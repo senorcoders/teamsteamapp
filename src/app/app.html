@@ -1,1 +1,10 @@
-<ion-nav [root]="rootPage"></ion-nav>
+<ion-menu [content]="mycontent">
+    <ion-content>
+      <ion-list>
+        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)">{{p.title}}</ion-item>
+        <ion-item (click)="logout()">Logout</ion-item>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
+
+<ion-nav #mycontent [root]="rootPage"></ion-nav>
