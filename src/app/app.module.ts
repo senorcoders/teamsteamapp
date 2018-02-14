@@ -15,12 +15,14 @@ import { interceptor } from '../providers/auth-service/interceptor';
 import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    EventsSchedulePage
   ],
   imports: [
     BrowserModule,
@@ -36,7 +38,8 @@ import { HttpModule } from '@angular/http';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    EventsSchedulePage
   ],
   providers: [
     StatusBar,

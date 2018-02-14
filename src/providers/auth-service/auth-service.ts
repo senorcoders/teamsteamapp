@@ -45,22 +45,37 @@ export class AuthServiceProvider {
         
         //For save
         t.storage.set('user', data);
+        t.user = new User();
+        console.log(data, t)
+        t.user.id = data.id;
+        t.user.username = data.username;
+        t.user.firstName = data.firstName;
+        t.user.lastName = data.lastName;
+        t.user.email = data.email;
+        t.user.role = data.role;
 
       }
     })
     
   }
 
-  public checkUser(){
-    /*t.user.id = data.id;
-        t.user.username = data.username;
-        t.user.firstName = data.firstName;
-        t.user.lastName = data.lastName;
-        t.user.email = data.email;*/
+  public async checkUser(){
+    var user = await this.storage.get("user");
+    this.user = user;
+    return user != null;
+  }
+
+  public User(){
+    return this.user;
   }
 
   public fullName(){
     return this.user.firstName+ " "+ this.user.lastName;
+  }
+
+  public async logout(){
+    var data = await this.storage.remove("user");
+    return data === undefined;
   }
 
 }
