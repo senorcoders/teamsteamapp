@@ -27,6 +27,7 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private ngZone: NgZone
   ) {
+    
   }
 
   ionViewDidLoad() {

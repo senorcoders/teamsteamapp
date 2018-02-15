@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Storage } from '@ionic/storage';
+import { MenuController } from 'ionic-angular';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -27,8 +28,8 @@ export class AuthServiceProvider {
 
   private user:User= new User();
 
-  constructor(public http: HttpClient, public storage: Storage) {
-    
+  constructor(public http: HttpClient, public storage: Storage, public menuCtrl: MenuController) {
+
   }
 
   /**
@@ -43,6 +44,8 @@ export class AuthServiceProvider {
       }else{
         callback(null, data);
         
+        t.menuCtrl.swipeEnable(true);
+
         //For save
         t.storage.set('user', data);
         t.user = new User();
@@ -62,7 +65,13 @@ export class AuthServiceProvider {
   public async checkUser(){
     var user = await this.storage.get("user");
     this.user = user;
-    return user != null;
+    if(user != null){
+      this.menuCtrl.swipeEnable(true);
+      return true;
+    }
+
+    this.menuCtrl.swipeEnable(false);
+    return false;
   }
 
   public User(){
@@ -74,6 +83,8 @@ export class AuthServiceProvider {
   }
 
   public async logout(){
+    this.user = null;
+    this.menuCtrl.swipeEnable(false);
     var data = await this.storage.remove("user");
     return data === undefined;
   }

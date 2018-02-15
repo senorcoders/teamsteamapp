@@ -20,11 +20,11 @@
 <ion-content padding>
   <ion-list>
     <ion-item *ngFor="let event of events">
-        <ion-card-header>
+        <ion-card-header style="font-weight: bold; text-transform: uppercase;">
             {{event.name}}
           </ion-card-header>
           <ion-card-content>
-            {{event.createdAt}}
+            {{event.dateTime}}
           </ion-card-content>
     </ion-item>
   </ion-list>

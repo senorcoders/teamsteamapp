@@ -16,6 +16,7 @@ import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
+import { Network } from '@ionic-native/network';
 
 @NgModule({
   declarations: [
@@ -44,6 +45,7 @@ import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
   providers: [
     StatusBar,
     SplashScreen,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider
