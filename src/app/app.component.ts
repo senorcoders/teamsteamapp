@@ -11,6 +11,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { OfflinePage } from '../pages/offline/offline';
+import { RosterPage } from '../pages/roster/roster';
 
 @Component({
   templateUrl: 'app.html'
@@ -21,7 +22,8 @@ export class MyApp {
   private disconnectSubscription:any;
 
   public pages:Array<Object> = [
-    { title : "Events", component : EventsSchedulePage }
+    { title : "Events", component : EventsSchedulePage },
+    { title : "Roster", component : RosterPage }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 

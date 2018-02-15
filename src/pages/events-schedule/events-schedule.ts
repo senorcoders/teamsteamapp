@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
@@ -25,7 +25,8 @@ export class EventsSchedulePage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public auth: AuthServiceProvider,
-    public http: HttpClient
+    public http: HttpClient,
+    public alertCtrl: AlertController
   ) {
   }
 
@@ -40,10 +41,11 @@ export class EventsSchedulePage {
       url = "/team/parent/"+ this.user.id;
     }
     
-    this.team = await this.http.get(url).toPromise();
+    var res = await this.http.get(url).toPromise();
+
+    this.team = res;
     let events:any;
 
-    console.log(this.team);
     if( this.team.hasOwnProperty('team') ){
       events = await this.http.get("/event/team/"+ moment().format("MM-DD-YYYY-hh:mm:ss-a") + "/"+ this.team.team).toPromise();
     }else if( Object.prototype.toString.call(this.team) === '[object Array]'){

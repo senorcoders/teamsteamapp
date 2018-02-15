@@ -17,13 +17,17 @@ import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { Network } from '@ionic-native/network';
+import { RosterPage } from '../pages/roster/roster';
+import { MemberRosterPage } from '../pages/member-roster/member-roster';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
     LoginPage,
-    EventsSchedulePage
+    EventsSchedulePage,
+    RosterPage,
+    MemberRosterPage
   ],
   imports: [
     BrowserModule,
@@ -40,7 +44,9 @@ import { Network } from '@ionic-native/network';
     MyApp,
     HomePage,
     LoginPage,
-    EventsSchedulePage
+    EventsSchedulePage,
+    RosterPage,
+    MemberRosterPage
   ],
   providers: [
     StatusBar,
