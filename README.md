@@ -30,3 +30,9 @@ $ npm install
  $ ionic cordova platform add ios
  $ ionic cordova run ios --device --livereload
  ```
+
+ ## License
+
+ ```
+ we imprison anyone who steals this app
+```
