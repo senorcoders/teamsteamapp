@@ -17,8 +17,10 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class LoginPage {
 
-  public username:string="";
-  public password:string="";
+  public firstname:string="";
+  public lastname:string="";
+  public email:string="";
+  public remember:boolean;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -30,14 +32,19 @@ export class LoginPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
   }
-
+  public forgotPassword(){
+    console.log('forgot password');
+  }
+  public Register(){
+    console.log('register');
+  }
   public Login(){
-    console.log(this.username)
-    if( this.username == '' || this.password == '' ){
+    console.log(this.firstname)
+    if( this.firstname == '' || this.lastname == '' || this.email==''  ){
       this.presentAlert("There's empty fields");
     }else{
       
-      this.authService.Login(this.username, this.password, function(err, user){
+      this.authService.Login(this.firstname, this.lastname, function(err, user){
           if(user){
             
           }else{
