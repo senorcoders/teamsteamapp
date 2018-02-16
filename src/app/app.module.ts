@@ -15,12 +15,19 @@ import { interceptor } from '../providers/auth-service/interceptor';
 import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
+import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
+import { Network } from '@ionic-native/network';
+import { RosterPage } from '../pages/roster/roster';
+import { MemberRosterPage } from '../pages/member-roster/member-roster';
 
 @NgModule({
   declarations: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    EventsSchedulePage,
+    RosterPage,
+    MemberRosterPage
   ],
   imports: [
     BrowserModule,
@@ -36,11 +43,15 @@ import { HttpModule } from '@angular/http';
   entryComponents: [
     MyApp,
     HomePage,
-    LoginPage
+    LoginPage,
+    EventsSchedulePage,
+    RosterPage,
+    MemberRosterPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
+    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider
