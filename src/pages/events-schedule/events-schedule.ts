@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
+import { EventPage } from '../event/event';
 
 /**
  * Generated class for the EventsSchedulePage page.
@@ -72,6 +73,13 @@ export class EventsSchedulePage {
     });
 
     this.events = this.events.reverse();
+  }
+
+  public goEvent(event:any){
+    this.navCtrl.push(EventPage, {
+      event,
+      user : this.user
+    })
   }
 
 }

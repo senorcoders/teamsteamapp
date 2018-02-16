@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular/components/alert/alert-controller';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
+import { HttpClient } from '@angular/common/http';
 
 /**
  * Generated class for the LoginPage page.
@@ -18,6 +19,8 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 })
 export class LoginPage {
 
+  public showPassword:boolean=false;
+
   public username:string="";
   public password:string="";
 
@@ -25,7 +28,8 @@ export class LoginPage {
     public navParams: NavParams,
     public alertCtrl:AlertController,
     public authService: AuthServiceProvider,
-    private ngZone: NgZone
+    private ngZone: NgZone,
+    public http : HttpClient
   ) {
     
   }
@@ -59,6 +63,21 @@ export class LoginPage {
       buttons: ['Ok']
     });
     alert.present();
+  }
+
+  public async toPassword(){
+    let response:any;
+    response = await this.http.get('/user?where={"username":{"like":"'+ this.username+ '"}}').toPromise();
+    if( response.length > 0){
+      this.showPassword = true;
+    }else{
+      console.log("Register");
+    }
+    
+  }
+
+  public toUserName(){
+    this.showPassword = false;
   }
 
 }
