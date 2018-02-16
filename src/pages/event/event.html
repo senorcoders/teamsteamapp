@@ -1,0 +1,46 @@
+<!--
+  Generated template for the EventPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="base">
+    <ion-title>Event</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-item>
+        <h2 style="text-transform: uppercase;">{{event.name}}</h2>
+        <p>{{event.dateTime}}</p>
+    </ion-item>
+    
+      <img [hidden]="!event.image" [src]="event.image">
+    
+      <ion-card-content [hidden]="!event.description" >
+        <p>{{event.description}}</p>
+      </ion-card-content>
+
+      <ion-item class="location-event">
+        <h2>Location</h2>
+        <p>Name: {{event.location[0].name}}</p>
+        <p>Address: {{event.location[0].address}}</p>
+        <p>Link: <a [href]="event.link" target="_black"> {{event.location[0].link}} </a></p>
+        <p>Detail: {{event.location[0].detail}}</p>
+      </ion-item>
+    
+      <ion-row [hidden]="user.role.name == Manager">
+        <ion-col style="text-align: right;">
+          <button ion-button clear small>
+            <ion-icon name="md-create"></ion-icon>
+          </button>
+        </ion-col>
+      </ion-row>
+    
+    </ion-card>
+</ion-content>

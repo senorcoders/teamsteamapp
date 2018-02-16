@@ -4,31 +4,51 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<!--ion-header>
 
-  <ion-navbar>
-    <ion-title>Login</ion-title>
+  <ion-navbar color="base">
+    <ion-title></ion-title>
   </ion-navbar>
 
-</ion-header>
+</ion-header-->
 
+<ion-content center padding>
+    <ion-card>
+        <!--img src="img/nin-live.png"/-->
+        <ion-card-content>
+          <ion-card-title>
+            Welcome to Team Manager
+          </ion-card-title>
+          <p>
+              The Best Way to manage your team 
+          </p>
+          <div class="card-subtitle" [style.opacity]="showPassword ? '0' : '1'" [style.visibility]="showPassword ? 'hidden' : 'visible'" >What is your username?</div>
+          <div class="card-subtitle" [style.opacity]="!showPassword ? '0' : '1'" [style.visibility]="!showPassword ? 'hidden' : 'visible'" >and your password?</div>
+        </ion-card-content>
+      </ion-card>
 
-<ion-content padding>
-  <ion-list>
+      <div padding [ngClass]="{'out': showPassword }" style="margin-top: 141px;">
+          <ion-input type="text" value="" [(ngModel)]="username" [ngClass]="{'out': showPassword }" placeholder="USERNAME" ></ion-input>
+        </div>
+        
+        <div padding [ngClass]="{'out': !showPassword }">
+          <ion-input type="password" value="" [(ngModel)]="password" [ngClass]="{'out': !showPassword }" placeholder="PASSWORD" ></ion-input>
+        </div>
 
-    <ion-item>
-      <ion-label floating>Username</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="username" ></ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Password</ion-label>
-      <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
-    </ion-item>
-
-  </ion-list>
-
-  <div padding>
-    <button ion-button color="primary" block (click)="Login()" >Sign In</button>
-  </div>
+        <div>
+          <ion-grid>
+            <ion-row>
+              <ion-col [hidden]="showPassword" >
+                  <button ion-button color="base" block (click)="toPassword()" >Next</button>
+              </ion-col>
+              <ion-col [hidden]="!showPassword" >
+                  <button ion-button color="base" (click)="toUserName()" >Back</button>
+              </ion-col>
+              <ion-col [hidden]="!showPassword" class="align-right" >
+                  <button ion-button color="base" (click)="Login()" >Login</button>
+              </ion-col>
+            </ion-row> 
+          </ion-grid>
+        </div>
+  
 </ion-content>

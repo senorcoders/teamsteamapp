@@ -19,6 +19,7 @@ import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
+import { EventPage } from '../pages/event/event';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { MemberRosterPage } from '../pages/member-roster/member-roster';
     LoginPage,
     EventsSchedulePage,
     RosterPage,
-    MemberRosterPage
+    MemberRosterPage,
+    EventPage
   ],
   imports: [
     BrowserModule,
@@ -46,7 +48,8 @@ import { MemberRosterPage } from '../pages/member-roster/member-roster';
     LoginPage,
     EventsSchedulePage,
     RosterPage,
-    MemberRosterPage
+    MemberRosterPage,
+    EventPage
   ],
   providers: [
     StatusBar,
