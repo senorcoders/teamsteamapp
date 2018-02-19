@@ -1,3 +1,6 @@
 page-member-roster {
-
+    .button-fab-right{
+        position: relative;
+        left: calc(100% - 60px) !important;
+    }
 }
