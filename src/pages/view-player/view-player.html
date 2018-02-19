@@ -1,0 +1,61 @@
+<!--
+  Generated template for the ViewPlayerPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="base">
+    <ion-title>Player</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-header>
+        {{player.user.firstName+ " "+ player.user.lastName}}
+    </ion-card-header>
+    <img [hidden]="!player.image" [src]="player.image"/>
+    <ion-card-content>
+      <ion-list>
+        <ion-list-header>
+          Player Details
+        </ion-list-header>
+
+        <ion-item>
+          <h2>First Name</h2>
+          <p> {{player.user.firstName}} </p>
+        </ion-item>
+
+        <ion-item>
+          <h2>Last Name</h2>
+          <p> {{player.user.lastName}} </p>
+        </ion-item>
+
+        <ion-item>
+            <h2>BirthDay</h2>
+            <p> {{player.birthDay}} </p>
+          </ion-item>
+
+          <ion-item>
+              <h2>Gender</h2>
+              <p> {{player.user.gender}} </p>
+            </ion-item>
+
+            <ion-item>
+                <h2>Jersey Number</h2>
+                <p> {{player.yerseyNumber}} </p>
+              </ion-item>
+
+            <ion-item>
+              <h2>Positions</h2>
+              <p *ngFor="let position of player.positions"> {{position._valud}} </p>
+            </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>

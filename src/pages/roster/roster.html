@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="base">
       <button ion-button icon-only menuToggle start>
           <ion-icon name="menu"></ion-icon>
       </button>
@@ -20,10 +20,10 @@
 <ion-content padding>
     <ion-list>
         <ion-item *ngFor="let player of players">
-          <ion-thumbnail item-start>
+          <ion-thumbnail style="cursor: pointer;" (click)="viewPlayer(player)" item-start [hidden]="!player.image" >
             <img src="{{player.image}}">
           </ion-thumbnail>
-          <h2>{{player.user.firstName+ " "+ player.user.lastName}}</h2>
+          <h2 style="cursor: pointer;" (click)="viewPlayer(player)" >{{player.user.firstName+ " "+ player.user.lastName}}</h2>
           <p [hidden]="!player.positions">{{player.positions[0]._value}} </p>
           <button (click)="editMember(player)" *ngIf="user.role.name != Manager" ion-button clear item-end>Edit</button>
         </ion-item>
