@@ -6,8 +6,8 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>MemberRoster</ion-title>
+  <ion-navbar color="base">
+    <ion-title>Member Roster</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,6 +16,15 @@
 <ion-content padding>
 
     <h1> {{player.user.firstName+ " "+ player.user.lastName}} </h1>
+
+    <ion-avatar [hidden]="!player.image" >
+        <img width="100%" [src]="player.image">
+        <ion-fab top right edge class="button-fab-right">
+            <button ion-fab color="base" (click)="changePhoto()" >
+              <ion-icon name="md-camera"></ion-icon>
+            </button>
+        </ion-fab>
+    </ion-avatar>
 
     <ion-list>
 
@@ -29,11 +38,6 @@
           <ion-input type="text" value="" [(ngModel)]="player.user.lastName"></ion-input>
         </ion-item>
 
-        <ion-item>
-            <ion-label floating>Last Name</ion-label>
-            <ion-input type="text" value="" [(ngModel)]="player.user.lastName"></ion-input>
-          </ion-item>
-
           <ion-item>
               <ion-label floating>BirthDay</ion-label>
               <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="player.birthDay"></ion-datetime>
@@ -41,7 +45,14 @@
 
             <ion-item>
                 <ion-label floating>Gender</ion-label>
-                <ion-input type="text" value="" [(ngModel)]="player.gender"></ion-input>
+                <ion-select [(ngModel)]="player.gender">
+                    <ion-option value="male">
+                        Male
+                    </ion-option>
+                    <ion-option value="female">
+                        Female
+                    </ion-option>
+                </ion-select>
               </ion-item>
     
               <ion-item>
@@ -51,7 +62,7 @@
 
             <ion-item>
               <ion-label floating>Position</ion-label>
-              <ion-input type="text" value="" [(ngModel)]="player.positions[0]._value"></ion-input>
+              <ion-input type="text" value="" [(ngModel)]="player.positions"></ion-input>
             </ion-item>
 
       </ion-list>
@@ -102,5 +113,7 @@
 
         </ion-item>
       </ion-list>
+
+    <button ion-button block (click)="update()">Update</button>
 
 </ion-content>

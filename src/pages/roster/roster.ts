@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MemberRosterPage } from '../member-roster/member-roster';
+import { ViewPlayerPage } from '../view-player/view-player';
 
 /**
  * Generated class for the RosterPage page.
@@ -56,6 +57,12 @@ export class RosterPage {
 
   public editMember(member:any){
     this.navCtrl.push(MemberRosterPage, {
+      player : member
+    });
+  }
+
+  public viewPlayer(member){
+    this.navCtrl.push(ViewPlayerPage, {
       player : member
     });
   }

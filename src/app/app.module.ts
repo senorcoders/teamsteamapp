@@ -7,6 +7,8 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
+import { Camera } from '@ionic-native/camera';
+
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -19,6 +21,9 @@ import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
+import { EventPage } from '../pages/event/event';
+import { AddFamilyPage } from '../pages/add-family/add-family';
+import { ViewPlayerPage } from '../pages/view-player/view-player';
 
 @NgModule({
   declarations: [
@@ -27,7 +32,10 @@ import { MemberRosterPage } from '../pages/member-roster/member-roster';
     LoginPage,
     EventsSchedulePage,
     RosterPage,
-    MemberRosterPage
+    MemberRosterPage,
+    EventPage,
+    ViewPlayerPage,
+    AddFamilyPage
   ],
   imports: [
     BrowserModule,
@@ -46,12 +54,16 @@ import { MemberRosterPage } from '../pages/member-roster/member-roster';
     LoginPage,
     EventsSchedulePage,
     RosterPage,
-    MemberRosterPage
+    MemberRosterPage,
+    EventPage,
+    ViewPlayerPage,
+    AddFamilyPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
     Network,
+    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider
