@@ -24,6 +24,7 @@ import { MemberRosterPage } from '../pages/member-roster/member-roster';
 import { EventPage } from '../pages/event/event';
 import { AddFamilyPage } from '../pages/add-family/add-family';
 import { ViewPlayerPage } from '../pages/view-player/view-player';
+import { EditFamilyPage } from '../pages/edit-family/edit-family';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ViewPlayerPage } from '../pages/view-player/view-player';
     MemberRosterPage,
     EventPage,
     ViewPlayerPage,
-    AddFamilyPage
+    AddFamilyPage,
+    EditFamilyPage
   ],
   imports: [
     BrowserModule,
@@ -57,7 +59,8 @@ import { ViewPlayerPage } from '../pages/view-player/view-player';
     MemberRosterPage,
     EventPage,
     ViewPlayerPage,
-    AddFamilyPage
+    AddFamilyPage,
+    EditFamilyPage
   ],
   providers: [
     StatusBar,

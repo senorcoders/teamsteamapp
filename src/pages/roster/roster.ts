@@ -63,7 +63,8 @@ export class RosterPage {
 
   public viewPlayer(member){
     this.navCtrl.push(ViewPlayerPage, {
-      player : member
+      player : member,
+      user : this.user
     });
   }
 

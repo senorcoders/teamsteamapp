@@ -73,7 +73,7 @@ export class LoginPage {
 
   public async toPassword(){
     let response:any;
-    response = await this.http.get('/user?where={"username":{"like":"'+ this.username+ '"}}').toPromise();
+    response = await this.http.get('/user?where={"username":{"like":"'+ /*this.username+*/ '"}}').toPromise();
     if( response.length > 0){
       this.showPassword = true;
     }else{

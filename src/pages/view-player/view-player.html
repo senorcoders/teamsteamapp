@@ -8,6 +8,11 @@
 
   <ion-navbar color="base">
     <ion-title>Player</ion-title>
+    <ion-buttons [hidden]="user.role.name != Manager" end>
+      <button ion-button end>
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -52,7 +57,7 @@
 
             <ion-item>
               <h2>Positions</h2>
-              <p *ngFor="let position of player.positions"> {{position._valud}} </p>
+              <p *ngFor="let position of player.positions"> {{position}} </p>
             </ion-item>
 
       </ion-list>

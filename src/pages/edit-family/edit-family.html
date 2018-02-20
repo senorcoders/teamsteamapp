@@ -1,0 +1,145 @@
+<!--
+  Generated template for the EditFamilyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar color="base" >
+    <ion-title>Family</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-list-header>
+      Person 1
+    </ion-list-header>
+
+    <ion-item>
+      <ion-label floating>
+        First Name
+      </ion-label>
+      <ion-input text="" type="text" [(ngModel)]="person1.firstName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        Last Name
+      </ion-label>
+      <ion-input text="" type="text" [(ngModel)]="person1.lastName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        Email
+      </ion-label>
+      <ion-input text="" type="text" [(ngModel)]="person1.email"></ion-input>
+    </ion-item>
+
+      <ion-item>
+        <ion-label floating>
+          Who's This?
+        </ion-label>
+        <ion-input text="" type="text" [(ngModel)]="person1.relationship"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>
+          Private
+        </ion-label>
+        <ion-toggle [(ngModel)]="person1.private"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+        <ion-label>
+          Receive Emails
+        </ion-label>
+        <ion-toggle [(ngModel)]="person1.receiveEmail"></ion-toggle>
+      </ion-item>
+
+      <ion-item>
+          <ion-label floating>
+            Phone Number
+          </ion-label>
+          <ion-input text="" [(ngModel)]="person1.phoneNumber"></ion-input>
+        </ion-item>
+
+        <ion-item>
+          <ion-label floating>
+            Address
+          </ion-label>
+          <ion-input text="" [(ngModel)]="person1.address"></ion-input>
+        </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+      <ion-list-header>
+        Person 2
+      </ion-list-header>
+  
+      <ion-item>
+        <ion-label floating>
+          First Name
+        </ion-label>
+        <ion-input text="" type="text" [(ngModel)]="person2.firstName"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>
+          Last Name
+        </ion-label>
+        <ion-input text="" type="text" [(ngModel)]="person2.lastName"></ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>
+          Email
+        </ion-label>
+        <ion-input text="" type="text" [(ngModel)]="person2.email"></ion-input>
+      </ion-item>
+  
+        <ion-item>
+          <ion-label floating>
+            Who's This?
+          </ion-label>
+          <ion-input text="" type="text" [(ngModel)]="person2.relationship"></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label>
+            Private
+          </ion-label>
+          <ion-toggle [(ngModel)]="person2.private"></ion-toggle>
+        </ion-item>
+  
+        <ion-item>
+          <ion-label>
+            Receive Emails
+          </ion-label>
+          <ion-toggle [(ngModel)]="person2.receiveEmail"></ion-toggle>
+        </ion-item>
+  
+        <ion-item>
+            <ion-label floating>
+              Phone Number
+            </ion-label>
+            <ion-input text="" [(ngModel)]="person2.phoneNumber"></ion-input>
+          </ion-item>
+  
+          <ion-item>
+            <ion-label floating>
+              Address
+            </ion-label>
+            <ion-input text="" [(ngModel)]="person2.address"></ion-input>
+          </ion-item>
+  
+    </ion-list>
+
+    <button ion-button block color="base" (click)="save()" >Update</button>
+</ion-content>

@@ -8,6 +8,11 @@
 
   <ion-navbar color="base">
     <ion-title>Member Roster</ion-title>
+    <ion-buttons end>
+        <button ion-button icon-only (click)="goEditFamily()">
+            <ion-icon name="ios-people"></ion-icon>
+        </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
@@ -114,6 +119,6 @@
         </ion-item>
       </ion-list>
 
-    <button ion-button block (click)="update()">Update</button>
+    <button ion-button block color="base" (click)="update()">Update</button>
 
 </ion-content>

@@ -24,7 +24,7 @@
             <img src="{{player.image}}">
           </ion-thumbnail>
           <h2 style="cursor: pointer;" (click)="viewPlayer(player)" >{{player.user.firstName+ " "+ player.user.lastName}}</h2>
-          <p [hidden]="!player.positions">{{player.positions[0]._value}} </p>
+          <p [hidden]="!player.positions">{{player.positions}} </p>
           <button (click)="editMember(player)" *ngIf="user.role.name != Manager" ion-button clear item-end>Edit</button>
         </ion-item>
       </ion-list>

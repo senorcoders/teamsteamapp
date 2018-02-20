@@ -16,9 +16,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 export class ViewPlayerPage {
 
   public player:any;
+  public user:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
     this.player = this.navParams.get("player");
+    this.user = this.navParams.get("user");
+    
+    if( this.player.positions === undefined ){
+      this.player.positions = [];
+    }
+
   }
 
   ionViewDidLoad() {

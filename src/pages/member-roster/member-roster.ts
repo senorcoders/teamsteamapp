@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { EditFamilyPage } from '../edit-family/edit-family';
 
 /**
  * Generated class for the MemberRosterPage page.
@@ -37,8 +38,15 @@ export class MemberRosterPage {
     if( moment(this.player.birthDay, "MM/DD/YYYY", true).isValid() ){
       this.player.birthDay = moment(this.player.birthDay, "MM/DD/YYYY").format("YYYY-MM-DD");
     }
+    
+    if( this.player.positions !== undefined ){
+      if( Object.prototype.toString.call(this.player.positions) != '[object String]' ){
+        this.player.positions = this.player.positions.join(",");
+      }
+    }else{
+      this.player.positions = "";
+    }
 
-    this.player.positions = this.player.positions.join(",");
     console.log(this.player);
   }
 
@@ -182,7 +190,6 @@ export class MemberRosterPage {
     player.positions = player.positions.split(",");
     delete player.user;
     delete player.image;
-    delete player.positions;
 
     player.birthDay = moment(player.birthDay, "YYYY-MM-DD").format("MM/DD/YYYY");
 
@@ -208,6 +215,12 @@ export class MemberRosterPage {
     load.dismiss();
 
     this.navCtrl.pop();
+  }
+
+  public goEditFamily(){
+    this.navCtrl.push(EditFamilyPage, {
+      player: this.player
+    });
   }
 
 }
