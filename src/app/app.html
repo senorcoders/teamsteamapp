@@ -1,8 +1,20 @@
 <ion-menu [content]="mycontent">
+	<ion-header>
+	  <ion-navbar>
+	    <ion-title class="header-menu">
+	    	<img src="{{logo}}">
+	      	TEAMSTEAM
+	    </ion-title>
+	  </ion-navbar>
+	  <div class="user-info">
+	      	<img src="{{userimg}}" alt="" class="userimg">
+	      	<p class="username">{{username}}</p>
+	      </div>
+	</ion-header>
     <ion-content>
       <ion-list>
-        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)">{{p.title}}</ion-item>
-        <ion-item (click)="logout()">Logout</ion-item>
+        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)"><ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon>{{p.title}}</ion-item>
+        <ion-item (click)="logout()"><ion-icon name="log-out" class="icon-menu"></ion-icon>Logout</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>

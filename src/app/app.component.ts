@@ -20,10 +20,12 @@ export class MyApp {
   @ViewChild('mycontent') nav:Nav;
 
   private disconnectSubscription:any;
-
+  public username="Senorcoders";
+  public userimg="../assets/imgs/user.jpg";
+  public logo="../assets/imgs/logo-sign.png";
   public pages:Array<Object> = [
-    { title : "Events", component : EventsSchedulePage },
-    { title : "Roster", component : RosterPage }
+    { title : "Events", component : EventsSchedulePage, icon:"basketball" },
+    { title : "Roster", component : RosterPage, icon:"baseball" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
