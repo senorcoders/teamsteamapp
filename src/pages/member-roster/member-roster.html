@@ -22,14 +22,23 @@
 
     <h1> {{player.user.firstName+ " "+ player.user.lastName}} </h1>
 
-    <ion-avatar [hidden]="!player.image" >
-        <img width="100%" [src]="player.image">
+    <ion-avatar [hidden]="!image" >
+        <img width="100%" (load)="success()" [src]="imageSrc">
         <ion-fab top right edge class="button-fab-right">
             <button ion-fab color="base" (click)="changePhoto()" >
               <ion-icon name="md-camera"></ion-icon>
             </button>
         </ion-fab>
     </ion-avatar>
+
+    <ion-avatar [hidden]="image" >
+            <img width="100%" src="./assets/imgs/avatar.gif">
+            <ion-fab top right edge class="button-fab-right">
+                <button ion-fab color="base" (click)="changePhoto()" >
+                  <ion-icon name="md-camera"></ion-icon>
+                </button>
+            </ion-fab>
+        </ion-avatar>
 
     <ion-list>
 

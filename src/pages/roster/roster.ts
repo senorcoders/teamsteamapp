@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MemberRosterPage } from '../member-roster/member-roster';
 import { ViewPlayerPage } from '../view-player/view-player';
+import { interceptor } from '../../providers/auth-service/interceptor';
 
 /**
  * Generated class for the RosterPage page.
@@ -24,7 +25,8 @@ export class RosterPage {
   public players:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public http: HttpClient, public auth: AuthServiceProvider) {
+    public http: HttpClient, public auth: AuthServiceProvider
+  ) {
   }
 
   ionViewDidLoad() {
@@ -53,6 +55,19 @@ export class RosterPage {
 
     this.players = players;
 
+    let src = interceptor.url;
+
+    this.players = await Promise.all(this.players.map(async function(item){
+        item.loadImage = false;
+        item.image = src+ "/images/players/"+ item.id+ ".jpg";
+        console.log(item);
+        return item;
+      }));
+  }
+
+  public success(event, player){
+    console.log(event, player);
+    player.loadImage = true;
   }
 
   public editMember(member:any){

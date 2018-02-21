@@ -23,7 +23,8 @@
     <ion-card-header>
         {{player.user.firstName+ " "+ player.user.lastName}}
     </ion-card-header>
-    <img [hidden]="!player.image" [src]="player.image"/>
+    <img (load)="success(event)" [hidden]="!image" [src]="imageSrc"/>
+    <img [hidden]="image" src="./assets/imgs/avatar.gif"/>
     <ion-card-content>
       <ion-list>
         <ion-list-header>

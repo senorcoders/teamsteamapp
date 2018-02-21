@@ -53,9 +53,15 @@ export class LoginPage {
      this.authService.Login(this.firstname, this.lastname, function(err, user){
         if(user){
           t.ngZone.run(() => t.navCtrl.setRoot(EventsSchedulePage));
-        }else{
+        }else if(err){
           t.presentAlert("Invalid email or password");
           return;
+        }else{
+          t.alertCtrl.create({
+            title: "Error",
+            message: "Error In The Connection",
+            buttons: ["Ok"]
+          }).present();
         }
       });
 

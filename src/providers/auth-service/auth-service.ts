@@ -40,7 +40,7 @@ export class AuthServiceProvider {
     this.http.post('/login', { username, password})
     .subscribe(function(data:any){
       if( data.hasOwnProperty("message") && data.message == "User not found" ){
-        callback(null, null);
+        callback(data, null);
       }else{
         callback(null, data);
         
@@ -49,7 +49,6 @@ export class AuthServiceProvider {
         //For save
         t.storage.set('user', data);
         t.user = new User();
-        console.log(data, t)
         t.user.id = data.id;
         t.user.username = data.username;
         t.user.firstName = data.firstName;
@@ -58,7 +57,10 @@ export class AuthServiceProvider {
         t.user.role = data.role;
 
       }
-    })
+    }, function(err){
+      console.log(err);
+      callback(null, null);
+    });
     
   }
 

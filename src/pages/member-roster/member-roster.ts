@@ -4,6 +4,7 @@ import moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { EditFamilyPage } from '../edit-family/edit-family';
+import { interceptor } from '../../providers/auth-service/interceptor';
 
 /**
  * Generated class for the MemberRosterPage page.
@@ -28,6 +29,9 @@ export class MemberRosterPage {
   public idContact:string;
   public typeContact:string="";
 
+  public imageSrc:string;
+  public image:boolean=false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
     private camera: Camera, public loading: LoadingController
@@ -47,6 +51,8 @@ export class MemberRosterPage {
       this.player.positions = "";
     }
 
+    this.imageSrc = interceptor.url+ "/images/players/"+ this.player.id+ ".jpg";
+    //this.imageSrc = this.player.image;
     console.log(this.player);
   }
 
@@ -55,6 +61,10 @@ export class MemberRosterPage {
     cts = await this.http.get("/contacts/user/"+ this.player.user.id).toPromise();
     this.contacts = cts;
     console.log(this.contacts);
+  }
+
+  public success(){
+    this.image = true;
   }
 
   public editContact(contact){
@@ -161,12 +171,15 @@ export class MemberRosterPage {
   }
 
   private async updatePhoto(base64Image){
-    let player = this.player
-    player.image = base64Image;
+    let src = this.imageSrc.toString();
+    this.imageSrc = "./assets/imgs/avatar.gif"
     let load = this.loading.create({content : "Saving..."});
     load.present({ disableApp : true });
     try{
-      await this.http.put("/players/"+ this.player.id, player).toPromise();
+      await this.http.post("/players/image", {
+        id : this.player.id,
+        image : base64Image
+      }).toPromise();
     }catch(e){
       
       load.dismiss();
@@ -180,7 +193,8 @@ export class MemberRosterPage {
     }
     
     load.dismiss();
-    this.player.image = base64Image;
+    
+    this.imageSrc = src;
 
   }
 

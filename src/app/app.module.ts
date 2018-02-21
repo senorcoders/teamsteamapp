@@ -8,6 +8,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 
 import { MyApp } from './app.component';
@@ -46,6 +47,7 @@ import { EditFamilyPage } from '../pages/edit-family/edit-family';
       name: 'teamsnap',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
+    IonicImageLoader.forRoot(),
     HttpModule,
     HttpClientModule
   ],
@@ -69,7 +71,8 @@ import { EditFamilyPage } from '../pages/edit-family/edit-family';
     Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
-    AuthServiceProvider
+    AuthServiceProvider,
+    interceptor
   ]
 })
 export class AppModule {}
