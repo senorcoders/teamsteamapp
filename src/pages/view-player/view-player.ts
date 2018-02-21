@@ -32,7 +32,8 @@ export class ViewPlayerPage {
       this.player.positions = this.player.positions.split(",");
     }
 
-    this.imageSrc = interceptor.url+ "/images/players/"+ this.player.id+ ".jpg";
+    this.imageSrc = this.player.image;
+    
   }
 
   ionViewDidLoad() {

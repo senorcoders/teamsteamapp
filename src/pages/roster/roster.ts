@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MemberRosterPage } from '../member-roster/member-roster';
@@ -24,8 +24,18 @@ export class RosterPage {
   private team:any;
   public players:Array<any>=[];
 
+  public updateImagePlayer = (index:number, stringBase64:string)=>{
+
+    let t = this; console.log(index);
+    return new Promise(function(resolve, reject){
+      t.players[index].image = stringBase64;
+    })
+
+  }
+
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    public http: HttpClient, public auth: AuthServiceProvider
+    public http: HttpClient, public auth: AuthServiceProvider,
+    public loading: LoadingController
   ) {
   }
 
@@ -34,6 +44,10 @@ export class RosterPage {
   }
 
   async ngOnInit(){
+
+    let load = this.loading.create({ content: "Loading Roster..."});
+    load.present({ disableApp : true });
+
     this.user = await this.auth.User();
     let url;
     if( this.user.role.name === "Player"){
@@ -56,13 +70,24 @@ export class RosterPage {
     this.players = players;
 
     let src = interceptor.url;
+    let t = this;
 
     this.players = await Promise.all(this.players.map(async function(item){
+      
         item.loadImage = false;
-        item.image = src+ "/images/players/"+ item.id+ ".jpg";
+        
+        let image:any = await t.http.get("/players/image/"+ item.id).toPromise();
+        if(image.hasOwnProperty("message")){
+          item.image = "/not-found";
+        }else{
+          item.image = image.data;
+        }
+
         console.log(item);
         return item;
       }));
+
+    load.dismiss();
   }
 
   public success(event, player){
@@ -70,9 +95,11 @@ export class RosterPage {
     player.loadImage = true;
   }
 
-  public editMember(member:any){
+  public editMember(index:number, member:any){
     this.navCtrl.push(MemberRosterPage, {
-      player : member
+      player : member,
+      index,
+      updateImage: this.updateImagePlayer
     });
   }
 

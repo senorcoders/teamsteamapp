@@ -32,12 +32,17 @@ export class MemberRosterPage {
   public imageSrc:string;
   public image:boolean=false;
 
+  public updateImageCallback:any;
+  public index:any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
     private camera: Camera, public loading: LoadingController
   ) {
 
     this.player = this.navParams.get("player");
+    this.updateImageCallback = this.navParams.get("updateImage");
+    this.index = this.navParams.get("index");
 
     if( moment(this.player.birthDay, "MM/DD/YYYY", true).isValid() ){
       this.player.birthDay = moment(this.player.birthDay, "MM/DD/YYYY").format("YYYY-MM-DD");
@@ -51,8 +56,8 @@ export class MemberRosterPage {
       this.player.positions = "";
     }
 
-    this.imageSrc = interceptor.url+ "/images/players/"+ this.player.id+ ".jpg";
-    //this.imageSrc = this.player.image;
+    this.imageSrc = this.player.image;
+    
     console.log(this.player);
   }
 
@@ -171,10 +176,12 @@ export class MemberRosterPage {
   }
 
   private async updatePhoto(base64Image){
-    let src = this.imageSrc.toString();
+
     this.imageSrc = "./assets/imgs/avatar.gif"
+
     let load = this.loading.create({content : "Saving..."});
     load.present({ disableApp : true });
+
     try{
       await this.http.post("/players/image", {
         id : this.player.id,
@@ -194,8 +201,10 @@ export class MemberRosterPage {
     
     load.dismiss();
     
-    this.imageSrc = src;
+    this.imageSrc = base64Image;
 
+    this.updateImageCallback(this.index, base64Image);
+    
   }
 
   private async update(){
