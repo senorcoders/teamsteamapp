@@ -6,13 +6,67 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>CreatePlayer</ion-title>
+  <ion-navbar color="base">
+    <ion-title>Create Player</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+
+  <ion-avatar [hidden]="!image" >
+    <img width="100%" (load)="success()" [src]="imageSrc">
+    <ion-fab top right edge class="button-fab-right">
+        <button ion-fab color="base" (click)="changePhoto()" >
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-avatar>
+
+<ion-avatar [hidden]="image" >
+        <img width="100%" src="./assets/imgs/avatar.gif">
+        <ion-fab top right edge class="button-fab-right">
+            <button ion-fab color="base" (click)="changePhoto()" >
+              <ion-icon name="md-camera"></ion-icon>
+            </button>
+        </ion-fab>
+    </ion-avatar>
+
+<ion-list>
+
+  <ion-item>
+    <ion-label floating>username</ion-label>
+    <ion-input type="text" value="" [(ngModel)]="username" ></ion-input>
+  </ion-item>
+
+    <ion-item>
+      <ion-label floating>First Name</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="firstName" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Last Name</ion-label>
+      <ion-input type="text" value="" [(ngModel)]=".lastName"></ion-input>
+    </ion-item>
+
+      <ion-item>
+          <ion-label floating>Email</ion-label>
+          <ion-input type="text" value="" [(ngModel)]="email"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="password"></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label floating>Password</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="passwordCheck"></ion-input>
+      </ion-item>
+
+  </ion-list>
+
+  <button ion-button block color="base" (click)="save()">Save</button>
 
 </ion-content>
