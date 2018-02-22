@@ -26,6 +26,8 @@ import { EventPage } from '../pages/event/event';
 import { AddFamilyPage } from '../pages/add-family/add-family';
 import { ViewPlayerPage } from '../pages/view-player/view-player';
 import { EditFamilyPage } from '../pages/edit-family/edit-family';
+import { CreatePlayerPage } from '../pages/create-player/create-player';
+import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-player-details';
 
 @NgModule({
   declarations: [
@@ -38,7 +40,9 @@ import { EditFamilyPage } from '../pages/edit-family/edit-family';
     EventPage,
     ViewPlayerPage,
     AddFamilyPage,
-    EditFamilyPage
+    EditFamilyPage,
+    CreatePlayerPage,
+    CreatePlayerDetailsPage
   ],
   imports: [
     BrowserModule,
@@ -62,7 +66,9 @@ import { EditFamilyPage } from '../pages/edit-family/edit-family';
     EventPage,
     ViewPlayerPage,
     AddFamilyPage,
-    EditFamilyPage
+    EditFamilyPage,
+    CreatePlayerPage,
+    CreatePlayerDetailsPage
   ],
   providers: [
     StatusBar,

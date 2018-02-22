@@ -5,6 +5,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MemberRosterPage } from '../member-roster/member-roster';
 import { ViewPlayerPage } from '../view-player/view-player';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { CreatePlayerPage } from '../create-player/create-player';
 
 /**
  * Generated class for the RosterPage page.
@@ -91,7 +92,6 @@ export class RosterPage {
   }
 
   public success(event, player){
-    console.log(event, player);
     player.loadImage = true;
   }
 
@@ -108,6 +108,10 @@ export class RosterPage {
       player : member,
       user : this.user
     });
+  }
+
+  public addPlayer(){
+    this.navCtrl.push(CreatePlayerPage);
   }
 
 }
