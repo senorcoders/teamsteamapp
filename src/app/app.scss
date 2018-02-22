@@ -14,3 +14,75 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
+
+/*menu style*/
+.toolbar-background-md, .toolbar-background{
+	background: rgba(0,102,235,.7)
+}
+.toolbar-title{
+	color:white;
+	font-weight: lighter;
+}
+.toolbar-content-ios{
+	.header-menu{
+		padding-left:20px !important;
+		text-align: left !important;
+		padding-top: 10px !important;
+		padding-bottom: 10px !important;
+	}
+}
+.toolbar-title{
+	display: flex;
+    align-items: center;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    img{
+    	margin-right: 10px;
+    }
+}
+.user-info{
+	background: #0066eb;
+	padding-top: 30px;
+}
+.username{
+	color: white;
+    text-align: center;
+    font-size: 1.8rem;
+    margin: 0;
+    padding: 10px 0 40px;
+    text-transform: capitalize;
+}
+.userimg{
+	border-radius: 100%;
+    border: 1px solid #979797;
+    width: 90px;
+    display: block;
+    margin: 0 auto;
+}
+.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
+	border: 0
+}
+.list-ios > .item-block:first-child{
+	border: 0
+}
+.menu-inner{
+	.content{
+	background: url(../assets/imgs/sidebar-bg.jpg);
+	}
+	.scroll-content{
+		background: rgba(0,0,0,0.9);
+		.list{
+			padding-top: 40px;
+		}
+	}
+	.item{
+		background: transparent;
+		color:white;
+		.item-inner{
+			border-bottom: 0 !important
+		}
+	}
+	.icon-menu{
+		margin-right: 10px;
+	}
+}
