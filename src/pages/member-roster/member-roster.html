@@ -95,7 +95,7 @@
 
         <ion-item>
             <ion-label floating>Type</ion-label>
-            <ion-select [(ngModel)]="typeContact" multiple="true">
+            <ion-select [(ngModel)]="typeContact" multiple="false">
               <ion-option value="email">Email</ion-option>
               <ion-option value="telephone">Telephone</ion-option>
             </ion-select>
@@ -127,7 +127,9 @@
 
         </ion-item>
       </ion-list>
-
+    
     <button ion-button block color="base" (click)="update()">Update</button>
+
+    <button ion-button block color="danger" (click)="remove()" >Delete</button>
 
 </ion-content>

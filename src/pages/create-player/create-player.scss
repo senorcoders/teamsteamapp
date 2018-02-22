@@ -1,3 +1,6 @@
 page-create-player {
-
+    .button-fab-right{
+        position: relative;
+        left: calc(100% - 60px) !important;
+    }
 }

@@ -92,7 +92,6 @@ export class RosterPage {
   }
 
   public success(event, player){
-    console.log(event, player);
     player.loadImage = true;
   }
 

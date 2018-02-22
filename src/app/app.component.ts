@@ -20,9 +20,14 @@ export class MyApp {
   @ViewChild('mycontent') nav:Nav;
 
   private disconnectSubscription:any;
+
+  public user:any={
+    username: "SenorCoders"
+  };
+
   public username="Senorcoders";
-  public userimg="../assets/imgs/user.jpg";
-  public logo="../assets/imgs/logo-sign.png";
+  public userimg="./assets/imgs/user.jpg";
+  public logo="./assets/imgs/logo-sign.png";
   public pages:Array<Object> = [
     { title : "Events", component : EventsSchedulePage, icon:"basketball" },
     { title : "Roster", component : RosterPage, icon:"baseball" }
@@ -60,6 +65,8 @@ export class MyApp {
     var authenticated = await this.auth.checkUser();
     if( authenticated === true ){
       this.nav.root = EventsSchedulePage;
+      this.user = this.auth.User();
+      console.log(this.user);
     }else{
       this.nav.root = LoginPage;
     }

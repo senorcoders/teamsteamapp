@@ -25,13 +25,13 @@
 </ion-avatar>
 
 <ion-avatar [hidden]="image" >
-        <img width="100%" src="./assets/imgs/avatar.gif">
-        <ion-fab top right edge class="button-fab-right">
-            <button ion-fab color="base" (click)="changePhoto()" >
-              <ion-icon name="md-camera"></ion-icon>
-            </button>
-        </ion-fab>
-    </ion-avatar>
+  <img width="100%" src="./assets/imgs/avatar.gif">
+  <ion-fab top right edge class="button-fab-right">
+    <button ion-fab color="base" (click)="changePhoto()" >
+      <ion-icon name="md-camera"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-avatar>
 
 <ion-list>
 
@@ -47,26 +47,29 @@
 
     <ion-item>
       <ion-label floating>Last Name</ion-label>
-      <ion-input type="text" value="" [(ngModel)]=".lastName"></ion-input>
+      <ion-input type="text" value="" [(ngModel)]="lastName"></ion-input>
     </ion-item>
 
       <ion-item>
           <ion-label floating>Email</ion-label>
-          <ion-input type="text" value="" [(ngModel)]="email"></ion-input>
+          <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
       </ion-item>
 
       <ion-item>
         <ion-label floating>Password</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="password"></ion-input>
+        <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Password</ion-label>
-        <ion-input type="text" value="" [(ngModel)]="passwordCheck"></ion-input>
+        <ion-label floating>Write Your Password Again</ion-label>
+        <ion-input type="password" value="" [(ngModel)]="passwordCheck"></ion-input>
       </ion-item>
 
   </ion-list>
 
-  <button ion-button block color="base" (click)="save()">Save</button>
+  <button ion-button block color="base" (click)="save()">
+    Detail Players
+    <ion-icon style="margin-left: 20px;" name="md-arrow-forward"></ion-icon>
+  </button>
 
 </ion-content>

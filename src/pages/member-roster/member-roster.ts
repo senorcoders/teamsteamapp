@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import moment from 'moment';
 import { HttpClient } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { EditFamilyPage } from '../edit-family/edit-family';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { RosterPage } from '../roster/roster';
 
 /**
  * Generated class for the MemberRosterPage page.
@@ -19,6 +21,9 @@ import { interceptor } from '../../providers/auth-service/interceptor';
   templateUrl: 'member-roster.html',
 })
 export class MemberRosterPage {
+
+  public load:Loading;
+
   public player:any;
 
   public save:boolean=true;
@@ -37,7 +42,8 @@ export class MemberRosterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
-    private camera: Camera, public loading: LoadingController
+    private camera: Camera, public loading: LoadingController,
+    public auth: AuthServiceProvider
   ) {
 
     this.player = this.navParams.get("player");
@@ -244,6 +250,101 @@ export class MemberRosterPage {
     this.navCtrl.push(EditFamilyPage, {
       player: this.player
     });
+  }
+
+  public remove(){
+    let t = this;
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Password',
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Go!',
+          handler: data => {
+            t.checkPassword(data.password);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  public checkPassword(password){
+    let username = this.auth.User().username;
+
+    this.load = this.loading.create({ content: "Deleting..." });
+    this.load.present({ disableApp : true });
+    let t = this;
+    this.http.post('/login', { username, password})
+    .subscribe(function(data:any){
+
+      if( data.hasOwnProperty("message") && data.message == "User not found" ){
+        t.load.dismiss();
+        t.alertCtrl.create({
+          title: "Error",
+          message: "Passwords do not match",
+          buttons: ["Ok"]
+        }).present();
+
+      }else{
+
+        console.log("success");
+        t.deletePlayer();
+
+      }
+    }, function(err){
+      
+      this.load.dismiss();
+
+      t.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
+
+      console.error(err);
+
+    });
+  }
+
+  public async deletePlayer(){
+    let t = this;
+    try{
+      await this.http.delete("/user/"+ this.player.user.id).toPromise();
+      await this.http.delete("/players/"+ this.player.id).toPromise();
+      await Promise.all(this.contacts.map(async function(item){
+        await t.http.delete("/contacts/"+ item.id).toPromise();
+      }));
+
+      if( t.image === true ){
+        await this.http.delete("/players/image/"+ this.player.id).toPromise();
+      }
+      
+    }
+    catch(e){
+      console.error(e);
+      t.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
+    }
+    
+    t.load.dismiss();
+    this.navCtrl.setRoot(RosterPage);
   }
 
 }
