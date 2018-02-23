@@ -1,9 +1,10 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
 import { EventPage } from '../event/event';
+import { NewEventPage } from '../new-event/new-event';
 
 /**
  * Generated class for the EventsSchedulePage page.
@@ -18,7 +19,14 @@ import { EventPage } from '../event/event';
   templateUrl: 'events-schedule.html',
 })
 export class EventsSchedulePage {
-  user:any;
+
+  @ViewChild("addEventButton") addEventButton: ElementRef;
+  public user:any= {
+    role : {
+      name: ""
+    }
+  };
+
   public team:any;
 
   public events:Array<any>=[];
@@ -33,13 +41,18 @@ export class EventsSchedulePage {
 
   async ngOnInit(){
     this.user = await this.auth.User();
+    
+    if( this.user.role.name != "Manager"){
+      this.addEventButton.nativeElement.style.display = "none";
+    }
+    
     let url;
     if( this.user.role.name === "Player"){
       url = "/team/player/"+ this.user.id;
     }else if( this.user.role.name === "Manager" ){
       url = "/team/manager/"+ this.user.id;
-    }else if( this.user.role.name === "Parent" ){
-      url = "/team/parent/"+ this.user.id;
+    }else if( this.user.role.name === "Family" ){
+      url = "/team/family/"+ this.user.id;
     }
     
     var res = await this.http.get(url).toPromise();
@@ -80,6 +93,12 @@ export class EventsSchedulePage {
       event,
       user : this.user
     })
+  }
+
+  public addEvent(){
+    this.navCtrl.push(NewEventPage, {
+      team : this.team
+    });
   }
 
 }

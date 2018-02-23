@@ -6,13 +6,66 @@
 -->
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>NewEvent</ion-title>
+  <ion-navbar color="base">
+    <ion-title>New Event</ion-title>
   </ion-navbar>
-
+  
 </ion-header>
 
 
 <ion-content padding>
+  <div id="map_canvas"></div>
 
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="name" > </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Short Label</ion-label>
+      <ion-input type="text" [(ngModel)]="shortLabel" > </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Repeats</ion-label>
+      <ion-select [(ngModel)]="repeats">
+        <ion-option value="no-repeat">No-Repeat</ion-option>
+        <ion-option value="daily">Daily</ion-option>
+        <ion-option value="weekly">Weekly</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item [hidden]="repeats == weekly" >
+        <ion-label floating>Daily Weekly</ion-label>
+        <ion-select [(ngModel)]="repeats">
+          <ion-option value="no-repeat">Monday</ion-option>
+          <ion-option value="daily">Daily</ion-option>
+          <ion-option value="weekly">Tuesday</ion-option>
+          <ion-option value="weekly">Wednesday</ion-option>
+          <ion-option value="weekly">Friday</ion-option>
+          <ion-option value="weekly">Saturday</ion-option>
+          <ion-option value="weekly">Sunday</ion-option>
+        </ion-select>
+      </ion-item>
+    
+    <ion-item>
+      <ion-label floating>Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Date</ion-label>
+      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Time</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
+    </ion-item>
+
+    
+
+  </ion-list>
 </ion-content>

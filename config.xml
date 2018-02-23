@@ -89,11 +89,13 @@
     <allow-navigation href="http://192.168.8.101:8100" />
     <allow-navigation href="http://192.168.8.108:8100" />
     <plugin name="cordova-plugin-file" spec="^6.0.1" />
-    <engine name="android" spec="7.0.0" />
     <plugin name="cordova-plugin-googlemaps" spec="^2.2.5">
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAdhoIwYypMOYDQRjMV7tGNAaiDuf0QxjQ" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyAsROqFV85U2WN2DeE8xgDmup1eF_2aAhU" />
-        <variable name="PLAY_SERVICES_VERSION" value="11.8.0" />
-        <variable name="ANDROID_SUPPORT_V4_VERSION" value="24.1.0" />
+    </plugin>
+    <allow-navigation href="http://192.168.8.104:8100" />
+    <engine name="android" spec="6.3.0" />
+    <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
+        <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
 </widget>

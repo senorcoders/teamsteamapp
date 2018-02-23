@@ -9,15 +9,8 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { IonicImageLoader } from 'ionic-image-loader';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker
- } from '@ionic-native/google-maps';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
 
 
 import { MyApp } from './app.component';
@@ -95,7 +88,7 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
     AuthServiceProvider,
     interceptor,
     GoogleMaps,
-    GoogleMap,
+    Geolocation
   ]
 })
 export class AppModule {}
