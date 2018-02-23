@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import {
   GoogleMaps,
   GoogleMap,
@@ -11,6 +11,11 @@ import {
   MarkerOptions,
   Marker
  } from '@ionic-native/google-maps';
+ import moment from 'moment';
+import { VALID } from '@angular/forms/src/model';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { HttpClient } from '@angular/common/http';
+import { EventsSchedulePage } from '../events-schedule/events-schedule';
  
 
 /**
@@ -27,13 +32,40 @@ import {
 })
 export class NewEventPage {
 
+  private team:any;
+
   map: GoogleMap;
   load:Loading;
+  markerEvent:Marker;
+  public image:boolean=false;
+  public imageSrc:string="";
+
+  //var for inputs location
+  public locationLink:string;
+  public locationDetail:string;
+
+  //var for inputs event
+  public name:string="";
+  public shortLabel:string;
+  public repeats:string="no-repeat";
+  public repeatsOption:string="monday";
+  public date:string="";
+  public time:string="";
+  public attendeceTracking:boolean=false;
+  public notifyTeam:boolean=false;
+  public optionalInfo:string="";
+  public description:string="";
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
-    public loading: LoadingController
+    public alertCtrl: AlertController, public loading: LoadingController, 
+    private camera: Camera, private auth: AuthServiceProvider,
+    private http: HttpClient
   ) {
+
+    this.team = this.navParams.get("team");
+
     this.load = this.loading.create({
       content: "Loading Map"
     });
@@ -54,7 +86,7 @@ export class NewEventPage {
   }
 
   loadMap(lat, lot) {
-
+    console.log(lat, lot);
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -75,25 +107,194 @@ export class NewEventPage {
         console.log('Map is ready!');
 
         t.load.dismiss();
-        
+
+        this.map.setMyLocationEnabled(true);
+
+        //for when click in map
+        this.map.addEventListener(GoogleMapsEvent.MAP_LONG_CLICK).subscribe(
+            (data) => {
+
+              let options ={ target: data[0],
+              zoom: 18,
+              tilt: 30
+            }
+              this.map.moveCamera(options);
+              this.map.addMarker({
+                title: 'Position of Event',
+                icon: 'blue',
+                animation: 'DROP',
+                position: data[0]
+              })
+              .then(marker => {
+                console.log(this);
+                if( this.markerEvent !== null && this.markerEvent !== undefined ){
+                  this.markerEvent.remove();
+                }
+
+                marker.on(GoogleMapsEvent.MARKER_CLICK)
+                  .subscribe(() => {
+                  });
+                this.markerEvent = marker;
+              });
+            }
+        );
+
         // Now you can use all methods safely.
         this.map.addMarker({
-            title: 'Ionic',
+            title: 'My Position',
             icon: 'blue',
             animation: 'DROP',
             position: {
-              lat: 43.0741904,
-              lng: -89.3809802
+              lat: lat,
+              lng: lot
             }
           })
           .then(marker => {
             marker.on(GoogleMapsEvent.MARKER_CLICK)
               .subscribe(() => {
-                alert('clicked');
               });
           });
 
       });
   }
 
+  //#region for change photo
+  public success(){
+    this.image = true;
+  }
+
+  public changePhoto(){
+    const options: CameraOptions = {
+      quality: 100,
+      sourceType : 0,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    }
+    
+    let fnt = this;
+
+    this.alertCtrl.create({ title : "Source", message : "Select a source",
+    buttons : [{
+      text : "Library",
+      handler : function(){
+        fnt.getPhoto(options);
+      }
+    }, {
+      text : "Camera",
+      handler: function(){
+        options.sourceType  = 1;
+        fnt.getPhoto(options);
+      }
+    }] }).present();
+
+  }
+
+  private getPhoto(options:any){
+    
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      let base64Image = 'data:image/jpeg;base64,' + imageData;
+      this.imageSrc = base64Image;
+
+     }, (err) => {
+      console.error(err);
+     });
+  }
+
+
+  public async save(){
+
+    this.load = this.loading.create({ content: "Saving..." });
+    this.load.present({ disableApp: true });
+
+    if( this.markerEvent === undefined || this.markerEvent === null ){
+      this.alertCtrl.create({ title: "Required", message: "select a position for event in map", buttons: ["Ok"]})
+      .present();
+      return;
+    }
+
+    //create el object fo send to location event
+    let location:any = this.markerEvent.getPosition();
+    location.link = this.locationLink || "";
+    location.detail = this.locationDetail || "";
+
+    console.log(location);
+
+    //Check if the fields required is ok
+    let inputsRequired = ["name", "time"], valid = true;
+    for(let name of inputsRequired){
+      if( this[name] == "" ){
+        this.load.dismiss();
+        this.alertCtrl.create({
+          title: "Required",
+          message: name+ "Is Required",
+          buttons: ["Ok"]
+        }).present();
+        valid = false;
+        break;
+      }
+    }
+    
+    if( valid === false ){
+      return;
+    }
+
+    let event:any = {
+      team: this.team.id,
+      name : this.name,
+      shortLabel : this.shortLabel,
+      attendeceTracking: this.attendeceTracking,
+      notifyTeam: this.notifyTeam,
+      optionalInfo : this.optionalInfo,
+      description: this.description,
+      user: this.auth.User().id
+    };
+
+    if( this.repeats == "weekly" ){
+      event.repeatsOption = this.repeatsOption;
+      event.dateTime = moment().format("MM-DD-YYYY")+ " "+this.date;
+    }else{
+
+      if( this.date == '' ){
+        this.load.dismiss();
+        this.alertCtrl.create({
+          title: "Required",
+          message:"Date Is Required",
+          buttons: ["Ok"]
+        }).present();
+
+        return;
+      }
+
+      event.dateTime = this.date+ " "+ this.date;
+    }
+
+    valid = true;
+    let newEvent:any, newLocation:any;
+    try{
+      newEvent = await this.http.post("/events", event).toPromise();
+      location.team = newEvent.id;
+      newLocation = await this.http.post("/locationevents", location).toPromise();
+    }
+    catch(e){
+      this.load.dismiss();
+      console.error(e);
+      valid = false;
+    }
+    
+    if( valid === false ){
+      this.load.dismiss();
+      this.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
+      return;
+    }
+
+    this.navCtrl.setRoot(EventsSchedulePage);
+
+  }
 }

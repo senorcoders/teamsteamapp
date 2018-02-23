@@ -4,6 +4,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -36,16 +38,34 @@ export class MyApp {
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
-    splashScreen: SplashScreen, 
-    public auth: AuthServiceProvider,
-    public menuCtrl: MenuController,
-    private network: Network, public toast: ToastController) {
+    splashScreen: SplashScreen, public auth: AuthServiceProvider,
+    public menuCtrl: MenuController, public geolocation: Geolocation,
+    private network: Network, public toast: ToastController,
+    private locationAccuracy: LocationAccuracy
+  ) {
+
+      let t = this;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
-    });
+
+        t.locationAccuracy.canRequest().then((canRequest: boolean) => {
+
+          if(canRequest) {
+            // the accuracy option will be ignored by iOS
+            t.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+              () =>{
+                t.getLocationDebug();
+              } ,
+              error => console.log('Error requesting location permissions', error)
+            );
+          }
+
+        });
+        
+      });
 
     this.toas = this.toast.create({
       message: " Internet connection is required",
@@ -73,6 +93,17 @@ export class MyApp {
     }else{
       this.nav.root = LoginPage;
     }
+  }
+
+  private getLocationDebug(){
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      console.log(resp.coords.latitude, resp.coords.longitude);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
   /**

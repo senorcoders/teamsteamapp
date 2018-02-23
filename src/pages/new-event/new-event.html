@@ -14,7 +14,24 @@
 
 
 <ion-content padding>
+
+  <h5 style="text-transform: uppercase;">Press and Hold to select event location</h5>
+
   <div id="map_canvas"></div>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Location Detail</ion-label>
+      <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Location Link</ion-label>
+      <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
+    </ion-item>
+
+  </ion-list>
 
   <ion-list>
 
@@ -37,25 +54,19 @@
       </ion-select>
     </ion-item>
 
-    <ion-item [hidden]="repeats == weekly" >
+    <ion-item [hidden]="repeats != weekly" >
         <ion-label floating>Daily Weekly</ion-label>
-        <ion-select [(ngModel)]="repeats">
-          <ion-option value="no-repeat">Monday</ion-option>
-          <ion-option value="daily">Daily</ion-option>
-          <ion-option value="weekly">Tuesday</ion-option>
-          <ion-option value="weekly">Wednesday</ion-option>
-          <ion-option value="weekly">Friday</ion-option>
-          <ion-option value="weekly">Saturday</ion-option>
-          <ion-option value="weekly">Sunday</ion-option>
+        <ion-select [(ngModel)]="repeatsOption">
+          <ion-option value="monday">Monday</ion-option>
+          <ion-option value="tuesday">Tuesday</ion-option>
+          <ion-option value="wednesday">Wednesday</ion-option>
+          <ion-option value="friday">Friday</ion-option>
+          <ion-option value="saturday">Saturday</ion-option>
+          <ion-option value="Sunday">Sunday</ion-option>
         </ion-select>
       </ion-item>
-    
-    <ion-item>
-      <ion-label floating>Date</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
-    </ion-item>
 
-    <ion-item>
+    <ion-item [hidden]="repeats == weekly">
       <ion-label floating>Date</ion-label>
       <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
     </ion-item>
@@ -65,7 +76,45 @@
       <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
     </ion-item>
 
-    
+    <ion-item>
+        <ion-label>Attendence Traking</ion-label>
+        <ion-toggle [(ngModel)]="attendeceTracking" > </ion-toggle>
+      </ion-item>
+
+    <ion-item>
+      <ion-label>Notify Team</ion-label>
+      <ion-toggle [(ngModel)]="notifyTeam" > </ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Optional Info</ion-label>
+      <ion-textarea [(ngModel)]="optionalInfo" > </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea [(ngModel)]="description" > </ion-textarea>
+    </ion-item>
 
   </ion-list>
+
+  <ion-avatar [hidden]="!image" >
+      <img width="100%" (load)="success()" [src]="imageSrc">
+      <ion-fab top right edge class="button-fab-right">
+          <button ion-fab color="base" (click)="changePhoto()" >
+            <ion-icon name="md-camera"></ion-icon>
+          </button>
+      </ion-fab>
+  </ion-avatar>
+
+  <ion-avatar [hidden]="image" >
+    <img width="100%" src="./assets/imgs/avatar.gif">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhoto()" >
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-avatar>
+
+  <button ion-button block style="margin-top: 30px;" (click)="save()">Save</button>
 </ion-content>

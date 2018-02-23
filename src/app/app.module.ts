@@ -11,6 +11,7 @@ import { Camera } from '@ionic-native/camera';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 import { MyApp } from './app.component';
@@ -88,7 +89,8 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
     AuthServiceProvider,
     interceptor,
     GoogleMaps,
-    Geolocation
+    Geolocation,
+    LocationAccuracy
   ]
 })
 export class AppModule {}
