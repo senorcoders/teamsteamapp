@@ -5,7 +5,7 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 
 @Injectable()
 export class interceptor implements HttpInterceptor {
-  public static url:string = 'http://192.168.8.101:3000'; //'http://138.68.19.227:1337'; //'http://localhost:3000';
+  public static url:string = 'http://192.168.8.106:3000'; //'http://138.68.19.227:1337'; //'http://localhost:3000';
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     req = req.clone({
       url: interceptor.url + req.url

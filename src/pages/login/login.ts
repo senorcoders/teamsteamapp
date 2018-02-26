@@ -46,7 +46,7 @@ export class LoginPage {
   }
   public Login(){
     console.log(this.firstname)
-    if( this.firstname == '' || this.lastname == '' || this.email==''  ){
+    if( this.firstname == '' || this.lastname == '' /*|| this.email==''*/  ){
       this.presentAlert("There's empty fields");
     }else{
       let t = this;

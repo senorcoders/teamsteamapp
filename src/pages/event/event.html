@@ -20,7 +20,7 @@
         <p>{{event.dateTime}}</p>
     </ion-item>
     
-      <img [hidden]="!event.image" [src]="event.image">
+      <img (load)="successImage($event)" [src]="event.imageSrc">
     
       <ion-card-content [hidden]="!event.description" >
         <p>{{event.description}}</p>
@@ -28,10 +28,9 @@
 
       <ion-item class="location-event">
         <h2>Location</h2>
-        <p>Name: {{event.location[0].name}}</p>
-        <p>Address: {{event.location[0].address}}</p>
-        <p>Link: <a [href]="event.link" target="_black"> {{event.location[0].link}} </a></p>
-        <p>Detail: {{event.location[0].detail}}</p>
+        <div id="map_canvas" style="width: 100%; height: 200px; "></div>
+        <p [hidden]="event.location[0].link == ''" >Link: <a [href]="event.link" target="_black"> {{event.location[0].link}} </a></p>
+        <p [hidden]="event.location[0].detail == ''">Detail: {{event.location[0].detail}}</p>
       </ion-item>
     
       <ion-row [hidden]="user.role.name == Manager">

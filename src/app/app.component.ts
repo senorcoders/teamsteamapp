@@ -1,9 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav } from 'ionic-angular';
+import { Platform, Nav, NavController, ToastController, Toast } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Network } from '@ionic-native/network';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -25,6 +27,8 @@ export class MyApp {
     username: "SenorCoders"
   };
 
+  public toas:Toast;
+
   public username="Senorcoders";
   public userimg="./assets/imgs/user.jpg";
   public logo="./assets/imgs/logo-sign.png";
@@ -34,30 +38,50 @@ export class MyApp {
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
-    splashScreen: SplashScreen, 
-    public auth: AuthServiceProvider,
-    public menuCtrl: MenuController,
-    private network: Network) {
+    splashScreen: SplashScreen, public auth: AuthServiceProvider,
+    public menuCtrl: MenuController, public geolocation: Geolocation,
+    private network: Network, public toast: ToastController,
+    private locationAccuracy: LocationAccuracy
+  ) {
+
+      let t = this;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.styleDefault();
       splashScreen.hide();
+
+        t.locationAccuracy.canRequest().then((canRequest: boolean) => {
+
+          if(canRequest) {
+            // the accuracy option will be ignored by iOS
+            t.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+              () =>{
+                t.getLocationDebug();
+              } ,
+              error => console.log('Error requesting location permissions', error)
+            );
+          }
+
+        });
+        
+      });
+
+    this.toas = this.toast.create({
+      message: " Internet connection is required",
+      showCloseButton: true,
+      position: "bottom"
     });
 
-    /*this.disconnectSubscription = this.network.onDisconnect().subscribe(() => {
-      this.nav.push(OfflinePage);
-      this.menuCtrl.swipeEnable(false);
-    });
-
-    
-    this.network.onConnect().subscribe(function(){
-      console.log(this.nav.getViews() );
-      if( this.nav.getViews() ){
-
-      }
-      this.nav.pop();
-    });*/
+    this.network.onConnect().subscribe(data => {
+      this.toas.dismiss();
+      console.log(data);
+    }, error => console.error(error));
+   
+    this.network.onDisconnect().subscribe(data => {
+      console.log(data)
+      this.toas.present();
+    }, error => console.error(error));
 
   }
 
@@ -66,10 +90,20 @@ export class MyApp {
     if( authenticated === true ){
       this.nav.root = EventsSchedulePage;
       this.user = this.auth.User();
-      console.log(this.user);
     }else{
       this.nav.root = LoginPage;
     }
+  }
+
+  private getLocationDebug(){
+
+    this.geolocation.getCurrentPosition().then((resp) => {
+      // resp.coords.latitude
+      // resp.coords.longitude
+      console.log(resp.coords.latitude, resp.coords.longitude);
+     }).catch((error) => {
+       console.log('Error getting location', error);
+     });
   }
 
   /**

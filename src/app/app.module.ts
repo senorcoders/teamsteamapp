@@ -9,6 +9,9 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 import { IonicStorageModule } from '@ionic/storage';
 import { Camera } from '@ionic-native/camera';
 import { IonicImageLoader } from 'ionic-image-loader';
+import { GoogleMaps } from '@ionic-native/google-maps';
+import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 import { MyApp } from './app.component';
@@ -28,6 +31,8 @@ import { ViewPlayerPage } from '../pages/view-player/view-player';
 import { EditFamilyPage } from '../pages/edit-family/edit-family';
 import { CreatePlayerPage } from '../pages/create-player/create-player';
 import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-player-details';
+import { NewEventPage } from '../pages/new-event/new-event';
+import { EditEventPage } from '../pages/edit-event/edit-event';
 
 @NgModule({
   declarations: [
@@ -42,7 +47,9 @@ import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-p
     AddFamilyPage,
     EditFamilyPage,
     CreatePlayerPage,
-    CreatePlayerDetailsPage
+    CreatePlayerDetailsPage,
+    NewEventPage,
+    EditEventPage
   ],
   imports: [
     BrowserModule,
@@ -68,7 +75,9 @@ import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-p
     AddFamilyPage,
     EditFamilyPage,
     CreatePlayerPage,
-    CreatePlayerDetailsPage
+    CreatePlayerDetailsPage,
+    NewEventPage,
+    EditEventPage
   ],
   providers: [
     StatusBar,
@@ -78,7 +87,10 @@ import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-p
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider,
-    interceptor
+    interceptor,
+    GoogleMaps,
+    Geolocation,
+    LocationAccuracy
   ]
 })
 export class AppModule {}

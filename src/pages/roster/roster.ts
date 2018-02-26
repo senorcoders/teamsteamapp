@@ -22,6 +22,8 @@ import { CreatePlayerPage } from '../create-player/create-player';
 export class RosterPage {
   
   public user:any;
+  public isManager:boolean=false;
+
   private team:any;
   public players:Array<any>=[];
 
@@ -50,17 +52,19 @@ export class RosterPage {
     load.present({ disableApp : true });
 
     this.user = await this.auth.User();
+    
     let url;
     if( this.user.role.name === "Player"){
       url = "/team/player/"+ this.user.id;
     }else if( this.user.role.name === "Manager" ){
       url = "/team/manager/"+ this.user.id;
+      this.isManager = true;
     }else if( this.user.role.name === "Parent" ){
       url = "/team/parent/"+ this.user.id;
     }
     
     this.team = await this.http.get(url).toPromise();
-
+    
     var players:any;
     if( this.team.hasOwnProperty('team') ){
       players = await this.http.get("/players/team/"+ this.team.team).toPromise();

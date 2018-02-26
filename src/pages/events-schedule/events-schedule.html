@@ -12,20 +12,29 @@
     </button>
 
     <ion-title>Events Schedule</ion-title>
+
+    <ion-buttons end #addEventButton >
+      <button ion-button (click)="addEvent()" >
+        <ion-icon name="md-add-circle"></ion-icon>
+      </button>
+    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item *ngFor="let event of events">
-        <ion-card-header style="font-weight: bold; text-transform: uppercase;" (click)="goEvent(event)" >
-            {{event.name}}
-          </ion-card-header>
-          <ion-card-content>
-            {{event.dateTime}}
-          </ion-card-content>
-    </ion-item>
-  </ion-list>
+  <ion-card *ngFor="let e of events">
+    <img [src]="e.imageSrc" (load)="successImage($event)" [hidden]="true" >
+    <ion-card-content>
+      <ion-card-title style="font-weight: bold; text-transform: uppercase;" (click)="goEvent(e)" >
+        {{e.name}}
+      </ion-card-title>
+      <p>
+        {{e.description}}
+      </p>
+      <p [hidden]="!e.showDateTime" style="text-align: right;">{{e.parsedDateTime}}</p>
+      <p [hidden]="e.showDateTime" style="text-align: right;">Daily</p>
+    </ion-card-content>
+  </ion-card>
 </ion-content>
