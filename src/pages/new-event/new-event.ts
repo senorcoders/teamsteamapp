@@ -56,6 +56,10 @@ export class NewEventPage {
   public optionalInfo:string="";
   public description:string="";
 
+  //for max date and min date asing in date time picker
+  public minDate:string;
+  public maxDate:string;
+
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
@@ -65,7 +69,6 @@ export class NewEventPage {
   ) {
 
     this.team = this.navParams.get("team");
-
     this.load = this.loading.create({
       content: "Loading Map"
     });
@@ -82,7 +85,9 @@ export class NewEventPage {
        console.log('Error getting location', error);
      });
     
-
+     this.maxDate = moment().add(2, "year",).format("YYYY");
+     this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
+     console.log(this.minDate, this.maxDate);
   }
 
   loadMap(lat, lot) {
@@ -210,6 +215,7 @@ export class NewEventPage {
     this.load.present({ disableApp: true });
 
     if( this.markerEvent === undefined || this.markerEvent === null ){
+      this.load.dismiss();
       this.alertCtrl.create({ title: "Required", message: "select a position for event in map", buttons: ["Ok"]})
       .present();
       return;
@@ -229,7 +235,7 @@ export class NewEventPage {
         this.load.dismiss();
         this.alertCtrl.create({
           title: "Required",
-          message: name+ "Is Required",
+          message: name.toUpperCase()+ " Is Required",
           buttons: ["Ok"]
         }).present();
         valid = false;
@@ -242,20 +248,21 @@ export class NewEventPage {
     }
 
     let event:any = {
-      team: this.team.id,
+      team: this.team.team,
       name : this.name,
       shortLabel : this.shortLabel,
       attendeceTracking: this.attendeceTracking,
       notifyTeam: this.notifyTeam,
       optionalInfo : this.optionalInfo,
       description: this.description,
-      user: this.auth.User().id
+      user: this.auth.User().id,
+      repeats: this.repeats
     };
 
     if( this.repeats == "weekly" ){
       event.repeatsOption = this.repeatsOption;
-      event.dateTime = moment().format("MM-DD-YYYY")+ " "+this.date;
-    }else{
+      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.date;
+    }else if( this.repeats == 'no-repeat' ){
 
       if( this.date == '' ){
         this.load.dismiss();
@@ -268,18 +275,25 @@ export class NewEventPage {
         return;
       }
 
-      event.dateTime = this.date+ " "+ this.date;
+      event.dateTime = this.date+ " "+ this.time;
+    }else{
+      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
     }
 
     valid = true;
-    let newEvent:any, newLocation:any;
+    let newEvent:any;
     try{
-      newEvent = await this.http.post("/events", event).toPromise();
-      location.team = newEvent.id;
-      newLocation = await this.http.post("/locationevents", location).toPromise();
+      newEvent = await this.http.post("/event", {
+        event,
+        location
+      }).toPromise();
+      console.log(newEvent);
+      if( this.imageSrc !== '' ){
+        await this.http.post("/event/image", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
+      }
+
     }
     catch(e){
-      this.load.dismiss();
       console.error(e);
       valid = false;
     }
@@ -294,7 +308,10 @@ export class NewEventPage {
       return;
     }
 
+    this.load.dismiss();
+
     this.navCtrl.setRoot(EventsSchedulePage);
 
   }
+  
 }

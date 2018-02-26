@@ -48,13 +48,13 @@
     <ion-item>
       <ion-label floating>Repeats</ion-label>
       <ion-select [(ngModel)]="repeats">
-        <ion-option value="no-repeat">No-Repeat</ion-option>
+        <ion-option value="no-repeat">Not Repeat</ion-option>
         <ion-option value="daily">Daily</ion-option>
         <ion-option value="weekly">Weekly</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item [hidden]="repeats != weekly" >
+    <ion-item [hidden]="repeats != 'weekly'" >
         <ion-label floating>Daily Weekly</ion-label>
         <ion-select [(ngModel)]="repeatsOption">
           <ion-option value="monday">Monday</ion-option>
@@ -66,13 +66,13 @@
         </ion-select>
       </ion-item>
 
-    <ion-item [hidden]="repeats == weekly">
+    <ion-item [hidden]="repeats == 'weekly' || repeats == 'daily'">
       <ion-label floating>Date</ion-label>
-      <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
+      <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Time</ion-label>
+      <ion-label floating>Time hour-minute</ion-label>
       <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
     </ion-item>
 
@@ -108,7 +108,7 @@
   </ion-avatar>
 
   <ion-avatar [hidden]="image" >
-    <img width="100%" src="./assets/imgs/avatar.gif">
+    <img width="100%" src="./assets/imgs/event.png">
     <ion-fab top right edge class="button-fab-right">
       <button ion-fab color="base" (click)="changePhoto()" >
         <ion-icon name="md-camera"></ion-icon>
