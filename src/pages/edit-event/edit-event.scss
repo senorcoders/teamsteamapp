@@ -1,3 +1,10 @@
 page-edit-event {
-
+    #map_canvas2{
+        width: 100%;
+        height: 50%;
+    }
+    .button-fab-right{
+        position: relative;
+        left: calc(100% - 60px) !important;
+    }
 }

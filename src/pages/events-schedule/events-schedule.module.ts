@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { EventsSchedulePage } from './events-schedule';
+import { IonicImageLoader } from 'ionic-image-loader';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { EventsSchedulePage } from './events-schedule';
   ],
   imports: [
     IonicPageModule.forChild(EventsSchedulePage),
+    IonicImageLoader
   ],
 })
 export class EventsSchedulePageModule {}

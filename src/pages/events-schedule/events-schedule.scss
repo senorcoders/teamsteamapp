@@ -1,8 +1,12 @@
 page-events-schedule {
-    ion-card img {
+    ion-card img-loader {
         display: block;
         width: 100%;
         height: 200px;
-        object-fit: cover;
+        //object-fit: cover;
+      }
+      ion-card img-loader img{
+          height: 100%;
+          object-fit: cover;
       }
 }

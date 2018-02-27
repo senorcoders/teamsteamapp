@@ -7,12 +7,104 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>EditEvent</ion-title>
+    <ion-title>Edit Event</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <h5 style="text-transform: uppercase;">Press and Hold to select event location</h5>
 
+  <div id="map_canvas2"></div>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Location Detail</ion-label>
+      <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Location Link</ion-label>
+      <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>Name</ion-label>
+      <ion-input type="text" [(ngModel)]="name" > </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Short Label</ion-label>
+      <ion-input type="text" [(ngModel)]="shortLabel" > </ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Repeats</ion-label>
+      <ion-select [(ngModel)]="repeats">
+        <ion-option value="no-repeat">Not Repeat</ion-option>
+        <ion-option value="daily">Daily</ion-option>
+        <ion-option value="weekly">Weekly</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item [hidden]="repeats != 'weekly'" >
+        <ion-label floating>Daily Weekly</ion-label>
+        <ion-select [(ngModel)]="repeatsOption">
+          <ion-option value="monday">Monday</ion-option>
+          <ion-option value="tuesday">Tuesday</ion-option>
+          <ion-option value="wednesday">Wednesday</ion-option>
+          <ion-option value="friday">Friday</ion-option>
+          <ion-option value="saturday">Saturday</ion-option>
+          <ion-option value="Sunday">Sunday</ion-option>
+        </ion-select>
+      </ion-item>
+
+    <ion-item [hidden]="repeats == 'weekly' || repeats == 'daily'">
+      <ion-label floating>Date</ion-label>
+      <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Time hour-minute</ion-label>
+      <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>Attendence Traking</ion-label>
+        <ion-toggle [(ngModel)]="attendeceTracking" > </ion-toggle>
+      </ion-item>
+
+    <ion-item>
+      <ion-label>Notify Team</ion-label>
+      <ion-toggle [(ngModel)]="notifyTeam" > </ion-toggle>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Optional Info</ion-label>
+      <ion-textarea [(ngModel)]="optionalInfo" > </ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Description</ion-label>
+      <ion-textarea [(ngModel)]="description" > </ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-avatar>
+      <img id="imgT" useImg="true" width="100%" [src]="imageSrc">
+      <ion-fab top right edge class="button-fab-right">
+          <button ion-fab color="base" (click)="changePhoto()" >
+            <ion-icon name="md-camera"></ion-icon>
+          </button>
+      </ion-fab>
+  </ion-avatar>
+
+  <button ion-button block style="margin-top: 30px;" (click)="update()">Update</button>
 </ion-content>

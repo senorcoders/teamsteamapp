@@ -247,6 +247,16 @@ export class NewEventPage {
       return;
     }
 
+    if( this.imageSrc == '' ){
+      this.load.dismiss();
+        this.alertCtrl.create({
+          title: "Required",
+          message: "Image Is Required",
+          buttons: ["Ok"]
+        }).present();
+        return;
+    }
+
     let event:any = {
       team: this.team.team,
       name : this.name,
@@ -261,7 +271,7 @@ export class NewEventPage {
 
     if( this.repeats == "weekly" ){
       event.repeatsOption = this.repeatsOption;
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.date;
+      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
     }else if( this.repeats == 'no-repeat' ){
 
       if( this.date == '' ){
@@ -288,9 +298,9 @@ export class NewEventPage {
         location
       }).toPromise();
       console.log(newEvent);
-      if( this.imageSrc !== '' ){
-        await this.http.post("/event/image", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
-      }
+      
+      await this.http.post("/event/image", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
+      
 
     }
     catch(e){

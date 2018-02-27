@@ -20,7 +20,7 @@
         <p>{{event.dateTime}}</p>
     </ion-item>
     
-      <img (load)="successImage($event)" [src]="event.imageSrc">
+      <img-loader useImg="true" [src]="'/images/events/'+ event.id+ '.jpg'"></img-loader>
     
       <ion-card-content [hidden]="!event.description" >
         <p>{{event.description}}</p>
@@ -35,7 +35,7 @@
     
       <ion-row [hidden]="user.role.name == Manager">
         <ion-col style="text-align: right;">
-          <button ion-button clear small>
+          <button ion-button clear small (click)="editEvent()" >
             <ion-icon name="md-create"></ion-icon>
           </button>
         </ion-col>

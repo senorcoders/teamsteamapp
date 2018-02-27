@@ -1,11 +1,18 @@
 page-event {
     .location-event{
-        p{
-
-        }
         h2{
             border-bottom: 1px outset #f3f3f3;
             margin-bottom: 10px;
         }
     }
+
+    img-loader{
+        height: 200px;
+        img{
+            object-fit: cover;
+            height: 100%;
+        }
+
+    }
+    
 }

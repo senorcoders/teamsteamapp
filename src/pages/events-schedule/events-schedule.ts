@@ -6,6 +6,7 @@ import moment from 'moment';
 import { EventPage } from '../event/event';
 import { NewEventPage } from '../new-event/new-event';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { ImageLoaderConfig, ImageLoader } from 'ionic-image-loader';
 
 /**
  * Generated class for the EventsSchedulePage page.
@@ -36,8 +37,17 @@ export class EventsSchedulePage {
     public navParams: NavParams,
     public auth: AuthServiceProvider,
     public http: HttpClient,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController, private imageLoaderConfig: ImageLoaderConfig,
+    private imageLoader: ImageLoader
   ) {
+
+    //this.imageLoader.clearCache();
+
+    // disable spinners by default, you can add [spinner]="true" to a specific component instance later on to override this
+    this.imageLoaderConfig.enableSpinner(true);
+    
+    // set the maximum concurrent connections to 10
+    this.imageLoaderConfig.setConcurrency(10);
   }
 
   async ngOnInit(){
@@ -165,7 +175,8 @@ export class EventsSchedulePage {
   }
 
   public successImage(e){
-    e.path[0].removeAttribute("hidden");
+    console.log(e);
+    e.element.removeAttribute("hidden");
   }
 
 }
