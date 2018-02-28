@@ -18,6 +18,7 @@ import { HttpClient } from '@angular/common/http';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
 import { ImageLoader } from 'ionic-image-loader';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * Generated class for the EditEventPage page.
@@ -96,9 +97,13 @@ export class EditEventPage {
       content: "Loading Map"
     });
 
-    //this.load.present({ disableApp : true });
+    this.load.present({ disableApp : true });
 
-    this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
+    if( HelpersProvider.Platform() ){
+      this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
+    }else{
+      this.loadMap(HelpersProvider.lat, HelpersProvider.lng);
+    }
   
      this.maxDate = moment().add(2, "year",).format("YYYY");
      this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");

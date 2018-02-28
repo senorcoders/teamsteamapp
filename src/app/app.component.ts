@@ -6,6 +6,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { Network } from '@ionic-native/network';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
@@ -41,7 +42,7 @@ export class MyApp {
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
-    private locationAccuracy: LocationAccuracy
+    private locationAccuracy: LocationAccuracy, private push: Push
   ) {
 
       let t = this;
@@ -51,6 +52,7 @@ export class MyApp {
       statusBar.styleDefault();
       splashScreen.hide();
 
+      if( platform.is("android") || platform.is("ios") ){
         t.locationAccuracy.canRequest().then((canRequest: boolean) => {
 
           if(canRequest) {
@@ -64,6 +66,21 @@ export class MyApp {
           }
 
         });
+
+        //#region for notifications push request permiss
+        t.push.hasPermission()
+        .then((res: any) => {
+
+          if (res.isEnabled) {
+            console.log('We have permission to send push notifications');
+            t.notifcations();
+          } else {
+            console.log('We do not have permission to send push notifications');
+          }
+
+        });
+        //#endregion
+      } 
         
       });
 
@@ -121,6 +138,53 @@ export class MyApp {
     this.nav.setRoot(page);
     this.menuCtrl.close();
   }
+
+
+  //#region for push notifications configuration
+  private notifcations(){
+
+    // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
+    this.push.createChannel({
+      id: "testchannel1",
+      description: "My first test channel",
+      // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
+      importance: 3
+    }).then(() => console.log('Channel created'));
+    
+    // Delete a channel (Android O and above)
+    //this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted'));
+    
+    // Return a list of currently configured channels
+    this.push.listChannels().then((channels) => console.log('List of channels', channels))
+    
+    // to initialize push notifications
+    
+    const options: PushOptions = {
+        android: {
+          senderID: "414026305021"
+        },
+        ios: {
+            alert: 'true',
+            badge: true,
+            sound: 'false'
+        },
+        windows: {},
+        browser: {
+            pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
+        }
+    };
+    
+    const pushObject: PushObject = this.push.init(options);
+    
+    
+    pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+    
+    pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+    
+    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+  }
+
+  //#endregion
 
 }
 

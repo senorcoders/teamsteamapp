@@ -13,6 +13,7 @@ import {
   Marker
  } from '@ionic-native/google-maps';
 import { EditEventPage } from '../edit-event/edit-event';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * Generated class for the EventPage page.
@@ -50,7 +51,7 @@ export class EventPage {
     //this.init();
   }
 
-  private init(){
+  ngOnInit(){
     this.event = this.navParams.get("event");
     this.user = this.navParams.data.user;
     console.log(this.event);
@@ -71,7 +72,11 @@ export class EventPage {
       });
       
       this.load.present({ disableApp : true });
-      this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
+      if( HelpersProvider.Platform() ){
+        this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
+      }else{
+        this.loadMap(HelpersProvider.lat, HelpersProvider.lng);
+      }
   }
 
   loadMap(lat, lot) {
@@ -121,10 +126,6 @@ export class EventPage {
       event: this.event/*,
       updateEvent: this.updateEvent*/
     });
-  }
-
-  ionWillEnter(){
-    this.init();
   }
 
 }

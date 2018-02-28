@@ -1,6 +1,6 @@
 {
   "name": "teamsnap",
-  "app_id": "",
+  "app_id": "c54635ca",
   "type": "ionic-angular",
   "integrations": {
     "cordova": {}

@@ -33,6 +33,16 @@ import { CreatePlayerPage } from '../pages/create-player/create-player';
 import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-player-details';
 import { NewEventPage } from '../pages/new-event/new-event';
 import { EditEventPage } from '../pages/edit-event/edit-event';
+import { HelpersProvider } from '../providers/helpers/helpers';
+
+import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { Push } from '@ionic-native/push';
+
+const cloudSettings: CloudSettings = {
+  'core': {
+    'app_id': 'c54635ca'
+  }
+};
 
 @NgModule({
   declarations: [
@@ -59,6 +69,7 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
          driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     IonicImageLoader.forRoot(),
+    CloudModule.forRoot(cloudSettings),
     HttpModule,
     HttpClientModule
   ],
@@ -90,7 +101,9 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
     interceptor,
     GoogleMaps,
     Geolocation,
-    LocationAccuracy
+    LocationAccuracy,
+    HelpersProvider,
+    Push
   ]
 })
 export class AppModule {}
