@@ -24,11 +24,11 @@
 
 
 <ion-content padding>
-  <ion-card *ngFor="let e of events">
+  <ion-card *ngFor="let e of events" (click)="goEvent(e)">
     <img [src]="e.imageSrc" [hidden]="false">
     <!--img-loader useImg="true" [src]="e.imageSrc" (load)="successImage($event)" ></img-loader-->
     <ion-card-content>
-      <ion-card-title style="font-weight: bold; text-transform: uppercase;" (click)="goEvent(e)" >
+      <ion-card-title style="font-weight: bold; text-transform: uppercase;" >
         {{e.name}}
       </ion-card-title>
       <p>

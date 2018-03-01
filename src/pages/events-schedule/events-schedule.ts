@@ -40,7 +40,7 @@ export class EventsSchedulePage {
     public alertCtrl: AlertController, private imageLoaderConfig: ImageLoaderConfig,
     private imageLoader: ImageLoader
   ) {
-
+    
     //this.imageLoader.clearCache();
 
     // disable spinners by default, you can add [spinner]="true" to a specific component instance later on to override this
@@ -175,7 +175,6 @@ export class EventsSchedulePage {
   }
 
   public successImage(e){
-    console.log(e);
     e.element.removeAttribute("hidden");
   }
 
