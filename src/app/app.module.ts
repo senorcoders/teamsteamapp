@@ -35,14 +35,7 @@ import { NewEventPage } from '../pages/new-event/new-event';
 import { EditEventPage } from '../pages/edit-event/edit-event';
 import { HelpersProvider } from '../providers/helpers/helpers';
 
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
 import { Push } from '@ionic-native/push';
-
-const cloudSettings: CloudSettings = {
-  'core': {
-    'app_id': 'c54635ca'
-  }
-};
 
 @NgModule({
   declarations: [
@@ -69,7 +62,6 @@ const cloudSettings: CloudSettings = {
          driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     IonicImageLoader.forRoot(),
-    CloudModule.forRoot(cloudSettings),
     HttpModule,
     HttpClientModule
   ],

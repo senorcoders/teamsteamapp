@@ -14,6 +14,9 @@ import {
  } from '@ionic-native/google-maps';
 import { EditEventPage } from '../edit-event/edit-event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { HttpClient } from '@angular/common/http';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { EventsSchedulePage } from '../events-schedule/events-schedule';
 
 /**
  * Generated class for the EventPage page.
@@ -46,7 +49,8 @@ export class EventPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public loading: LoadingController,
-    private imageLoaderConfig: ImageLoaderConfig
+    private imageLoaderConfig: ImageLoaderConfig, public alertCtrl: AlertController,
+    private http: HttpClient, public auth: AuthServiceProvider
   ) {
     //this.init();
   }
@@ -121,7 +125,100 @@ export class EventPage {
       });
   }
 
-  public editEvent(){
+  public remove(){
+    let t = this;
+    let alert = this.alertCtrl.create({
+      title: 'Confirm Password',
+      inputs: [
+        {
+          name: 'password',
+          placeholder: 'Password',
+          type: 'password'
+        }
+      ],
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'Go!',
+          handler: data => {
+            t.checkPassword(data.password);
+          }
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  public checkPassword(password){
+    let username = this.auth.User().username;
+
+    this.load = this.loading.create({ content: "Deleting..." });
+    this.load.present({ disableApp : true });
+    let t = this;
+    this.http.post('/login', { username, password})
+    .subscribe(function(data:any){
+
+      if( data.hasOwnProperty("message") && data.message == "User not found" ){
+        t.load.dismiss();
+        t.alertCtrl.create({
+          title: "Error",
+          message: "Passwords do not match",
+          buttons: ["Ok"]
+        }).present();
+
+      }else{
+
+        console.log("success");
+        t.deleteEvent();
+
+      }
+    }, function(err){
+      
+      this.load.dismiss();
+
+      t.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
+
+      console.error(err);
+
+    });
+  }
+
+  private async deleteEvent(){
+    let t = this, valid:boolean=true;
+    try{
+      await t.http.delete("/event/"+ t.event.id).toPromise();
+      await t.http.delete("/locationevent/"+ t.event.location[0].id).toPromise();
+      await t.http.delete("/event/image/"+ t.event.id).toPromise();
+    }
+    catch(e){
+      console.error(e);
+      valid = false;
+      t.load.dismissAll();
+      t.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
+    }
+
+    if( valid === false )
+      return;
+    
+    t.load.dismiss();
+    this.navCtrl.setRoot(EventsSchedulePage);
+  }
+
+  private async editEvent(){
     this.navCtrl.push(EditEventPage, {
       event: this.event/*,
       updateEvent: this.updateEvent*/

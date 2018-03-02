@@ -354,28 +354,20 @@ export class EditEventPage {
     console.log(parsedEvent);
 
     let t = this;
-    (<any>window).cookies.clear(function() {
-        console.log('Cookies cleared!');
-        t.imageLoader.clearCache();
+    
+    //for await three seconds that clean cache
+    new Promise(function(resolve, reject){
+      setTimeout(resolve(), 3000);
+    }).then(function(){
 
-      //for await three seconds that clean cache
-      new Promise(function(resolve, reject){
-        setTimeout(resolve(), 3000);
-      }).then(function(){
-
-        t.navCtrl.pop();
-        /*t.navCtrl.setRoot(EventsSchedulePage).then(function(){
-          /*t.navCtrl.push(EventPage, {
+      t.navCtrl.pop();
+        t.navCtrl.setRoot(EventsSchedulePage).then(function(){
+          t.navCtrl.push(EventPage, {
             event : parsedEvent,
             user : t.auth.User()
           })
-        });*/
-
-      })
-
-      
-
-    });
+        });
+    })
     
     
 

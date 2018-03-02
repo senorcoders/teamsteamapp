@@ -34,9 +34,14 @@
       </ion-item>
     
       <ion-row [hidden]="user.role.name == Manager">
-        <ion-col style="text-align: right;">
+        <ion-col style="text-align: left;">
           <button ion-button clear small (click)="editEvent()" >
             <ion-icon name="md-create"></ion-icon>
+          </button>
+        </ion-col>
+        <ion-col style="text-align: right;">
+          <button ion-button clear small (click)="remove()" >
+            <ion-icon name="md-close-circle"></ion-icon>
           </button>
         </ion-col>
       </ion-row>
