@@ -15,6 +15,10 @@ import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { OfflinePage } from '../pages/offline/offline';
 import { RosterPage } from '../pages/roster/roster';
+import { HttpClient } from '@angular/common/http';
+
+import * as moment from 'moment';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -29,6 +33,7 @@ export class MyApp {
   };
 
   public toas:Toast;
+  public team:any;
 
   public username="Senorcoders";
   public userimg="./assets/imgs/user.jpg";
@@ -42,7 +47,8 @@ export class MyApp {
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
-    private locationAccuracy: LocationAccuracy, private push: Push
+    private locationAccuracy: LocationAccuracy, private push: Push,
+    private http: HttpClient
   ) {
 
       let t = this;
@@ -66,20 +72,6 @@ export class MyApp {
           }
 
         });
-
-        //#region for notifications push request permiss
-        t.push.hasPermission()
-        .then((res: any) => {
-
-          if (res.isEnabled) {
-            console.log('We have permission to send push notifications');
-            t.notifcations();
-          } else {
-            console.log('We do not have permission to send push notifications');
-          }
-
-        });
-        //#endregion
       } 
         
       });
@@ -110,6 +102,47 @@ export class MyApp {
     }else{
       this.nav.root = LoginPage;
     }
+
+    try{
+      this.user = await this.auth.User();
+      
+      let url;
+      if( this.user.role.name === "Player"){
+        url = "/team/player/"+ this.user.id;
+      }else if( this.user.role.name === "Manager" ){
+        url = "/team/manager/"+ this.user.id;
+      }else if( this.user.role.name === "Family" ){
+        url = "/team/family/"+ this.user.id;
+      }
+      
+      var res = await this.http.get(url).toPromise();
+
+      this.team = res;
+
+      let events:any;
+
+      if( this.team.hasOwnProperty('team') ){
+        this.team = this.team.team;
+      }else if( Object.prototype.toString.call(this.team) === '[object Array]'){
+        this.team = this.team[0].team;
+      }
+    }catch(e){
+      console.error(e);
+    }
+
+    //#region for notifications push request permiss
+    this.push.hasPermission()
+    .then((res: any) => {
+
+      if (res.isEnabled) {
+        console.log('We have permission to send push notifications');
+        this.notifcations();
+      } else {
+        console.log('We do not have permission to send push notifications');
+      }
+
+    });
+    //#endregion
   }
 
   private getLocationDebug(){
@@ -141,15 +174,15 @@ export class MyApp {
 
 
   //#region for push notifications configuration
-  private notifcations(){
+  public notifcations(){
 
     // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
-    this.push.createChannel({
+    /*this.push.createChannel({
       id: "testchannel1",
       description: "My first test channel",
       // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
       importance: 3
-    }).then(() => console.log('Channel created'));
+    }).then(() => console.log('Channel created'));*/
     
     // Delete a channel (Android O and above)
     //this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted'));
@@ -158,10 +191,12 @@ export class MyApp {
     this.push.listChannels().then((channels) => console.log('List of channels', channels))
     
     // to initialize push notifications
-    
+    let team = this.team;
+
     const options: PushOptions = {
         android: {
-          senderID: "414026305021"
+          senderID: "414026305021",
+          topics: [team]
         },
         ios: {
             alert: 'true',

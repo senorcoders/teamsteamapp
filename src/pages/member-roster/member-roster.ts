@@ -189,7 +189,7 @@ export class MemberRosterPage {
     load.present({ disableApp : true });
 
     try{
-      await this.http.post("/players/image", {
+      await this.http.post("/images/players", {
         id : this.player.id,
         image : base64Image
       }).toPromise();
@@ -330,7 +330,7 @@ export class MemberRosterPage {
       }));
 
       if( t.image === true ){
-        await this.http.delete("/players/image/"+ this.player.id).toPromise();
+        await this.http.delete("/images/players/"+ this.player.id).toPromise();
       }
       
     }

@@ -198,7 +198,7 @@ export class EventPage {
     try{
       await t.http.delete("/event/"+ t.event.id).toPromise();
       await t.http.delete("/locationevent/"+ t.event.location[0].id).toPromise();
-      await t.http.delete("/event/image/"+ t.event.id).toPromise();
+      await t.http.delete("/images/events/"+ t.event.id).toPromise();
     }
     catch(e){
       console.error(e);

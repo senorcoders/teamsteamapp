@@ -69,6 +69,7 @@ export class NewEventPage {
   ) {
 
     this.team = this.navParams.get("team");
+    console.log(this.team);
     this.load = this.loading.create({
       content: "Loading Map"
     });
@@ -131,7 +132,6 @@ export class NewEventPage {
                 position: data[0]
               })
               .then(marker => {
-                console.log(this);
                 if( this.markerEvent !== null && this.markerEvent !== undefined ){
                   this.markerEvent.remove();
                 }
@@ -299,7 +299,7 @@ export class NewEventPage {
       }).toPromise();
       console.log(newEvent);
       
-      await this.http.post("/event/image", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
+      await this.http.post("/images/events", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
       
 
     }

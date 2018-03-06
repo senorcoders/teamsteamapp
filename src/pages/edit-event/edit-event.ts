@@ -329,7 +329,7 @@ export class EditEventPage {
       console.log(updateEvent, updateLocation);
       
       if( this.image === true )
-        await this.http.post("/event/image", { id : this.event.id, image : this.imageSrc }).toPromise();
+        await this.http.post("/images/events", { id : this.event.id, image : this.imageSrc }).toPromise();
 
     }
     catch(e){

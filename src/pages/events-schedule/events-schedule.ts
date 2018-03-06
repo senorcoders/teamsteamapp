@@ -45,6 +45,8 @@ export class EventsSchedulePage {
 
     // disable spinners by default, you can add [spinner]="true" to a specific component instance later on to override this
     this.imageLoaderConfig.enableSpinner(true);
+
+    //this.imageLoaderConfig.enableDebugMode();
     
     // set the maximum concurrent connections to 10
     this.imageLoaderConfig.setConcurrency(10);
@@ -92,8 +94,9 @@ export class EventsSchedulePage {
       
       it.dateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("MM/DD/YYYY hh:mm");
       it.loadImage = false;
-      it.imageSrc = interceptor.url+ "/images/events/"+ it.id+ ".jpg";
-      
+      let ramdon = new Date().getTime();
+      it.imageSrc = interceptor.url+ '/images/'+ ramdon+ '/events/'+ it.id;
+      console.log(it.imageSrc);
       return it;
     }));
 

@@ -15,6 +15,8 @@ Cordova version 6.5.0
 $ git clone https://github.com/senorcoders/teamsteamapp
 $ cd FLR
 $ npm install
+Modify plugin image loader in provider/image-loader.ts line 254
+change method get for post
 ```
 
 ## Running on Android Device

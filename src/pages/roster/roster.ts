@@ -42,17 +42,13 @@ export class RosterPage {
   ) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad RosterPage');
-  }
-
   async ngOnInit(){
 
     let load = this.loading.create({ content: "Loading Roster..."});
     load.present({ disableApp : true });
 
     this.user = await this.auth.User();
-    
+    try{
     let url;
     if( this.user.role.name === "Player"){
       url = "/team/player/"+ this.user.id;
@@ -80,18 +76,18 @@ export class RosterPage {
     this.players = await Promise.all(this.players.map(async function(item){
       
         item.loadImage = false;
-        
-        let image:any = await t.http.get("/players/image/"+ item.id).toPromise();
-        if(image.hasOwnProperty("message")){
-          item.image = "/not-found";
-        }else{
-          item.image = image.data;
-        }
+        let ramdon = new Date().getTime();
+        item.image = interceptor.url+ "/images/"+ ramdon+ "/players/"+ item.id;
 
-        console.log(item);
         return item;
       }));
 
+    
+    }
+    catch(e){
+      console.error(e);
+    }
+    
     load.dismiss();
   }
 

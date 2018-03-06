@@ -41,7 +41,6 @@ export class CreatePlayerDetailsPage {
   public menuCtrl: MenuController, public auth: AuthServiceProvider
   ) {
     this.user = this.navParams.get("user");
-
   }
 
   async ngOnInit(){
@@ -153,7 +152,7 @@ export class CreatePlayerDetailsPage {
       player = await this.http.post("/players", player).toPromise();
 
       if( this.user.hasOwnProperty('image') && this.user.image != '' ){
-        await this.http.post("/players/image", {
+        await this.http.post("/images/players", {
           id : player.id,
           image : this.user.image
         }).toPromise();

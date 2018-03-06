@@ -20,7 +20,7 @@
         <p>{{event.dateTime}}</p>
     </ion-item>
     
-      <img-loader useImg="true" [src]="'/images/events/'+ event.id+ '.jpg'"></img-loader>
+      <img [src]="event.imageSrc" />
     
       <ion-card-content [hidden]="!event.description" >
         <p>{{event.description}}</p>
