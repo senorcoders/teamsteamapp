@@ -105,5 +105,5 @@
         <variable name="SENDER_ID" value="1:414026305021:android:764d2cb7da3280eb" />
     </plugin>
     <allow-navigation href="http://192.168.8.102:8100" />
-    <engine name="android" spec="~7.1.0" />
+    <engine name="android" spec="7.1.0" />
 </widget>

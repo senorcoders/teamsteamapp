@@ -7,6 +7,7 @@ import { EventPage } from '../event/event';
 import { NewEventPage } from '../new-event/new-event';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { ImageLoaderConfig, ImageLoader } from 'ionic-image-loader';
+import { MyApp } from '../../app/app.component';
 
 /**
  * Generated class for the EventsSchedulePage page.
@@ -40,16 +41,7 @@ export class EventsSchedulePage {
     public alertCtrl: AlertController, private imageLoaderConfig: ImageLoaderConfig,
     private imageLoader: ImageLoader
   ) {
-    
-    //this.imageLoader.clearCache();
-
-    // disable spinners by default, you can add [spinner]="true" to a specific component instance later on to override this
-    this.imageLoaderConfig.enableSpinner(true);
-
-    //this.imageLoaderConfig.enableDebugMode();
-    
-    // set the maximum concurrent connections to 10
-    this.imageLoaderConfig.setConcurrency(10);
+    MyApp.initNotifcations();
   }
 
   async ngOnInit(){

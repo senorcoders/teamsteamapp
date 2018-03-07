@@ -36,6 +36,10 @@ import { EditEventPage } from '../pages/edit-event/edit-event';
 import { HelpersProvider } from '../providers/helpers/helpers';
 
 import { Push } from '@ionic-native/push';
+import { ChatPage } from '../pages/chat/chat';
+import { EmojiProvider } from '../providers/emoji/emoji';
+import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
+import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 
 @NgModule({
   declarations: [
@@ -52,7 +56,10 @@ import { Push } from '@ionic-native/push';
     CreatePlayerPage,
     CreatePlayerDetailsPage,
     NewEventPage,
-    EditEventPage
+    EditEventPage,
+    ChatPage,
+    RelativeTimePipe,
+    EmojiPickerComponent
   ],
   imports: [
     BrowserModule,
@@ -80,7 +87,8 @@ import { Push } from '@ionic-native/push';
     CreatePlayerPage,
     CreatePlayerDetailsPage,
     NewEventPage,
-    EditEventPage
+    EditEventPage,
+    ChatPage
   ],
   providers: [
     StatusBar,
@@ -95,7 +103,8 @@ import { Push } from '@ionic-native/push';
     Geolocation,
     LocationAccuracy,
     HelpersProvider,
-    Push
+    Push,
+    EmojiProvider
   ]
 })
 export class AppModule {}

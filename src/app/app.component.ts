@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, Nav, NavController, ToastController, Toast } from 'ionic-angular';
+import { Platform, Nav, NavController, ToastController, Toast, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -18,6 +18,8 @@ import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
 import * as moment from 'moment';
+import { Storage } from '@ionic/storage';
+import { ChatPage } from '../pages/chat/chat';
 
 
 @Component({
@@ -27,6 +29,13 @@ export class MyApp {
   @ViewChild('mycontent') nav:Nav;
 
   private disconnectSubscription:any;
+
+  private static notificationEnable:boolean=false;
+  private static httpCliente:HttpClient;
+  private static authService: AuthServiceProvider;
+  private static pusherNotification:Push;
+  private static permision:boolean=false;
+  public static User:any;
 
   public user:any={
     username: "SenorCoders"
@@ -40,7 +49,8 @@ export class MyApp {
   public logo="./assets/imgs/logo-sign.png";
   public pages:Array<Object> = [
     { title : "Events", component : EventsSchedulePage, icon:"basketball" },
-    { title : "Roster", component : RosterPage, icon:"baseball" }
+    { title : "Roster", component : RosterPage, icon:"baseball" },
+    { title : "Chat", component : ChatPage, icon:"baseball" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
@@ -51,7 +61,11 @@ export class MyApp {
     private http: HttpClient
   ) {
 
-      let t = this;
+    MyApp.httpCliente= this.http;
+    MyApp.authService = this.auth;
+    MyApp.pusherNotification = this.push;
+
+    let t = this;
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -72,7 +86,19 @@ export class MyApp {
           }
 
         });
-      } 
+      }
+      
+      t.push.hasPermission()
+      .then((res: any) => {
+
+        if (res.isEnabled) {
+          console.log('We have permission to send push notifications');
+          MyApp.permision=true;
+        } else {
+          console.log('We do not have permission to send push notifications');
+        }
+
+      });
         
       });
 
@@ -99,50 +125,12 @@ export class MyApp {
     if( authenticated === true ){
       this.nav.root = EventsSchedulePage;
       this.user = this.auth.User();
+      MyApp.User = this.auth.User();
     }else{
       this.nav.root = LoginPage;
+      return;
     }
 
-    try{
-      this.user = await this.auth.User();
-      
-      let url;
-      if( this.user.role.name === "Player"){
-        url = "/team/player/"+ this.user.id;
-      }else if( this.user.role.name === "Manager" ){
-        url = "/team/manager/"+ this.user.id;
-      }else if( this.user.role.name === "Family" ){
-        url = "/team/family/"+ this.user.id;
-      }
-      
-      var res = await this.http.get(url).toPromise();
-
-      this.team = res;
-
-      let events:any;
-
-      if( this.team.hasOwnProperty('team') ){
-        this.team = this.team.team;
-      }else if( Object.prototype.toString.call(this.team) === '[object Array]'){
-        this.team = this.team[0].team;
-      }
-    }catch(e){
-      console.error(e);
-    }
-
-    //#region for notifications push request permiss
-    this.push.hasPermission()
-    .then((res: any) => {
-
-      if (res.isEnabled) {
-        console.log('We have permission to send push notifications');
-        this.notifcations();
-      } else {
-        console.log('We do not have permission to send push notifications');
-      }
-
-    });
-    //#endregion
   }
 
   private getLocationDebug(){
@@ -172,9 +160,19 @@ export class MyApp {
     this.menuCtrl.close();
   }
 
+  public static async initNotifcations(){
+
+    if( MyApp.notificationEnable === true && MyApp.permision === false ){
+      return;
+    }
+
+    MyApp.notifcations(MyApp.User.team);
+
+  }
+
 
   //#region for push notifications configuration
-  public notifcations(){
+  private static notifcations(team){
 
     // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
     /*this.push.createChannel({
@@ -188,11 +186,11 @@ export class MyApp {
     //this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted'));
     
     // Return a list of currently configured channels
-    this.push.listChannels().then((channels) => console.log('List of channels', channels))
+    MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
     
     // to initialize push notifications
-    let team = this.team;
 
+    console.log(team);
     const options: PushOptions = {
         android: {
           senderID: "414026305021",
@@ -209,12 +207,20 @@ export class MyApp {
         }
     };
     
-    const pushObject: PushObject = this.push.init(options);
+    const pushObject: PushObject = MyApp.pusherNotification.init(options);
     
     
-    pushObject.on('notification').subscribe((notification: any) => console.log('Received a notification', notification));
+    pushObject.on('notification').subscribe((notification: any) =>{
+      //ChatPage.eventChat(notification.additionalData);
+      new Events().publish('chat:received', notification.additionalData);
+      console.log('Received a notification', notification);
+    })
     
-    pushObject.on('registration').subscribe((registration: any) => console.log('Device registered', registration));
+    pushObject.on('registration').subscribe((registration: any) => {
+      MyApp.notificationEnable=true;
+      console.log('Device registered', registration);
+    });
+    
     
     pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }

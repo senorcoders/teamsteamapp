@@ -17,6 +17,7 @@ class User {
   public email:String;
   public firstName:string;
   public lastName:String;
+  public team:string;
   public role:Object={
     name:""
   };
@@ -56,6 +57,7 @@ export class AuthServiceProvider {
         t.user.email = data.email;
         t.user.role = data.role;
 
+        t.SaveTeam();
       }
     }, function(err){
       console.log(err);
@@ -64,10 +66,49 @@ export class AuthServiceProvider {
     
   }
 
+  public async SaveTeam(){
+    let user;
+
+    try{
+      user = this.User();
+      
+      let url;
+      if( user.role.name === "Player"){
+        url = "/team/player/"+ user.id;
+      }else if( user.role.name === "Manager" ){
+        url = "/team/manager/"+ user.id;
+      }else if( user.role.name === "Family" ){
+        url = "/team/family/"+ user.id;
+      }
+      
+      var res = await this.http.get(url).toPromise();
+
+      let team:any = res;
+
+      let events:any;
+
+      if( team.hasOwnProperty('team') ){
+        team = team.team;
+      }else if( Object.prototype.toString.call(team) === '[object Array]'){
+        team = team[0].team;
+      }
+
+      console.log("team "+ team);
+      this.user.team = team;
+      this.storage.set("team", team);
+    }catch(e){
+      console.error(e);
+    }
+
+  }
+
   public async checkUser(){
-    var user = await this.storage.get("user");
+    let user = await this.storage.get("user");
+    let team = await this.storage.get("team");
+
     this.user = user;
     if(user != null){
+      this.user.team = team;
       this.menuCtrl.swipeEnable(true);
       return true;
     }
@@ -88,6 +129,7 @@ export class AuthServiceProvider {
     this.user = null;
     this.menuCtrl.swipeEnable(false);
     var data = await this.storage.remove("user");
+    data = await this.storage.remove("team");
     return data === undefined;
   }
 
