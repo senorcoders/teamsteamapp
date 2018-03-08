@@ -15,6 +15,7 @@ import {
 import { VALID } from '@angular/forms/src/model';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
  
 
@@ -64,8 +65,8 @@ export class NewEventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
-    private camera: Camera, private auth: AuthServiceProvider,
-    private http: HttpClient
+    public camera: Camera, private auth: AuthServiceProvider,
+    private http: HttpClient, private helper:HelpersProvider
   ) {
 
     this.team = this.navParams.get("team");
@@ -169,9 +170,10 @@ export class NewEventPage {
   }
 
   public changePhoto(){
+    this.load = this.loading.create({ content: "Loading Image..." });
     const options: CameraOptions = {
-      quality: 100,
-      sourceType : 0,
+      quality: 50,
+      sourceType : this.camera.DestinationType.NATIVE_URI,
       destinationType: this.camera.DestinationType.DATA_URL,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
@@ -195,16 +197,32 @@ export class NewEventPage {
 
   }
 
-  private getPhoto(options:any){
-    
+  public getPhoto(options:any){
+
+    this.load.present({ disableApp: true });
+    let t = this;
+
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.imageSrc = base64Image;
+      console.log(imageData);
+      t.helper.PerformanceImage(imageData)
+      .then(function(r){
+        t.imageSrc = 'data:image/jpeg;base64,'+ r;
+        t.load.dismiss();
+      })
+      .catch(function(e){
+        console.error(e);
+      });
 
      }, (err) => {
       console.error(err);
+      t.load.dismiss();
+      t.alertCtrl.create({
+        title: "Error",
+        message: "Unexpected Error",
+        buttons: ["Ok"]
+      }).present();
      });
   }
 
@@ -256,6 +274,8 @@ export class NewEventPage {
         }).present();
         return;
     }
+
+    //let stringbase4Image = await this.helper.urlTobase64(this.imageSrc);
 
     let event:any = {
       team: this.team.team,

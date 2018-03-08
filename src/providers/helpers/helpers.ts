@@ -1,6 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
+import { interceptor } from '../auth-service/interceptor';
+import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
 
 /*
   Generated class for the HelpersProvider provider.
@@ -25,5 +27,90 @@ export class HelpersProvider {
     let t = new Platform();
     return t.is("android") || t.is("ios");
   }
+
+  public dataURItoBlob(dataURI) {
+    var binary = atob(dataURI.split(',')[1]);
+    var array = [];
+    for (var i = 0; i < binary.length; i++) {
+      array.push(binary.charCodeAt(i));
+    }
+    return new Blob([new Uint8Array(array)], {
+        type: 'image/jpg'
+    });
+  }
+
+  public blobToFile = (theBlob: Blob, fileName:string): File => {
+      var b: any = theBlob;
+      //A Blob() is almost a File() - it's just missing the two properties below which we will add
+      b.lastModifiedDate = new Date();
+      b.name = fileName;
+
+      //Cast to a File() type
+      return <File>theBlob;
+  }
+
+  public fileToBase64(file):Promise<string> {
+    return new Promise(function(resolve, reject){
+
+      var reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = function () {
+        resolve(reader.result);
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+
+    });
+ }
+
+public PerformanceImage(base64:string):Promise<string>{
+  let t = this;
+  return new Promise(async function(resolve, reject){
+    let response:any;
+    try{
+      response  = await t.http.post("/performance", {
+        data : base64
+      }, { responseType: "text" }).toPromise();
+      //response.filename = interceptor.url+ response.filename;
+      //response.filename = response.filename;
+      resolve(response);
+    }catch(e){
+      console.error(e);
+      reject(e);
+    }
+  });
+}
+
+public urlTobase64(url):Promise<string> {
+  let t = this;
+  return new Promise(function(resolve, reject){
+
+    var reader = new FileReader();
+    let link = url.replace(interceptor.url, "");
+
+    console.log(link, reader);
+
+    let header = new HttpHeaders();
+    header.append('Content-Type','image/jpeg');
+
+    t.http.get(link, { responseType: 'blob' }).toPromise().then(function(image:any){
+      console.log(image);
+      reader.readAsDataURL(image);
+      reader.onload = function () {
+        console.log(reader);
+        resolve(reader.result);
+      };
+      reader.onerror = function (error) {
+        reject(error);
+      };
+    })
+    .catch(function(err){
+      reject(err);
+    });
+    
+
+  });
+}
 
 }

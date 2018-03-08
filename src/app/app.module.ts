@@ -40,7 +40,6 @@ import { ChatPage } from '../pages/chat/chat';
 import { EmojiProvider } from '../providers/emoji/emoji';
 import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
 import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
-
 @NgModule({
   declarations: [
     MyApp,
