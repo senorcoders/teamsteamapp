@@ -36,6 +36,7 @@ export class MyApp {
   private static pusherNotification:Push;
   private static permision:boolean=false;
   public static User:any;
+  private static event:Events;
 
   public user:any={
     username: "SenorCoders"
@@ -58,12 +59,13 @@ export class MyApp {
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
-    private http: HttpClient
+    private http: HttpClient, private Evenn: Events
   ) {
 
     MyApp.httpCliente= this.http;
     MyApp.authService = this.auth;
     MyApp.pusherNotification = this.push;
+    MyApp.event = this.Evenn;
 
     let t = this;
     platform.ready().then(() => {
@@ -212,7 +214,9 @@ export class MyApp {
     
     pushObject.on('notification').subscribe((notification: any) =>{
       //ChatPage.eventChat(notification.additionalData);
-      new Events().publish('chat:received', notification.additionalData);
+      setTimeout(() => {
+        MyApp.event.publish('chat:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
       console.log('Received a notification', notification);
     })
     

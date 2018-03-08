@@ -19,7 +19,7 @@
 
   <div class="message-wrap">
 
-      <div *ngFor="let msg of msgList"
+      <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy"
            class="message"
            [class.left]=" msg.user !== user.id "
            [class.right]=" msg.user === user.id ">

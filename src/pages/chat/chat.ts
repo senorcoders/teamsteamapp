@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
@@ -44,7 +44,9 @@ export class ChatPage {
   private static changeMessages:Function=function(payload){ console.log(payload) };
 
   constructor(navParams: NavParams,
-    private events: Events, private http: HttpClient) {
+    private events: Events, private http: HttpClient,
+    private ngZone: NgZone
+  ) {
   
       this.user = MyApp.User;
 
@@ -68,6 +70,7 @@ ionViewDidEnter() {
 
   // Subscribe to received  new message events
   this.events.subscribe('chat:received', msg => {
+    console.log(msg);
     this.pushNewMsg(msg);
   });
 }
@@ -132,11 +135,11 @@ let newMsg = {
 };
 
 this.pushNewMsg(newMsg);
-  this.editorMsg = '';
+this.editorMsg = '';
 
-  if (!this.showEmojiPicker) {
-    this.messageInput.setFocus();
-  }
+if (!this.showEmojiPicker) {
+  this.messageInput.setFocus();
+}
 
   this.http.post("/messages", newMsg).toPromise()
   .then((msg:any) => {
@@ -155,10 +158,10 @@ async pushNewMsg (msg) {
   let index = this.getMsgIndexById(msg.dateTime);
   console.log(msg, index);
   if (index === -1) {
-    this.msgList.push(msg);
+    msg.photo = interceptor.url+ "images/players/"+ msg.id;
+    this.ngZone.run(()=>{ this.msgList.push(msg); })
     console.log("add new message", this.msgList);
     this.scrollToBottom();
-    
   }
   
 }
@@ -173,6 +176,10 @@ scrollToBottom() {
        this.content.scrollToBottom();
     }
     }, 400)
+}
+
+public customTrackBy(index: number, obj: any): any {
+	return index;
 }
 
 }
