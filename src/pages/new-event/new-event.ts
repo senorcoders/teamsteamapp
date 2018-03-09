@@ -173,10 +173,11 @@ export class NewEventPage {
     this.load = this.loading.create({ content: "Loading Image..." });
     const options: CameraOptions = {
       quality: 50,
-      sourceType : this.camera.DestinationType.NATIVE_URI,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
+      destinationType: this.camera.DestinationType.FILE_URI,
       encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
+      mediaType: this.camera.MediaType.PICTURE,
+      saveToPhotoAlbum: true 
     }
     
     let fnt = this;

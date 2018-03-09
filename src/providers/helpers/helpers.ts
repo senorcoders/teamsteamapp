@@ -3,6 +3,9 @@ import { Injectable } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { CameraPage } from '../../pages/camera/camera';
+import {App} from "ionic-angular";
 
 /*
   Generated class for the HelpersProvider provider.
@@ -15,8 +18,10 @@ export class HelpersProvider {
   public static lat:string="51.5033640";
   public static lng:string="-0.12762500";
 
-  constructor(public http: HttpClient) {
-    console.log('Hello HelpersProvider Provider');
+  constructor(public http: HttpClient, public diagnostic: Diagnostic,
+    public app: App
+  ) {
+    
   }
 
   public static Position(){
@@ -112,5 +117,24 @@ public urlTobase64(url):Promise<string> {
 
   });
 }
+
+public Camera():Promise<string>{
+  var t = this;
+  return new Promise(async function(resolve, reject){
+    t.diagnostic.isCameraAuthorized().then(async (authorized) => {
+      if(authorized){
+        await t.app.getActiveNavs()[0].push(CameraPage, { resolve, reject });
+      }else {
+        t.diagnostic.requestCameraAuthorization().then(async (status) => {
+            if(status == t.diagnostic.permissionStatus.GRANTED){
+              await t.app.getActiveNavs()[0].push(CameraPage, { resolve, reject });
+            }else {
+              reject({ message : "permiss denied" });
+            }
+          })
+        }
+      })
+    });
+  }
 
 }

@@ -13,7 +13,6 @@ import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
-import { OfflinePage } from '../pages/offline/offline';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 

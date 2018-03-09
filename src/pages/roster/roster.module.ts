@@ -5,7 +5,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 
 @NgModule({
   declarations: [
-    RosterPage,
+    //RosterPage,
   ],
   imports: [
     IonicPageModule.forChild(RosterPage),

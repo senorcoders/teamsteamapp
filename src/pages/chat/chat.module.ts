@@ -6,7 +6,7 @@ import { EmojiProvider } from '../../providers/emoji/emoji';
 
 @NgModule({
   declarations: [
-    ChatPage,
+    //ChatPage,
   ],
   imports: [
     IonicPageModule.forChild(ChatPage)

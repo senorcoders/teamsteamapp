@@ -5,7 +5,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 
 @NgModule({
   declarations: [
-    EventsSchedulePage,
+    //EventsSchedulePage,
   ],
   imports: [
     IonicPageModule.forChild(EventsSchedulePage),

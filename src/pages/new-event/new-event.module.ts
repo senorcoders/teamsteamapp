@@ -4,7 +4,7 @@ import { NewEventPage } from './new-event';
 
 @NgModule({
   declarations: [
-    NewEventPage,
+    //NewEventPage,
   ],
   imports: [
     IonicPageModule.forChild(NewEventPage),

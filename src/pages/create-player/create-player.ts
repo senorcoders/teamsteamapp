@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController, LoadingController
 import { HttpClient } from '@angular/common/http';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CreatePlayerDetailsPage } from '../create-player-details/create-player-details';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * Generated class for the CreatePlayerPage page.
@@ -30,7 +31,8 @@ export class CreatePlayerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
-    private camera: Camera, public loading: LoadingController
+    private camera: Camera, public loading: LoadingController,
+    public helper:HelpersProvider
   ) {
   }
 
@@ -101,7 +103,7 @@ export class CreatePlayerPage {
     const options: CameraOptions = {
       quality: 100,
       sourceType : 0,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
@@ -125,12 +127,19 @@ export class CreatePlayerPage {
   }
 
   private getPhoto(options:any){
-    
+    let t = this;
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.imageSrc = base64Image;
+      //console.log(imageData);
+      t.helper.PerformanceImage(imageData)
+      .then(function(r){
+        t.imageSrc = 'data:image/jpeg;base64,'+ r;
+        //t.load.dismiss();
+      })
+      .catch(function(e){
+        console.error(e);
+      });
 
      }, (err) => {
       console.error(err);

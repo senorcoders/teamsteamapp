@@ -8,6 +8,8 @@ import { NewEventPage } from '../new-event/new-event';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { ImageLoaderConfig, ImageLoader } from 'ionic-image-loader';
 import { MyApp } from '../../app/app.component';
+import { CameraPage } from '../camera/camera';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * Generated class for the EventsSchedulePage page.
@@ -39,7 +41,7 @@ export class EventsSchedulePage {
     public auth: AuthServiceProvider,
     public http: HttpClient,
     public alertCtrl: AlertController, private imageLoaderConfig: ImageLoaderConfig,
-    private imageLoader: ImageLoader
+    private imageLoader: ImageLoader, public helper:HelpersProvider
   ) {
     MyApp.initNotifcations();
   }
@@ -163,10 +165,13 @@ export class EventsSchedulePage {
     })
   }
 
-  public addEvent(){
-    this.navCtrl.push(NewEventPage, {
+  public async addEvent(){
+    let r = await this.helper.Camera();
+    console.log(r);
+    //this.helper.cameraPreview.show();
+    /*this.navCtrl.push(NewEventPage, {
       team : this.team
-    });
+    });*/
   }
 
   public successImage(e){

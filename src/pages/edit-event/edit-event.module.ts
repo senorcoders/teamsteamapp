@@ -4,7 +4,7 @@ import { EditEventPage } from './edit-event';
 
 @NgModule({
   declarations: [
-    EditEventPage,
+    //EditEventPage,
   ],
   imports: [
     IonicPageModule.forChild(EditEventPage),

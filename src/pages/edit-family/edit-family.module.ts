@@ -4,7 +4,7 @@ import { EditFamilyPage } from './edit-family';
 
 @NgModule({
   declarations: [
-    EditFamilyPage,
+    //EditFamilyPage,
   ],
   imports: [
     IonicPageModule.forChild(EditFamilyPage),

@@ -7,6 +7,7 @@ import { EditFamilyPage } from '../edit-family/edit-family';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { RosterPage } from '../roster/roster';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * Generated class for the MemberRosterPage page.
@@ -43,7 +44,7 @@ export class MemberRosterPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
     private camera: Camera, public loading: LoadingController,
-    public auth: AuthServiceProvider
+    public auth: AuthServiceProvider, private helper: HelpersProvider
   ) {
 
     this.player = this.navParams.get("player");
@@ -145,7 +146,7 @@ export class MemberRosterPage {
     const options: CameraOptions = {
       quality: 100,
       sourceType : 0,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
@@ -169,12 +170,19 @@ export class MemberRosterPage {
   }
 
   private getPhoto(options:any){
-    
+    let t = this;
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.updatePhoto(base64Image);
+      //console.log(imageData);
+      t.helper.PerformanceImage(imageData)
+      .then(function(r){
+        let base64Image = 'data:image/jpeg;base64,' + r;
+        t.updatePhoto(base64Image);
+      })
+      .catch(function(e){
+        console.error(e);
+      });
 
      }, (err) => {
       console.error(err);

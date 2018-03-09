@@ -71,7 +71,8 @@ export class EditEventPage {
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
     private camera: Camera, private auth: AuthServiceProvider,
-    private http: HttpClient, private imageLoader: ImageLoader
+    private http: HttpClient, private imageLoader: ImageLoader,
+    private helper: HelpersProvider
   ) {
     this.event = this.navParams.get("event");
     //this.callbackUpdate = this.navParams.get("updateEvent");
@@ -193,7 +194,7 @@ export class EditEventPage {
     const options: CameraOptions = {
       quality: 100,
       sourceType : 0,
-      destinationType: this.camera.DestinationType.DATA_URL,
+      destinationType: this.camera.DestinationType.NATIVE_URI,
       encodingType: this.camera.EncodingType.JPEG,
       mediaType: this.camera.MediaType.PICTURE
     }
@@ -223,17 +224,21 @@ export class EditEventPage {
     this.camera.getPicture(options).then((imageData) => {
       // imageData is either a base64 encoded string or a file URI
       // If it's base64:
+      //console.log(imageData);
       t.load.present({ disableApp : true });
-      let base64Image = 'data:image/jpeg;base64,' + imageData;
-      this.imageSrc = base64Image;
-      document.getElementById("imgT").setAttribute("src", base64Image);
-      this.load.dismiss();
-      /*document.getElementsByTagName("page-edit-event")[0].getElementsByTagName("img")[0].src = base64Image;
-      document.getElementsByTagName("page-edit-event")[0].getElementsByTagName("img")[0].onload = function(){
+      t.helper.PerformanceImage(imageData)
+      .then(function(r){
+        let base64Image = 'data:image/jpeg;base64,' + r;
+        this.imageSrc = base64Image;
+        document.getElementById("imgT").setAttribute("src", base64Image);
+        this.load.dismiss();
+        this.image = true;
+      })
+      .catch(function(e){
         t.load.dismiss();
-      };*/
-
-      this.image = true;
+        console.error(e);
+      });
+      
 
      }, (err) => {
       console.error(err);

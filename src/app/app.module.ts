@@ -12,7 +12,7 @@ import { IonicImageLoader } from 'ionic-image-loader';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-
+import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -26,7 +26,6 @@ import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
 import { EventPage } from '../pages/event/event';
-import { AddFamilyPage } from '../pages/add-family/add-family';
 import { ViewPlayerPage } from '../pages/view-player/view-player';
 import { EditFamilyPage } from '../pages/edit-family/edit-family';
 import { CreatePlayerPage } from '../pages/create-player/create-player';
@@ -40,6 +39,16 @@ import { ChatPage } from '../pages/chat/chat';
 import { EmojiProvider } from '../providers/emoji/emoji';
 import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
 import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
+import { CameraPage } from '../pages/camera/camera';
+import { CameraPreview } from '@ionic-native/camera-preview';
+import { Diagnostic } from '@ionic-native/diagnostic';
+import { File } from '@ionic-native/file';
+import { PhotoLibrary } from '@ionic-native/photo-library';
+import { LibraryImagesPage } from '../pages/library-images/library-images';
+import { ItemDetailsPage } from '../pages/item-details/item-details';
+import { PermissionsPage } from '../pages/permissions/permissions';
+import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pipe';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -50,7 +59,6 @@ import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
     MemberRosterPage,
     EventPage,
     ViewPlayerPage,
-    AddFamilyPage,
     EditFamilyPage,
     CreatePlayerPage,
     CreatePlayerDetailsPage,
@@ -58,7 +66,12 @@ import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
     EditEventPage,
     ChatPage,
     RelativeTimePipe,
-    EmojiPickerComponent
+    EmojiPickerComponent,
+    CameraPage,
+    LibraryImagesPage,
+    ItemDetailsPage,
+    PermissionsPage,
+    CDVPhotoLibraryPipe
   ],
   imports: [
     BrowserModule,
@@ -81,13 +94,16 @@ import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
     MemberRosterPage,
     EventPage,
     ViewPlayerPage,
-    AddFamilyPage,
     EditFamilyPage,
     CreatePlayerPage,
     CreatePlayerDetailsPage,
     NewEventPage,
     EditEventPage,
-    ChatPage
+    ChatPage,
+    CameraPage,
+    LibraryImagesPage,
+    ItemDetailsPage,
+    PermissionsPage
   ],
   providers: [
     StatusBar,
@@ -103,7 +119,12 @@ import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
     LocationAccuracy,
     HelpersProvider,
     Push,
-    EmojiProvider
+    EmojiProvider,
+    CameraPreview,
+    File,
+    Diagnostic,
+    PhotoLibrary,
+    AndroidFullScreen
   ]
 })
 export class AppModule {}
