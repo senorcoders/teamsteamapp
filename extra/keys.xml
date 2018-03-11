@@ -1,0 +1,4 @@
+<plugin name="cordova-plugin-googlemaps" spec="^2.2.5">
+        <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAdhoIwYypMOYDQRjMV7tGNAaiDuf0QxjQ" />
+        <variable name="API_KEY_FOR_IOS" value="AIzaSyAsROqFV85U2WN2DeE8xgDmup1eF_2aAhU" />
+    </plugin>

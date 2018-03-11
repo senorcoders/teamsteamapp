@@ -35,9 +35,9 @@ export class NewEventPage {
 
   private team:any;
 
-  map: GoogleMap;
+  public map: GoogleMap;
   load:Loading;
-  markerEvent:Marker;
+  public markerEvent:Marker;
   public image:boolean=false;
   public imageSrc:string="";
 
@@ -63,7 +63,7 @@ export class NewEventPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private googleMaps: GoogleMaps, public geolocation: Geolocation,
+    public googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
     public camera: Camera, private auth: AuthServiceProvider,
     private http: HttpClient, private helper:HelpersProvider
@@ -170,63 +170,21 @@ export class NewEventPage {
   }
 
   public changePhoto(){
-    this.load = this.loading.create({ content: "Loading Image..." });
-    const options: CameraOptions = {
-      quality: 50,
-      sourceType : this.camera.PictureSourceType.PHOTOLIBRARY,
-      destinationType: this.camera.DestinationType.FILE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE,
-      saveToPhotoAlbum: true 
-    }
-    
-    let fnt = this;
-
-    this.alertCtrl.create({ title : "Source", message : "Select a source",
-    buttons : [{
-      text : "Library",
-      handler : function(){
-        fnt.getPhoto(options);
-      }
-    }, {
-      text : "Camera",
-      handler: function(){
-        options.sourceType  = 1;
-        fnt.getPhoto(options);
-      }
-    }] }).present();
-
-  }
-
-  public getPhoto(options:any){
-
-    this.load.present({ disableApp: true });
     let t = this;
-
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      console.log(imageData);
-      t.helper.PerformanceImage(imageData)
-      .then(function(r){
-        t.imageSrc = 'data:image/jpeg;base64,'+ r;
-        t.load.dismiss();
-      })
-      .catch(function(e){
-        console.error(e);
-      });
-
-     }, (err) => {
+    //console.log(this);
+    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+      t.imageSrc = result;
+    })
+    .catch((err)=>{
       console.error(err);
-      t.load.dismiss();
       t.alertCtrl.create({
         title: "Error",
         message: "Unexpected Error",
         buttons: ["Ok"]
       }).present();
-     });
-  }
+    });
 
+  }
 
   public async save(){
 

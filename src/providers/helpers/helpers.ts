@@ -134,7 +134,6 @@ public Camera(parameters):Promise<string>{
         await t.app.getActiveNavs()[0].push(CameraPage, parameters);
       }else {
 
-
         t.diagnostic.requestCameraAuthorization().then(async (status) => {
             if(status == t.diagnostic.permissionStatus.GRANTED){
               await t.app.getActiveNavs()[0].push(CameraPage, parameters);
@@ -142,7 +141,6 @@ public Camera(parameters):Promise<string>{
               reject({ message : "permiss denied" });
             }
           })
-
 
         }
       })

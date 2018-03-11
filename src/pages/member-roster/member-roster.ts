@@ -171,22 +171,13 @@ export class MemberRosterPage {
 
   private getPhoto(options:any){
     let t = this;
-    this.camera.getPicture(options).then((imageData) => {
-      // imageData is either a base64 encoded string or a file URI
-      // If it's base64:
-      //console.log(imageData);
-      t.helper.PerformanceImage(imageData)
-      .then(function(r){
-        let base64Image = 'data:image/jpeg;base64,' + r;
-        t.updatePhoto(base64Image);
-      })
-      .catch(function(e){
-        console.error(e);
-      });
 
-     }, (err) => {
+    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+      t.updatePhoto(result);
+    })
+    .catch((err)=>{
       console.error(err);
-     });
+    });
   }
 
   private async updatePhoto(base64Image){

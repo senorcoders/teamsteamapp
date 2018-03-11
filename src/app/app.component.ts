@@ -207,25 +207,31 @@ export class MyApp {
             pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
         }
     };
+
+    try{
+      const pushObject: PushObject = MyApp.pusherNotification.init(options);
     
-    const pushObject: PushObject = MyApp.pusherNotification.init(options);
+      pushObject.on('notification').subscribe((notification: any) =>{
+        //ChatPage.eventChat(notification.additionalData);
+        setTimeout(() => {
+          MyApp.event.publish('chat:received', notification.additionalData, Date.now())
+            }, Math.random() * 1800);
+        console.log('Received a notification', notification);
+      })
+      
+      pushObject.on('registration').subscribe((registration: any) => {
+        MyApp.notificationEnable=true;
+        console.log('Device registered', registration);
+      });
+      
+      
+      pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+    }
+    catch(e){
+      console.error(e);
+    }
     
     
-    pushObject.on('notification').subscribe((notification: any) =>{
-      //ChatPage.eventChat(notification.additionalData);
-      setTimeout(() => {
-        MyApp.event.publish('chat:received', notification.additionalData, Date.now())
-          }, Math.random() * 1800);
-      console.log('Received a notification', notification);
-    })
-    
-    pushObject.on('registration').subscribe((registration: any) => {
-      MyApp.notificationEnable=true;
-      console.log('Device registered', registration);
-    });
-    
-    
-    pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
   }
 
   //#endregion

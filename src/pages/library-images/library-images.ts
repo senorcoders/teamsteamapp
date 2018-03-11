@@ -120,7 +120,7 @@ export class LibraryImagesPage {
       //console.log(this.library);
       setTimeout(function(){
         infiniteScroll.complete();
-      }, 500)
+      }, 1500);
     });
     /*for(let t of news){
       this.library.push(t);

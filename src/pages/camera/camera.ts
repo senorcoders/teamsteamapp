@@ -66,11 +66,12 @@ export class CameraPage {
   }
 
   takePicture() {
-    /*const pictureOpts: CameraPreviewPictureOptions = {
-      width: 1280,
-      height: 1280,
-      quality: 50
+    const pictureOpts: CameraPreviewPictureOptions = {
+      width: this.width,
+      height: this.height,
+      quality: this.quality
     }
+
     this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
       this.picture = 'data:image/jpeg;base64,' + imageData;
       this.navCtrl.pop();
@@ -79,7 +80,7 @@ export class CameraPage {
     }, (err) => {
       console.log(err);
       this.picture = null;
-    });*/
+    });
   }
 
   changeEffect() {
@@ -99,11 +100,11 @@ export class CameraPage {
       width: window.innerWidth,
       height: window.innerHeight - 80,
       camera: 'rear',
-      tapPhoto: true,
+      tapPhoto: false,
       previewDrag: false,
       toBack: false,
       alpha: 1,
-      tapToFocus: false
+      tapToFocus: true
     };
 
     try{
@@ -112,22 +113,8 @@ export class CameraPage {
       console.error(e);
       await this.cameraPreview.show();
     }
-    
-    const pictureOpts: CameraPreviewPictureOptions = {
-      width: this.width,
-      height: this.height,
-      quality: this.quality
-    }
 
-    this.cameraPreview.takePicture(pictureOpts, (imageData) => {
-      this.picture = 'data:image/jpeg;base64,' + imageData;
-      this.navCtrl.pop();
-      this.resolve(this.picture)
-      this.cameraPreview.stopCamera();
-    }, (err) => {
-      console.log(err);
-      this.picture = null;
-    });
+    await this.cameraPreview.setFlashMode(this.cameraPreview.FLASH_MODE.AUTO);
 
   }
 
@@ -139,7 +126,7 @@ export class CameraPage {
       width: window.innerWidth,
       height: window.innerHeight - 80,
       camera: 'rear',
-      tapPhoto: true,
+      tapPhoto: false,
       previewDrag: false,
       toBack: false,
       alpha: 1,
