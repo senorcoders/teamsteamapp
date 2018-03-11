@@ -166,7 +166,7 @@ export class EventsSchedulePage {
   }
 
   public async addEvent(){
-    let r = await this.helper.Camera();
+    let r = await this.helper.Camera({ width: 500, height: 500 });
     console.log(r);
     //this.helper.cameraPreview.show();
     /*this.navCtrl.push(NewEventPage, {

@@ -118,20 +118,32 @@ public urlTobase64(url):Promise<string> {
   });
 }
 
-public Camera():Promise<string>{
+public Camera(parameters):Promise<string>{
   var t = this;
+  parameters.width = parameters.width || 300;
+  parameters.height = parameters.height || 300;
+  parameters.quality = parameters.quality || 50;
+
   return new Promise(async function(resolve, reject){
+
+    parameters.resolve = resolve;
+    parameters.reject = reject;
+
     t.diagnostic.isCameraAuthorized().then(async (authorized) => {
       if(authorized){
-        await t.app.getActiveNavs()[0].push(CameraPage, { resolve, reject });
+        await t.app.getActiveNavs()[0].push(CameraPage, parameters);
       }else {
+
+
         t.diagnostic.requestCameraAuthorization().then(async (status) => {
             if(status == t.diagnostic.permissionStatus.GRANTED){
-              await t.app.getActiveNavs()[0].push(CameraPage, { resolve, reject });
+              await t.app.getActiveNavs()[0].push(CameraPage, parameters);
             }else {
               reject({ message : "permiss denied" });
             }
           })
+
+
         }
       })
     });
