@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Events, Content, TextInput } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
@@ -32,6 +32,9 @@ export class ChatPage {
   msgListObserver:Observable<Array<any>>;
   editorMsg = '';
   showEmojiPicker = false;
+  public nameTeam:string="";
+
+  private updateTimeMessage:any;
 
   public user:any;
 
@@ -45,7 +48,7 @@ export class ChatPage {
 
   constructor(navParams: NavParams,
     private events: Events, private http: HttpClient,
-    private ngZone: NgZone
+    private ngZone: NgZone, public changeDectRef: ChangeDetectorRef
   ) {
   
       this.user = MyApp.User;
@@ -61,18 +64,33 @@ export class ChatPage {
 ionViewWillLeave() {
   // unsubscribe
   ChatPage.enableChat = false;
-  this.events.unsubscribe('chat:received')
+  window.clearInterval(this.updateTimeMessage);
+  this.events.unsubscribe('chat:received');
 }
 
-ionViewDidEnter() {
+async ionViewDidEnter() {
+  //get name of team
+  let team:any = await this.http.get("/teams/"+ this.user.team).toPromise();
+  this.nameTeam = team.name;
+
   //get message list
-  this.getMsg();
+  await this.getMsg();
+  let t = this;
+  this.updateTimeMessage = setInterval(function(){
+    console.log("changes pipe");
+    t.changeDectRef.reattach();
+  }, 30*1000);
 
   // Subscribe to received  new message events
   this.events.subscribe('chat:received', msg => {
     console.log(msg);
     this.pushNewMsg(msg);
   });
+
+  this.showEmojiPicker = false;
+  this.content.resize();
+  this.scrollToBottom();
+  
 }
 
 onFocus() {
@@ -100,11 +118,7 @@ private async getMsg() {
     let mgs:any = await this.http.get("/messages/team/"+ MyApp.User.team).toPromise();
     this.msgList = await Promise.all(mgs.map(async function(item){
       let ramdon= new Date().getTime();
-      if( item.role == "Player")
-        item.photo = interceptor.url+ "images/players/"+ item.id;
-        else{
-          item.photo = interceptor.url+ "images/managers/"+ item.id;
-        }
+      item.photo = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ item.user;
       return item;
     }));
 
@@ -158,7 +172,7 @@ async pushNewMsg (msg) {
   let index = this.getMsgIndexById(msg.dateTime);
   console.log(msg, index);
   if (index === -1) {
-    msg.photo = interceptor.url+ "images/players/"+ msg.id;
+    msg.photo = interceptor.url+ "/images/random/users/"+ msg.user;
     this.ngZone.run(()=>{ this.msgList.push(msg); })
     console.log("add new message", this.msgList);
     this.scrollToBottom();

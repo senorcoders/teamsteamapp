@@ -34,7 +34,7 @@ export class ItemDetailsPage {
     var ctx = c.getContext('2d');
     c.width = this.width;
     c.height = this.height;
-    ctx.drawImage((document.getElementById('imageSelect') as any), 0,0);
+    ctx.drawImage((document.getElementById('imageSelect') as any), 0,0, this.width, this.height);
     var dataURL = c.toDataURL('image/jpg');
 
     //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);

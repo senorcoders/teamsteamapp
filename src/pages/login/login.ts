@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular/components/alert/alert-controller
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HttpClient } from '@angular/common/http';
+import { StatusBar } from '@ionic-native/status-bar';
 
 /**
  * Generated class for the LoginPage page.
@@ -30,9 +31,9 @@ export class LoginPage {
     public alertCtrl:AlertController,
     public authService: AuthServiceProvider,
     private ngZone: NgZone,
-    public http : HttpClient
+    public http : HttpClient, public statusBar: StatusBar
   ) {
-    
+    this.statusBar.backgroundColorByName("white");
   }
 
   ionViewDidLoad() {
@@ -52,9 +53,10 @@ export class LoginPage {
       let t = this;
      this.authService.Login(this.firstname, this.lastname, function(err, user){
         if(user){
+          t.statusBar.backgroundColorByHexString("#319a25");
           t.ngZone.run(() => t.navCtrl.setRoot(EventsSchedulePage));
         }else if(err){
-          t.presentAlert("Invalid email or password");
+          t.presentAlert("Invalid username or password");
           return;
         }else{
           t.alertCtrl.create({

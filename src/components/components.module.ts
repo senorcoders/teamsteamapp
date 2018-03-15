@@ -1,9 +1,10 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
+import { GoogleMapsComponent } from './google-maps/google-maps';
 @NgModule({
-	declarations: [/*EmojiPickerComponent*/],
+	declarations: [GoogleMapsComponent/*EmojiPickerComponent*/],
 	imports: [ /*IonicPageModule.forChild(EmojiPickerComponent),*/ ],
-	exports: [/*EmojiPickerComponent*/]
+	exports: [GoogleMapsComponent/*EmojiPickerComponent*/]
 })
 export class ComponentsModule {}

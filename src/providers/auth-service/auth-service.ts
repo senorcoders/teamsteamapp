@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular';
+import { MyApp } from '../../app/app.component';
 
 /*
   Generated class for the AuthServiceProvider provider.
@@ -28,8 +29,10 @@ class User {
 export class AuthServiceProvider {
 
   private user:User= new User();
+  public functions:any=function(){};
 
-  constructor(public http: HttpClient, public storage: Storage, public menuCtrl: MenuController) {
+  constructor(public http: HttpClient, public storage: Storage, public menuCtrl: MenuController,
+  public zone: NgZone ) {
 
   }
 
@@ -95,7 +98,9 @@ export class AuthServiceProvider {
 
       console.log("team "+ team);
       this.user.team = team;
+      MyApp.User = this.user;
       this.storage.set("team", team);
+      this.changesUpdate();
     }catch(e){
       console.error(e);
     }
@@ -131,6 +136,14 @@ export class AuthServiceProvider {
     var data = await this.storage.remove("user");
     data = await this.storage.remove("team");
     return data === undefined;
+  }
+
+  private changesUpdate(){
+    this.functions();
+  }
+
+  public changeUser(callback:any){
+    this.functions = callback;
   }
 
 }

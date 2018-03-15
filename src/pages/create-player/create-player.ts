@@ -103,7 +103,7 @@ export class CreatePlayerPage {
     
     let t = this;
 
-    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+    this.helper.Camera({ width : 200, height: 200, quality: 75 }).then((result)=>{
       t.imageSrc = result;
     })
     .catch((err)=>{

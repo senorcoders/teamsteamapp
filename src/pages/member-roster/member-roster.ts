@@ -62,8 +62,9 @@ export class MemberRosterPage {
     }else{
       this.player.positions = "";
     }
-
-    this.imageSrc = this.player.image;
+    
+    let random = new Date().getTime();
+    this.imageSrc = interceptor.url +"/images/"+ random+ "/users/"+ this.player.user.id;
     
     console.log(this.player);
   }
@@ -143,42 +144,17 @@ export class MemberRosterPage {
   }
 
   public changePhoto(){
-    const options: CameraOptions = {
-      quality: 100,
-      sourceType : 0,
-      destinationType: this.camera.DestinationType.NATIVE_URI,
-      encodingType: this.camera.EncodingType.JPEG,
-      mediaType: this.camera.MediaType.PICTURE
-    }
-    
-    let fnt = this;
-
-    this.alertCtrl.create({ title : "Source", message : "Select a source",
-    buttons : [{
-      text : "Library",
-      handler : function(){
-        fnt.getPhoto(options);
-      }
-    }, {
-      text : "Camera",
-      handler: function(){
-        options.sourceType  = 1;
-        fnt.getPhoto(options);
-      }
-    }] }).present();
-
-  }
-
-  private getPhoto(options:any){
     let t = this;
 
-    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+    this.helper.Camera({ width : 200, height: 200, quality: 75 }).then((result)=>{
       t.updatePhoto(result);
     })
     .catch((err)=>{
       console.error(err);
     });
+
   }
+
 
   private async updatePhoto(base64Image){
 
@@ -188,8 +164,8 @@ export class MemberRosterPage {
     load.present({ disableApp : true });
 
     try{
-      await this.http.post("/images/players", {
-        id : this.player.id,
+      await this.http.post("/images/users", {
+        id : this.player.user.id,
         image : base64Image
       }).toPromise();
     }catch(e){
@@ -329,7 +305,7 @@ export class MemberRosterPage {
       }));
 
       if( t.image === true ){
-        await this.http.delete("/images/players/"+ this.player.id).toPromise();
+        await this.http.delete("/images/users/"+ this.player.user.id).toPromise();
       }
       
     }

@@ -15,9 +15,10 @@
 
 <ion-content padding>
 
-  <h5 style="text-transform: uppercase;">Press and Hold to select event location</h5>
-
-  <div id="map_canvas"></div>
+  <h5>Place of Event</h5>
+  <h6>{{location.place.subAdministrativeArea}}</h6>
+  <h6>{{location.place.thoroughfare}}</h6>
+  <button ion-button (click)="loadPlace()">Select a Place</button>
 
   <ion-list>
 

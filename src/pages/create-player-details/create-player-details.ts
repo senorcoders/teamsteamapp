@@ -152,8 +152,8 @@ export class CreatePlayerDetailsPage {
       player = await this.http.post("/players", player).toPromise();
 
       if( this.user.hasOwnProperty('image') && this.user.image != '' ){
-        await this.http.post("/images/players", {
-          id : player.id,
+        await this.http.post("/images/users", {
+          id : user.id,
           image : this.user.image
         }).toPromise();
       }

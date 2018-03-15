@@ -24,6 +24,11 @@
 
 
 <ion-content padding>
+  <h4 style="position: fixed; width: 100%; /* margin-left: 2.5%; */ padding: 10px; background: white; left: 0; margin-top: -16px;" (click)="presentPopover($event)">
+    {{by | uppercase}}
+    <ion-icon name="ios-arrow-down-outline" style="float: right;"></ion-icon>
+  </h4>
+
   <ion-card *ngFor="let e of events" (click)="goEvent(e)">
     <img [src]="e.imageSrc" [hidden]="false">
     <ion-card-content>

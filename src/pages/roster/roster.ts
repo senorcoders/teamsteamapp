@@ -6,6 +6,7 @@ import { MemberRosterPage } from '../member-roster/member-roster';
 import { ViewPlayerPage } from '../view-player/view-player';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { CreatePlayerPage } from '../create-player/create-player';
+import { MyApp } from '../../app/app.component';
 
 /**
  * Generated class for the RosterPage page.
@@ -47,7 +48,7 @@ export class RosterPage {
     let load = this.loading.create({ content: "Loading Roster..."});
     load.present({ disableApp : true });
 
-    this.user = await this.auth.User();
+    this.user = MyApp.User;
     try{
     let url;
     if( this.user.role.name === "Player"){
@@ -77,7 +78,7 @@ export class RosterPage {
       
         item.loadImage = false;
         let ramdon = new Date().getTime();
-        item.image = interceptor.url+ "/images/"+ ramdon+ "/players/"+ item.id;
+        item.image = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ item.user.id;
 
         return item;
       }));

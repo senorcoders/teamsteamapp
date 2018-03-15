@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
@@ -11,12 +11,22 @@ import { MyApp } from '../../app/app.component';
 import { CameraPage } from '../camera/camera';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-/**
- * Generated class for the EventsSchedulePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+@Component({
+  template: `
+    <ion-list>
+      <!--ion-list-header>Ionic</ion-list-header-->
+      <button ion-item (click)="close('past')">Past</button>
+      <button ion-item (click)="close('upcoming')">UpComing</button>
+    </ion-list>
+  `
+})
+export class PopoverPage {
+  constructor(public viewCtrl: ViewController) {}
+
+  close(by) {
+    this.viewCtrl.dismiss(by);
+  }
+}
 
 @IonicPage()
 @Component({
@@ -36,19 +46,25 @@ export class EventsSchedulePage {
 
   public events:Array<any>=[];
 
+  public by:string="upcoming";
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public auth: AuthServiceProvider,
     public http: HttpClient,
     public alertCtrl: AlertController, private imageLoaderConfig: ImageLoaderConfig,
-    private imageLoader: ImageLoader, public helper:HelpersProvider
+    private imageLoader: ImageLoader, public helper:HelpersProvider,
+    public popoverCtrl: PopoverController
   ) {
     MyApp.initNotifcations();
   }
 
   async ngOnInit(){
+    await this.getEvents();
+  }
+
+  private async getEvents(){
     this.user = await this.auth.User();
-    
     if( this.user.role.name != "Manager"){
       this.addEventButton.nativeElement.style.display = "none";
     }
@@ -69,9 +85,9 @@ export class EventsSchedulePage {
     let events:any;
 
     if( this.team.hasOwnProperty('team') ){
-      events = await this.http.get("/event/team/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team.team).toPromise();
+      events = await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team.team).toPromise();
     }else if( Object.prototype.toString.call(this.team) === '[object Array]'){
-      events = await this.http.get("/event/team/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team[0].team).toPromise();
+      events = await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team[0].team).toPromise();
     }
     console.log(events);
     this.events = events;
@@ -173,6 +189,17 @@ export class EventsSchedulePage {
 
   public successImage(e){
     e.element.removeAttribute("hidden");
+  }
+
+  public presentPopover(myEvent) {
+    let popover = this.popoverCtrl.create(PopoverPage);
+    let t = this;
+    popover.onDidDismiss(function(by){
+      if( by ){ t.by = by; t.getEvents(); }
+    });
+    popover.present({
+      ev: myEvent
+    });
   }
 
 }

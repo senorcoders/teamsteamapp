@@ -26,9 +26,9 @@
 
 <ion-content padding>
     <ion-list>
-        <ion-item *ngFor="let player of players; let i = index">
+        <ion-item *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
 
-          <ion-avatar style="cursor: pointer;" (click)="viewPlayer(player)" item-start [hidden]="!player.loadImage">
+          <ion-avatar style="cursor: pointer;" item-start [hidden]="!player.loadImage">
             <img src="{{player.image}}" (load)="success(event, player);">
           </ion-avatar>
 
@@ -37,8 +37,10 @@
           </ion-avatar>
 
           <h2 style="cursor: pointer;" (click)="viewPlayer(player)" >{{player.user.firstName+ " "+ player.user.lastName}}</h2>
-          <p [hidden]="!player.positions">{{player.positions}} </p>
-          <button (click)="editMember(i, player)" *ngIf="user.role.name != Manager" ion-button clear item-end>Edit</button>
+          <p [hidden]="!player.positions" (click)="viewPlayer(player)">{{player.positions}} </p>
+
+          
+          <button (click)="editMember(i, player)" [hidden]="user.role.name != 'Manager'" ion-button clear item-end>Edit</button>
         </ion-item>
       </ion-list>
 </ion-content>

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import {
@@ -19,6 +19,7 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
 import { ImageLoader } from 'ionic-image-loader';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 
 /**
  * Generated class for the EditEventPage page.
@@ -36,8 +37,19 @@ export class EditEventPage {
   private team:string;
 
   public event:any;
+  public eventOriginal:any;
+  private updateEvent:boolean=false;
 
   public callbackUpdate:Function;
+
+  public location:any={
+    position : { lat: 51.5033640, lng : -0.12762500 },
+    place : {
+      placesubAdministrativeArea:"",
+      thoroughfare:""
+    },
+    change: false
+  };
 
   map: GoogleMap;
   load:Loading;
@@ -72,14 +84,19 @@ export class EditEventPage {
     public alertCtrl: AlertController, public loading: LoadingController, 
     private camera: Camera, private auth: AuthServiceProvider,
     private http: HttpClient, private imageLoader: ImageLoader,
-    private helper: HelpersProvider
+    private helper: HelpersProvider, public modalCtrl: ModalController
   ) {
     this.event = this.navParams.get("event");
-    //this.callbackUpdate = this.navParams.get("updateEvent");
-
+    //for remove reference
+    this.eventOriginal = JSON.parse( JSON.stringify(this.navParams.get("event")) );
+    
     console.log(this.event);
     this.locationLink = this.event.location[0].link;
     this.locationDetail = this.event.location[0].detail;
+
+    this.location.position.lat = this.event.location[0].lat;
+    this.location.position.lng = this.event.location[0].lng;
+    
 
     this.name = this.event.name;
     this.shortLabel = this.event.shortLabel || "";
@@ -94,95 +111,29 @@ export class EditEventPage {
     this.team = this.event.team;
     this.imageSrc =  this.event.imageSrc;
 
-    this.load = this.loading.create({
-      content: "Loading Map"
-    });
-
-    this.load.present({ disableApp : true });
-
-    if( HelpersProvider.Platform() ){
-      this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
-    }else{
-      this.loadMap(HelpersProvider.lat, HelpersProvider.lng);
-    }
   
      this.maxDate = moment().add(2, "year",).format("YYYY");
      this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
      this.minDate, this.maxDate
   }
 
-  loadMap(lat, lot) {
-    console.log(lat, lot);
-    let mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: lat,
-          lng: lot
-        },
-        zoom: 18,
-        tilt: 30
-      }
-    };
+  async ionViewDidLoad(){
+    let places = await this.helper.locationToPlaces(this.location.position);
+    this.location.place = places[0];
+  }
 
+  public loadPlace(){
+    let modal = this.modalCtrl.create(GoogleMapsComponent);
     let t = this;
-    this.map = GoogleMaps.create('map_canvas2', mapOptions);
-
-    // Wait the MAP_READY before using any methods.
-    this.map.one(GoogleMapsEvent.MAP_READY)
-      .then(() => {
-        console.log('Map is ready!');
-
-        t.load.dismissAll();
-
-        this.map.setMyLocationEnabled(true);
-
-        //for when click in map
-        this.map.addEventListener(GoogleMapsEvent.MAP_LONG_CLICK).subscribe(
-            (data) => {
-
-              let options ={ target: data[0],
-              zoom: 18,
-              tilt: 30
-            }
-              this.map.moveCamera(options);
-              this.map.addMarker({
-                title: 'New Position',
-                icon: 'blue',
-                animation: 'DROP',
-                position: data[0]
-              })
-              .then(marker => {
-                console.log(this);
-                if( this.markerEvent !== null && this.markerEvent !== undefined ){
-                  this.markerEvent.remove();
-                }
-
-                marker.on(GoogleMapsEvent.MARKER_CLICK)
-                  .subscribe(() => {
-                  });
-                this.markerEvent = marker;
-              });
-            }
-        );
-
-        // Now you can use all methods safely.
-        this.map.addMarker({
-            title: 'Position of Event',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-              lat: lat,
-              lng: lot
-            }
-          })
-          .then(marker => {
-            this.markerEventOld = marker;
-            marker.on(GoogleMapsEvent.MARKER_CLICK)
-              .subscribe(() => {
-              });
-          });
-
-      });
+    modal.onDidDismiss(async function(data:any){
+      if(data){
+        t.location.position = data;
+        let places = await t.helper.locationToPlaces(t.location.position);
+        t.location.place = places[0];
+        t.location.change = true;
+      }
+    });
+    modal.present();
   }
 
   //#region for change photo
@@ -205,19 +156,23 @@ export class EditEventPage {
 
   }
 
+  ionViewWillUnload(){
+    if( this.updateEvent === false ){
+      this.navCtrl.push(EventPage, {
+        event: this.eventOriginal,
+        user: this.auth.User()
+      });
+    }
+  }
+
   public async update(){
+
 
     this.load = this.loading.create({ content: "Updating..." });
     this.load.present({ disableApp: true });
 
     //create el object fo send to location event
-    let location:any
-    if( this.markerEvent === undefined || this.markerEvent === null ){
-      location = this.markerEventOld.getPosition();
-    }else{
-      location = this.markerEvent.getPosition();
-    }
-     
+    let location:any = this.location.position;
     location.link = this.locationLink || "";
     location.detail = this.locationDetail || "";
 
@@ -317,24 +272,13 @@ export class EditEventPage {
     parsedEvent.location = [updateLocation];
     console.log(parsedEvent);
 
+    this.updateEvent = true;
     let t = this;
     
-    //for await three seconds that clean cache
-    new Promise(function(resolve, reject){
-      setTimeout(resolve(), 3000);
-    }).then(function(){
-
-      t.navCtrl.pop();
-        t.navCtrl.setRoot(EventsSchedulePage).then(function(){
-          t.navCtrl.push(EventPage, {
-            event : parsedEvent,
-            user : t.auth.User()
-          })
-        });
-    })
+    this.navCtrl.setRoot(EventsSchedulePage, {}, {animation: "wp-transition"}, function(){
+      t.navCtrl.push(EventPage, {event: parsedEvent, user: t.auth.User() });
+    });
     
-    
-
   }
 
 }

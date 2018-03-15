@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { File } from '@ionic-native/file';
 import { PhotoLibrary } from '@ionic-native/photo-library';
@@ -31,7 +31,7 @@ export class CameraPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public cameraPreview: CameraPreview,
     public file: File, public photoLibrary: PhotoLibrary,
-    private androidFullScreen: AndroidFullScreen
+    private androidFullScreen: AndroidFullScreen, public loadCtrl: LoadingController
   ) {
     
     this.resolve = this.navParams.get("resolve");
@@ -148,7 +148,7 @@ export class CameraPage {
 
   ionViewWillUnload(){
     console.log("ionViewWillUnload "+ Math.random());
-    this.reject({ message: "cancel" });
+    this.resolve();
   }
 
   public toBack(){

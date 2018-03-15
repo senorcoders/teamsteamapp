@@ -13,6 +13,8 @@ import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -21,7 +23,7 @@ import { interceptor } from '../providers/auth-service/interceptor';
 import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
+import { EventsSchedulePage, PopoverPage } from '../pages/events-schedule/events-schedule';
 import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
@@ -48,6 +50,8 @@ import { LibraryImagesPage } from '../pages/library-images/library-images';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PermissionsPage } from '../pages/permissions/permissions';
 import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pipe';
+import { GoogleMapsComponent } from '../components/google-maps/google-maps';
+import { PlacePipe } from '../pipes/place/place';
 
 @NgModule({
   declarations: [
@@ -66,12 +70,15 @@ import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pi
     EditEventPage,
     ChatPage,
     RelativeTimePipe,
+    PlacePipe,
     EmojiPickerComponent,
+    GoogleMapsComponent,
     CameraPage,
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    CDVPhotoLibraryPipe
+    CDVPhotoLibraryPipe,
+    PopoverPage
   ],
   imports: [
     BrowserModule,
@@ -103,7 +110,9 @@ import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pi
     CameraPage,
     LibraryImagesPage,
     ItemDetailsPage,
-    PermissionsPage
+    PermissionsPage,
+    GoogleMapsComponent,
+    PopoverPage
   ],
   providers: [
     StatusBar,
@@ -124,7 +133,9 @@ import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pi
     File,
     Diagnostic,
     PhotoLibrary,
-    AndroidFullScreen
+    AndroidFullScreen,
+    NativeGeocoder,
+    PhotoViewer
   ]
 })
 export class AppModule {}

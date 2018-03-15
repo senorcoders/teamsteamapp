@@ -17,6 +17,10 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
+import { AndroidSystemUiFlags } from '@ionic-native/android-full-screen';
+import { interceptor } from '../../providers/auth-service/interceptor';
+import { MyApp } from '../../app/app.component';
+import { PhotoViewer, PhotoViewerOptions } from '@ionic-native/photo-viewer';
 
 /**
  * Generated class for the EventPage page.
@@ -38,27 +42,41 @@ export class EventPage {
   public user:any;
   public event:any;
 
-  /*public updateEvent = function(ev:any){
-    let t = this;
-    let promise = new Promise(function(resolve, reject){
-      t.event = ev;
-
-    });
-
-  }*/
+  public location:any={
+    position : { lat: 51.5033640, lng : -0.12762500 },
+    place : {
+      placesubAdministrativeArea:"",
+      thoroughfare:""
+    },
+    change: false
+  };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public loading: LoadingController,
     private imageLoaderConfig: ImageLoaderConfig, public alertCtrl: AlertController,
-    private http: HttpClient, public auth: AuthServiceProvider
+    private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
+    public photoViewer: PhotoViewer
   ) {
     //this.init();
+    let e = this.navParams.get("event");
+    this.user = MyApp.User;
+    if( e.imageSrc === null || e.imageSrc === undefined ){
+      let ramdon = new Date().getTime();
+      e.imageSrc = interceptor.url+ "/images/"+ ramdon+ "/events/"+ e.id; 
+    }
+
+    this.event = e;
   }
 
-  ngOnInit(){
-    this.event = this.navParams.get("event");
-    this.user = this.navParams.data.user;
+  async ngOnInit(){
+    
     console.log(this.event);
+
+    //for geoconder location
+    this.location.position = { lat: this.event.location[0].lat, lng: this.event.location[0].lng };
+    let places = await this.helper.locationToPlaces(this.location.position);
+    this.location.place = places[0];
+    this.location.change = true;
 
     if( moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid() ){
       this.event.dateTime = moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss").format("MM/DD/YYYY HH:mm");
@@ -219,10 +237,17 @@ export class EventPage {
   }
 
   private async editEvent(){
-    this.navCtrl.push(EditEventPage, {
-      event: this.event/*,
-      updateEvent: this.updateEvent*/
-    });
+    let t = this;
+    this.navCtrl.pop({animation: "ios-transition"}, function(){
+      t.navCtrl.push(EditEventPage, {
+        event: t.event
+      }, {animation: "ios-transition"});
+    })
+  }
+
+  public viewPhoto(src:string, name:string){
+    console.log(src);
+    this.photoViewer.show(src, name, { share: true})
   }
 
 }

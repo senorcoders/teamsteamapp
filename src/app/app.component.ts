@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, NgZone } from '@angular/core';
 import { Platform, Nav, NavController, ToastController, Toast, Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
@@ -19,6 +19,7 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { ChatPage } from '../pages/chat/chat';
+import { interceptor } from '../providers/auth-service/interceptor';
 
 
 @Component({
@@ -58,7 +59,8 @@ export class MyApp {
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
-    private http: HttpClient, private Evenn: Events
+    private http: HttpClient, private Evenn: Events, 
+    public zone: NgZone
   ) {
 
     MyApp.httpCliente= this.http;
@@ -70,7 +72,8 @@ export class MyApp {
     platform.ready().then(() => {
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
+      statusBar.overlaysWebView(false);
+      statusBar.backgroundColorByHexString("#319a25");
       splashScreen.hide();
 
       if( platform.is("android") || platform.is("ios") ){
@@ -127,10 +130,27 @@ export class MyApp {
       this.nav.root = EventsSchedulePage;
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
+
+      console.log(this.user);
+      let ramdon = new Date().getTime();
+      this.userimg = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id;
+      document.getElementById("imageSlide").setAttribute("src", this.userimg);
+      document.getElementById("nameSlide").innerText = this.user.username;
     }else{
       this.nav.root = LoginPage;
       return;
     }
+
+    let t = this;
+    this.auth.changeUser(function(){
+      t.user = t.auth.User();
+
+      console.log(t.user);
+      let ramdon = new Date().getTime();
+      t.userimg = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id;
+      document.getElementById("imageSlide").setAttribute("src", t.userimg);
+      document.getElementById("nameSlide").innerText = t.user.username;
+    });
 
   }
 
@@ -195,7 +215,9 @@ export class MyApp {
     const options: PushOptions = {
         android: {
           senderID: "414026305021",
-          topics: [team]
+          topics: [team],
+          sound: true,
+          vibrate: true
         },
         ios: {
             alert: 'true',
@@ -217,7 +239,7 @@ export class MyApp {
           MyApp.event.publish('chat:received', notification.additionalData, Date.now())
             }, Math.random() * 1800);
         console.log('Received a notification', notification);
-      })
+      });
       
       pushObject.on('registration').subscribe((registration: any) => {
         MyApp.notificationEnable=true;

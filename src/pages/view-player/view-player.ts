@@ -32,7 +32,8 @@ export class ViewPlayerPage {
       this.player.positions = this.player.positions.split(",");
     }
 
-    this.imageSrc = this.player.image;
+    let random = new Date().getTime();
+    this.imageSrc = interceptor.url +"/images/"+ random+ "/users/"+ this.player.user.id;
     
   }
 

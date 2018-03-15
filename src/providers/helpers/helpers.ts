@@ -6,6 +6,9 @@ import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
 import {App} from "ionic-angular";
+import { NativeGeocoder, 
+  NativeGeocoderReverseResult, 
+  NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
 /*
   Generated class for the HelpersProvider provider.
@@ -19,7 +22,7 @@ export class HelpersProvider {
   public static lng:string="-0.12762500";
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
-    public app: App
+    public app: App, public nativeGeocoder:NativeGeocoder
   ) {
     
   }
@@ -146,5 +149,20 @@ public Camera(parameters):Promise<string>{
       })
     });
   }
+
+
+public async locationToPlaces(value){
+  let response:NativeGeocoderReverseResult;
+    try{
+      let obj:NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      console.log(obj);
+      response = obj;
+    }catch(e){
+      console.error(e);
+      response = null;
+    }
+    return response;
+}
+
 
 }

@@ -1,22 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-import {
-  GoogleMaps,
-  GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker
- } from '@ionic-native/google-maps';
  import moment from 'moment';
 import { VALID } from '@angular/forms/src/model';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
+import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
+import { Observable } from 'rxjs/Observable';
  
 
 /**
@@ -35,11 +27,18 @@ export class NewEventPage {
 
   private team:any;
 
-  public map: GoogleMap;
   load:Loading;
-  public markerEvent:Marker;
   public image:boolean=false;
   public imageSrc:string="";
+
+  public location:any={
+    position : { lat: 51.5033640, lng : -0.12762500 },
+    place : {
+      placesubAdministrativeArea:"",
+      thoroughfare:""
+    },
+    change: false
+  };
 
   //var for inputs location
   public locationLink:string;
@@ -63,105 +62,22 @@ export class NewEventPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public googleMaps: GoogleMaps, public geolocation: Geolocation,
-    public alertCtrl: AlertController, public loading: LoadingController, 
-    public camera: Camera, private auth: AuthServiceProvider,
-    private http: HttpClient, private helper:HelpersProvider
+    public alertCtrl: AlertController,
+    public loading: LoadingController, public camera: Camera, 
+    private auth: AuthServiceProvider, private http: HttpClient, 
+    private helper:HelpersProvider, public modalCtrl: ModalController
   ) {
-
     this.team = this.navParams.get("team");
     console.log(this.team);
-    this.load = this.loading.create({
-      content: "Loading Map"
-    });
-
-    this.load.present({ disableApp : true });
-
-    let t = this;
-    
-    this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-      t.loadMap(resp.coords.latitude, resp.coords.longitude);
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
-    
-     this.maxDate = moment().add(2, "year",).format("YYYY");
-     this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
-     console.log(this.minDate, this.maxDate);
+    this.maxDate = moment().add(2, "year",).format("YYYY");
+    this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
+    console.log(this.minDate, this.maxDate);
   }
 
-  loadMap(lat, lot) {
-    console.log(lat, lot);
-    let mapOptions: GoogleMapOptions = {
-      camera: {
-        target: {
-          lat: lat,
-          lng: lot
-        },
-        zoom: 18,
-        tilt: 30
-      }
-    };
-
-    let t = this;
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
-
-    // Wait the MAP_READY before using any methods.
-    this.map.one(GoogleMapsEvent.MAP_READY)
-      .then(() => {
-        console.log('Map is ready!');
-
-        t.load.dismiss();
-
-        this.map.setMyLocationEnabled(true);
-
-        //for when click in map
-        this.map.addEventListener(GoogleMapsEvent.MAP_LONG_CLICK).subscribe(
-            (data) => {
-
-              let options ={ target: data[0],
-              zoom: 18,
-              tilt: 30
-            }
-              this.map.moveCamera(options);
-              this.map.addMarker({
-                title: 'Position of Event',
-                icon: 'blue',
-                animation: 'DROP',
-                position: data[0]
-              })
-              .then(marker => {
-                if( this.markerEvent !== null && this.markerEvent !== undefined ){
-                  this.markerEvent.remove();
-                }
-
-                marker.on(GoogleMapsEvent.MARKER_CLICK)
-                  .subscribe(() => {
-                  });
-                this.markerEvent = marker;
-              });
-            }
-        );
-
-        // Now you can use all methods safely.
-        this.map.addMarker({
-            title: 'My Position',
-            icon: 'blue',
-            animation: 'DROP',
-            position: {
-              lat: lat,
-              lng: lot
-            }
-          })
-          .then(marker => {
-            marker.on(GoogleMapsEvent.MARKER_CLICK)
-              .subscribe(() => {
-              });
-          });
-
-      });
+  async ngOnInit(){
+    /*let places = await this.helper.locationToPlaces(this.location.position);
+    this.location.place = places[0];
+    console.log(this.location);*/
   }
 
   //#region for change photo
@@ -169,11 +85,27 @@ export class NewEventPage {
     this.image = true;
   }
 
+  public loadPlace(){
+    let modal = this.modalCtrl.create(GoogleMapsComponent);
+    let t = this;
+    modal.onDidDismiss(async function(data:any){
+      if(data){
+        t.location.position = data;
+        let places = await t.helper.locationToPlaces(t.location.position);
+        t.location.place = places[0];
+        t.location.change = true;
+      }
+    });
+    modal.present();
+  }
+
   public changePhoto(){
     let t = this;
     //console.log(this);
     this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
-      t.imageSrc = result;
+      if( result ){
+        t.imageSrc = result;
+      }
     })
     .catch((err)=>{
       console.error(err);
@@ -191,7 +123,7 @@ export class NewEventPage {
     this.load = this.loading.create({ content: "Saving..." });
     this.load.present({ disableApp: true });
 
-    if( this.markerEvent === undefined || this.markerEvent === null ){
+    if( this.location.change === false ){
       this.load.dismiss();
       this.alertCtrl.create({ title: "Required", message: "select a position for event in map", buttons: ["Ok"]})
       .present();
@@ -199,7 +131,7 @@ export class NewEventPage {
     }
 
     //create el object fo send to location event
-    let location:any = this.markerEvent.getPosition();
+    let location:any = this.location.position;
     location.link = this.locationLink || "";
     location.detail = this.locationDetail || "";
 
