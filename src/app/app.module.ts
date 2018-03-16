@@ -7,7 +7,6 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
-import { Camera } from '@ionic-native/camera';
 import { IonicImageLoader } from 'ionic-image-loader';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -118,7 +117,6 @@ import { PlacePipe } from '../pipes/place/place';
     StatusBar,
     SplashScreen,
     Network,
-    Camera,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider,
