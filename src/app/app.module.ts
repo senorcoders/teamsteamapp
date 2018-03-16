@@ -23,7 +23,7 @@ import { interceptor } from '../providers/auth-service/interceptor';
 import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
-import { EventsSchedulePage, PopoverPage } from '../pages/events-schedule/events-schedule';
+import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
@@ -77,8 +77,7 @@ import { PlacePipe } from '../pipes/place/place';
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    CDVPhotoLibraryPipe,
-    PopoverPage
+    CDVPhotoLibraryPipe
   ],
   imports: [
     BrowserModule,
@@ -111,8 +110,7 @@ import { PlacePipe } from '../pipes/place/place';
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    GoogleMapsComponent,
-    PopoverPage
+    GoogleMapsComponent
   ],
   providers: [
     StatusBar,

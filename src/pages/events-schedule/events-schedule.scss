@@ -1,12 +1,77 @@
 page-events-schedule {
-    ion-card img-loader {
-        display: block;
+    #select-by{
+        margin-top: -4px;
         width: 100%;
-        height: 200px;
-        //object-fit: cover;
-      }
-      ion-card img-loader img{
-          height: 100%;
-          object-fit: cover;
-      }
+        height: 44px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        /*box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14),
+            0 3px 0 0 rgba(0, 0, 0, 0.2), 
+            0 1px 0 0 rgba(0, 0, 0, 0.12);*/
+
+        .select-by{
+            width: 50%;
+            flex-basis: 50%;
+            margin: 0 !important;
+            height: 100%;
+            border-radius: 0 !important;
+            box-shadow: 0 0 0 0 transparent !important;
+            .button-inner{
+                display: flex !important;
+                flex-wrap: wrap;
+                flex-direction: row;
+                ion-icon{
+                    transform: rotate(180deg);
+                    height: 10px;
+                    color: #e8eaf6 !important;
+                    font-size: 25pt;
+                    margin-bottom: -15px;
+                }
+                .select pre{
+                    color: red;
+                }
+                pre{
+                    font-family: inherit !important;
+                }
+                ion-icon, pre{
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    flex-basis: 100%;
+                }
+            }
+        }
+    }
+
+    ion-content{
+        background-color: #e8eaf6 !important;
+    }
+
+    .scroll-content{
+        padding-top: 30px;
+    }
+
+    ion-card{
+        margin-top: 20px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+
+        .divider{
+            width: 100%;
+            height: 1px;
+            background: rgba(33, 32, 32, 0.16);
+        }
+
+        ion-card-content{
+
+            ion-card-title{
+                font-size: 14pt !important;
+                color: rgba(0, 0, 0, 0.616) !important;
+                padding: 5px 15px !important;
+            }
+        }
+    }
+
 }

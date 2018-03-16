@@ -13,33 +13,64 @@
 
     <ion-title>Events Schedule</ion-title>
 
-    <ion-buttons end #addEventButton >
-      <button ion-button (click)="addEvent()" >
-        <ion-icon name="md-add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-  <h4 style="position: fixed; width: 100%; /* margin-left: 2.5%; */ padding: 10px; background: white; left: 0; margin-top: -16px;" (click)="presentPopover($event)">
-    {{by | uppercase}}
-    <ion-icon name="ios-arrow-down-outline" style="float: right;"></ion-icon>
-  </h4>
+<ion-content>
+  <div ion-fixed id="select-by">
+    <button color="pdark" ion-button [ngClass]="by == 'past' ? 'select' : ''" class="select-by" (click)="byS('past')">
+        <pre>Past</pre>
+        <ion-icon [hidden]="by == 'upcoming'" name="md-arrow-dropdown"></ion-icon>
+    </button>
+    <button ion-button color="pdark" [ngClass]="by == 'upcoming' ? 'select' : ''" class="select-by" (click)="byS('upcoming')">
+        <pre>Upcoming</pre>
+        <ion-icon [hidden]="by == 'past'" name="md-arrow-dropdown"></ion-icon>
+    </button>
+  </div>
 
-  <ion-card *ngFor="let e of events" (click)="goEvent(e)">
-    <img [src]="e.imageSrc" [hidden]="false">
+  <ion-card *ngFor="let e of events">
+    <ion-card-content (click)="goEvent(e)">
+        <ion-card-title>{{e.name}}</ion-card-title>
+    </ion-card-content>
+    
+    <img (click)="goEvent(e)" [src]="e.imageSrc">
     <ion-card-content>
-      <ion-card-title style="font-weight: bold; text-transform: uppercase;" >
-        {{e.name}}
-      </ion-card-title>
-      <p>
+      <p (click)="goEvent(e)">
         {{e.description}}
       </p>
       <p [hidden]="!e.showDateTime" style="text-align: right;">{{e.parsedDateTime}}</p>
       <p [hidden]="e.showDateTime" style="text-align: right;">Daily</p>
+      
+      <div class="divider"> </div>
+      <ion-row>
+        <ion-col col-3>
+          <button ion-button icon-left clear small>
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>12</div>
+          </button>
+        </ion-col>
+        <ion-col col-3>
+            <button ion-button icon-left clear small>
+              <ion-icon name="thumbs-down"></ion-icon>
+              <div>12</div>
+            </button>
+          </ion-col>
+        <ion-col col-6>
+          <button ion-button icon-left>
+            <ion-icon name="text"></ion-icon>
+            <div>4 Comments</div>
+          </button>
+        </ion-col>
+      </ion-row>
     </ion-card-content>
   </ion-card>
+
+  <ion-fab bottom right #addEventButton>
+    <button color="base" ion-fab icon-only (click)="addEvent()" >
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>

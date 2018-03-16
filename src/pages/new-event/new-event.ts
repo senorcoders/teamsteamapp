@@ -34,7 +34,7 @@ export class NewEventPage {
   public location:any={
     position : { lat: 51.5033640, lng : -0.12762500 },
     place : {
-      placesubAdministrativeArea:"",
+      subAdministrativeArea:"",
       thoroughfare:""
     },
     change: false

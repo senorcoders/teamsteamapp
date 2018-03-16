@@ -113,6 +113,7 @@
         <variable name="API_KEY_FOR_ANDROID" value="AIzaSyAdhoIwYypMOYDQRjMV7tGNAaiDuf0QxjQ" />
         <variable name="API_KEY_FOR_IOS" value="AIzaSyAsROqFV85U2WN2DeE8xgDmup1eF_2aAhU" />
     </plugin>
-    <engine name="android" spec="7.1.0" />
+    <allow-navigation href="http://192.168.8.111:8100" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="7.1.0" />
 </widget>

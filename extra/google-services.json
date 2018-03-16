@@ -1,27 +1,27 @@
 {
   "project_info": {
-    "project_number": "414026305021",
-    "firebase_url": "https://serviciosrivenses.firebaseio.com",
-    "project_id": "serviciosrivenses",
-    "storage_bucket": "serviciosrivenses.appspot.com"
+    "project_number": "593055236592",
+    "firebase_url": "https://teamsteam-817af.firebaseio.com",
+    "project_id": "teamsteam-817af",
+    "storage_bucket": "teamsteam-817af.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:414026305021:android:764d2cb7da3280eb",
+        "mobilesdk_app_id": "1:593055236592:android:2468dbd066b545bf",
         "android_client_info": {
-          "package_name": "io.ionic.starter"
+          "package_name": "com.senorcoders.teamsteam"
         }
       },
       "oauth_client": [
         {
-          "client_id": "414026305021-014fl6dakp1hgfugck5n3a6gao9iqgsr.apps.googleusercontent.com",
+          "client_id": "593055236592-9d13efnh5uo8kuptr2lbe1i221nn9f5g.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDNo9Qw86PLTlLiJxynlIVpVPSFf-gsgM8"
+          "current_key": "AIzaSyCjxRZ98le4mL1R_ozP2nHdwOAdSg26SFU"
         }
       ],
       "services": {

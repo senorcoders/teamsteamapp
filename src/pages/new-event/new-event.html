@@ -15,26 +15,11 @@
 
 <ion-content padding>
 
-  <h5>Place of Event</h5>
-  <h6>{{location.place.subAdministrativeArea}}</h6>
-  <h6>{{location.place.thoroughfare}}</h6>
-  <button ion-button (click)="loadPlace()">Select a Place</button>
-
   <ion-list>
 
-    <ion-item>
-      <ion-label floating>Location Detail</ion-label>
-      <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Location Link</ion-label>
-      <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
-    </ion-item>
-
-  </ion-list>
-
-  <ion-list>
+    <ion-list-header>
+      general data
+    </ion-list-header>
 
     <ion-item>
       <ion-label floating>Name</ion-label>
@@ -95,6 +80,25 @@
     <ion-item>
       <ion-label floating>Description</ion-label>
       <ion-textarea [(ngModel)]="description" > </ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-list>
+    <ion-list-header>Location</ion-list-header>
+
+    <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
+    <ion-item [hidden]="location.place.thoroughfare == ''">{{location.place.thoroughfare}}</ion-item>
+    <button ion-button (click)="loadPlace()">Select a Place</button>
+
+    <ion-item>
+      <ion-label floating>Location Detail</ion-label>
+      <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Location Link</ion-label>
+      <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
     </ion-item>
 
   </ion-list>
