@@ -53,7 +53,7 @@ export class LoginPage {
       let t = this;
      this.authService.Login(this.firstname, this.lastname, function(err, user){
         if(user){
-          t.statusBar.backgroundColorByHexString("#319a25");
+          t.statusBar.backgroundColorByHexString("#008e76");
           t.ngZone.run(() => t.navCtrl.setRoot(EventsSchedulePage));
         }else if(err){
           t.presentAlert("Invalid username or password");

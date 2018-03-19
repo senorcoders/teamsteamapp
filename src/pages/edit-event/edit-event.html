@@ -1,9 +1,4 @@
-<!--
-  Generated template for the EditEventPage page.
 
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
 
   <ion-navbar color="base">
@@ -14,89 +9,94 @@
 
 
 <ion-content padding>
-    <h5>Place of Event</h5>
-    <h6>{{location.place.subAdministrativeArea}}</h6>
-    <h6>{{location.place.thoroughfare}}</h6>
-    <button ion-button (click)="loadPlace()">Select a Place</button>
 
-  <ion-list>
+    <ion-list>
 
-    <ion-item>
-      <ion-label floating>Location Detail</ion-label>
-      <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Location Link</ion-label>
-      <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
-    </ion-item>
-
-  </ion-list>
-
-  <ion-list>
-
-    <ion-item>
-      <ion-label floating>Name</ion-label>
-      <ion-input type="text" [(ngModel)]="name" > </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Short Label</ion-label>
-      <ion-input type="text" [(ngModel)]="shortLabel" > </ion-input>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Repeats</ion-label>
-      <ion-select [(ngModel)]="repeats">
-        <ion-option value="no-repeat">Not Repeat</ion-option>
-        <ion-option value="daily">Daily</ion-option>
-        <ion-option value="weekly">Weekly</ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item [hidden]="repeats != 'weekly'" >
-        <ion-label floating>Daily Weekly</ion-label>
-        <ion-select [(ngModel)]="repeatsOption">
-          <ion-option value="monday">Monday</ion-option>
-          <ion-option value="tuesday">Tuesday</ion-option>
-          <ion-option value="wednesday">Wednesday</ion-option>
-          <ion-option value="friday">Friday</ion-option>
-          <ion-option value="saturday">Saturday</ion-option>
-          <ion-option value="Sunday">Sunday</ion-option>
+      <ion-list-header>
+        general data
+      </ion-list-header>
+  
+      <ion-item>
+        <ion-label floating>Name</ion-label>
+        <ion-input type="text" [(ngModel)]="name" > </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Short Label</ion-label>
+        <ion-input type="text" [(ngModel)]="shortLabel" > </ion-input>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Repeats</ion-label>
+        <ion-select [(ngModel)]="repeats">
+          <ion-option value="no-repeat">Not Repeat</ion-option>
+          <ion-option value="daily">Daily</ion-option>
+          <ion-option value="weekly">Weekly</ion-option>
         </ion-select>
       </ion-item>
-
-    <ion-item [hidden]="repeats == 'weekly' || repeats == 'daily'">
-      <ion-label floating>Date</ion-label>
-      <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Time hour-minute</ion-label>
-      <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
-    </ion-item>
-
-    <ion-item>
-        <ion-label>Attendence Traking</ion-label>
-        <ion-toggle [(ngModel)]="attendeceTracking" > </ion-toggle>
+  
+      <ion-item [hidden]="repeats != 'weekly'" >
+          <ion-label floating>Daily Weekly</ion-label>
+          <ion-select [(ngModel)]="repeatsOption">
+            <ion-option value="monday">Monday</ion-option>
+            <ion-option value="tuesday">Tuesday</ion-option>
+            <ion-option value="wednesday">Wednesday</ion-option>
+            <ion-option value="friday">Friday</ion-option>
+            <ion-option value="saturday">Saturday</ion-option>
+            <ion-option value="Sunday">Sunday</ion-option>
+          </ion-select>
+        </ion-item>
+  
+      <ion-item [hidden]="repeats == 'weekly' || repeats == 'daily'">
+        <ion-label floating>Date</ion-label>
+        <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
       </ion-item>
-
-    <ion-item>
-      <ion-label>Notify Team</ion-label>
-      <ion-toggle [(ngModel)]="notifyTeam" > </ion-toggle>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Optional Info</ion-label>
-      <ion-textarea [(ngModel)]="optionalInfo" > </ion-textarea>
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>Description</ion-label>
-      <ion-textarea [(ngModel)]="description" > </ion-textarea>
-    </ion-item>
-
-  </ion-list>
+  
+      <ion-item>
+        <ion-label floating>Time hour-minute</ion-label>
+        <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
+      </ion-item>
+  
+      <ion-item>
+          <ion-label>Attendence Traking</ion-label>
+          <ion-toggle [(ngModel)]="attendeceTracking" > </ion-toggle>
+        </ion-item>
+  
+      <ion-item>
+        <ion-label>Notify Team</ion-label>
+        <ion-toggle [(ngModel)]="notifyTeam" > </ion-toggle>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Optional Info</ion-label>
+        <ion-textarea [(ngModel)]="optionalInfo" > </ion-textarea>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Description</ion-label>
+        <ion-textarea [(ngModel)]="description" > </ion-textarea>
+      </ion-item>
+  
+    </ion-list>
+  
+    <ion-list>
+      <ion-list-header>Location</ion-list-header>
+  
+      <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
+      <ion-item [hidden]="location.place.thoroughfare == ''">{{location.place.thoroughfare}}</ion-item>
+      <button ion-button (click)="loadPlace()">Select a Place</button>
+  
+      <ion-item>
+        <ion-label floating>Location Detail</ion-label>
+        <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
+      </ion-item>
+  
+      <ion-item>
+        <ion-label floating>Location Link</ion-label>
+        <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
+      </ion-item>
+  
+    </ion-list>
 
   <ion-avatar>
       <img id="imgT" useImg="true" width="100%" [src]="imageSrc">

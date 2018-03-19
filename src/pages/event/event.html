@@ -13,7 +13,7 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
   <ion-card>
     <ion-item>
         <h2 style="text-transform: uppercase;">{{event.name}}</h2>
@@ -36,18 +36,17 @@
         <p [hidden]="event.location[0].detail == ''">Detail: {{event.location[0].detail}}</p>
       </ion-item>
     
-      <ion-row [hidden]="user.role.name != 'Manager'">
-        <ion-col style="text-align: left;">
-          <button ion-button clear small (click)="editEvent()" >
-            <ion-icon name="md-create"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col style="text-align: right;">
-          <button ion-button clear small (click)="remove()" >
-            <ion-icon name="md-close-circle"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    
     </ion-card>
+
+    <ion-fab [hidden]="user.role.name != 'Manager'" bottom right class="top-bottom" (click)="editEvent()" >
+      <button color="base" ion-fab icon-only >
+        <ion-icon name="md-create"></ion-icon>
+      </button>
+    </ion-fab>
+
+    <ion-fab [hidden]="user.role.name != 'Manager'" bottom right (click)="remove()" >
+      <button color="base" ion-fab icon-only >
+        <ion-icon name="md-close-circle"></ion-icon>
+      </button>
+    </ion-fab>
 </ion-content>

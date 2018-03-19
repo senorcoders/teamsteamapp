@@ -7,4 +7,11 @@ page-edit-event {
         position: relative;
         left: calc(100% - 60px) !important;
     }
+
+    ion-list-header{
+        font-size: 13pt !important;
+        text-transform: uppercase !important;
+        padding-top: 30px !important;
+        margin-bottom: 0 !important;
+    }
 }

@@ -6,13 +6,15 @@ page-event {
         }
     }
 
-    img-loader{
-        height: 200px;
-        img{
-            object-fit: cover;
-            height: 100%;
-        }
+    ion-card{
+        margin-top: 0px !important;
+        margin-left: 0 !important;
+        margin-right: 0 !important;
+        width: 100% !important;
+    }
 
+    .top-bottom{
+        bottom: 80px !important;
     }
     
 }
