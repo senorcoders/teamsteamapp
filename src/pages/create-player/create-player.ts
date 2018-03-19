@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { CreatePlayerDetailsPage } from '../create-player-details/create-player-details';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
@@ -31,7 +30,7 @@ export class CreatePlayerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
-    private camera: Camera, public loading: LoadingController,
+   public loading: LoadingController,
     public helper:HelpersProvider
   ) {
   }

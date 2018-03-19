@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import {
   GoogleMaps,
   GoogleMap,
@@ -21,12 +20,7 @@ import { ImageLoader } from 'ionic-image-loader';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 
-/**
- * Generated class for the EditEventPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -82,7 +76,7 @@ export class EditEventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
-    private camera: Camera, private auth: AuthServiceProvider,
+     private auth: AuthServiceProvider,
     private http: HttpClient, private imageLoader: ImageLoader,
     private helper: HelpersProvider, public modalCtrl: ModalController
   ) {

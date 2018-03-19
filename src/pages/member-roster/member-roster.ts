@@ -2,19 +2,13 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import moment from 'moment';
 import { HttpClient } from '@angular/common/http';
-import { Camera, CameraOptions } from '@ionic-native/camera';
 import { EditFamilyPage } from '../edit-family/edit-family';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { RosterPage } from '../roster/roster';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-/**
- * Generated class for the MemberRosterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
 
 @IonicPage()
 @Component({
@@ -43,7 +37,7 @@ export class MemberRosterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
-    private camera: Camera, public loading: LoadingController,
+   public loading: LoadingController,
     public auth: AuthServiceProvider, private helper: HelpersProvider
   ) {
 

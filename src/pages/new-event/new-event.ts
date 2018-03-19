@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
-import { Camera, CameraOptions } from '@ionic-native/camera';
  import moment from 'moment';
 import { VALID } from '@angular/forms/src/model';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -10,13 +9,6 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 import { Observable } from 'rxjs/Observable';
  
-
-/**
- * Generated class for the NewEventPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -63,7 +55,7 @@ export class NewEventPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController,
-    public loading: LoadingController, public camera: Camera, 
+    public loading: LoadingController,
     private auth: AuthServiceProvider, private http: HttpClient, 
     private helper:HelpersProvider, public modalCtrl: ModalController
   ) {
