@@ -16,7 +16,6 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
-import { ImageLoader } from 'ionic-image-loader';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 
@@ -77,7 +76,7 @@ export class EditEventPage {
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
      private auth: AuthServiceProvider,
-    private http: HttpClient, private imageLoader: ImageLoader,
+    private http: HttpClient,
     private helper: HelpersProvider, public modalCtrl: ModalController
   ) {
     this.event = this.navParams.get("event");

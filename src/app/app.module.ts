@@ -7,7 +7,6 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
-import { IonicImageLoader } from 'ionic-image-loader';
 import { GoogleMaps } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
@@ -51,6 +50,9 @@ import { PermissionsPage } from '../pages/permissions/permissions';
 import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pipe';
 import { GoogleMapsComponent } from '../components/google-maps/google-maps';
 import { PlacePipe } from '../pipes/place/place';
+import { CommentsComponent } from '../components/comments/comments';
+import { ViewLikesComponent } from '../components/view-likes/view-likes';
+import { ViewTrakingComponent } from '../components/view-traking/view-traking';
 
 @NgModule({
   declarations: [
@@ -76,7 +78,10 @@ import { PlacePipe } from '../pipes/place/place';
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    CDVPhotoLibraryPipe
+    CDVPhotoLibraryPipe,
+    CommentsComponent,
+    ViewLikesComponent,
+    ViewTrakingComponent
   ],
   imports: [
     BrowserModule,
@@ -85,7 +90,6 @@ import { PlacePipe } from '../pipes/place/place';
       name: 'teamsnap',
          driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
-    IonicImageLoader.forRoot(),
     HttpModule,
     HttpClientModule
   ],
@@ -109,7 +113,10 @@ import { PlacePipe } from '../pipes/place/place';
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    GoogleMapsComponent
+    GoogleMapsComponent,
+    CommentsComponent,
+    ViewLikesComponent,
+    ViewTrakingComponent
   ],
   providers: [
     StatusBar,

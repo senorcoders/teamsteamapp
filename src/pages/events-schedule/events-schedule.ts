@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, ModalController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
@@ -9,6 +9,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import { MyApp } from '../../app/app.component';
 import { CameraPage } from '../camera/camera';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 
 @IonicPage()
 @Component({
@@ -33,7 +34,7 @@ export class EventsSchedulePage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public auth: AuthServiceProvider,
-    public http: HttpClient,
+    public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper:HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone
   ) {
@@ -58,6 +59,7 @@ export class EventsSchedulePage {
       
       console.log(events);
       this.events = events;
+      let user = this.user;
 
       //preformarting for events
       this.events = await Promise.all(this.events.map(async function(it, index){
@@ -73,7 +75,24 @@ export class EventsSchedulePage {
         it.loadImage = false;
         let ramdon = new Date().getTime();
         it.imageSrc = interceptor.url+ '/images/'+ ramdon+ '/events/'+ it.id;
-        console.log(it.imageSrc);
+        let likesUp=0, likeUp=false, likesDown = 0, likeDown = false;
+        for(var t of it.likes){
+          if( t.like === true ){
+            likesUp +=1;
+            if( t.user === user.id){
+              likeUp = true;
+            }
+          }else{
+            likesDown +=1;
+            if( t.user === user.id){
+              likeDown = true;
+            }
+          }
+        }
+        it.likesUp = likesUp;
+        it.likesDown = likesDown;
+        it.likeUp = likeUp;
+        it.likeDown = likeDown;
         return it;
       }));
 
@@ -168,6 +187,99 @@ export class EventsSchedulePage {
       t.by = b;
       t.getEvents();
     })
+  }
+
+  public async like(event, likeUp){
+    
+    //si no ha dado like en ninguno
+    if( event.likeUp === false && event.likeDown === false){
+      let like:any = { user : this.user.id, event : event.id, dateTime : moment().toISOString() };
+      if( likeUp === true ){
+        like.like = true
+      }else{
+        like.like = false;
+      }
+
+      let li = await this.http.post("/likes/", like).toPromise();
+      //console.log(li);
+      event.likeUp = likeUp;
+      event.likeDown = !likeUp;
+      event.likes.push(li);
+      await this.countLikes(event);
+      return;
+    }
+
+    //Para cuando ya se ha dado click en cualquiera de los botones
+    let idUser = this.user.id;
+    let index = event.likes.findIndex(function(elem){ return elem.user === idUser });
+    let like = event.likes[index];
+
+    //console.log(like);
+
+    if(event.likeUp === true && likeUp === true){
+      let li = await this.http.delete("/likes/"+ like.id).toPromise();
+      event.likeUp = false;
+      if( event.likes.length === 1)
+        event.likes = [];
+      else
+        event.likes.splice(index, 1);
+      //console.log(event.likes);
+      await this.countLikes(event);
+      return;
+
+    }else if(event.likeDown === true && likeUp === false ){
+      let li = await this.http.delete("/likes/"+ like.id).toPromise();
+      event.likeDown = false;
+      if( event.likes.length === 1)
+        event.likes = [];
+      else
+        event.likes.splice(index, 1);
+
+      //console.log(event.likes);
+      await this.countLikes(event);
+      return;
+    }
+    
+    if(event.likeUp === false && likeUp === true && event.likeDown === true){
+      let li = await this.http.put("/likes/"+ like.id, like).toPromise();
+      //console.log(li);
+      event.likeDown = false;
+      event.likeUp = true;
+      event.likes[index].like = likeUp;
+      await this.countLikes(event);
+      
+    }else if(event.likeUp === true && likeUp === false && event.likeDown === false){
+      let li = await this.http.put("/likes/"+ like.id, like).toPromise();
+      //console.log(li);
+      event.likeDown = true;
+      event.likeUp = false;
+      event.likes[index].like = likeUp;
+      await this.countLikes(event);
+    }
+
+  }
+
+  private async countLikes(event):Promise<Object>{
+    let user = this.user;
+    return new Promise(function(resolve, reject){
+      let likesUp=0, likesDown = 0;
+        for(var t of event.likes){
+          if( t.like === true ){
+            likesUp +=1;
+          }else{
+            likesDown +=1;
+          }
+        }
+        event.likesUp = likesUp;
+        event.likesDown = likesDown;
+        resolve(true);
+    });
+  }
+
+  public async viewTraking(){
+    let view = this.modalCtrl.create(ViewTrakingComponent, { event : event });
+    view.present();
+    console.log(view);
   }
 
 }

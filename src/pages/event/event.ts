@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading } from 'ionic-angular';
-import { ImageLoaderConfig } from 'ionic-image-loader';
 import * as moment from 'moment';
 
 import {
@@ -42,6 +41,9 @@ export class EventPage {
   public user:any;
   public event:any;
 
+  public imgUser:string="";
+  public username:string="";
+
   public location:any={
     position : { lat: 51.5033640, lng : -0.12762500 },
     place : {
@@ -52,8 +54,7 @@ export class EventPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private googleMaps: GoogleMaps, public loading: LoadingController,
-    private imageLoaderConfig: ImageLoaderConfig, public alertCtrl: AlertController,
+    private googleMaps: GoogleMaps, public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
     public photoViewer: PhotoViewer
   ) {
@@ -66,11 +67,17 @@ export class EventPage {
     }
 
     this.event = e;
+
+    //for image user that published events
+    let r = new Date().getTime();
+    this.imgUser = interceptor.url+ "/images/"+ r+ "/users&thumbnail/"+ this.event.user;
   }
 
   async ngOnInit(){
     
     console.log(this.event);
+    let userPublisher:any = await this.http.get("/user/"+ this.event.user).toPromise();  
+    this.username = userPublisher.username;
 
     //for geoconder location
     this.location.position = { lat: this.event.location[0].lat, lng: this.event.location[0].lng };
@@ -82,12 +89,12 @@ export class EventPage {
       this.event.dateTime = moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss").format("MM/DD/YYYY HH:mm");
     }
 
+    this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("Do MMMM YYYY hh:mm");
+
     if( !this.event.location[0].link.includes("http") ){
       this.event.link = "http://"+ this.event.location[0].link;
     }else
       this.event.link = this.event.location[0].link 
-
-      this.imageLoaderConfig.enableSpinner(true);
 
       this.load = this.loading.create({
         content: "Loading Map"

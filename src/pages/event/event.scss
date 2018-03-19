@@ -1,8 +1,14 @@
+$color-text: rgba(0, 0, 0, 0.616) !important;
 page-event {
-    .location-event{
-        h2{
-            border-bottom: 1px outset #f3f3f3;
-            margin-bottom: 10px;
+    ion-item, ion-card-content{
+        p{
+            font-size: 11pt !important;
+            color: $color-text !important;
+        }
+        .divider{
+            width: 100%;
+            height: 1px;
+            background: rgba(33, 32, 32, 0.16);
         }
     }
 
@@ -11,10 +17,52 @@ page-event {
         margin-left: 0 !important;
         margin-right: 0 !important;
         width: 100% !important;
+        /*padding-top: 65px !important;*/
+
+        .description{
+            /*margin-top: -30px !important;*/
+            background: transparent !important;
+            ion-thumbnail{
+                max-height: 40px !important;
+                min-height: 40px !important;
+                max-width: 40px !important;
+                min-width: 40px !important;
+                img{
+                    border-radius: 100%; 
+                    /*border: 1px solid transparent !important;*/
+                    object-fit: cover;
+                    width: 40px !important;
+                    height: 40px !important;
+                }
+            }
+            p{
+                /*margin-top: 30px !important;*/
+                color: $color-text;
+            }
+        }
+        img{
+            border-top: 1px outset #1C746E !important;
+            border-bottom: 1px outset #1C746E !important;
+        }
+        .location-event{
+            ion-label{
+                margin: 0 !important;
+            }
+
+            p{
+                margin-top: 10px !important;
+            }
+        }
     }
 
     .top-bottom{
         bottom: 80px !important;
+    }
+
+    .titles-event{
+        font-size: 14pt !important;
+        color: $color-text;
+        padding: 5px 0 !important;
     }
     
 }

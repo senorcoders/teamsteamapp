@@ -46,21 +46,21 @@
       <div class="divider"> </div>
       <ion-row>
         <ion-col col-3>
-          <button ion-button icon-left clear small>
+          <button ion-button (click)="like(e, true)" color="plight" [ngClass]="{'select': e.likeUp }" icon-left clear small>
             <ion-icon name="thumbs-up"></ion-icon>
-            <div>12</div>
+            <div>{{e.likesUp}} </div>
           </button>
         </ion-col>
         <ion-col col-3>
-            <button ion-button icon-left clear small>
+            <button ion-button (click)="like(e, false)" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
               <ion-icon name="thumbs-down"></ion-icon>
-              <div>12</div>
+              <div>{{e.likesDown}}</div>
             </button>
           </ion-col>
         <ion-col col-6>
-          <button ion-button icon-left>
+          <button ion-button (click)="viewTraking()" icon-left>
             <ion-icon name="text"></ion-icon>
-            <div>4 Comments</div>
+            <div>{{e.comments.length}} Comments</div>
           </button>
         </ion-col>
       </ion-row>
