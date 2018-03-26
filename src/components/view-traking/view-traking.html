@@ -1,7 +1,8 @@
 <!-- Generated template for the ViewTrakingComponent component -->
 <ion-content>
     <ion-tabs>
-        <ion-tab [root]="Comments" tabTitle="Chat" tabIcon="chat"></ion-tab>
-        <ion-tab [root]="LikesUp" [rootParams]="chatParams" tabTitle="Chat" tabIcon="chat"></ion-tab>
+        <ion-tab [root]="Comments" [rootParams]="comments" [tabTitle]="'Comments '+ event.comments.length" tabIcon="text"></ion-tab>
+        <ion-tab [root]="LikesUp" [rootParams]="likeUpParams" tabTitle="Like Up" tabIcon="thumbs-up"></ion-tab>
+        <ion-tab [root]="LikesDown" [rootParams]="likeDownParams" tabTitle="Like Down" tabIcon="thumbs-down"></ion-tab>
       </ion-tabs>
 </ion-content>

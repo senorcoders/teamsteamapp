@@ -63,20 +63,27 @@ export class EventPage {
     this.user = MyApp.User;
     if( e.imageSrc === null || e.imageSrc === undefined ){
       let ramdon = new Date().getTime();
-      e.imageSrc = interceptor.url+ "/images/"+ ramdon+ "/events/"+ e.id; 
+      e.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/events/"+ e.id); 
     }
 
     this.event = e;
 
     //for image user that published events
     let r = new Date().getTime();
-    this.imgUser = interceptor.url+ "/images/"+ r+ "/users&thumbnail/"+ this.event.user;
+    this.imgUser = interceptor.transformUrl("/images/"+ r+ "/users&thumbnail/"+ this.event.user);
   }
 
   async ngOnInit(){
     
     console.log(this.event);
-    let userPublisher:any = await this.http.get("/user/"+ this.event.user).toPromise();  
+    let idUser:string;
+    if(Object.prototype.toString.call(this.event.user) === '[object String]'){
+      idUser = this.event.user
+    }else{
+      idUser = this.event.user.id;
+    }
+
+    let userPublisher:any = await this.http.get("/user/"+ idUser).toPromise();  
     this.username = userPublisher.username;
 
     //for geoconder location

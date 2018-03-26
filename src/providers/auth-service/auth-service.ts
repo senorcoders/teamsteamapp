@@ -19,6 +19,7 @@ class User {
   public firstName:string;
   public lastName:String;
   public team:string;
+  public token:string;
   public role:Object={
     name:""
   };
@@ -59,6 +60,7 @@ export class AuthServiceProvider {
         t.user.lastName = data.lastName;
         t.user.email = data.email;
         t.user.role = data.role;
+        t.user.token = data.token;
 
         t.SaveTeam();
       }
@@ -74,6 +76,7 @@ export class AuthServiceProvider {
 
     try{
       user = this.User();
+      MyApp.User = user;
       
       let url;
       if( user.role.name === "Player"){

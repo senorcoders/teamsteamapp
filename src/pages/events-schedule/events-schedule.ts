@@ -74,7 +74,7 @@ export class EventsSchedulePage {
         it.dateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("MM/DD/YYYY hh:mm");
         it.loadImage = false;
         let ramdon = new Date().getTime();
-        it.imageSrc = interceptor.url+ '/images/'+ ramdon+ '/events/'+ it.id;
+        it.imageSrc = interceptor.transformUrl('/images/'+ ramdon+ '/events/'+ it.id);
         let likesUp=0, likeUp=false, likesDown = 0, likeDown = false;
         for(var t of it.likes){
           if( t.like === true ){
@@ -276,10 +276,9 @@ export class EventsSchedulePage {
     });
   }
 
-  public async viewTraking(){
-    let view = this.modalCtrl.create(ViewTrakingComponent, { event : event });
+  public async viewTraking(e){
+    let view = this.modalCtrl.create(ViewTrakingComponent, { e });
     view.present();
-    console.log(view);
   }
 
 }

@@ -17,9 +17,20 @@ export class ViewTrakingComponent {
 
   public Comments=CommentsComponent;
   public LikesUp=ViewLikesComponent;
+  public LikesDown=ViewLikesComponent;
+  
+
+  //params
+  public comments:any = { like : true}
+  public likeUpParams = { like : true}
+  public likeDownParams = { like : false}
+
+  public event:any;
 
   constructor(public viewCtrl: ViewController, public navParams: NavParams) {
     console.log(this.navParams.data);
+    this.event = this.navParams.get("e");
+    this.comments = { e : this.event };
   }
 
 }

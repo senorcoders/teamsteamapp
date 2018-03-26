@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { ChatPage } from '../pages/chat/chat';
 import { interceptor } from '../providers/auth-service/interceptor';
+import { MyTaskPage } from '../pages/my-task/my-task';
 
 
 @Component({
@@ -48,8 +49,12 @@ export class MyApp {
   public username="Senorcoders";
   public userimg="./assets/imgs/user.jpg";
   public logo="./assets/imgs/logo-sign.png";
+  public defaultImageUserUrl="./assets/imgs/user-menu.png";
+  public defaultImageUser=true;
+
   public pages:Array<Object> = [
     { title : "Events", component : EventsSchedulePage, icon:"basketball" },
+    { title : "My Task", component : MyTaskPage, icon:"basketball" },
     { title : "Roster", component : RosterPage, icon:"baseball" },
     { title : "Chat", component : ChatPage, icon:"baseball" }
    ];
@@ -133,7 +138,7 @@ export class MyApp {
 
       console.log(this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id;
+      this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
       document.getElementById("nameSlide").innerText = this.user.username;
     }else{
@@ -143,15 +148,20 @@ export class MyApp {
 
     let t = this;
     this.auth.changeUser(function(){
+      t.defaultImageUser = true;
       t.user = t.auth.User();
 
       console.log(t.user);
       let ramdon = new Date().getTime();
-      t.userimg = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id;
+      t.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id);
       document.getElementById("imageSlide").setAttribute("src", t.userimg);
       document.getElementById("nameSlide").innerText = t.user.username;
     });
 
+  }
+
+  public loadImageMenu(){
+    this.defaultImageUser=false;
   }
 
   private getLocationDebug(){
@@ -234,10 +244,27 @@ export class MyApp {
       const pushObject: PushObject = MyApp.pusherNotification.init(options);
     
       pushObject.on('notification').subscribe((notification: any) =>{
+        console.log(notification.additionalData);
         //ChatPage.eventChat(notification.additionalData);
-        setTimeout(() => {
-          MyApp.event.publish('chat:received', notification.additionalData, Date.now())
-            }, Math.random() * 1800);
+        if(notification.additionalData.is === 'comment' ){
+          setTimeout(() => {
+            MyApp.event.publish('comment:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
+        }else if(notification.is === 'like' ){
+          setTimeout(() => {
+            MyApp.event.publish('like:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
+        }else if(notification.additionalData.is === 'event' ){
+          setTimeout(() => {
+            MyApp.event.publish('event:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
+        }else if(notification.additionalData.is === 'message' ){
+          setTimeout(() => {
+            MyApp.event.publish('chat:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
+        }
+
+
         console.log('Received a notification', notification);
       });
       

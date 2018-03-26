@@ -118,7 +118,7 @@ private async getMsg() {
     let mgs:any = await this.http.get("/messages/team/"+ MyApp.User.team).toPromise();
     this.msgList = await Promise.all(mgs.map(async function(item){
       let ramdon= new Date().getTime();
-      item.photo = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ item.user;
+      item.photo = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ item.user);
       return item;
     }));
 
@@ -172,7 +172,7 @@ async pushNewMsg (msg) {
   let index = this.getMsgIndexById(msg.dateTime);
   console.log(msg, index);
   if (index === -1) {
-    msg.photo = interceptor.url+ "/images/random/users/"+ msg.user;
+    msg.photo = interceptor.transformUrl("/images/random/users/"+ msg.user);
     this.ngZone.run(()=>{ this.msgList.push(msg); })
     console.log("add new message", this.msgList);
     this.scrollToBottom();

@@ -161,7 +161,7 @@ export class NewEventPage {
     //let stringbase4Image = await this.helper.urlTobase64(this.imageSrc);
 
     let event:any = {
-      team: this.team.team,
+      team: this.team,
       name : this.name,
       shortLabel : this.shortLabel,
       attendeceTracking: this.attendeceTracking,

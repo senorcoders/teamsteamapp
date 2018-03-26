@@ -13,6 +13,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { DatePicker } from '@ionic-native/date-picker';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -53,6 +54,8 @@ import { PlacePipe } from '../pipes/place/place';
 import { CommentsComponent } from '../components/comments/comments';
 import { ViewLikesComponent } from '../components/view-likes/view-likes';
 import { ViewTrakingComponent } from '../components/view-traking/view-traking';
+import { MyTaskPage } from '../pages/my-task/my-task';
+import { NewTaskPage } from '../pages/new-task/new-task';
 
 @NgModule({
   declarations: [
@@ -81,7 +84,9 @@ import { ViewTrakingComponent } from '../components/view-traking/view-traking';
     CDVPhotoLibraryPipe,
     CommentsComponent,
     ViewLikesComponent,
-    ViewTrakingComponent
+    ViewTrakingComponent,
+    MyTaskPage,
+    NewTaskPage
   ],
   imports: [
     BrowserModule,
@@ -116,7 +121,9 @@ import { ViewTrakingComponent } from '../components/view-traking/view-traking';
     GoogleMapsComponent,
     CommentsComponent,
     ViewLikesComponent,
-    ViewTrakingComponent
+    ViewTrakingComponent,
+    MyTaskPage,
+    NewTaskPage
   ],
   providers: [
     StatusBar,
@@ -138,7 +145,8 @@ import { ViewTrakingComponent } from '../components/view-traking/view-traking';
     PhotoLibrary,
     AndroidFullScreen,
     NativeGeocoder,
-    PhotoViewer
+    PhotoViewer,
+    DatePicker
   ]
 })
 export class AppModule {}

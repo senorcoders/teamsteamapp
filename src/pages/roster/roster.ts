@@ -78,7 +78,7 @@ export class RosterPage {
       
         item.loadImage = false;
         let ramdon = new Date().getTime();
-        item.image = interceptor.url+ "/images/"+ ramdon+ "/users&thumbnail/"+ item.user.id;
+        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ item.user.id);
 
         return item;
       }));
