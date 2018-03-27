@@ -56,6 +56,7 @@ import { ViewLikesComponent } from '../components/view-likes/view-likes';
 import { ViewTrakingComponent } from '../components/view-traking/view-traking';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { NewTaskPage } from '../pages/new-task/new-task';
+import { TaskPage } from '../pages/task/task';
 
 @NgModule({
   declarations: [
@@ -86,7 +87,8 @@ import { NewTaskPage } from '../pages/new-task/new-task';
     ViewLikesComponent,
     ViewTrakingComponent,
     MyTaskPage,
-    NewTaskPage
+    NewTaskPage,
+    TaskPage
   ],
   imports: [
     BrowserModule,
@@ -123,7 +125,8 @@ import { NewTaskPage } from '../pages/new-task/new-task';
     ViewLikesComponent,
     ViewTrakingComponent,
     MyTaskPage,
-    NewTaskPage
+    NewTaskPage,
+    TaskPage
   ],
   providers: [
     StatusBar,

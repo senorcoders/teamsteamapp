@@ -8,7 +8,7 @@ import { MyApp } from '../../app/app.component';
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url:string =  'http://192.168.8.102:8087'; //'http://138.68.19.227:8087'; 'http://localhost:8087';
+  public static url:string = 'http://192.168.1.2:8087'; //'http://138.68.19.227:8087'; 'http://localhost:8087';
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
