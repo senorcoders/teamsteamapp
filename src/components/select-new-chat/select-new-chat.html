@@ -1,0 +1,16 @@
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>Search...</ion-label>
+      <ion-input type="search" [(ngModel)]="search" (keyup)='filter()' ></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <ion-list>
+    <ion-item *ngFor='let player of players;' (click)='newChat(player)' [hidden]='!player.show' >
+      <h2>{{player.user.username}}</h2>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

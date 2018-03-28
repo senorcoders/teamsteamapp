@@ -5,15 +5,18 @@ import { GoogleMapsComponent } from './google-maps/google-maps';
 import { CommentsComponent } from './comments/comments';
 import { ViewTrakingComponent } from './view-traking/view-traking';
 import { ViewLikesComponent } from './view-likes/view-likes';
+import { SelectNewChatComponent } from './select-new-chat/select-new-chat';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
     ViewTrakingComponent,
-    ViewLikesComponent/*EmojiPickerComponent*/],
+    ViewLikesComponent,
+    SelectNewChatComponent/*EmojiPickerComponent*/],
 	imports: [ /*IonicPageModule.forChild(EmojiPickerComponent),*/ ],
 	exports: [GoogleMapsComponent,
     CommentsComponent,
     ViewTrakingComponent,
-    ViewLikesComponent/*EmojiPickerComponent*/]
+    ViewLikesComponent,
+    SelectNewChatComponent/*EmojiPickerComponent*/]
 })
 export class ComponentsModule {}

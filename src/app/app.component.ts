@@ -21,6 +21,7 @@ import { Storage } from '@ionic/storage';
 import { ChatPage } from '../pages/chat/chat';
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
+import { ListChatsPage } from '../pages/list-chats/list-chats';
 
 
 @Component({
@@ -56,7 +57,8 @@ export class MyApp {
     { title : "Events", component : EventsSchedulePage, icon:"basketball" },
     { title : "My Task", component : MyTaskPage, icon:"basketball" },
     { title : "Roster", component : RosterPage, icon:"baseball" },
-    { title : "Chat", component : ChatPage, icon:"baseball" }
+    { title : "Chat", component : ListChatsPage, icon:"baseball" },
+    { title : "Messages", component : ChatPage, icon:"baseball" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
@@ -226,6 +228,7 @@ export class MyApp {
         android: {
           senderID: "414026305021",
           topics: [team],
+
           sound: true,
           vibrate: true
         },
@@ -241,6 +244,8 @@ export class MyApp {
     };
 
     try{
+
+      //#region for notification in team
       const pushObject: PushObject = MyApp.pusherNotification.init(options);
     
       pushObject.on('notification').subscribe((notification: any) =>{
@@ -272,9 +277,47 @@ export class MyApp {
         MyApp.notificationEnable=true;
         console.log('Device registered', registration);
       });
-      
-      
+            
       pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      //#endregion
+
+      //#region for chat personal
+      const optionsChat: PushOptions = {
+        android: {
+          senderID: "414026305021",
+          topics: [MyApp.User.id],
+          sound: true,
+          vibrate: true
+        },
+        ios: {
+            alert: 'true',
+            badge: true,
+            sound: 'false'
+        },
+        windows: {},
+        browser: {
+            pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
+        }
+      };
+
+      const pushChat:PushObject = MyApp.pusherNotification.init(optionsChat);
+
+      pushChat.on('notification').subscribe((notification: any) =>{
+        console.log(notification.additionalData);
+          setTimeout(() => {
+            MyApp.event.publish('chatOne:received', notification.additionalData, Date.now())
+          }, Math.random() * 1800);
+
+
+        console.log('Received a notification', notification);
+      });
+
+      pushChat.on('registration').subscribe((registration: any) => {
+        console.log('Device registered', registration);
+      });
+            
+      pushChat.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      //#endregion
     }
     catch(e){
       console.error(e);

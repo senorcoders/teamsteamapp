@@ -57,6 +57,9 @@ import { ViewTrakingComponent } from '../components/view-traking/view-traking';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { NewTaskPage } from '../pages/new-task/new-task';
 import { TaskPage } from '../pages/task/task';
+import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
+import { ListChatsPage } from '../pages/list-chats/list-chats';
+import { SelectNewChatComponent } from '../components/select-new-chat/select-new-chat';
 
 @NgModule({
   declarations: [
@@ -88,7 +91,10 @@ import { TaskPage } from '../pages/task/task';
     ViewTrakingComponent,
     MyTaskPage,
     NewTaskPage,
-    TaskPage
+    TaskPage,
+    ChatOnePersonPage,
+    ListChatsPage,
+    SelectNewChatComponent
   ],
   imports: [
     BrowserModule,
@@ -126,7 +132,10 @@ import { TaskPage } from '../pages/task/task';
     ViewTrakingComponent,
     MyTaskPage,
     NewTaskPage,
-    TaskPage
+    TaskPage,
+    ChatOnePersonPage,
+    ListChatsPage,
+    SelectNewChatComponent
   ],
   providers: [
     StatusBar,
