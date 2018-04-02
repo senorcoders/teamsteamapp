@@ -9,20 +9,17 @@ import {App} from "ionic-angular";
 import { NativeGeocoder, 
   NativeGeocoderReverseResult, 
   NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 
-/*
-  Generated class for the HelpersProvider provider.
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 @Injectable()
 export class HelpersProvider {
   public static lat:string="51.5033640";
   public static lng:string="-0.12762500";
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
-    public app: App, public nativeGeocoder:NativeGeocoder
+    public app: App, public nativeGeocoder:NativeGeocoder,
+    public datePicker: DatePicker
   ) {
     
   }
@@ -151,7 +148,8 @@ public Camera(parameters):Promise<string>{
   }
 
 
-public async locationToPlaces(value){
+
+  public async locationToPlaces(value){
   let response:NativeGeocoderReverseResult;
     try{
       let obj:NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
@@ -164,5 +162,16 @@ public async locationToPlaces(value){
     return response;
 }
 
+public nativeDatePicker(options?:DatePickerOptions):Promise<Date>{
+
+  options = options || {
+    date: new Date(),
+    mode: 'datetime',
+    androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  };
+  options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT;
+
+  return this.datePicker.show(options);
+}
 
 }

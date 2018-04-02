@@ -45,9 +45,7 @@ export class MemberRosterPage {
     this.updateImageCallback = this.navParams.get("updateImage");
     this.index = this.navParams.get("index");
 
-    if( moment(this.player.birthDay, "MM/DD/YYYY", true).isValid() ){
-      this.player.birthDay = moment(this.player.birthDay, "MM/DD/YYYY").format("YYYY-MM-DD");
-    }
+    this.player.birthDayParsed = moment(this.player.birthDay).format("DD MMM YYYY");
     
     if( this.player.positions !== undefined ){
       if( Object.prototype.toString.call(this.player.positions) != '[object String]' ){
@@ -68,6 +66,14 @@ export class MemberRosterPage {
     cts = await this.http.get("/contacts/user/"+ this.player.user.id).toPromise();
     this.contacts = cts;
     console.log(this.contacts);
+  }
+
+  public setDate(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    .then(date=>{
+      this.player.birthDayParsed = moment(date).format("DD MMM YYYY");
+      this.player.birthDay = moment(date).toISOString();
+    })
   }
 
   public success(){
@@ -188,8 +194,6 @@ export class MemberRosterPage {
     player.positions = player.positions.split(",");
     delete player.user;
     delete player.image;
-
-    player.birthDay = moment(player.birthDay, "YYYY-MM-DD").format("MM/DD/YYYY");
 
     let user = this.player.user;
 

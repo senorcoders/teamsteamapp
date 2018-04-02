@@ -75,8 +75,7 @@ export class EditEventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
-     private auth: AuthServiceProvider,
-    private http: HttpClient,
+    private auth: AuthServiceProvider, private http: HttpClient,
     private helper: HelpersProvider, public modalCtrl: ModalController
   ) {
     this.event = this.navParams.get("event");
@@ -95,7 +94,7 @@ export class EditEventPage {
     this.shortLabel = this.event.shortLabel || "";
     this.repeats = this.event.repeats;
     this.repeatsOption = this.event.repeatsOption || "";
-    this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("MM/DD/YYYY");
+    this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("DD MMM YYYY");
     this.time = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("HH:mm");
     this.attendeceTracking = this.event.attendeceTracking;
     this.notifyTeam = this.event.notifyTeam;
@@ -113,6 +112,20 @@ export class EditEventPage {
   async ionViewDidLoad(){
     let places = await this.helper.locationToPlaces(this.location.position);
     this.location.place = places[0];
+  }
+
+  public setDate(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    .then(date=>{
+      this.date = moment(date).format("DD MMM YYYY");
+    })
+  }
+
+  public setTime(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'time' })
+    .then(date=>{
+      this.time = moment(date).format("HH:mm");
+    })
   }
 
   public loadPlace(){
@@ -214,7 +227,7 @@ export class EditEventPage {
 
     if( this.repeats == "weekly" ){
       event.repeatsOption = this.repeatsOption;
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
+      event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
     }else if( this.repeats == 'no-repeat' ){
 
       if( this.date == '' ){
@@ -228,7 +241,7 @@ export class EditEventPage {
         return;
       }
 
-      event.dateTime = this.date+ " "+ this.time;
+      event.dateTime =  moment(this.date+ " "+ this.time, "DD MMM YYYY HH:mm").toISOString();
     }else{
       event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
     }

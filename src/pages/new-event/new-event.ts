@@ -8,6 +8,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 import { Observable } from 'rxjs/Observable';
+import { MyApp } from '../../app/app.component';
  
 
 @IonicPage()
@@ -54,8 +55,7 @@ export class NewEventPage {
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public alertCtrl: AlertController,
-    public loading: LoadingController,
+    public alertCtrl: AlertController, public loading: LoadingController, 
     private auth: AuthServiceProvider, private http: HttpClient, 
     private helper:HelpersProvider, public modalCtrl: ModalController
   ) {
@@ -70,6 +70,20 @@ export class NewEventPage {
     /*let places = await this.helper.locationToPlaces(this.location.position);
     this.location.place = places[0];
     console.log(this.location);*/
+  }
+
+  public setDate(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    .then(date=>{
+      this.date = moment(date).format("DD MMM YYYY");
+    })
+  }
+
+  public setTime(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'time' })
+    .then(date=>{
+      this.time = moment(date).format("HH:mm");
+    })
   }
 
   //#region for change photo
@@ -168,13 +182,13 @@ export class NewEventPage {
       notifyTeam: this.notifyTeam,
       optionalInfo : this.optionalInfo,
       description: this.description,
-      user: this.auth.User().id,
+      user: MyApp.User.id,
       repeats: this.repeats
     };
 
     if( this.repeats == "weekly" ){
       event.repeatsOption = this.repeatsOption;
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
+      event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
     }else if( this.repeats == 'no-repeat' ){
 
       if( this.date == '' ){
@@ -188,7 +202,7 @@ export class NewEventPage {
         return;
       }
 
-      event.dateTime = this.date+ " "+ this.time;
+      event.dateTime = moment(this.date+ " "+ this.time, "DD MMM YYYY HH:mm").toISOString();
     }else{
       event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
     }

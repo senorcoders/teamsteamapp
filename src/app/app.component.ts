@@ -298,7 +298,7 @@ export class MyApp {
         browser: {
             pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
         }
-      };
+      };  
 
       const pushChat:PushObject = MyApp.pusherNotification.init(optionsChat);
 

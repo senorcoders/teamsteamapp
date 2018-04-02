@@ -53,8 +53,7 @@
         </ion-item>
 
           <ion-item>
-              <ion-label floating>BirthDay</ion-label>
-              <ion-datetime displayFormat="MM/DD/YYYY" [(ngModel)]="player.birthDay"></ion-datetime>
+              <h4 class="date-time" (click)="setDate()">BirthDay: {{player.birthDayParsed}}</h4>
             </ion-item>
 
             <ion-item>

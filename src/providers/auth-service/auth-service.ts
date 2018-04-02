@@ -47,7 +47,6 @@ export class AuthServiceProvider {
       if( data.hasOwnProperty("message") && data.message == "User not found" ){
         callback(data, null);
       }else{
-        callback(null, data);
         
         t.menuCtrl.swipeEnable(true);
 
@@ -62,7 +61,9 @@ export class AuthServiceProvider {
         t.user.role = data.role;
         t.user.token = data.token;
 
-        t.SaveTeam();
+        t.SaveTeam(function(){
+          callback(null, data);
+        });
       }
     }, function(err){
       console.log(err);
@@ -71,7 +72,7 @@ export class AuthServiceProvider {
     
   }
 
-  public async SaveTeam(){
+  public async SaveTeam(callback:Function){
     let user;
 
     try{
@@ -104,8 +105,10 @@ export class AuthServiceProvider {
       MyApp.User = this.user;
       this.storage.set("team", team);
       this.changesUpdate();
+      callback();
     }catch(e){
       console.error(e);
+      callback();
     }
 
   }

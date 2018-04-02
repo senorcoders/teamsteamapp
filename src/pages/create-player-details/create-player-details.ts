@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController, MenuController } 
 import { HttpClient } from '@angular/common/http';
 import { RosterPage } from '../roster/roster';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { HelpersProvider } from '../../providers/helpers/helpers';
+import * as moment from 'moment';
 
 /**
  * Generated class for the CreatePlayerDetailsPage page.
@@ -38,7 +40,8 @@ export class CreatePlayerDetailsPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public alertCtrl: AlertController, public http: HttpClient,
-  public menuCtrl: MenuController, public auth: AuthServiceProvider
+  public menuCtrl: MenuController, public auth: AuthServiceProvider,
+  public helper: HelpersProvider
   ) {
     this.user = this.navParams.get("user");
   }
@@ -57,6 +60,13 @@ export class CreatePlayerDetailsPage {
     var res = await this.http.get(url).toPromise();
 
     this.team = res;
+  }
+
+  public setDate(){
+    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    .then(date=>{
+      this.birthDay = moment(date).format("DD MMM YYYY");
+    })
   }
 
   public addContact(){
@@ -135,7 +145,7 @@ export class CreatePlayerDetailsPage {
 
     let user:any, player:any = {
       team: this.team.team,
-      birthDay: this.birthDay,
+      birthDay: moment(this.birthDay, "DD MMM YYYY").toISOString(),
       yerseyNumber: this.yerseyNumber,
       gender: this.gender,
       nonPlayer: this.nonPlayer,

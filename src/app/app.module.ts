@@ -14,6 +14,7 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DatePicker } from '@ionic-native/date-picker';
+import { LongPressModule } from 'ionic-long-press';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -104,7 +105,8 @@ import { SelectNewChatComponent } from '../components/select-new-chat/select-new
          driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     HttpModule,
-    HttpClientModule
+    HttpClientModule,
+    LongPressModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

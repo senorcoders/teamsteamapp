@@ -53,13 +53,11 @@
       </ion-item>
 
     <ion-item [hidden]="repeats == 'weekly' || repeats == 'daily'">
-      <ion-label floating>Date</ion-label>
-      <ion-datetime [min]="minDate" [max]="maxDate" displayFormat="MM/DD/YYYY" [(ngModel)]="date" > </ion-datetime>
+      <h4 class="date-time" (click)="setDate()" >Date: {{date}} </h4>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Time hour-minute</ion-label>
-      <ion-datetime displayFormat="HH:mm" [(ngModel)]="time" > </ion-datetime>
+      <h4 class="date-time" (click)="setTime()" >Time: {{time}} </h4>
     </ion-item>
 
     <ion-item>

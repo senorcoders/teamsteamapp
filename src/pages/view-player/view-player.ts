@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import * as moment from 'moment';
 
 /**
  * Generated class for the ViewPlayerPage page.
@@ -32,6 +33,7 @@ export class ViewPlayerPage {
       this.player.positions = this.player.positions.split(",");
     }
 
+    this.player.birthDateParsed = moment(this.player.birthDay).format("DD MMM YYYY");
     let random = new Date().getTime();
     this.imageSrc = interceptor.transformUrl("/images/"+ random+ "/users/"+ this.player.user.id);
     

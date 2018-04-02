@@ -29,7 +29,7 @@ export class EventsSchedulePage {
 
   public events:Array<any>=[];
 
-  public by:string="past";
+  public by:string="upcoming";
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -49,6 +49,7 @@ export class EventsSchedulePage {
 
     try{
       this.user = await this.auth.User();
+      //console.log(this.user, MyApp.User);
       if( this.user.role.name != "Manager"){
         this.addEventButton.nativeElement.style.display = "none";
       }

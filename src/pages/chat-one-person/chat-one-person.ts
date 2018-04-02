@@ -38,6 +38,10 @@ export class ChatOnePersonPage {
     public navParams: NavParams) {
     this.to = this.navParams.get("user");
     this.from = MyApp.User;
+    if( this.to.hasOwnProperty('_id') ){
+      this.to.id = this.to._id;
+      delete this.to._id;
+    }
   }
 
   ionViewWillLeave() {
