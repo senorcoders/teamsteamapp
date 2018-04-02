@@ -1,0 +1,28 @@
+<ion-header no-border>
+    <ion-toolbar>
+        <ion-segment color="base">
+            <ion-segment-button value="yes" (ionSelect)="select('yes')">
+              Yes
+            </ion-segment-button>
+            <ion-segment-button value="no" (ionSelect)="select('no')">
+              No
+            </ion-segment-button>
+            <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
+              Maybe
+            </ion-segment-button>
+          </ion-segment>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-content>
+
+    <ion-list>
+      <ion-item *ngFor="let tracking of trackingsFilter;" >
+          <ion-avatar item-start>
+            <img [src]="tracking.imageSrc">
+          </ion-avatar>
+          {{tracking.user.username}}
+      </ion-item>
+    </ion-list>
+
+  </ion-content>

@@ -49,10 +49,6 @@ export class EventsSchedulePage {
 
     try{
       this.user = await this.auth.User();
-      //console.log(this.user, MyApp.User);
-      if( this.user.role.name != "Manager"){
-        this.addEventButton.nativeElement.style.display = "none";
-      }
 
       this.team = this.user.team;
       console.log("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team);

@@ -1,4 +1,13 @@
 <!-- Generated template for the ViewLikesComponent component -->
-<div>
-  {{text}}
-</div>
+<ion-content>
+  <ion-list>
+    
+    <ion-item *ngFor='let user of users;' >
+      <ion-avatar item-start>
+        <img [src]="user.imageSrc">
+      </ion-avatar>
+      {{user.username}}
+    </ion-item>
+
+  </ion-list>
+</ion-content>

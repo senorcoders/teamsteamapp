@@ -1,2 +1,8 @@
-<div>
+<div id="tracking">
+    <h2>Tracking</h2>
+    <div>
+        <button (click)="asingResponse('yes')" ion-button small [ngClass]="tracking.info === 'yes' ? 'select-button' : '' " >Yes</button>
+        <button (click)="asingResponse('no')" ion-button small [ngClass]="tracking.info === 'no' ? 'select-button' : '' " >No</button>
+        <button (click)="asingResponse('maybe')" ion-button small [ngClass]="tracking.info === 'maybe' ? 'select-button' : '' " >Maybe</button>
+    </div>
 </div>

@@ -7,19 +7,22 @@ import { ViewTrakingComponent } from './view-traking/view-traking';
 import { ViewLikesComponent } from './view-likes/view-likes';
 import { SelectNewChatComponent } from './select-new-chat/select-new-chat';
 import { TrackingEventComponent } from './tracking-event/tracking-event';
+import { TrackingEventManagerComponent } from './tracking-event-manager/tracking-event-manager';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
     ViewTrakingComponent,
     ViewLikesComponent,
     SelectNewChatComponent,
-    TrackingEventComponent/*EmojiPickerComponent*/],
+    TrackingEventComponent,
+    TrackingEventManagerComponent/*EmojiPickerComponent*/],
 	imports: [ /*IonicPageModule.forChild(EmojiPickerComponent),*/ ],
 	exports: [GoogleMapsComponent,
     CommentsComponent,
     ViewTrakingComponent,
     ViewLikesComponent,
     SelectNewChatComponent,
-    TrackingEventComponent/*EmojiPickerComponent*/]
+    TrackingEventComponent,
+    TrackingEventManagerComponent/*EmojiPickerComponent*/]
 })
 export class ComponentsModule {}

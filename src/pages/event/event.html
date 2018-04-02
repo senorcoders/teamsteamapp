@@ -30,27 +30,33 @@
         <p style="text-align: right;">{{event.parsedTime}}</p>
         <ion-row>
           <ion-col col-3>
-            <button ion-button icon-left clear small>
+            <button ion-button icon-left clear small (click)="like(event, true)">
               <ion-icon name="thumbs-up"></ion-icon>
-              <div>12</div>
+              <div>{{event.likesUp}}</div>
             </button>
           </ion-col>
           <ion-col col-3>
-              <button ion-button icon-left clear small>
+              <button ion-button icon-left clear small (click)="like(event, false)">
                 <ion-icon name="thumbs-down"></ion-icon>
-                <div>12</div>
+                <div>{{event.likesDown}}</div>
               </button>
             </ion-col>
           <ion-col col-6>
-            <button ion-button icon-left>
+            <button ion-button icon-left (click)="viewTraking(event)">
               <ion-icon name="text"></ion-icon>
-              <div>4 Comments</div>
+              <div>{{event.comments.length}} Comments</div>
             </button>
           </ion-col>
         </ion-row>
       </ion-item>
 
       <div class="divider"> </div>
+
+      <div id="tracking-section" (click)="viewTrakingEvent()" >
+        <!--ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon-->
+        <h3>Tracking</h3>
+        <ion-icon name="md-arrow-dropright-circle"></ion-icon>
+      </div>
       
       <ion-item class="location-event">
         <h2 style="text-transform: uppercase;" class="titles-event">Location</h2>

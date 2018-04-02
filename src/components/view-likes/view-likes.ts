@@ -1,22 +1,51 @@
 import { Component } from '@angular/core';
+import { NavParams } from 'ionic-angular';
+import { HttpClient } from '@angular/common/http';
+import { HelpersProvider } from '../../providers/helpers/helpers';
+import { interceptor } from '../../providers/auth-service/interceptor';
 
-/**
- * Generated class for the ViewLikesComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'view-likes',
   templateUrl: 'view-likes.html'
 })
 export class ViewLikesComponent {
 
-  text: string;
+  public likes:Array<any>=[];
+  public users:Array<any>=[];
 
-  constructor() {
-    console.log('Hello ViewLikesComponent Component');
-    this.text = 'Hello World';
+  constructor(private navParams: NavParams, public http: HttpClient
+  ) {
+    
+    this.likes = this.navParams.get("likes");
+
+  }
+
+  async ngOnInit(){
+    try{
+      let arr = [];
+      for(let like of this.likes){
+        let user = await this.getUser(like.user);
+        user.imageSrc = interceptor.transformUrl("/images/random/users&thumbnail/"+ user.id);
+        arr.push(user);
+      }
+      this.users = arr;
+    }catch(e){
+      console.error(e);
+    }
+  }
+
+  private getUser(id:string):Promise<any>{
+    let t = this;
+    return new Promise(function(resolve, reject){
+      t.http.get("/user/"+ id).toPromise()
+      .then(function(user){
+        resolve(user);
+      })
+      .catch(function(e){
+        reject(e);
+      });
+
+    });
   }
 
 }

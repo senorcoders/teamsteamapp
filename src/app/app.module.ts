@@ -61,6 +61,8 @@ import { TaskPage } from '../pages/task/task';
 import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { SelectNewChatComponent } from '../components/select-new-chat/select-new-chat';
+import { TrackingEventComponent } from '../components/tracking-event/tracking-event';
+import { TrackingEventManagerComponent } from '../components/tracking-event-manager/tracking-event-manager';
 
 @NgModule({
   declarations: [
@@ -95,7 +97,9 @@ import { SelectNewChatComponent } from '../components/select-new-chat/select-new
     TaskPage,
     ChatOnePersonPage,
     ListChatsPage,
-    SelectNewChatComponent
+    SelectNewChatComponent,
+    TrackingEventComponent,
+    TrackingEventManagerComponent
   ],
   imports: [
     BrowserModule,
@@ -137,7 +141,9 @@ import { SelectNewChatComponent } from '../components/select-new-chat/select-new
     TaskPage,
     ChatOnePersonPage,
     ListChatsPage,
-    SelectNewChatComponent
+    SelectNewChatComponent,
+    TrackingEventComponent,
+    TrackingEventManagerComponent
   ],
   providers: [
     StatusBar,

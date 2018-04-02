@@ -22,8 +22,8 @@ export class ViewTrakingComponent {
 
   //params
   public comments:any = { like : true}
-  public likeUpParams = { like : true}
-  public likeDownParams = { like : false}
+  public likeUpParams:any = { like : true}
+  public likeDownParams:any = { like : false}
 
   public event:any;
 
@@ -31,6 +31,14 @@ export class ViewTrakingComponent {
     console.log(this.navParams.data);
     this.event = this.navParams.get("e");
     this.comments = { e : this.event };
+    this.likeUpParams.likes = this.event.likes.filter(function(item){
+      return item.like === true;
+    });
+
+    this.likeDownParams.likes = this.event.likes.filter(function(item){
+      return item.like === false;
+    });
+
   }
 
 }

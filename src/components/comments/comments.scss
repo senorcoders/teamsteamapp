@@ -1,5 +1,9 @@
 comments {
-    $userBackgroundColor: #387ef5;
+  .scroll-content{
+    margin-bottom: 56px !important;
+  }
+
+  $userBackgroundColor: #387ef5;
   $toUserBackgroundColor: #fff;
 
   ion-content .scroll-content {

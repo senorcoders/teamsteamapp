@@ -48,7 +48,7 @@
         <ion-col col-3>
           <button ion-button (click)="like(e, true)" color="plight" [ngClass]="{'select': e.likeUp }" icon-left clear small>
             <ion-icon name="thumbs-up"></ion-icon>
-            <div>{{e.likesUp}} </div>
+            <div>{{e.likesUp}}</div>
           </button>
         </ion-col>
         <ion-col col-3>
@@ -67,7 +67,7 @@
     </ion-card-content>
   </ion-card>
 
-  <ion-fab bottom right #addEventButton>
+  <ion-fab bottom right [hidden]='user.role.name != "Manager"' >
     <button color="base" ion-fab icon-only (click)="addEvent()" >
       <ion-icon name="md-add"></ion-icon>
     </button>
