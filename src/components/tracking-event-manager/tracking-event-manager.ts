@@ -1,7 +1,8 @@
 import { Component } from '@angular/core';
-import { ViewController, NavParams } from 'ionic-angular';
+import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-chat-to-perfil-player';
 
 /**
  * Generated class for the TrackingEventManagerComponent component.
@@ -19,9 +20,12 @@ export class TrackingEventManagerComponent {
   public trackings:Array<any>=[];
   public trackingsFilter:Array<any>=[];
   private selectFilter:string='yes';
+  public countYes:number=0;
+  public countNo:number=0;
+  public countMaybe:number=0;
 
   constructor(private viewCtrl: ViewController, private navParams: NavParams,
-    private http: HttpClient
+    private http: HttpClient, private modalCtrl: ModalController
   ) {
     this.event = this.navParams.get("e");
   }
@@ -29,9 +33,20 @@ export class TrackingEventManagerComponent {
   async ngOnInit(){
     try{
       let trackings:any = await this.http.get("/trackingevent/event/"+ this.event.id).toPromise();
+
+      let t = this;
+
       console.log(trackings);
       this.trackings = await Promise.all( trackings.map( async function(item){
         item.imageSrc = interceptor.transformUrl("/images/random/users&thumbnail/"+ item.user.id);
+
+        if( item.info == 'yes' )
+          t.countYes += 1;
+        else if( item.info == 'no' )
+          t.countNo += 1;
+        else
+          t.countMaybe += 1;
+
         return item;
       }) );
       await this.filter();
@@ -55,6 +70,11 @@ export class TrackingEventManagerComponent {
     this.filter();
   }
 
-
+  public presentTo(user:any){
+    console.log(user);
+    this.modalCtrl.create(ToChatToPerfilPlayerComponent, {
+      user: user
+    }).present();
+  }
 
 }

@@ -2,13 +2,13 @@
     <ion-toolbar>
         <ion-segment color="base">
             <ion-segment-button value="yes" (ionSelect)="select('yes')">
-              Yes
+              Yes {{countYes}}
             </ion-segment-button>
             <ion-segment-button value="no" (ionSelect)="select('no')">
-              No
+              No {{countNo}}
             </ion-segment-button>
             <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
-              Maybe
+              Maybe {{countMaybe}}
             </ion-segment-button>
           </ion-segment>
     </ion-toolbar>
@@ -17,7 +17,7 @@
   <ion-content>
 
     <ion-list>
-      <ion-item *ngFor="let tracking of trackingsFilter;" >
+      <ion-item *ngFor="let tracking of trackingsFilter;" (click)="presentTo(tracking.user)" >
           <ion-avatar item-start>
             <img [src]="tracking.imageSrc">
           </ion-avatar>

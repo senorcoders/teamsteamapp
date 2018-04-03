@@ -38,7 +38,7 @@ export class ViewTrakingComponent {
     this.likeDownParams.likes = this.event.likes.filter(function(item){
       return item.like === false;
     });
-
+    console.log(this.likeDownParams);
   }
 
 }
