@@ -4,13 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { CreatePlayerDetailsPage } from '../create-player-details/create-player-details';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-/**
- * Generated class for the CreatePlayerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-create-player',
@@ -101,7 +94,7 @@ export class CreatePlayerPage {
   public changePhoto(){
     
     let t = this;
-
+    
     this.helper.Camera({ width : 200, height: 200, quality: 75 }).then((result)=>{
       t.imageSrc = result;
     })

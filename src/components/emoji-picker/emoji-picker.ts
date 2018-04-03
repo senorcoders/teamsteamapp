@@ -2,13 +2,6 @@ import { Component, forwardRef } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from "@angular/forms";
 import { EmojiProvider } from '../../providers/emoji/emoji';
 
-/**
- * Generated class for the EmojiPickerComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
-
 export const EMOJI_PICKER_VALUE_ACCESSOR: any = {
   provide: NG_VALUE_ACCESSOR,
   useExisting: forwardRef(() => EmojiPickerComponent),

@@ -1,9 +1,6 @@
-/*
-  Generated class for the EmojiProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/**
+ * a qui estan guardador todos los emojis que se usaran para el chat y commentarios
+ */
 
 export class EmojiProvider {
 

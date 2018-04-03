@@ -4,10 +4,7 @@ import { ViewLikesComponent } from '../view-likes/view-likes';
 import { NavParams, ViewController } from 'ionic-angular';
 
 /**
- * Generated class for the ViewTrakingComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * home para ver y publicar los comentarios y ver likes del evento
  */
 @Component({
   selector: 'view-traking',

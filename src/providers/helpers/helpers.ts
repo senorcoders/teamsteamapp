@@ -11,6 +11,9 @@ import { NativeGeocoder,
   NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 
+/**
+ * este servicio contiene funciones generales que son usadas mas de una por las diferentes componentes
+ */
 
 @Injectable()
 export class HelpersProvider {
@@ -24,15 +27,18 @@ export class HelpersProvider {
     
   }
 
+  //Para devolver la position de ejemplo para pruebas
   public static Position(){
     return { lat : HelpersProvider.lat, lng: HelpersProvider.lng };
   }
 
+  //devuelve true si se esta en la plataforma ios o android
   public static Platform():boolean{
     let t = new Platform();
     return t.is("android") || t.is("ios");
   }
 
+  //para convertir url base 64 a blob
   public dataURItoBlob(dataURI) {
     var binary = atob(dataURI.split(',')[1]);
     var array = [];
@@ -44,6 +50,7 @@ export class HelpersProvider {
     });
   }
 
+  //convertir un blob un tipo de archivo para escritura
   public blobToFile = (theBlob: Blob, fileName:string): File => {
       var b: any = theBlob;
       //A Blob() is almost a File() - it's just missing the two properties below which we will add
@@ -54,6 +61,7 @@ export class HelpersProvider {
       return <File>theBlob;
   }
 
+  //convertir una image a base 64 url
   public fileToBase64(file):Promise<string> {
     return new Promise(function(resolve, reject){
 
@@ -69,6 +77,7 @@ export class HelpersProvider {
     });
  }
 
+ //usa el endpoint del server para volver mas liviana una imagen
 public PerformanceImage(base64:string):Promise<string>{
   let t = this;
   return new Promise(async function(resolve, reject){
@@ -87,6 +96,7 @@ public PerformanceImage(base64:string):Promise<string>{
   });
 }
 
+//Para tomar un url de imagen y convertirlo a base 64
 public urlTobase64(url):Promise<string> {
   let t = this;
   return new Promise(function(resolve, reject){
@@ -118,6 +128,7 @@ public urlTobase64(url):Promise<string> {
   });
 }
 
+//Para abrir la camera desde cualquier component
 public Camera(parameters):Promise<string>{
   var t = this;
   parameters.width = parameters.width || 300;
@@ -161,6 +172,8 @@ public Camera(parameters):Promise<string>{
     }
     return response;
 }
+
+//Para mostrar un picker native de date time y que se mas rapdio al seleccionar
 
 public nativeDatePicker(options?:DatePickerOptions):Promise<Date>{
 

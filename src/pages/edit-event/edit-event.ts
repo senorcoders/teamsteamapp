@@ -225,6 +225,7 @@ export class EditEventPage {
       repeats: this.repeats
     };
 
+    //Para chekear como se guardara la fecha de los eventos
     if( this.repeats == "weekly" ){
       event.repeatsOption = this.repeatsOption;
       event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();

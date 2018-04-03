@@ -13,12 +13,8 @@ import 'rxjs/add/observable/fromEvent';
 import * as Rx from 'rxjs';
 
 /**
- * Generated class for the ChatPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * este es para chat de todo el equipo
  */
-
 @IonicPage()
 @Component({
   selector: 'page-chat',

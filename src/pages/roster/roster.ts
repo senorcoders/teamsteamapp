@@ -9,10 +9,7 @@ import { CreatePlayerPage } from '../create-player/create-player';
 import { MyApp } from '../../app/app.component';
 
 /**
- * Generated class for the RosterPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * para mostrar la lista de jugadores del equipo
  */
 
 @IonicPage()

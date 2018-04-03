@@ -7,12 +7,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import * as moment from 'moment';
 
 /**
- * Generated class for the CreatePlayerDetailsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * para agregar los detalles del jugador
  */
-
 @IonicPage()
 @Component({
   selector: 'page-create-player-details',

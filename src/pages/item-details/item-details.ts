@@ -4,6 +4,9 @@ import { NavParams } from 'ionic-angular';
 
 import { LibraryItem } from '@ionic-native/photo-library';
 
+/**
+ * este component es para visualizar una imagen de la libreria de imagenes
+ */
 @Component({
   selector: 'page-item-details',
   templateUrl: 'item-details.html'

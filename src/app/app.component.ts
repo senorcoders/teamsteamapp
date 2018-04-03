@@ -8,7 +8,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
-import { HomePage } from '../pages/home/home';
 import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
@@ -70,6 +69,7 @@ export class MyApp {
     public zone: NgZone
   ) {
 
+    //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
     MyApp.httpCliente= this.http;
     MyApp.authService = this.auth;
     MyApp.pusherNotification = this.push;
@@ -119,11 +119,14 @@ export class MyApp {
       position: "bottom"
     });
 
+    //se ejecuta cuando se conecta a internet
     this.network.onConnect().subscribe(data => {
       this.toas.dismiss();
       console.log(data);
     }, error => console.error(error));
-   
+    
+    //se ejecuta cuando se desconecta de internet
+    //se muestra al usuario que debe estar conectado
     this.network.onDisconnect().subscribe(data => {
       console.log(data)
       this.toas.present();
@@ -148,6 +151,7 @@ export class MyApp {
       return;
     }
 
+    //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
     let t = this;
     this.auth.changeUser(function(){
       t.defaultImageUser = true;
@@ -207,16 +211,6 @@ export class MyApp {
   //#region for push notifications configuration
   private static notifcations(team){
 
-    // Create a channel (Android O and above). You'll need to provide the id, description and importance properties.
-    /*this.push.createChannel({
-      id: "testchannel1",
-      description: "My first test channel",
-      // The importance property goes from 1 = Lowest, 2 = Low, 3 = Normal, 4 = High and 5 = Highest.
-      importance: 3
-    }).then(() => console.log('Channel created'));*/
-    
-    // Delete a channel (Android O and above)
-    //this.push.deleteChannel('testchannel1').then(() => console.log('Channel deleted'));
     
     // Return a list of currently configured channels
     MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))

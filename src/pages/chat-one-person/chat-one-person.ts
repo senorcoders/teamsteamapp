@@ -6,6 +6,9 @@ import { Observable} from 'rxjs/Observable'
 import { interceptor } from '../../providers/auth-service/interceptor';
 import * as moment from 'moment';
 
+/**
+ * este es para chat entre el manager y un solo jugador
+ */
 @IonicPage()
 @Component({
   selector: 'page-chat-one-person',

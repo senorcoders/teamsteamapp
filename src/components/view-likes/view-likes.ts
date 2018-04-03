@@ -4,6 +4,9 @@ import { HttpClient } from '@angular/common/http';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { interceptor } from '../../providers/auth-service/interceptor';
 
+/**
+ * muestra la cantidad like y los datos de los players 
+ */
 @Component({
   selector: 'view-likes',
   templateUrl: 'view-likes.html'

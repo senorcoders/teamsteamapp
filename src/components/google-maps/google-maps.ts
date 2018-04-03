@@ -11,6 +11,7 @@ import {
   Marker
  } from '@ionic-native/google-maps';
 
+/* component para selecionar la ubicacion en google maps */
 @Component({
   selector: 'google-maps',
   templateUrl: 'google-maps.html'
@@ -34,6 +35,7 @@ export class GoogleMapsComponent {
 
     this.load.present({ disableApp : true });
 
+    //comprabamos si los parametros de la location fueron enviados sino usamos la posicion actual
     let t = this;
     if( this.navParams.get('location') === null || this.navParams.get('location') === undefined ){
       this.geolocation.getCurrentPosition().then((resp) => {
@@ -49,6 +51,7 @@ export class GoogleMapsComponent {
   }
 
   ngOnInit(){
+    //esto sirve para ocultar todas las paginas y mostra linear layout del plugin
     let style = document.createElement("style");
     style.innerText = String.raw`
       .ion-page.show-page:not(google-maps) {

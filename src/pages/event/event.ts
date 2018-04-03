@@ -24,12 +24,6 @@ import { ViewTrakingComponent } from '../../components/view-traking/view-traking
 import { TrackingEventComponent } from '../../components/tracking-event/tracking-event';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
 
-/**
- * Generated class for the EventPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({

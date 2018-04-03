@@ -4,10 +4,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import * as moment from 'moment';
 
 /**
- * Generated class for the ViewPlayerPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Para visualizar el player
  */
 
 @IonicPage()

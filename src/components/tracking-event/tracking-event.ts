@@ -3,12 +3,7 @@ import { ViewController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 
-/**
- * Generated class for the TrackingEventComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
+/* este es para el traking o asistencia al evento */
 @Component({
   selector: 'tracking-event',
   templateUrl: 'tracking-event.html'
@@ -37,6 +32,7 @@ export class TrackingEventComponent {
 
   }
 
+  //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(response){
     let guardar = this.tracking.user !== undefined;
     try{
@@ -49,6 +45,7 @@ export class TrackingEventComponent {
         newTrack = await this.http.put("/trackingevent/"+ this.tracking.id, { info: response }).toPromise();
         this.tracking = newTrack;
       }
+      this.viewCtrl.dismiss();
     }
     catch(e){
       console.error(e);

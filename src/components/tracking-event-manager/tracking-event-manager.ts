@@ -5,10 +5,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-chat-to-perfil-player';
 
 /**
- * Generated class for the TrackingEventManagerComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * este es para el traking o asistencia que se le muestra al manager
  */
 @Component({
   selector: 'tracking-event-manager',

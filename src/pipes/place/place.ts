@@ -3,18 +3,12 @@ import { NativeGeocoder,
   NativeGeocoderReverseResult, 
   NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 
-/**
- * Generated class for the PlacePipe pipe.
- *
- * See https://angular.io/api/core/Pipe for more info on Angular Pipes.
- */
 @Pipe({
   name: 'place',
 })
 export class PlacePipe implements PipeTransform {
-  /**
-   * Takes a value and makes it lowercase.
-   */
+
+  //Para obtener el geolocation name apartir de ILatLng
   constructor(public nativeGeocoder:NativeGeocoder){}
   async transform(value: any, ...args) {
     let response:string;

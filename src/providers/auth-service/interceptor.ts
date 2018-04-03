@@ -5,6 +5,11 @@ import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthServiceProvider } from './auth-service';
 import { MyApp } from '../../app/app.component';
 
+/**
+ * intercepta todos lo peticiones que se acen por de http cliente para añadir 
+ * la base url y token de seguridad
+ */
+
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
@@ -35,6 +40,8 @@ export class interceptor implements HttpInterceptor {
     return next.handle(req);
   }
 
+  //agrega el token de seguridad a los url, es para aquellos que no se les puede asingar header
+  //como el src de una imagen
   public static transformUrl(url):string{
     url += '?token='+ MyApp.User.token;
     return interceptor.url+ url;

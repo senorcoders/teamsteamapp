@@ -13,10 +13,7 @@ const THUMBNAIL_WIDTH = 250;
 const THUMBNAIL_HEIGHT = 150;
 
 /**
- * Generated class for the LibraryImagesPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * para ver las imagenes que estan dentro de library imagenes del telefono
  */
 
 @IonicPage()

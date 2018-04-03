@@ -5,6 +5,10 @@ import { ToastController } from 'ionic-angular';
 
 import { PhotoLibrary } from '@ionic-native/photo-library';
 
+/**
+ * para pedir permiso para acceder a la library de photos del telefono
+ */
+
 @Component({
   selector: 'page-permissions',
   templateUrl: 'permissions.html'

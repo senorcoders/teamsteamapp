@@ -4,12 +4,6 @@ import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { ChatOnePersonPage } from '../../pages/chat-one-person/chat-one-person';
 
-/**
- * Generated class for the SelectNewChatComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
- */
 @Component({
   selector: 'select-new-chat',
   templateUrl: 'select-new-chat.html'
@@ -35,6 +29,7 @@ export class SelectNewChatComponent {
     
   }
 
+  //filtrando la lista de players con el valor de entrada del input search
   public async filter(){
     let sear = this.search;
 
@@ -42,7 +37,7 @@ export class SelectNewChatComponent {
       let usn = item.user.username.toLowerCase();
       if( sear === '' ){
         item.show = true;
-      }else if( usn.includes(sear) ){
+      }else if( usn.includes(sear.toLowerCase()) ){
         item.show = true;
       }else{
         item.show = false;

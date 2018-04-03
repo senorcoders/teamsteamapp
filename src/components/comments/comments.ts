@@ -6,12 +6,6 @@ import { Observable} from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 
-/**
- * Generated class for the CommentsComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components
- */
 @Component({
   selector: 'comments',
   templateUrl: 'comments.html'
@@ -57,12 +51,14 @@ export class CommentsComponent {
       return item;
     }));
 
+    //esta funcion es para actualizar la diferencida de tiempo
     let t = this;
     this.updateTimeMessage = setInterval(function(){
       console.log("changes pipe");
       t.changeDectRef.reattach();
     }, 30*1000);
-  
+    
+    //suscripcion para cuando se recibe un nuevo commentario por medio de push notifications
     this.eventPush.subscribe('comment:received', (comment)=>{
       console.log(comment);
       this.pushNewComment(comment);

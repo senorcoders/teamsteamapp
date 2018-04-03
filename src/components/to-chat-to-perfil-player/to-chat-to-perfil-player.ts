@@ -5,11 +5,8 @@ import { ViewPlayerPage } from '../../pages/view-player/view-player';
 import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 
-/**
- * Generated class for the ToChatToPerfilPlayerComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+/* es para darle la opcion al usuario de seleccionar si 
+desea enviar un mensaje o ver el perfil del player
  */
 @Component({
   selector: 'to-chat-to-perfil-player',

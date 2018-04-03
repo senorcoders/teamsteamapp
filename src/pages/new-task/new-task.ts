@@ -6,13 +6,6 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { MyTaskPage } from '../my-task/my-task';
 
-/**
- * Generated class for the NewTaskPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-
 @IonicPage()
 @Component({
   selector: 'page-new-task',

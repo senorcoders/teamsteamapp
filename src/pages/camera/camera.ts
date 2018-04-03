@@ -8,12 +8,8 @@ import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 declare var cordova: any; // global variable for paths
 
 /**
- * Generated class for the CameraPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * este es una page donde poder visualizar correctamente la camera
  */
-
 @IonicPage()
 @Component({
   selector: 'page-camera',
@@ -65,6 +61,7 @@ export class CameraPage {
     });
   }
 
+  //Para tomar la foto
   takePicture() {
     const pictureOpts: CameraPreviewPictureOptions = {
       width: this.width,
@@ -91,6 +88,7 @@ export class CameraPage {
     this.cameraPreview.setColorEffect(randomEffect);
   }
 
+  //Para iniciar la camera cada ves que se entra a la page
   async ionViewDidLoad(){
     console.log("ionViewDidLoad "+ Math.random());
 
@@ -118,6 +116,7 @@ export class CameraPage {
 
   }
 
+  //Para iniciar la camera cada ves que se entra a la page sin haberla cerrado
   async ionViewWillEnter(){
     console.log("ionViewWillEnter "+ Math.random());
     let previewOtions: CameraPreviewOptions = {
@@ -141,11 +140,13 @@ export class CameraPage {
     }
   }
   
+  //para detener la camera cuando se cierra la pagina pop
   ionViewDidLeave(){
     this.cameraPreview.stopCamera();
     console.log("ionViewDidLeave "+ Math.random());
   }
 
+  //para detener la camera cuando se oculta la pagina push
   ionViewWillUnload(){
     console.log("ionViewWillUnload "+ Math.random());
     this.resolve();
@@ -156,16 +157,19 @@ export class CameraPage {
     this.navCtrl.pop();
   }
 
+  //mostrar la libraria de fotos
   public async toLibrary(){
     this.cameraPreview.hide();
     this.navCtrl.push(LibraryImagesPage, { resolve: this.resolve, reject: this.reject, 
       width: this.width, height : this.height });
   }
 
+  //Para cambiar a alternativa camera
   public switchCamera(){
     this.cameraPreview.switchCamera();
   }
 
+  //esto no trabaja quizas lo elimine en el futuro nesesito probar con otros telefonos
   public async switchFlash(){
     let flash = await this.cameraPreview.getFlashMode();
     console.log(flash);

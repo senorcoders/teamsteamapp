@@ -17,7 +17,6 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { LongPressModule } from 'ionic-long-press';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { interceptor } from '../providers/auth-service/interceptor';
 import { LoginPage } from '../pages/login/login';
@@ -68,7 +67,6 @@ import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-p
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
     LoginPage,
     EventsSchedulePage,
     RosterPage,
@@ -117,7 +115,6 @@ import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-p
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
     LoginPage,
     EventsSchedulePage,
     RosterPage,

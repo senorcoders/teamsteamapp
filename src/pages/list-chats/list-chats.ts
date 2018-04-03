@@ -6,10 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 
 /**
- * Generated class for the ListChatsPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * esta es la lista de players con los que ha chateado
  */
 
 @IonicPage()

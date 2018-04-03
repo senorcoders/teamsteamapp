@@ -8,7 +8,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { RosterPage } from '../roster/roster';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-
+/**
+ * para editar un player
+ */
 
 @IonicPage()
 @Component({
@@ -61,6 +63,7 @@ export class MemberRosterPage {
     console.log(this.player);
   }
 
+  //al iniciar cargamos los contactos del player
   async ngOnInit(){
     let cts:any;
     cts = await this.http.get("/contacts/user/"+ this.player.user.id).toPromise();
@@ -155,7 +158,7 @@ export class MemberRosterPage {
 
   }
 
-
+  //la foto se actualiza en el momento de haber sido cambiada
   private async updatePhoto(base64Image){
 
     this.imageSrc = "./assets/imgs/avatar.gif"
@@ -189,7 +192,7 @@ export class MemberRosterPage {
   }
 
   private async update(){
-
+    //se copea el objeto de player sin referencia
     let player = JSON.parse( JSON.stringify(this.player) );
     player.positions = player.positions.split(",");
     delete player.user;
@@ -225,6 +228,7 @@ export class MemberRosterPage {
     });
   }
 
+  //muestra un alert controller para pedirle la contraseña al usuario
   public remove(){
     let t = this;
     let alert = this.alertCtrl.create({
@@ -255,6 +259,7 @@ export class MemberRosterPage {
     alert.present();
   }
 
+  //Para comprobar si es el usuario legitimo el que esta borrando datos se le pedi la contraseña nuevamente
   public checkPassword(password){
     let username = this.auth.User().username;
 

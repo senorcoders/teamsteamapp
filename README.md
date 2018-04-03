@@ -4,19 +4,17 @@
 ## Requirements
 
 ```
-Ionic version 3.19.0
-Node v8.0.0
-Cordova version 6.5.0
+Ionic version 3.20.0
+Node v8.9.4
+Cordova version 8.0.0
 ```
 
 ## Getting started
 
 ```
 $ git clone https://github.com/senorcoders/teamsteamapp
-$ cd FLR
+$ cd teamsteamapp
 $ npm install
-Modify plugin image loader in provider/image-loader.ts line 254
-change method get for post
 ```
 
 ## Running on Android Device
@@ -32,9 +30,3 @@ change method get for post
  $ ionic cordova platform add ios
  $ ionic cordova run ios --device --livereload
  ```
-
- ## License
-
- ```
- we imprison anyone who steals this app
-```

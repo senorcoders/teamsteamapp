@@ -4,12 +4,9 @@ import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 
-/*
-  Generated class for the AuthServiceProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
+/**
+ * Para manejar la session del usuario y guardar datos importantes
+ */
 
 //#region Class of User
 class User {
@@ -71,7 +68,8 @@ export class AuthServiceProvider {
     });
     
   }
-
+  
+  //guardar el team del usuario para evitar estar cargando del servidor el equipo
   public async SaveTeam(callback:Function){
     let user;
 
@@ -113,6 +111,7 @@ export class AuthServiceProvider {
 
   }
 
+  //comprobar si ya un usuario guardado
   public async checkUser(){
     let user = await this.storage.get("user");
     let team = await this.storage.get("team");
@@ -128,10 +127,12 @@ export class AuthServiceProvider {
     return false;
   }
 
+  //de volver la instancia del usuario actual
   public User(){
     return this.user;
   }
 
+  //Obtener el nombre completo del usuario
   public fullName(){
     return this.user.firstName+ " "+ this.user.lastName;
   }
@@ -148,6 +149,7 @@ export class AuthServiceProvider {
     this.functions();
   }
 
+  //esto es para actualizar datos en el app para cuando se cambie de usuario
   public changeUser(callback:any){
     this.functions = callback;
   }

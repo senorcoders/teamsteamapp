@@ -6,10 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MyApp } from '../../app/app.component';
 
 /**
- * Generated class for the TaskPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * para ver la tarea
  */
 
 @IonicPage()
@@ -31,6 +28,7 @@ export class TaskPage {
     this.manager = MyApp.User.role.name === "Manager";
   }
 
+  //pedir la contraseña para comprobar si el usuario es el legitimo
   public requestRemove(){
     let t = this;
     let alert = this.alertCtrl.create({
@@ -61,6 +59,7 @@ export class TaskPage {
     alert.present();
   }
 
+  //comprobar si la contraseña es correcta
   public checkPassword(password){
     let username = this.auth.User().username;
 
@@ -99,6 +98,7 @@ export class TaskPage {
     });
   }
 
+  //Para eliminar tareas
   public async removeTask(){
     
     let valid = true;
@@ -117,6 +117,7 @@ export class TaskPage {
     if( valid ) this.navCtrl.setRoot(MyTaskPage);
   }
   
+  //Para cambiar de completada a no completada y viceversa
   public async changeStatus(){
     let task = this.task;
     task.completad = !this.task.completad;

@@ -7,10 +7,7 @@ import { TaskPage } from '../task/task';
 import  * as moment from 'moment';
 
 /**
- * Generated class for the MyTaskPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * para visualizar todas las tareas asignadas al equipo
  */
 
 @IonicPage()
