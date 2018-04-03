@@ -118,4 +118,7 @@
     <allow-navigation href="http://192.168.8.109:8100" />
     <engine name="android" spec="~7.1.0" />
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
+    <plugin name="cordova-plugin-photo-library" spec="^2.1.0">
+        <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
+    </plugin>
 </widget>
