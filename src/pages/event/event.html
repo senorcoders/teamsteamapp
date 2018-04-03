@@ -47,9 +47,15 @@
       <div class="divider"> </div>
 
       <div id="tracking-section" (click)="viewTrakingEvent()" >
-        <!--ion-icon ios="ios-clipboard" md="md-clipboard"></ion-icon-->
-        <h3>Tracking</h3>
-        <ion-icon name="md-arrow-dropright-circle"></ion-icon>
+        <div class="tracking">
+          <h3>Tracking</h3>
+          <!--ion-icon name="md-arrow-dropdown-circle"></ion-icon-->
+        </div>
+        <div class="count">
+          <h5 (click)="asingResponse('yes')" >Yes {{event.countYes}} </h5>
+          <h5 (click)="asingResponse('no')" >No {{event.countNo}} </h5>
+          <h5 (click)="asingResponse('maybe')"  >Maybe {{event.countMaybe}} </h5>
+        </div>
       </div>
       
       <ion-item class="location-event">

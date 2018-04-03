@@ -72,6 +72,8 @@ export class EventsSchedulePage {
         it.loadImage = false;
         let ramdon = new Date().getTime();
         it.imageSrc = interceptor.transformUrl('/images/'+ ramdon+ '/events/'+ it.id);
+
+        //Para obtener los likes y comments
         let likesUp=0, likeUp=false, likesDown = 0, likeDown = false;
         for(var t of it.likes){
           if( t.like === true ){
@@ -90,6 +92,7 @@ export class EventsSchedulePage {
         it.likesDown = likesDown;
         it.likeUp = likeUp;
         it.likeDown = likeDown;
+
         return it;
       }));
 

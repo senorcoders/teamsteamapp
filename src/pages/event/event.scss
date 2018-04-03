@@ -1,23 +1,45 @@
 $color-text: rgba(0, 0, 0, 0.616) !important;
 page-event {
     #tracking-section{
-        height: 50px;
+        height: 100px;
         text-align: center;
         background-color: rgba(0, 0, 0, .1);
         display: flex;
-        ion-icon{
-            width: 33.33%;
-            flex-basis: 33.33%;
-            text-align: center;
-            line-height: 50px;
-            font-size: 3rem;
+        flex-wrap: wrap;
+        div{
+            flex-basis: 100%;
+            width: 100%;
         }
-        h3{
-            width: 66.66%;
-            flex-basis: 66.66%;
-            line-height: 50px;
+        .tracking{
+            display: flex;
+            h3{
+                width: 100%;
+                flex-basis: 100%;
+                line-height: 50px;
+                text-align: center;
+                font-size: 2rem;
+            }
+            /*ion-icon{
+                width: 33.33%;
+                flex-basis: 33.33%;
+                text-align: center;
+                line-height: 50px;
+                font-size: 3rem;
+            }*/
+        }
+        .count{
+            height: 50px;
+            padding-bottom: 20px;
             text-align: center;
-            font-size: 2rem;
+            background-color: transparent;
+            display: flex;
+            h5{
+                width: 33.33%;
+                flex-basis: 33.33%;
+                line-height: 30px;
+                text-align: center;
+                font-size: 1.5rem;
+            }
         }
     }
 

@@ -35,6 +35,8 @@ export class EventPage {
   map: GoogleMap;
   load:Loading;
 
+  private tracking:any;
+
   public user:any;
   public event:any;
 
@@ -72,6 +74,15 @@ export class EventPage {
 
   async ngOnInit(){
     
+    //para obtener los trackings del evento
+    try{
+      this.tracking = await this.http.get("/traking/query/"+ MyApp.User.id+ "/"+ this.event.id).toPromise();
+      console.log(this.tracking);
+    }
+    catch(e){
+      console.error(e);
+    }
+
     console.log(this.event);
     let idUser:string;
     if(Object.prototype.toString.call(this.event.user) === '[object String]'){
@@ -110,6 +121,40 @@ export class EventPage {
       }else{
         this.loadMap(HelpersProvider.lat, HelpersProvider.lng);
       }
+
+      let counts = await this.getTrackings(this.event);
+
+      this.event.countYes = counts.countYes;
+      this.event.countNo = counts.countNo;
+      this.event.countMaybe = counts.countMaybe;
+  }
+
+  //Para obtener los tracking de event
+  private async getTrackings(event){
+    
+    let countYes=0, countNo=0, countMaybe=0;
+    try{
+      let trackings:any = await this.http.get("/trackingevent/event/"+ event.id).toPromise();
+
+      console.log(trackings);
+      await Promise.all( trackings.map( async function(item){
+
+        if( item.info == 'yes' )
+          countYes += 1;
+        else if( item.info == 'no' )
+          countNo += 1;
+        else
+          countMaybe += 1;
+
+        return item;
+      }) );
+
+    }
+    catch(e){
+      console.error(e);
+    }
+
+    return { countYes, countNo, countMaybe };
   }
 
   loadMap(lat, lot) {
@@ -356,10 +401,45 @@ export class EventPage {
   public viewTrakingEvent(){
     if( MyApp.User.role.name === 'Manager' ){
       this.modalCtrl.create(TrackingEventManagerComponent, { e : this.event }).present();
-    }else{
-      this.modalCtrl.create(TrackingEventComponent, { e : this.event }).present();
-    }
+    }/*else{
+      let te = this.modalCtrl.create(TrackingEventComponent, { e : this.event })
+      te.present();
+      let t = this;
+      te.onDidDismiss(async function(){
+        let counts = await this.getTrackings(this.event);
+
+        t.event.countYes = counts.countYes;
+        t.event.countNo = counts.countNo;
+        t.event.countMaybe = counts.countMaybe;
+      });
+    }*/
     
+  }
+
+  //asigna una respuesta al evento si no esta creada se crea
+  async asingResponse(response){
+    let guardar = this.tracking.user !== undefined;
+    try{
+      let newTrack:any;
+      if( guardar === false ){
+        newTrack = await this.http.post("/trackingevent", { user: MyApp.User.id, event: this.event.id, info: response })
+        .toPromise();
+        this.tracking = newTrack;
+      }else{
+        newTrack = await this.http.put("/trackingevent/"+ this.tracking.id, { info: response }).toPromise();
+        this.tracking = newTrack;
+      }
+
+      let counts = await this.getTrackings(this.event);
+
+      this.event.countYes = counts.countYes;
+      this.event.countNo = counts.countNo;
+      this.event.countMaybe = counts.countMaybe;
+
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 
 }
