@@ -21,6 +21,7 @@ import { ChatPage } from '../pages/chat/chat';
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
+import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
 
 @Component({
@@ -57,7 +58,8 @@ export class MyApp {
     { title : "My Task", component : MyTaskPage, icon:"basketball" },
     { title : "Roster", component : RosterPage, icon:"baseball" },
     { title : "Chat", component : ListChatsPage, icon:"baseball" },
-    { title : "Messages", component : ChatPage, icon:"baseball" }
+    { title : "Messages", component : ChatPage, icon:"baseball" },
+    { title : "Profile", component : ViewProfilePage, icon:"baseball" },
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 

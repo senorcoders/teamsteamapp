@@ -1,0 +1,23 @@
+<ion-header>
+
+  <ion-navbar color="base" >
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title> {{user.firstName+ " "+ user.lastName}} </ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div id="cabezera">
+      <div id="avatar">
+        <img [src]="user.imageSrc" >
+      </div>
+      <h4> {{user.username}} </h4>
+  </div>
+
+</ion-content>

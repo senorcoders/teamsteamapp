@@ -63,6 +63,7 @@ import { SelectNewChatComponent } from '../components/select-new-chat/select-new
 import { TrackingEventComponent } from '../components/tracking-event/tracking-event';
 import { TrackingEventManagerComponent } from '../components/tracking-event-manager/tracking-event-manager';
 import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
+import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
 @NgModule({
   declarations: [
@@ -99,7 +100,8 @@ import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-p
     SelectNewChatComponent,
     TrackingEventComponent,
     TrackingEventManagerComponent,
-    ToChatToPerfilPlayerComponent
+    ToChatToPerfilPlayerComponent,
+    ViewProfilePage
   ],
   imports: [
     BrowserModule,
@@ -143,7 +145,8 @@ import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-p
     SelectNewChatComponent,
     TrackingEventComponent,
     TrackingEventManagerComponent,
-    ToChatToPerfilPlayerComponent
+    ToChatToPerfilPlayerComponent,
+    ViewProfilePage
   ],
   providers: [
     StatusBar,

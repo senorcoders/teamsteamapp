@@ -1,0 +1,16 @@
+page-view-profile {
+    #cabezera{
+        width: 100%;
+        height: 100px;
+        #avatar{
+            text-align: center;
+            margin-left: calc(50% - 40px);
+            border-radius: 100%;
+            height: 80px;
+            width: 80px;
+            img{
+                object-fit: cover;
+            }
+        }
+    }
+}
