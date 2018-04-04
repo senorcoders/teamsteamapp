@@ -79,6 +79,7 @@ export class MyApp {
 
     let t = this;
     platform.ready().then(() => {
+      
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.overlaysWebView(false);
@@ -148,6 +149,7 @@ export class MyApp {
       this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
       document.getElementById("nameSlide").innerText = this.user.username;
+      MyApp.initConnetionSockets();
     }else{
       this.nav.root = LoginPage;
       return;
@@ -181,6 +183,13 @@ export class MyApp {
      }).catch((error) => {
        console.log('Error getting location', error);
      });
+  }
+
+  public static initConnetionSockets(){
+    let script = document.createElement("script");
+    script.setAttribute("src", interceptor.url+ "/js/sails.io.js");
+    return document.body.appendChild(script);
+    
   }
 
   /**

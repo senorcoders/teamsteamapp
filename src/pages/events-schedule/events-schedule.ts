@@ -10,6 +10,7 @@ import { MyApp } from '../../app/app.component';
 import { CameraPage } from '../camera/camera';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
+import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 
 @IonicPage()
 @Component({
@@ -31,9 +32,8 @@ export class EventsSchedulePage {
 
   public by:string="upcoming";
 
-  constructor(public navCtrl: NavController, 
-    public navParams: NavParams,
-    public auth: AuthServiceProvider,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper:HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone
@@ -51,9 +51,14 @@ export class EventsSchedulePage {
       this.user = await this.auth.User();
 
       this.team = this.user.team;
-      console.log("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team);
+      let url = "/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team;
+      console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
       
+      let subscripcion = await this.sockets.subscribe( interceptor.transformUrl("/event"), function(events){
+        console.log(events);
+      }.bind(this) );
+
       console.log(events);
       this.events = events;
       let user = this.user;

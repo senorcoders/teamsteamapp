@@ -64,6 +64,7 @@ import { TrackingEventComponent } from '../components/tracking-event/tracking-ev
 import { TrackingEventManagerComponent } from '../components/tracking-event-manager/tracking-event-manager';
 import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
+import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 
 @NgModule({
   declarations: [
@@ -169,7 +170,8 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
     AndroidFullScreen,
     NativeGeocoder,
     PhotoViewer,
-    DatePicker
+    DatePicker,
+    WebSocketsProvider
   ]
 })
 export class AppModule {}
