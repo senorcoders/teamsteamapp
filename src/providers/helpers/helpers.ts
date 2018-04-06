@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, NgZone } from '@angular/core';
 import { Platform } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
@@ -10,6 +10,8 @@ import { NativeGeocoder,
   NativeGeocoderReverseResult, 
   NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
+import { TranslateService } from '@ngx-translate/core';
+
 
 /**
  * este servicio contiene funciones generales que son usadas mas de una por las diferentes componentes
@@ -22,9 +24,21 @@ export class HelpersProvider {
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder:NativeGeocoder,
-    public datePicker: DatePicker
+    public datePicker: DatePicker, private translate: TranslateService,
+    private zone:NgZone
   ) {
-    
+    console.log(this);
+  }
+
+  public setLanguage(lang:string){
+    let t = this;
+    this.zone.run(function(){
+      t.translate.use(lang);
+    });
+  }
+
+  public getWords(key:string):Promise<string>{
+    return this.translate.get(key).toPromise();
   }
 
   //Para devolver la position de ejemplo para pruebas

@@ -1,0 +1,54 @@
+{
+    "EVENTS": {
+        "TITLE" : "Horario de Eventos",
+        "PAST": "Anteriores",
+        "UPCOMING": "Proximos"
+    },
+    "NEWEVENT": {
+        "TT": "Nuevo Evento",
+        "TITLE": "Datos Generales",
+        "REPEATS": "Repetir",
+        "DAYSREPEATS": "Dias",
+        "NOTIFY": "Notificar",
+        "OPTIONALINFO": "Información Opcional",
+        "LOCATIONDETAIL": "Detalles",
+        "TYPE": "Tipo",
+        "TYPES": {
+            "GAME": "Juego",
+            "PRACTICE": "Practica",
+            "EVENT": "Evento"
+        },
+        "ATTENDENCETRACKING": "Tomar Asistencia",
+        "PINMAP": "O MAPA",
+        "ENTERADDRES": "Digita La Direcciòn"
+    },
+    "DAYSWEEKS": {
+        "M": "L",
+        "TU": "M",
+        "W": "M",
+        "TH": "J",
+        "F": "V",
+        "SA": "S",
+        "SU": "D"
+    },
+    "DAILY": "Diario",
+    "NAME": "Nombre",
+    "DATE": "Fecha",
+    "TIME": "Hora",
+    "DESCRIPTION": "Descripción",
+    "LOCATION": "Ubicación",
+    "WEBSITE": "Sitio Web",
+    "TRACKING": "Asistencia",
+    "SAVE": "Guardar",
+    "UPDATE": "Actualizar",
+    "DELETE": "Eliminar",
+    "REMOVE": "Remover",
+    "SAVING": "Guardando...",
+    "UPDATING": "Actualizando...",
+    "ERORUNEXC": "Error Inesperado",
+    "REQUIRED": "Requerido!",
+    "ADDRESSORDATE": "Agregue La Direcciòn o seleccione un lugar en Mapa",
+    "ISREQUIRED": "Es Requerido",
+    "DAY": "Dia",
+    "TEST": "Hola estas usando el idioma español"
+}

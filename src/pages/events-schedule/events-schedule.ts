@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, ModalController, Events } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
@@ -11,6 +11,7 @@ import { CameraPage } from '../camera/camera';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
+import {TranslateService} from '@ngx-translate/core';
 
 @IonicPage()
 @Component({
@@ -36,9 +37,24 @@ export class EventsSchedulePage {
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper:HelpersProvider,
-    public popoverCtrl: PopoverController, public zone: NgZone
+    public popoverCtrl: PopoverController, public zone: NgZone,
+    private translate: TranslateService
   ) {
     MyApp.initNotifcations();
+
+    // this language will be used as a fallback when a translation isn't found in the current language
+    /*translate.setDefaultLang('en');
+
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('es');
+    this.translate.getTranslation("es").subscribe(function(next){
+      console.log(next);
+    })
+
+    this.translate.get("EVENTS.TITLE").subscribe(function(next){
+      console.log(next);
+    });*/
+
   }
 
   async ngOnInit(){
@@ -54,10 +70,6 @@ export class EventsSchedulePage {
       let url = "/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team;
       console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
-      
-      let subscripcion = await this.sockets.subscribe( interceptor.transformUrl("/event"), function(events){
-        console.log(events);
-      }.bind(this) );
 
       console.log(events);
       this.events = events;
@@ -167,6 +179,45 @@ export class EventsSchedulePage {
     catch(e){
       console.error(e);
     }
+  }
+
+  ionViewWillEnter (){
+    
+    let t = this;
+    //nos subscribimos con push
+    this.sockets.subscribeWithPush('event', function(data){
+      
+      console.log("new event ", event);
+
+      //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
+      //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
+      t.zone.run(function(){ t.getEvents(); });
+      
+    }, function(data){
+      console.log("actualizamos el evento", data);
+      //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
+      //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
+      t.zone.run(function(){ t.getEvents(); });
+
+    }, function(data){
+      console.log("eliminamos el evento", data);
+      //obtenemos la posicion que tiene en el array para despues eliminarlo
+      let index = t.events.findIndex(function(el){ return el.id === data.id });
+      if( index !== -1){
+        if( this.events.length === 0 )
+          this.events = [];
+        else{
+          this.events.splice(index, 1)
+        }
+
+      }
+      
+    });
+  }
+
+  ionViewWillUnload (){
+    console.log("unsubscribe");
+    this.sockets.unsubscribeWithPush('event');
   }
 
   public goEvent(event:any){

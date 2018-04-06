@@ -111,6 +111,12 @@ export class AuthServiceProvider {
 
   }
 
+  public async updateTokenReg(token){
+    console.log(token);
+    let updated = await this.http.put("/user/"+ MyApp.User.id, { "tokenReg": token }).toPromise()
+    console.log(updated);
+  }
+
   //comprobar si ya un usuario guardado
   public async checkUser(){
     let user = await this.storage.get("user");

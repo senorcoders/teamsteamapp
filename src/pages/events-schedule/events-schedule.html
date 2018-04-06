@@ -5,7 +5,7 @@
         <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>Events Schedule</ion-title>
+    <ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title>
 
   </ion-navbar>
 
@@ -15,11 +15,11 @@
 <ion-content>
   <div ion-fixed id="select-by">
     <button color="pdark" ion-button [ngClass]="by == 'past' ? 'select' : ''" class="select-by" (click)="byS('past')">
-        <pre>Past</pre>
+        <pre>{{ 'EVENTS.PAST' | translate }}</pre>
         <ion-icon [hidden]="by == 'upcoming'" name="md-arrow-dropdown"></ion-icon>
     </button>
     <button ion-button color="pdark" [ngClass]="by == 'upcoming' ? 'select' : ''" class="select-by" (click)="byS('upcoming')">
-        <pre>Upcoming</pre>
+        <pre>{{ 'EVENTS.UPCOMING' | translate }}</pre>
         <ion-icon [hidden]="by == 'past'" name="md-arrow-dropdown"></ion-icon>
     </button>
   </div>

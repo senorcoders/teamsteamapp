@@ -15,6 +15,7 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DatePicker } from '@ionic-native/date-picker';
 import { LongPressModule } from 'ionic-long-press';
+import { TranslateModule } from '@ngx-translate/core';
 
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -66,6 +67,15 @@ import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-p
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 
+//for  multilanguage
+import { TranslateLoader } from '@ngx-translate/core';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { Http } from '@angular/http';
+
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, './assets/i18n/', '.json');
+}
+
 @NgModule({
   declarations: [
     MyApp,
@@ -113,6 +123,13 @@ import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
     }),
     HttpModule,
     HttpClientModule,
+    TranslateModule.forRoot({
+      loader: {
+          provide: TranslateLoader,
+          useFactory: (HttpLoaderFactory),
+          deps: [HttpClient]
+      }
+    }),
     LongPressModule
   ],
   bootstrap: [IonicApp],

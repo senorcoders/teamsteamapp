@@ -39,15 +39,16 @@ export class NewEventPage {
 
   //var for inputs event
   public name:string="";
-  public shortLabel:string;
-  public repeats:string="no-repeat";
-  public repeatsOption:string="monday";
+  public type:string="event";
+  public repeats:boolean=false;
+  public repeatsDaily:boolean=false;
+  public repeatsDays:Array<any>=[];
   public date:string="";
   public time:string="";
   public attendeceTracking:boolean=false;
-  public notifyTeam:boolean=false;
   public optionalInfo:string="";
   public description:string="";
+  public address="";
 
   //for max date and min date asing in date time picker
   public minDate:string;
@@ -64,6 +65,31 @@ export class NewEventPage {
     this.maxDate = moment().add(2, "year",).format("YYYY");
     this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
     console.log(this.minDate, this.maxDate);
+  }
+
+  public getSelectDays(key:string){
+    return -1 !== this.repeatsDays.findIndex(function(el){ return el === key });
+  }
+
+  public selectDay(key:string){
+
+    let index = this.repeatsDays.findIndex(function(el){ return el === key });
+    console.log(index, key);
+    if( index === -1 )
+      this.repeatsDays.push(key);
+    else{
+
+      if( this.repeatsDays.length === 1 )
+        this.repeatsDays = [];
+      else
+        this.repeatsDays.splice(index, 1);
+      
+    }
+
+  }
+
+  public showDaysRepeats():boolean{
+    return this.repeats === true && this.repeatsDaily === false;
   }
 
   async ngOnInit(){
@@ -105,97 +131,135 @@ export class NewEventPage {
     modal.present();
   }
 
-  public changePhoto(){
-    let t = this;
-    //console.log(this);
-    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
-      if( result ){
-        t.imageSrc = result;
-      }
-    })
-    .catch((err)=>{
-      console.error(err);
-      t.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
-    });
+  public async changePhoto(){
+    let t = this, message = '';
+
+    try{
+      message = await this.helper.getWords("ERORUNEXC");
+
+      this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+        if( result ){
+          t.imageSrc = result;
+        }
+      })
+      .catch((err)=>{
+        console.error(err);
+        t.alertCtrl.create({
+          title: "Error",
+          message: message,
+          buttons: ["Ok"]
+        }).present();
+      });
+
+    }
+    catch(e){
+      console.error(e);
+    }
 
   }
 
   public async save(){
 
-    this.load = this.loading.create({ content: "Saving..." });
+    let content = await this.helper.getWords("SAVING"); 
+    this.load = this.loading.create({ content: content });
     this.load.present({ disableApp: true });
 
-    if( this.location.change === false ){
+    let requiredM = await this.helper.getWords("REQUIRED"),
+    AddressOrMap = await this.helper.getWords("ADDRESSORDATE");
+
+    if( this.location.change === false && this.address === '' ){
+      this.alertCtrl.create({ title: requiredM, message: AddressOrMap, buttons: ["Ok"] }).present();
       this.load.dismiss();
-      this.alertCtrl.create({ title: "Required", message: "select a position for event in map", buttons: ["Ok"]})
-      .present();
       return;
     }
 
     //create el object fo send to location event
-    let location:any = this.location.position;
-    location.link = this.locationLink || "";
-    location.detail = this.locationDetail || "";
+    let locate:any;
+    if( this.location.change === false ){
+      locate = {};
+    }else{
+      locate = this.location.position;
+    }
 
-    console.log(location);
+    locate.address = this.address;
+    locate.link = this.locationLink || "";
+    locate.detail = this.locationDetail || "";
+    
+    console.log(locate);
 
     //Check if the fields required is ok
-    let inputsRequired = ["name", "time"], valid = true;
-    for(let name of inputsRequired){
-      if( this[name] == "" ){
-        this.load.dismiss();
+    let isRequired = await this.helper.getWords("ISREQUIRED");
+    let nameM = await this.helper.getWords("NAME"),
+    timeM = await this.helper.getWords("TIME");
+
+    if( this.name === '' ){
+      this.load.dismiss();
         this.alertCtrl.create({
-          title: "Required",
-          message: name.toUpperCase()+ " Is Required",
+          title: requiredM,
+          message: nameM+ " "+ isRequired,
           buttons: ["Ok"]
         }).present();
-        valid = false;
-        break;
-      }
+        
+        return;
     }
     
-    if( valid === false ){
-      return;
+    if( this.time === '' ){
+      this.load.dismiss();
+        this.alertCtrl.create({
+          title: requiredM,
+          message: timeM+ " "+ isRequired,
+          buttons: ["Ok"]
+        }).present();
+        
+        return;
     }
 
     if( this.imageSrc == '' ){
       this.load.dismiss();
         this.alertCtrl.create({
-          title: "Required",
-          message: "Image Is Required",
+          title: requiredM,
+          message: "Image "+ isRequired,
           buttons: ["Ok"]
         }).present();
         return;
     }
 
-    //let stringbase4Image = await this.helper.urlTobase64(this.imageSrc);
-
     let event:any = {
       team: this.team,
       name : this.name,
-      shortLabel : this.shortLabel,
+      type : this.type,
       attendeceTracking: this.attendeceTracking,
-      notifyTeam: this.notifyTeam,
       optionalInfo : this.optionalInfo,
       description: this.description,
       user: MyApp.User.id,
-      repeats: this.repeats
+      repeats: this.repeats,
+      repeatsDaily: this.repeatsDaily,
+      repeatsDays: this.repeatsDays.join(","),
+      location: locate
     };
+    console.log(event);
 
-    if( this.repeats == "weekly" ){
-      event.repeatsOption = this.repeatsOption;
-      event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
-    }else if( this.repeats == 'no-repeat' ){
+    //si es por semana entonces hay que chequear que este seleccionado almenos un dia
+    let dayM = await this.helper.getWords("DAY");
 
+    if( this.repeatsDaily === false && this.repeats === true ){
+      
+      if( this.repeatsDays.length === 0 ){
+        this.load.dismiss();
+        this.alertCtrl.create({ title: requiredM, message: dayM+ " "+ isRequired}).present();
+        return;
+      }else{
+        event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
+      }
+
+    }else if( this.repeats === false ){
+
+      let dateM = await this.helper.getWords("DATE");
       if( this.date == '' ){
         this.load.dismiss();
         this.alertCtrl.create({
           title: "Required",
-          message:"Date Is Required",
+          message: dateM+ " "+ isRequired,
           buttons: ["Ok"]
         }).present();
 
@@ -207,16 +271,15 @@ export class NewEventPage {
       event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
     }
 
-    valid = true;
+    let valid = true;
     let newEvent:any;
     try{
       newEvent = await this.http.post("/event", {
-        event,
-        location
+        event
       }).toPromise();
       console.log(newEvent);
       
-      await this.http.post("/images/events", { id : newEvent.event.id, image : this.imageSrc }).toPromise();
+      await this.http.post("/images/events", { id : newEvent.id, image : this.imageSrc }).toPromise();
       
 
     }
@@ -225,11 +288,12 @@ export class NewEventPage {
       valid = false;
     }
     
+    let unexp = await this.helper.getWords("ERORUNEXC");
     if( valid === false ){
       this.load.dismiss();
       this.alertCtrl.create({
         title: "Error",
-        message: "Unexpected Error",
+        message: unexp,
         buttons: ["Ok"]
       }).present();
       return;

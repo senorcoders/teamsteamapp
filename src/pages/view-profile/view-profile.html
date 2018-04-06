@@ -20,4 +20,14 @@
       <h4> {{user.username}} </h4>
   </div>
 
+  <h2> {{'TEST' | translate }} </h2>
+
+  <ion-item>
+    <button ion-button (click)="changeLang('es')">Español</button>
+  </ion-item>
+
+  <ion-item>
+    <button ion-button (click)="changeLang('en')">English</button>
+  </ion-item>
+
 </ion-content>

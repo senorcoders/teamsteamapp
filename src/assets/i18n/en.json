@@ -1,0 +1,54 @@
+{
+    "EVENTS": {
+        "TITLE": "Events Schedule",
+        "PAST": "Past",
+        "UPCOMING": "Upcoming"
+    },
+    "NEWEVENT": {
+        "TT": "New Event",
+        "TITLE": "General Data",
+        "REPEATS": "Repeats",
+        "DAYSREPEATS": "Repeats Days",
+        "NOTIFY": "NOTIFY",
+        "OPTIONALINFO": "OPTIONAL INFO",
+        "LOCATIONDETAIL": "LOCATION DETAIL",
+        "TYPE": "Type",
+        "TYPES": {
+            "GAME": "Game",
+            "PRACTICE": "Practice",
+            "EVENT": "Event"
+        },
+        "ATTENDENCETRACKING": "Attendece Tracking",
+        "PINMAP": "OR PIN MAP",
+        "ENTERADDRES": "Enter Address"
+    },
+    "DAYSWEEKS": {
+        "M": "M",
+        "TU": "T",
+        "W": "W",
+        "TH": "T",
+        "F": "F",
+        "SA": "S",
+        "SU": "S"
+    },
+    "DAILY": "Daily",
+    "NAME": "Name",
+    "DATE": "Date",
+    "TIME": "Time",
+    "DESCRIPTION": "Description",
+    "LOCATION": "Location",
+    "WEBSITE": "Website",
+    "TRACKING": "Tracking",
+    "SAVE": "Save",
+    "UPDATE": "Update",
+    "DELETE": "Delete",
+    "REMOVE": "Remove",
+    "SAVING": "Saving...",
+    "UPDATING": "Updating...",
+    "ERORUNEXC": "Unexpected Error",
+    "REQUIRED": "Requerido",
+    "ADDRESSORDATE": "Add Address or select a place on Map",
+    "ISREQUIRED": "Is Required",
+    "DAY": "Day",
+    "TEST": "Hello, you are using the language English"
+}

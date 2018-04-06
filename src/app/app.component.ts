@@ -23,6 +23,8 @@ import { MyTaskPage } from '../pages/my-task/my-task';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
+import { TranslateService } from '@ngx-translate/core';
+
 
 @Component({
   templateUrl: 'app.html'
@@ -68,7 +70,7 @@ export class MyApp {
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
     private http: HttpClient, private Evenn: Events, 
-    public zone: NgZone
+    public zone: NgZone, translate: TranslateService
   ) {
 
     //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
@@ -79,6 +81,11 @@ export class MyApp {
 
     let t = this;
     platform.ready().then(() => {
+
+      translate.setDefaultLang('en');
+
+      // the lang to use, if the lang isn't available, it will use the current loader to get them
+      translate.use('es');
       
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
@@ -144,7 +151,7 @@ export class MyApp {
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
-      console.log(this.user);
+      //console.log(this.user);
       let ramdon = new Date().getTime();
       this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
@@ -185,11 +192,17 @@ export class MyApp {
      });
   }
 
-  public static initConnetionSockets(){
-    let script = document.createElement("script");
+  public static async initConnetionSockets(){
+
+    let socket = document.getElementById("sockets-sails");
+    if( socket !== null && socket !== undefined )
+      return;
+
+    let script = await document.createElement("script");
+    script.setAttribute("id", "sockets-sails");
     script.setAttribute("src", interceptor.url+ "/js/sails.io.js");
-    return document.body.appendChild(script);
-    
+    return await document.body.appendChild(script);
+
   }
 
   /**
@@ -228,7 +241,7 @@ export class MyApp {
     
     // to initialize push notifications
 
-    console.log(team);
+    //console.log(team);
     const options: PushOptions = {
         android: {
           senderID: "414026305021",
@@ -252,34 +265,18 @@ export class MyApp {
 
       //#region for notification in team
       const pushObject: PushObject = MyApp.pusherNotification.init(options);
-    
+
       pushObject.on('notification').subscribe((notification: any) =>{
-        console.log(notification.additionalData);
-        //ChatPage.eventChat(notification.additionalData);
-        if(notification.additionalData.is === 'comment' ){
-          setTimeout(() => {
-            MyApp.event.publish('comment:received', notification.additionalData, Date.now())
-          }, Math.random() * 1800);
-        }else if(notification.is === 'like' ){
-          setTimeout(() => {
-            MyApp.event.publish('like:received', notification.additionalData, Date.now())
-          }, Math.random() * 1800);
-        }else if(notification.additionalData.is === 'event' ){
-          setTimeout(() => {
-            MyApp.event.publish('event:received', notification.additionalData, Date.now())
-          }, Math.random() * 1800);
-        }else if(notification.additionalData.is === 'message' ){
-          setTimeout(() => {
-            MyApp.event.publish('chat:received', notification.additionalData, Date.now())
-          }, Math.random() * 1800);
-        }
 
+        let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
+        MyApp.event.publish(is+ ":"+ verb, notification.additionalData.dataStringify, Date.now());
         console.log('Received a notification', notification);
       });
       
       pushObject.on('registration').subscribe((registration: any) => {
         MyApp.notificationEnable=true;
+        MyApp.authService.updateTokenReg(registration.registrationId);
         console.log('Device registered', registration);
       });
             
@@ -287,7 +284,7 @@ export class MyApp {
       //#endregion
 
       //#region for chat personal
-      const optionsChat: PushOptions = {
+      /*const optionsChat: PushOptions = {
         android: {
           senderID: "414026305021",
           topics: [MyApp.User.id],
@@ -321,7 +318,7 @@ export class MyApp {
         console.log('Device registered', registration);
       });
             
-      pushChat.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      pushChat.on('error').subscribe(error => console.error('Error with Push plugin', error));*/
       //#endregion
     }
     catch(e){
