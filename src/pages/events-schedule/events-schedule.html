@@ -34,8 +34,8 @@
       <p (click)="goEvent(e)">
         {{e.description}}
       </p>
-      <p [hidden]="!e.showDateTime" style="text-align: right;">{{e.parsedDateTime}}</p>
-      <p [hidden]="e.showDateTime" style="text-align: right;">Daily</p>
+      <p [hidden]="!e.repeatsDaily" style="text-align: right;">{{e.parsedDateTime}}</p>
+      <p [hidden]="e.repeatsDaily" style="text-align: right;">Daily</p>
       
       <div class="divider"> </div>
       <ion-row>
