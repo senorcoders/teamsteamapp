@@ -4,6 +4,18 @@
         "PAST": "Anteriores",
         "UPCOMING": "Proximos"
     },
+    "NAVMENU": {
+        "EVENTS" : "Eventos",
+        "MYTASK": "Mis Tareas",
+        "ROSTER": "Jugadores",
+        "MESSAGES": "Mensajes",
+        "PROFILE": "Perfil",
+        "LOGOUT": "Cerrar Sesión"
+    },
+    "MYTASK": {
+        "TITLE": "Mis Tareas",
+        "NEWTASK" : "Nueva Tarea"
+    },
     "NEWEVENT": {
         "TT": "Nuevo Evento",
         "TITLE": "Datos Generales",
@@ -50,5 +62,8 @@
     "ADDRESSORDATE": "Agregue La Direcciòn o seleccione un lugar en Mapa",
     "ISREQUIRED": "Es Requerido",
     "DAY": "Dia",
-    "TEST": "Hola estas usando el idioma español"
+    "TEST": "Hola estas usando el idioma español",
+    "LANGUAGE": "Languaje",
+    "SELECTUSER": "Jugadores y Managers",
+    "SEARCH": "Buscar"
 }

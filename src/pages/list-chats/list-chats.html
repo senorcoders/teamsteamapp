@@ -6,7 +6,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>Chat</ion-title>
+    <ion-title>{{'NAVMENU.MESSAGES' | translate}}</ion-title>
 
   </ion-navbar>
 
@@ -16,9 +16,16 @@
 <ion-content padding>
 
   <ion-list>
+
+    <ion-item>
+      <h2 (click)="goChatTeam()" >{{team.name}}</h2>
+    </ion-item>
+
     <ion-item *ngFor='let user of listUsers' (click)="goChat(user)" >
       <h2>{{user.username}}</h2>
     </ion-item>
+
+
   </ion-list>
 
   <ion-fab bottom right>

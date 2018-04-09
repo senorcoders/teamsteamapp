@@ -80,7 +80,6 @@ export class RosterPage {
         return item;
       }));
 
-    
     }
     catch(e){
       console.error(e);
@@ -110,6 +109,10 @@ export class RosterPage {
 
   public addPlayer(){
     this.navCtrl.push(CreatePlayerPage);
+  }
+
+  public goChat(){
+
   }
 
 }

@@ -4,6 +4,7 @@ import { SelectNewChatComponent } from '../../components/select-new-chat/select-
 import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
+import { ChatPage } from '../chat/chat';
 
 /**
  * esta es la lista de players con los que ha chateado
@@ -17,21 +18,30 @@ import { MyApp } from '../../app/app.component';
 export class ListChatsPage {
 
   public listUsers:Array<any>=[];
+  public team:any={ name : "" };
+  public idTeam:string;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modal: ModalController, private http: HttpClient
   ) {
+    this.idTeam = MyApp.User.team;
   }
 
   async ngOnInit(){
     try{
       let users:any = await this.http.get("/chat-list/"+ MyApp.User.id).toPromise();
       this.listUsers = users;
-      //console.log(this.listUsers);
+      let team:any = await this.http.get("/team/"+ this.idTeam).toPromise();
+      this.team = team.team;
+      console.log(this.team);
     }
     catch(e){
       console.error(e);
     }
+  }
+
+  public goChatTeam(){
+    this.navCtrl.push(ChatPage);
   }
 
   public newChat(){

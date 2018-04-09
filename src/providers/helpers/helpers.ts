@@ -27,7 +27,7 @@ export class HelpersProvider {
     public datePicker: DatePicker, private translate: TranslateService,
     private zone:NgZone
   ) {
-    console.log(this);
+    //console.log(this);
   }
 
   public setLanguage(lang:string){

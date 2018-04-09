@@ -71,11 +71,11 @@ export class EventsSchedulePage {
       console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
 
-      console.log(events);
       this.events = await this.parserEvents(events);
+      console.log(this.events);
       let user = this.user;
 
-      this.events = this.events.reverse();
+      //this.events = this.events.reverse();
     }
     catch(e){
       console.error(e);
@@ -88,18 +88,21 @@ export class EventsSchedulePage {
     try{
 
       //preformarting for events
-      events = await Promise.all(events.map(async function(it, index){
-        
-        it.showDateTime = true;
+      events = events.map(function(it, index){
         
         //Para saber si el evento es semanal
         it.weeks = it.repeats === true && it.repeatsDaily === false;
 
-        if( it.weeks === true )
-          it.parsedDateTime = th.getDayCercano(it.repeatsDays).format("Do MMMM YYYY hh:mm");
-        else
+        if( it.weeks === true ){
+          let str = th.getDayCercano(it.repeatsDays).format("Do MMMM YYYY hh:mm");
+          it.parsedDateTime = str;
+        }else{
           it.parsedDateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("Do MMMM YYYY hh:mm");
+        }
         
+        if( it.repeatsDaily === true ){
+          it.Time = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("hh:mm");
+        }
 
         it.dateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("MM/DD/YYYY hh:mm");
         it.loadImage = false;
@@ -127,15 +130,15 @@ export class EventsSchedulePage {
         it.likeDown = likeDown;
 
         return it;
-      }));
+      });
 
       //for sort events
       events = events.sort(function(a, b){
         if( a.repeatsDaily == true ){
-          return 1;
+          return -1;
 
         }else if( b.repeatsDaily == true ){
-          return -1;
+          return 1;
 
         }else if( a.repeats == true && a.repeatsDaily === false && b.repeats == false ){
           let d1 = moment().day(a.repeatsOption), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
@@ -148,7 +151,7 @@ export class EventsSchedulePage {
           }
 
         }else if( a.repeats == "no-repeat" && b.repeats == 'weekly' ){
-          let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = moment().days(b.repeatsOption);
+          let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = th.getDayCercano(b.repeatsDays);
           if (d1.isBefore(d2)) {            // a comes first
             return 1
           } else if (d1.isAfter(d2)) {     // b comes first
@@ -168,7 +171,7 @@ export class EventsSchedulePage {
           }
           
         }else if( a.repeatsDaily === true && b.repeats == true && b.repeatsDaily === false ){
-          let d1 = moment(), d2 = th.getDayCercano(b.repeatsOption);
+          let d1 = moment(), d2 = th.getDayCercano(b.repeatsDays);
           if (d1.isBefore(d2)) {            // a comes first
             return 1
           } else if (d1.isAfter(d2)) {     // b comes first
@@ -202,28 +205,33 @@ export class EventsSchedulePage {
   //Para cuando los eventos son por semana
   //pueden haber varios dias en la semana que el evento ocurre
   //hay que buscar el evento mas cercano al fecha actual
-  private getDayCercano(days:Array<string>):any{
+  private getDayCercano(days:any):any{
 
     let daysNumber = {
-      "M": 0,
-      "TU": 1,
-      "W": 2,
-      "TH": 3,
-      "F": 4,
-      "SA": 5,
-      "SU": 6
+      "m": 1,
+      "tu": 2,
+      "w": 3,
+      "th": 4,
+      "f": 5,
+      "sa": 6,
+      "su": 7
       };
+    //console.log(days);
+    let daysMoment=[];
+    let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
 
-      let formatNow = moment().format("DD/MM/YYYY")
-
-    if( days.length === 1 )
-      return moment(daysNumber[days[0]]+ "/"+ formatNow, 'd/DD/MM/YYYY');
-    
-      let daysMoment=[];
-    for(let day in days){
-      daysMoment.push( moment(daysNumber[day], 'd') );
+    if( Days.length === 1 ){
+      let newmoment = moment();
+      newmoment.day(daysNumber[Days[0]]);
+      return newmoment;
     }
-    console.log(daysMoment);
+    
+    for(let day of Days){
+      let newmoment = moment();
+      newmoment.day(daysNumber[day]);
+      daysMoment.push( newmoment );
+    }
+
     let cercanoMoment;
     for(let i=0; i<daysMoment.length; i++){
       if( i === 0 ) cercanoMoment = daysMoment[i];

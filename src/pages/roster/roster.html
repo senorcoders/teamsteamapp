@@ -7,23 +7,17 @@
 
     <ion-title>Roster</ion-title>
 
-    <ion-buttons end [hidden]="!isManager" >
-      <button ion-button (click)="addPlayer()" >
-        <ion-icon name="md-add-circle"></ion-icon>
-      </button>
-    </ion-buttons>
-
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-    <ion-list>
+    <!--ion-list>
         <ion-item *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
 
           <ion-avatar style="cursor: pointer;" item-start [hidden]="!player.loadImage">
-            <img src="{{player.image}}" (load)="success(event, player);">
+            <img [src]="player.image" (load)="success(event, player);">
           </ion-avatar>
 
           <ion-avatar style="cursor: pointer;" (click)="viewPlayer(player)" item-start [hidden]="player.loadImage">
@@ -36,5 +30,36 @@
           
           <button (click)="editMember(i, player)" [hidden]="user.role.name != 'Manager'" ion-button clear item-end>Edit</button>
         </ion-item>
-      </ion-list>
+      </ion-list-->
+  
+  <ion-grid>
+
+    <ion-row>
+      
+      <ion-col col-4 *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
+        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" [hidden]="!player.loadImage">
+          <img [src]="player.image" (load)="success(event, player);">
+        </ion-avatar>
+
+        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" (click)="viewPlayer(player)" [hidden]="player.loadImage">
+            <img src="./assets/imgs/user.png">
+        </ion-avatar>
+
+        <h4 (click)="viewPlayer(player)">{{player.user.firstName}}</h4>
+        <h4>{{player.user.lastName}}</h4>
+
+        <a href="#" (click)="goChat()" >Chat</a>
+      </ion-col>
+
+    </ion-row>
+
+  </ion-grid>
+
+
+  <ion-fab bottom right [hidden]="!isManager" >
+    <button color="base" ion-fab icon-only (click)="addPlayer()" >
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
 </ion-content>

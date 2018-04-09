@@ -1,3 +1,31 @@
 page-roster {
 
+    ion-avatar{
+        display: flex;
+        justify-content: space-around;
+
+        img{
+            width: 100%;
+            height: 100%;
+            max-width: 80px !important;
+            max-height: 80px !important;
+            border-radius: 10px;
+            border: 1px solid #bdbdbd;
+        }
+    }
+
+    ion-col{
+        margin-bottom: 10px !important;
+        h4{
+            margin: 0 !important;
+            //margin-top: 5px !important;
+            text-align: center;
+            font-size: 1.5rem !important;
+            line-height: 2rem !important;
+        }
+        a{
+            display: block !important;
+            text-align: center !important;
+        }
+    }
 }

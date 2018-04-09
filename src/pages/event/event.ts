@@ -60,10 +60,6 @@ export class EventPage {
     //this.init();
     let e = this.navParams.get("event");
     this.user = MyApp.User;
-    if( e.imageSrc === null || e.imageSrc === undefined ){
-      let ramdon = new Date().getTime();
-      e.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/events/"+ e.id); 
-    }
 
     this.event = e;
 
@@ -95,31 +91,48 @@ export class EventPage {
     this.username = userPublisher.username;
 
     //for geoconder location
-    this.location.position = { lat: this.event.location[0].lat, lng: this.event.location[0].lng };
-    let places = await this.helper.locationToPlaces(this.location.position);
-    this.location.place = places[0];
-    this.location.change = true;
+    this.location.change = false;
+    this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
+    // console.log(this.location);
+    try{
+
+      if( this.location.useMap === true ){
+        this.location.position = { lat: this.event.location.lat, lng: this.event.location.lng };
+        let places = await this.helper.locationToPlaces(this.location.position);
+        this.location.place = places[0];
+        this.location.change = true;
+      }
+
+    }
+    catch(e){
+      console.error(e);
+    }
 
     if( moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid() ){
       this.event.dateTime = moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss").format("MM/DD/YYYY HH:mm");
     }
 
     this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("Do MMMM YYYY hh:mm");
+    
+    this.event.link = '';
+    if( this.event.location.hasOwnProperty('link') ){
 
-    if( !this.event.location[0].link.includes("http") ){
-      this.event.link = "http://"+ this.event.location[0].link;
-    }else
-      this.event.link = this.event.location[0].link 
+      if( !this.event.location.link.includes("http") || !this.event.location.link.includes("https") ){
+        this.event.link = "http://"+ this.event.location.link;
+      }else
+        this.event.link = this.event.location.link 
 
-      this.load = this.loading.create({
-        content: "Loading Map"
-      });
+    }
+
       
-      this.load.present({ disableApp : true });
-      if( HelpersProvider.Platform() ){
-        this.loadMap(this.event.location[0].lat, this.event.location[0].lng);
-      }else{
-        this.loadMap(HelpersProvider.lat, HelpersProvider.lng);
+      if( this.location.useMap === true ){
+
+        this.load = this.loading.create({
+          content: "Loading Map"
+        });
+        this.load.present({ disableApp : true });
+
+        this.loadMap(this.event.location.lat, this.event.location.lng);
       }
 
       let counts = await this.getTrackings(this.event);

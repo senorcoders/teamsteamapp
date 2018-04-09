@@ -4,6 +4,18 @@
         "PAST": "Past",
         "UPCOMING": "Upcoming"
     },
+    "NAVMENU": {
+        "EVENTS" : "Events",
+        "MYTASK": "My Task",
+        "ROSTER": "Roster",
+        "MESSAGES": "Messages",
+        "PROFILE": "Profile",
+        "LOGOUT": "Logout"
+    },
+    "MYTASK": {
+        "TITLE": "Mis Tareas",
+        "NEWTASK" : "Nueva Tarea"
+    },
     "NEWEVENT": {
         "TT": "New Event",
         "TITLE": "General Data",
@@ -50,5 +62,8 @@
     "ADDRESSORDATE": "Add Address or select a place on Map",
     "ISREQUIRED": "Is Required",
     "DAY": "Day",
-    "TEST": "Hello, you are using the language English"
+    "TEST": "Hello, you are using the language English",
+    "LANGUAGE": "Language",
+    "SELECTUSER": "Players and Managers",
+    "SEARCH": "Search"
 }

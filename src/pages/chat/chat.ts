@@ -11,6 +11,7 @@ import 'rxjs/add/operator/map';
 import { toObservable } from '@angular/forms/src/validators';
 import 'rxjs/add/observable/fromEvent';
 import * as Rx from 'rxjs';
+import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 
 /**
  * este es para chat de todo el equipo
@@ -42,9 +43,9 @@ export class ChatPage {
 
   private static changeMessages:Function=function(payload){ console.log(payload) };
 
-  constructor(navParams: NavParams,
-    private events: Events, private http: HttpClient,
-    private ngZone: NgZone, public changeDectRef: ChangeDetectorRef
+  constructor(navParams: NavParams, private events: Events,
+    private http: HttpClient, private ngZone: NgZone, 
+    public changeDectRef: ChangeDetectorRef, private subscription: WebSocketsProvider
   ) {
   
       this.user = MyApp.User;
@@ -55,13 +56,6 @@ export class ChatPage {
       ChatPage.changeMessages=(payload)=>{
         t.pushNewMsg(payload)
       };
-}
-
-ionViewWillLeave() {
-  // unsubscribe
-  ChatPage.enableChat = false;
-  window.clearInterval(this.updateTimeMessage);
-  this.events.unsubscribe('chat:received');
 }
 
 async ionViewDidEnter() {
@@ -78,15 +72,22 @@ async ionViewDidEnter() {
   }, 30*1000);
 
   // Subscribe to received  new message events
-  this.events.subscribe('chat:received', msg => {
+  this.subscription.subscribeWithPush("message", function(msg){
     console.log(msg);
     this.pushNewMsg(msg);
-  });
+  }.bind(this));
 
   this.showEmojiPicker = false;
   this.content.resize();
   this.scrollToBottom();
   
+}
+
+ionViewWillLeave() {
+  // unsubscribe
+  ChatPage.enableChat = false;
+  window.clearInterval(this.updateTimeMessage);
+  this.events.unsubscribe('message');
 }
 
 onFocus() {

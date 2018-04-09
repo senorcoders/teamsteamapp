@@ -12,16 +12,23 @@ export class SelectNewChatComponent {
 
   public players:Array<any>=[];
   public search:string='';
+  public user:any={};
 
   constructor(public viewCtrl: ViewController, public navParams: NavController,
     public http: HttpClient, public navCtrl: NavController
   ) {
-    
+    this.user = MyApp.User;
   }
 
   async ngOnInit(){
     let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
     this.players = team._players;
+    let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
+
+    for(let it of managers){
+      this.players.push(it);
+    }
+    
     this.players = await Promise.all(this.players.map(async (item)=>{
       item.show = true;
       return item;

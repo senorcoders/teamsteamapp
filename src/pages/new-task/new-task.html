@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title>New Task</ion-title>
+    <ion-title>{{'MYTASK.TITLE' | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -11,24 +11,24 @@
   <ion-list>
 
     <ion-item>
-      <ion-label floating>Name</ion-label>
+      <ion-label floating>{{'NAME' | translate}}</ion-label>
       <ion-input type="text" [(ngModel)]="name"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Description</ion-label>
+      <ion-label floating>{{'DESCRIPTION' | translate}}</ion-label>
       <ion-textarea type="text" [(ngModel)]="description"></ion-textarea>
     </ion-item>
 
     <ion-item>
-      <h4 (click)="editDate()" class="date-time">Date: {{date}}</h4>
+      <h4 (click)="editDate()" class="date-time">{{'DATE' | translate}}: {{date}}</h4>
     </ion-item>
 
     <ion-item>
-      <h4 class="date-time" (click)="editTime()">Time: {{time}}</h4>
+      <h4 class="date-time" (click)="editTime()">{{'TIME' | translate}}: {{time}}</h4>
     </ion-item>
 
   </ion-list>
 
-  <button ion-button block (click)="save()">Save</button>
+  <button ion-button block (click)="save()">{{'SAVE' | translate}}</button>
 </ion-content>

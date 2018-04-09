@@ -17,17 +17,23 @@
       <div id="avatar">
         <img [src]="user.imageSrc" >
       </div>
-      <h4> {{user.username}} </h4>
   </div>
+  <h4> {{user.username}} </h4>
 
-  <h2> {{'TEST' | translate }} </h2>
+  <ion-list>
 
-  <ion-item>
-    <button ion-button (click)="changeLang('es')">Español</button>
-  </ion-item>
+    <ion-item>
+      <h2>{{user.email}}</h2>
+    </ion-item>
 
-  <ion-item>
-    <button ion-button (click)="changeLang('en')">English</button>
-  </ion-item>
+    <ion-item>
+      <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
+      <ion-select [(ngModel)]="lang" (ionChange)='changeLang()' >
+        <ion-option value="en">English</ion-option>
+        <ion-option value="es">Espanish</ion-option>
+      </ion-select>
+    </ion-item>
+
+  </ion-list>
 
 </ion-content>

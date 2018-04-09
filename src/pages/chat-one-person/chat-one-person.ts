@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { Observable} from 'rxjs/Observable'
 import { interceptor } from '../../providers/auth-service/interceptor';
 import * as moment from 'moment';
+import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 
 /**
  * este es para chat entre el manager y un solo jugador
@@ -38,7 +39,7 @@ export class ChatOnePersonPage {
 
   constructor(private events: Events, private http: HttpClient,
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
-    public navParams: NavParams) {
+    public navParams: NavParams, public sockets: WebSocketsProvider) {
     this.to = this.navParams.get("user");
     this.from = MyApp.User;
     if( this.to.hasOwnProperty('_id') ){
@@ -47,12 +48,6 @@ export class ChatOnePersonPage {
     }
   }
 
-  ionViewWillLeave() {
-    // unsubscribe
-    window.clearInterval(this.updateTimeMessage);
-    this.events.unsubscribe('chatOne:received');
-  }
-  
   async ionViewDidEnter() {
     
     //get message list
@@ -64,17 +59,20 @@ export class ChatOnePersonPage {
     }, 30*1000);
   
     // Subscribe to received  new message events
-    this.events.subscribe('chatOne:received', msg => {
-      console.log(msg);
-      msg.from = msg._from;
-      delete msg._from;
+    this.sockets.subscribeWithPush("chat", function(msg){
       this.pushNewMsg(msg);
-    });
-  
+    }.bind(this));
+
     this.showEmojiPicker = false;
     this.content.resize();
     this.scrollToBottom();
     
+  }
+
+  ionViewWillLeave() {
+    // unsubscribe
+    window.clearInterval(this.updateTimeMessage);
+    this.sockets.unsubscribeWithPush("chat");
   }
   
   onFocus() {

@@ -1,15 +1,14 @@
 page-view-profile {
     #cabezera{
         width: 100%;
-        height: 100px;
+        height: 200px;
         #avatar{
-            text-align: center;
-            margin-left: calc(50% - 40px);
-            border-radius: 100%;
-            height: 80px;
-            width: 80px;
+            height: 100%;
+            width: 100%;
             img{
-                object-fit: cover;
+                object-fit: contain;
+                width: 100%;
+                height: 100%;
             }
         }
     }

@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { HttpClient } from '@angular/common/http';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 @IonicPage()
@@ -12,18 +14,53 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class ViewProfilePage {
 
-  public user:any;
+  public user:any={ options : { language: "en" } };
+  public lang:string='';
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public helper: HelpersProvider
+    public helper: HelpersProvider, private http: HttpClient,
+    public auth: AuthServiceProvider
   ) {
+
     this.user = MyApp.User;
+    console.log(this.user);
+    if( !this.user.hasOwnProperty("options") ){
+      this.user.options = { language : 'en' };
+    }
+
+    this.lang = this.user.options.language;
+
     let ramdon = new Date().getTime();
-    this.user.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
+    this.user.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ this.user.id);
+
   }
 
-  public changeLang(lang:string){
-    this.helper.setLanguage(lang);
+  async ionViewWillEnter(){
+    try{
+
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
+
+  public async changeLang(){
+
+    try{
+
+      let options = this.user.options;
+      options.language = this.lang;
+
+      let updatedUser = await this.http.put("/user/"+ this.user.id, { options }).toPromise();
+      await this.auth.saveOptions(options);
+      console.log(updatedUser);
+      this.helper.setLanguage(this.lang);
+
+    }
+    catch(e){
+      console.error(e);
+
+    }
   }
 
 }

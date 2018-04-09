@@ -6,14 +6,14 @@ import { AuthServiceProvider } from './auth-service';
 import { MyApp } from '../../app/app.component';
 
 /**
- * intercepta todos lo peticiones que se acen por de http cliente para añadir 
+ * intercepta todos lo peticiones que se realizan por http cliente para añadir 
  * la base url y token de seguridad
  */
 
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url:string = 'http://192.168.8.107:8187'; // 'http://138.68.19.227:8087'; 'http://localhost:8087';
+  public static url:string = 'http://138.68.19.227:8187'; // 'http://192.168.8.100:8187'; 'http://localhost:8087';
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

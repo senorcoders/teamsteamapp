@@ -3,6 +3,7 @@ import { Injectable, NgZone } from '@angular/core';
 import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
+import { HelpersProvider } from '../helpers/helpers';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -29,8 +30,10 @@ export class AuthServiceProvider {
   private user:User= new User();
   public functions:any=function(){};
 
-  constructor(public http: HttpClient, public storage: Storage, public menuCtrl: MenuController,
-  public zone: NgZone ) {
+  constructor(public http: HttpClient, public storage: Storage, 
+    public menuCtrl: MenuController, public zone: NgZone,
+    public helper: HelpersProvider
+   ) {
 
   }
 
@@ -74,8 +77,17 @@ export class AuthServiceProvider {
     let user;
 
     try{
+      
       user = this.User();
       MyApp.User = user;
+
+      //ahora asignamos el lenaguaje si es que esta definido
+      if( user.hasOwnProperty('options') && user.options.hasOwnProperty('language') ){
+        console.log("asignamos language", user.options.language);
+        await this.helper.setLanguage(user.options.language);
+      }else{
+        await this.helper.setLanguage('en')
+      }
       
       let url;
       if( user.role.name === "Player"){
@@ -158,6 +170,15 @@ export class AuthServiceProvider {
   //esto es para actualizar datos en el app para cuando se cambie de usuario
   public changeUser(callback:any){
     this.functions = callback;
+  }
+
+  //para guardar cambios hechos en options del usuario
+  public async saveOptions(options:any){
+    let user = MyApp.User;
+    user.options = options;
+    await this.storage.set("user", user);
+    MyApp.User = user;
+    this.user = MyApp.User;
   }
 
 }

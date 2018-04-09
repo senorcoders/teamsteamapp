@@ -24,6 +24,7 @@ import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
 import { TranslateService } from '@ngx-translate/core';
+import { HelpersProvider } from '../providers/helpers/helpers';
 
 
 @Component({
@@ -56,12 +57,11 @@ export class MyApp {
   public defaultImageUser=true;
 
   public pages:Array<Object> = [
-    { title : "Events", component : EventsSchedulePage, icon:"basketball" },
-    { title : "My Task", component : MyTaskPage, icon:"basketball" },
-    { title : "Roster", component : RosterPage, icon:"baseball" },
-    { title : "Chat", component : ListChatsPage, icon:"baseball" },
-    { title : "Messages", component : ChatPage, icon:"baseball" },
-    { title : "Profile", component : ViewProfilePage, icon:"baseball" },
+    { title : "NAVMENU.EVENTS", component : EventsSchedulePage, icon:"basketball" },
+    { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball" },
+    { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball" },
+    { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball" },
+    { title : "NAVMENU.PROFILE", component : ViewProfilePage, icon:"baseball" },
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
@@ -70,7 +70,8 @@ export class MyApp {
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
     private http: HttpClient, private Evenn: Events, 
-    public zone: NgZone, translate: TranslateService
+    public zone: NgZone, translate: TranslateService,
+    private helper: HelpersProvider
   ) {
 
     //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
@@ -157,6 +158,14 @@ export class MyApp {
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
       document.getElementById("nameSlide").innerText = this.user.username;
       MyApp.initConnetionSockets();
+
+      //ahora asignamos el lenaguaje si es que esta definido
+      if( MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language') ){
+        await this.helper.setLanguage(MyApp.User.options.language);
+      }else{
+        this.helper.setLanguage('en')
+      }
+
     }else{
       this.nav.root = LoginPage;
       return;
@@ -218,6 +227,11 @@ export class MyApp {
 
   goToPage(page){
     this.nav.setRoot(page);
+    this.menuCtrl.close();
+  }
+
+  public goProfile(){
+    this.nav.setRoot(ViewProfilePage);
     this.menuCtrl.close();
   }
 
