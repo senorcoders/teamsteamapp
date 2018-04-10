@@ -18,10 +18,12 @@ import  * as moment from 'moment';
 export class MyTaskPage {
 
   public tasks:Array<any>=[];
+  public role = "";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private http: HttpClient
   ) {
+    this.role = MyApp.User.role.name;
   }
 
   async ngOnInit(){
@@ -29,8 +31,15 @@ export class MyTaskPage {
   }
 
   async getTasks(){
+
     console.log(MyApp.User);
-    let tasks:any = await this.http.get('/task/team/'+ MyApp.User.team).toPromise();
+    let tasks:any;
+    if( MyApp.User.role.name === "Manager" ){
+      tasks = await this.http.get('/task/from/'+ MyApp.User.id).toPromise();
+    }else{
+      tasks = await this.http.get('/task/for/'+ MyApp.User.id).toPromise();
+    }
+    
     let now = moment();
     this.tasks = await Promise.all((tasks.map(async (item)=>{
       item.past = moment(item.dateTime).isBefore(now);

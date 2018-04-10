@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HelpersProvider } from '../../providers/helpers/helpers';
@@ -16,10 +16,13 @@ export class ViewProfilePage {
 
   public user:any={ options : { language: "en" } };
   public lang:string='';
+  public image=false;
+  public team:any={ name : "" };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
-    public auth: AuthServiceProvider
+    public auth: AuthServiceProvider, private loadingCtrl: LoadingController,
+    public alertCtrl: AlertController
   ) {
 
     this.user = MyApp.User;
@@ -38,6 +41,8 @@ export class ViewProfilePage {
   async ionViewWillEnter(){
     try{
 
+      this.team = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
+      console.log(this.team);
     }
     catch(e){
       console.error(e);
@@ -61,6 +66,39 @@ export class ViewProfilePage {
       console.error(e);
 
     }
+  }
+
+  public async changePhoto(){
+
+    let unexpectM = await this.helper.getWords("ERORUNEXC"),
+    savingM = await this.helper.getWords("SAVING");
+
+    let load = this.loadingCtrl.create({ content: savingM });
+    load.present({ disableApp : true });
+
+    try{
+
+      let image = await this.helper.Camera({ quality : 80 });
+
+      await this.http.post("/images/users", {
+        id : MyApp.User.id,
+        image : image
+      }).toPromise();
+
+      let ramdon = new Date().getTime();
+      this.user.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ this.user.id);
+
+    }
+    catch(e){
+      console.log("");
+      load.dismiss();
+      this.alertCtrl.create({ title: "Error", message: unexpectM }).present();
+    }
+
+  }
+
+  public success(){
+    this.image = true;
   }
 
 }

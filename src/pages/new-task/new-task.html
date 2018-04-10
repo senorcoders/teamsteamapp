@@ -21,6 +21,15 @@
     </ion-item>
 
     <ion-item>
+
+      <ion-label floating>{{'ASSIGN' | translate}}</ion-label>
+      <ion-select [(ngModel)]="assign" >
+        <ion-option *ngFor="let player of players;" [value]="player.user.id">{{player.user.username}}</ion-option>
+      </ion-select>
+
+    </ion-item>
+
+    <ion-item>
       <h4 (click)="editDate()" class="date-time">{{'DATE' | translate}}: {{date}}</h4>
     </ion-item>
 

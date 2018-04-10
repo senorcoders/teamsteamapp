@@ -23,7 +23,7 @@
 
   </ion-list>
 
-  <ion-fab bottom right>
+  <ion-fab bottom right [hidden]="role !== 'Manager'" >
     <button color="base" ion-fab icon-only (click)="newTask()" >
       <ion-icon name="md-add"></ion-icon>
     </button>

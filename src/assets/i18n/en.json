@@ -65,5 +65,8 @@
     "TEST": "Hello, you are using the language English",
     "LANGUAGE": "Language",
     "SELECTUSER": "Players and Managers",
-    "SEARCH": "Search"
+    "SEARCH": "Search",
+    "EMPTYFIELDS": "Empty Fields",
+    "ASSIGN": "assign",
+    "CONTACTS": "Contacts"
 }

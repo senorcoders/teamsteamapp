@@ -5,6 +5,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { MyTaskPage } from '../my-task/my-task';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 @IonicPage()
 @Component({
@@ -15,18 +16,29 @@ export class NewTaskPage {
 
   public name:string="";
   public description:string="";
+  public assign="";
   public date:string;
   public time:string;
 
+  public players:Array<any>=[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private datePicker: DatePicker, private alertCtrl: AlertController,
-    public http: HttpClient
+    public http: HttpClient, private helper: HelpersProvider
   ) {
     this.date = moment().format("ddd DD MMM YYYY");
     this.time = moment().format("HH:mm");
   }
 
-  ngOnInit(){
+  async ngOnInit(){
+
+    let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
+    this.players = team._players;
+    /*let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
+
+    for(let it of managers){
+      this.players.push(it);
+    }*/
 
   }
 
@@ -59,13 +71,18 @@ export class NewTaskPage {
   }
 
   public async save(){
+
+    let requiredM = await this.helper.getWords("REQUIRED");
+    let emptyM = await this.helper.getWords("EMPTYFIELDS");
+
     if(
       this.name === '' || 
-      this.description === ''
+      this.description === '' ||
+      this.assign === ''
     ){
       this.alertCtrl.create({
-        title: "Required!",
-        message: "Empty Fields"
+        title: requiredM,
+        message: emptyM
       }).present();
       return;
     }
@@ -77,7 +94,8 @@ export class NewTaskPage {
         text: this.description,
         dateTime: moment(this.date+" "+this.time, "ddd DD MMM YYYY HH:mm").toISOString(),
         team: MyApp.User.team,
-        user: MyApp.User.id,
+        from: MyApp.User.id,
+        for: this.assign,
         completad: false
       };
 
@@ -86,7 +104,8 @@ export class NewTaskPage {
     }
     catch(e){
       console.error(e);
-      this.alertCtrl.create({ title: "Error", message: "Unexpected Error"})
+      let unexpectedM = await this.helper.getWords("ERORUNEXC");
+      this.alertCtrl.create({ title: "Error", message:  unexpectedM })
       .present();
       valid = false;
     }

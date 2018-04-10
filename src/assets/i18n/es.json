@@ -65,5 +65,8 @@
     "TEST": "Hola estas usando el idioma español",
     "LANGUAGE": "Languaje",
     "SELECTUSER": "Jugadores y Managers",
-    "SEARCH": "Buscar"
+    "SEARCH": "Buscar",
+    "EMPTYFIELDS": "Campos Vacios",
+    "ASSIGN": "Asignar",
+    "CONTACTS": "Contactos"
 }

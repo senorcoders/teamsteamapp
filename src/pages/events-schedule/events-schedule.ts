@@ -141,21 +141,21 @@ export class EventsSchedulePage {
           return 1;
 
         }else if( a.repeats == true && a.repeatsDaily === false && b.repeats == false ){
-          let d1 = moment().day(a.repeatsOption), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
+          let d1 = th.getDayCercano(a.repeatsDays), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
           if (d1.isBefore(d2)) {            // a comes first
-            return 1
+            return -1
           } else if (d1.isAfter(d2)) {     // b comes first
-              return -1
+              return 1
           } else {                // equal, so order is irrelevant
               return 0            // note: sort is not necessarily stable in JS
           }
 
-        }else if( a.repeats == "no-repeat" && b.repeats == 'weekly' ){
+        }else if( a.repeats == false && b.repeats == true && b.repeatsDaily == false ){
           let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = th.getDayCercano(b.repeatsDays);
           if (d1.isBefore(d2)) {            // a comes first
-            return 1
+            return -1
           } else if (d1.isAfter(d2)) {     // b comes first
-              return -1
+              return 1
           } else {                // equal, so order is irrelevant
               return 0            // note: sort is not necessarily stable in JS
           }
@@ -173,9 +173,9 @@ export class EventsSchedulePage {
         }else if( a.repeatsDaily === true && b.repeats == true && b.repeatsDaily === false ){
           let d1 = moment(), d2 = th.getDayCercano(b.repeatsDays);
           if (d1.isBefore(d2)) {            // a comes first
-            return 1
+            return -1
           } else if (d1.isAfter(d2)) {     // b comes first
-              return -1
+              return 1
           } else {                // equal, so order is irrelevant
               return 0            // note: sort is not necessarily stable in JS
           }
@@ -184,9 +184,9 @@ export class EventsSchedulePage {
 
         let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
         if (d1.isBefore(d2)) {            // a comes first
-          return 1
+          return -1
         } else if (d1.isAfter(d2)) {     // b comes first
-            return -1
+            return 1
         } else {                // equal, so order is irrelevant
             return 0            // note: sort is not necessarily stable in JS
         }
