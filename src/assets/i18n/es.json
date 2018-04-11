@@ -68,5 +68,6 @@
     "SEARCH": "Buscar",
     "EMPTYFIELDS": "Campos Vacios",
     "ASSIGN": "Asignar",
-    "CONTACTS": "Contactos"
+    "CONTACTS": "Contactos",
+    "MCODE": "Usted Debe Confirmar El Codigo de Verificación"
 }

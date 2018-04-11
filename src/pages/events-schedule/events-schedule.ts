@@ -88,16 +88,17 @@ export class EventsSchedulePage {
     try{
 
       //preformarting for events
-      events = events.map(function(it, index){
+      events = await Promise.all(events.map(async function(it, index){
         
         //Para saber si el evento es semanal
         it.weeks = it.repeats === true && it.repeatsDaily === false;
 
         if( it.weeks === true ){
-          let str = th.getDayCercano(it.repeatsDays).format("Do MMMM YYYY hh:mm");
-          it.parsedDateTime = str;
+          let day = th.getDayCercano(it.repeatsDays);
+          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
         }else{
-          it.parsedDateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("Do MMMM YYYY hh:mm");
+          let day = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
         }
         
         if( it.repeatsDaily === true ){
@@ -129,8 +130,16 @@ export class EventsSchedulePage {
         it.likeUp = likeUp;
         it.likeDown = likeDown;
 
+        it.tracking = await th.http.get("/traking/query/"+ MyApp.User.id+ "/"+ it.id).toPromise();
+
+        let counts = await th.getTrackings(it);
+
+        it.countYes = counts.countYes;
+        it.countNo = counts.countNo;
+        it.countMaybe = counts.countMaybe;
+
         return it;
-      });
+      }));
 
       //for sort events
       events = events.sort(function(a, b){
@@ -244,6 +253,62 @@ export class EventsSchedulePage {
 
     return cercanoMoment;
     
+  }
+
+  //Para obtener los tracking de event
+  private async getTrackings(event){
+    
+    let countYes=0, countNo=0, countMaybe=0;
+    try{
+      let trackings:any = await this.http.get("/trackingevent/event/"+ event.id).toPromise();
+
+      console.log(trackings);
+      await Promise.all( trackings.map( async function(item){
+
+        if( item.info == 'yes' )
+          countYes += 1;
+        else if( item.info == 'no' )
+          countNo += 1;
+        else
+          countMaybe += 1;
+
+        return item;
+      }) );
+
+    }
+    catch(e){
+      console.error(e);
+    }
+
+    return { countYes, countNo, countMaybe };
+  }
+
+  //asigna una respuesta al evento si no esta creada se crea
+  async asingResponse(event, response){
+    let guardar = event.tracking.user !== undefined;
+    try{
+      let newTrack:any;
+      if( guardar === false ){
+        newTrack = await this.http.post("/trackingevent", { user: MyApp.User.id, event: event.id, info: response })
+        .toPromise();
+        event.tracking = newTrack;
+      }else{
+        newTrack = await this.http.put("/trackingevent/"+ event.tracking.id, { info: response }).toPromise();
+        event.tracking = newTrack;
+      }
+
+      let counts = await this.getTrackings(event);
+
+      let index = this.events.findIndex(function(e){ return e.id === event.id; });
+      //console.log(index, this.events);
+      this.events[index].countYes = counts.countYes;
+      this.events[index].countNo = counts.countNo;
+      this.events[index].countMaybe = counts.countMaybe;
+
+    }
+    catch(e){
+      console.error(e);
+    }
   }
 
   ionViewWillEnter (){

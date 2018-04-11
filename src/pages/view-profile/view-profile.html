@@ -46,7 +46,7 @@
     <ion-item>
       <ion-icon name="md-mail" item-start></ion-icon> 
       {{user.email}} 
-      <ion-icon [hidden]="user.verified" color="danger" name="md-alert" item-end></ion-icon>
+      <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon>
       <ion-icon name="md-create" item-end></ion-icon>
     </ion-item>
 

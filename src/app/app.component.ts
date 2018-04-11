@@ -61,7 +61,7 @@ export class MyApp {
     { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball" },
     { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball" },
     { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball" },
-    { title : "NAVMENU.PROFILE", component : ViewProfilePage, icon:"baseball" },
+    //{ title : "NAVMENU.PROFILE", component : ViewProfilePage, icon:"baseball" },
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 

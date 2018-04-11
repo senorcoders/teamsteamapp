@@ -101,4 +101,10 @@ export class ViewProfilePage {
     this.image = true;
   }
 
+  public async mCode(){
+    let message = await this.helper.getWords("MCODE");
+    this.alertCtrl.create({ message: message})
+    .present();
+  }
+
 }

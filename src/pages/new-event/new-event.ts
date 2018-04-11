@@ -214,7 +214,7 @@ export class NewEventPage {
         return;
     }
 
-    if( this.imageSrc == '' ){
+    if( this.imageSrc == '' && this.type == "event" ){
       this.load.dismiss();
         this.alertCtrl.create({
           title: requiredM,
@@ -228,7 +228,7 @@ export class NewEventPage {
       team: this.team,
       name : this.name,
       type : this.type,
-      attendeceTracking: this.attendeceTracking,
+     // attendeceTracking: this.attendeceTracking,
       optionalInfo : this.optionalInfo,
       description: this.description,
       user: MyApp.User.id,
@@ -279,8 +279,10 @@ export class NewEventPage {
       }).toPromise();
       console.log(newEvent);
       
-      await this.http.post("/images/events", { id : newEvent.id, image : this.imageSrc }).toPromise();
-      
+      if( this.type === 'event' ){
+        await this.http.post("/images/events", { id : newEvent.id, image : this.imageSrc }).toPromise();
+      }
+
 
     }
     catch(e){
