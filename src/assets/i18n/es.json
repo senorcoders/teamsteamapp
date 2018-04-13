@@ -34,6 +34,10 @@
         "PINMAP": "O MAPA",
         "ENTERADDRES": "Digita La Direcciòn"
     },
+    "NEWTEAM":{
+        "TITLE": "Nuevo Equipo",
+        "ADD": "Agregar Equipo"
+    },
     "DAYSWEEKS": {
         "M": "L",
         "TU": "M",
@@ -48,6 +52,11 @@
     "DATE": "Fecha",
     "TIME": "Hora",
     "DESCRIPTION": "Descripción",
+    "SPORT": "Deporte",
+    "SPORTS":{
+        "BASEBALL": "Béisbol",
+        "FOOTBALL": "Fútbol"
+    },
     "LOCATION": "Ubicación",
     "WEBSITE": "Sitio Web",
     "TRACKING": "Asistencia",
@@ -69,5 +78,16 @@
     "EMPTYFIELDS": "Campos Vacios",
     "ASSIGN": "Asignar",
     "CONTACTS": "Contactos",
-    "MCODE": "Usted Debe Confirmar El Codigo de Verificación"
+    "MCODE": "Usted Debe Confirmar El Codigo de Verificación",
+    "COMMENTS": "Comentarios",
+    "ASSISTANCE": "Asistencia",
+    "YES": "Si",
+    "NO": "No",
+    "MAYBE": "Talvez",
+    "ENTRYFULLNAME": "Digita Tus Nuevos Datos",
+    "FIRSTNAME": "First Name",
+    "LASTNAME": "Last Name",
+    "CANCEL": "Cancelar",
+    "EDIT": "Editar",
+    "TEAMS": "Equipos"
 }

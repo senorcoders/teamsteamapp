@@ -1,7 +1,14 @@
+<ion-header>
+    <ion-navbar color="base">
+        <ion-title>{{"COMMENTS" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
     <ion-tabs>
         <ion-tab [root]="Comments" [rootParams]="comments" [tabTitle]="'Comments '+ event.comments.length" tabIcon="text"></ion-tab>
-        <ion-tab [root]="LikesUp" [rootParams]="likeUpParams" [tabTitle]="likeUpParams.likes.length" tabIcon="thumbs-up"></ion-tab>
-        <ion-tab [root]="LikesDown" [rootParams]="likeDownParams" [tabTitle]="likeDownParams.likes.length" tabIcon="thumbs-down"></ion-tab>
+        <ion-tab (click)="exit()" tabIcon="md-close-circle"></ion-tab>
+        <!--ion-tab [root]="LikesUp" [rootParams]="likeUpParams" [tabTitle]="likeUpParams.likes.length" tabIcon="thumbs-up"></ion-tab>
+        <ion-tab [root]="LikesDown" [rootParams]="likeDownParams" [tabTitle]="likeDownParams.likes.length" tabIcon="thumbs-down"></ion-->
       </ion-tabs>
 </ion-content>

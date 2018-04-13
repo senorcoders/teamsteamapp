@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar color="base" >
+    <ion-title>{{"TEAMS" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item *ngFor="let team of teams;" >
+      <ion-avatar item-start>
+        <img [src]="team.imageSrc">
+      </ion-avatar>
+      {{team.team.name}}
+    </ion-item>
+
+  </ion-list>
+
+  <ion-fab bottom right [hidden]='user.role.name != "Manager"' >
+    <button color="base" ion-fab icon-only (click)="addTeam()" >
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

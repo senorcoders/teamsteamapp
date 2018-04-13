@@ -38,4 +38,9 @@ export class ViewTrakingComponent {
     console.log(this.likeDownParams);
   }
 
+  public exit(){
+    console.log("exit");
+    this.viewCtrl.dismiss();
+  }
+
 }

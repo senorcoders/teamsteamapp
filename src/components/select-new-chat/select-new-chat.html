@@ -1,6 +1,11 @@
 <ion-header>
   
   <ion-navbar color="base" >
+      <ion-buttons left>
+          <button ion-button icon-only (click)="viewCtrl.dismiss()">
+          <ion-icon name="arrow-back"></ion-icon>
+      </button>
+  </ion-buttons>
     <ion-title>{{'SELECTUSER' | translate}}</ion-title>
   </ion-navbar>
 

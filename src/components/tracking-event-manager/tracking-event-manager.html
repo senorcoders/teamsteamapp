@@ -1,14 +1,24 @@
 <ion-header no-border>
+
+    <ion-navbar color="base">
+        <ion-buttons left>
+                <button ion-button icon-only (click)="viewCtrl.dismiss()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{"ASSISTANCE" | translate}}</ion-title>
+    </ion-navbar>
+
     <ion-toolbar>
-        <ion-segment color="base">
+        <ion-segment>
             <ion-segment-button value="yes" (ionSelect)="select('yes')">
-              Yes {{countYes}}
+              {{"YES" | translate}} {{countYes}}
             </ion-segment-button>
             <ion-segment-button value="no" (ionSelect)="select('no')">
-              No {{countNo}}
+              {{"NO" | translate}} {{countNo}}
             </ion-segment-button>
             <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
-              Maybe {{countMaybe}}
+              {{"MAYBE" | translate}} {{countMaybe}}
             </ion-segment-button>
           </ion-segment>
     </ion-toolbar>

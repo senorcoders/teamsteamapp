@@ -12,6 +12,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import {TranslateService} from '@ngx-translate/core';
+import { CommentsComponent } from '../../components/comments/comments';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @IonicPage()
 @Component({
@@ -38,22 +40,23 @@ export class EventsSchedulePage {
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper:HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone,
-    private translate: TranslateService
+    private translate: TranslateService, public locationAccuracy: LocationAccuracy
   ) {
     MyApp.initNotifcations();
 
-    // this language will be used as a fallback when a translation isn't found in the current language
-    /*translate.setDefaultLang('en');
+    this.locationAccuracy.canRequest().then((canRequest: boolean) => {
 
-    // the lang to use, if the lang isn't available, it will use the current loader to get them
-    translate.use('es');
-    this.translate.getTranslation("es").subscribe(function(next){
-      console.log(next);
-    })
+      if(canRequest) {
+        // the accuracy option will be ignored by iOS
+        this.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
+          () =>{
+            //permiss success
+          } ,
+          error => console.log('Error requesting location permissions', error)
+        );
+      }
 
-    this.translate.get("EVENTS.TITLE").subscribe(function(next){
-      console.log(next);
-    });*/
+    });
 
   }
 
@@ -70,7 +73,7 @@ export class EventsSchedulePage {
       let url = "/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team;
       console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
-
+      console.log(events);
       this.events = await this.parserEvents(events);
       console.log(this.events);
       let user = this.user;
@@ -291,10 +294,8 @@ export class EventsSchedulePage {
       if( guardar === false ){
         newTrack = await this.http.post("/trackingevent", { user: MyApp.User.id, event: event.id, info: response })
         .toPromise();
-        event.tracking = newTrack;
       }else{
         newTrack = await this.http.put("/trackingevent/"+ event.tracking.id, { info: response }).toPromise();
-        event.tracking = newTrack;
       }
 
       let counts = await this.getTrackings(event);
@@ -304,6 +305,7 @@ export class EventsSchedulePage {
       this.events[index].countYes = counts.countYes;
       this.events[index].countNo = counts.countNo;
       this.events[index].countMaybe = counts.countMaybe;
+      this.events[index].tracking = newTrack;
 
     }
     catch(e){
@@ -343,11 +345,31 @@ export class EventsSchedulePage {
       }
       
     });
+
+    this.sockets.subscribeWithPush("comment", function(data){
+
+      //console.log("new comment", data)
+      //Para actualizar cuando un commentario nuevo es realizado
+      //obtenemos la posicion que tiene en el array para despues eliminarlo
+      t.zone.run(function(){ 
+        
+        let index = t.events.findIndex(function(el){ return el.id === data.event });
+        //console.log(index);
+        if( index !== -1){
+          let event = t.events[index];
+          event.comments.push(data);
+          t.events[index] = event;
+        }
+
+      })
+
+    });
   }
 
   ionViewWillUnload (){
     console.log("unsubscribe");
     this.sockets.unsubscribeWithPush('event');
+    this.sockets.unsubscribeWithPush("comment");
   }
 
   public goEvent(event:any){
@@ -462,8 +484,8 @@ export class EventsSchedulePage {
     });
   }
 
-  public async viewTraking(e){
-    let view = this.modalCtrl.create(ViewTrakingComponent, { e });
+  public async viewComment(e){
+    let view = this.modalCtrl.create(CommentsComponent, { e });
     view.present();
   }
 

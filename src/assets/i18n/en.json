@@ -13,7 +13,7 @@
         "LOGOUT": "Logout"
     },
     "MYTASK": {
-        "TITLE": "Mis Tareas",
+        "TITLE": "My Tasks",
         "NEWTASK" : "Nueva Tarea"
     },
     "NEWEVENT": {
@@ -34,6 +34,10 @@
         "PINMAP": "OR PIN MAP",
         "ENTERADDRES": "Enter Address"
     },
+    "NEWTEAM":{
+        "TITLE": "New Team",
+        "ADD": "Add Team"
+    },
     "DAYSWEEKS": {
         "M": "M",
         "TU": "T",
@@ -48,6 +52,11 @@
     "DATE": "Date",
     "TIME": "Time",
     "DESCRIPTION": "Description",
+    "SPORT": "Sport",
+    "SPORTS":{
+        "BASEBALL": "Baseball",
+        "FOOTBALL": "Football"
+    },
     "LOCATION": "Location",
     "WEBSITE": "Website",
     "TRACKING": "Tracking",
@@ -69,5 +78,16 @@
     "EMPTYFIELDS": "Empty Fields",
     "ASSIGN": "assign",
     "CONTACTS": "Contacts",
-    "MCODE": "You Should Confirm Your Verification Code"
+    "MCODE": "You Should Confirm Your Verification Code",
+    "COMMENTS": "Comments",
+    "ASSISTANCE": "Assistance",
+    "YES": "Yes",
+    "NO": "No",
+    "MAYBE": "Maybe",
+    "ENTRYFULLNAME": "Digita Tus Nuevos Datos",
+    "FIRSTNAME": "Nombre",
+    "LASTNAME": "Apellido",
+    "CANCEL": "Cancel",
+    "EDIT": "Edit",
+    "TEAMS": "Teams"
 }

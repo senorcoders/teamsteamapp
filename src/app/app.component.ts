@@ -25,6 +25,7 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
+import { AddTeamPage } from '../pages/add-team/add-team';
 
 
 @Component({
@@ -61,7 +62,7 @@ export class MyApp {
     { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball" },
     { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball" },
     { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball" },
-    //{ title : "NAVMENU.PROFILE", component : ViewProfilePage, icon:"baseball" },
+    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball" },
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 

@@ -5,6 +5,7 @@ import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { ChatPage } from '../chat/chat';
+import { interceptor } from '../../providers/auth-service/interceptor';
 
 /**
  * esta es la lista de players con los que ha chateado
@@ -30,10 +31,18 @@ export class ListChatsPage {
   async ngOnInit(){
     try{
       let users:any = await this.http.get("/chat-list/"+ MyApp.User.id).toPromise();
-      this.listUsers = users;
+      
+      let ramdon = new Date().getTime();
+      this.listUsers = users.map(function(item){
+        
+        item.imgSrc = interceptor.transformUrl(`/images/${ramdon}/users&thumbnail/`+ item._id);
+        return item;
+
+      });
+
       let team:any = await this.http.get("/team/"+ this.idTeam).toPromise();
       this.team = team.team;
-      console.log(this.team);
+
     }
     catch(e){
       console.error(e);

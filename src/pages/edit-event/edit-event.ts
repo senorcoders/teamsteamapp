@@ -106,7 +106,8 @@ export class EditEventPage {
       this.location.position.lat = this.event.location.lat;
       this.location.position.lng = this.event.location.lng;
       let places = await this.helper.locationToPlaces(this.location.position);
-      this.location.place = places[0];
+      if( places !== null)
+        this.location.place = places[0];
     }
     
   }
@@ -123,6 +124,14 @@ export class EditEventPage {
     .then(date=>{
       this.time = moment(date).format("HH:mm");
     })
+  }
+
+  public getSelectDays(key:string){
+    return -1 !== this.repeatsDays.findIndex(function(el){ return el === key });
+  }
+
+  public showDaysRepeats():boolean{
+    return this.repeats === true && this.repeatsDaily === false;
   }
 
   public loadPlace(){

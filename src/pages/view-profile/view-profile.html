@@ -5,7 +5,12 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title> {{user.username}} </ion-title>
+    <ion-title> {{"NAVMENU.PROFILE" | translate}} <h1 class="text-right-navbar" >{{"EDIT"  | translate}}</h1> </ion-title>
+
+    <ion-buttons end>
+      <ion-toggle [(ngModel)]="edit"></ion-toggle>
+    </ion-buttons>
+
   </ion-navbar>
 
 </ion-header>
@@ -15,7 +20,7 @@
 
   <div class="cabezera" [hidden]="!image" >
       <div class="avatar">
-        <img [src]="user.imageSrc" >
+        <img [src]="user.imageSrc" (load)="loadImage()" >
       </div>
       <ion-fab top right class="button-fab-right">
         <button ion-fab color="base" (click)="changePhoto()" >
@@ -28,7 +33,7 @@
       <div class="avatar">
         <img src="./assets/imgs/user.png" style="object-fit: cover;" >
       </div>
-      <ion-fab top right class="button-fab-right">
+      <ion-fab top right class="button-fab-right" >
         <button ion-fab color="base" (click)="changePhoto()" >
           <ion-icon name="md-camera"></ion-icon>
         </button>
@@ -40,20 +45,26 @@
   <ion-list>
 
     <ion-item-divider>
-        {{user.firstName+ " "+ user.lastName}}
+        {{user.username}}
     </ion-item-divider>
     
+    <ion-item>
+      <ion-icon name="md-code-working" item-start></ion-icon> 
+      {{user.firstName+ " "+ user.lastName}} 
+      <ion-icon name="md-create" [hidden]="!edit" (click)="editNameFull()" item-end></ion-icon>
+    </ion-item>
+
     <ion-item>
       <ion-icon name="md-mail" item-start></ion-icon> 
       {{user.email}} 
       <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon>
-      <ion-icon name="md-create" item-end></ion-icon>
+      <ion-icon name="md-create" [hidden]="!edit" item-end></ion-icon>
     </ion-item>
 
-    <ion-item>
+    <ion-item (click)="selectTeams()" >
       <ion-icon name="ios-people" item-start></ion-icon>
       Team {{team.name}} 
-      <ion-icon name="md-create" item-end></ion-icon>
+      <ion-icon hidden name="md-create" item-end></ion-icon>
     </ion-item>
 
     <ion-item>
@@ -64,7 +75,7 @@
       </ion-select>
     </ion-item>
 
-    <ion-item>
+    <ion-item [hidden]="user.role.name != 'Manager' ">
       <ion-icon name="ios-people" item-start></ion-icon>
       {{'CONTACTS' | translate}} 
     </ion-item>

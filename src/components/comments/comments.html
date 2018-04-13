@@ -1,9 +1,20 @@
+<ion-header>
+    <ion-navbar color="base">
+        <ion-buttons left>
+                <button ion-button icon-only (click)="viewCtrl.dismiss()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{"COMMENTS" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
 <ion-content>
 
   <div class="message-wrap">
 
     <div *ngFor="let comment of commentsList; let i = index; trackBy: customTrackBy"
-         class="message" >
+         class="message" (click)="presentTo(comment.user)" >
         <img class="user-img" [src]="comment.photo" alt="" src="">
         <div class="msg-detail">
             <div class="msg-info">
@@ -30,7 +41,7 @@
           </ion-col>
           <ion-col col-8>
               <ion-textarea #chat_input
-                            placeholder="Text Input"
+                            placeholder="Comment"
                             [(ngModel)]="editorMsg"
                             (keyup.enter)="sendComment()"
                             (ionFocus)="onFocus()">

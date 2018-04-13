@@ -22,6 +22,9 @@
     </ion-item>
 
     <ion-item *ngFor='let user of listUsers' (click)="goChat(user)" >
+      <ion-avatar item-start>
+        <img [src]="user.imgSrc">
+      </ion-avatar>
       <h2>{{user.username}}</h2>
     </ion-item>
 

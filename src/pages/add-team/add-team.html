@@ -1,0 +1,64 @@
+<ion-header>
+
+  <ion-navbar color="base">
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title>{{"NEWTEAM.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-avatar [hidden]="!image" >
+    <img width="100%" (load)="success()" [src]="imageSrc">
+    <ion-fab top right edge class="button-fab-right">
+        <button ion-fab color="base" (click)="changePhoto()" >
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+    </ion-fab>
+</ion-avatar>
+
+<ion-avatar [hidden]="image" >
+  <img width="100%" src="./assets/imgs/logo-default.png">
+  <ion-fab top right edge class="button-fab-right">
+    <button ion-fab color="base" (click)="changePhoto()" >
+      <ion-icon name="md-camera"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-avatar>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>
+        {{"NAME" | translate}}
+      </ion-label>
+      <ion-input type="text" (ngModel)="name" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+       <ion-label floating>
+        {{"DESCRIPTION" | translate}}
+      </ion-label>
+      <ion-textarea (ngModel)="descripcion" ></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>
+         {{"SPORT" | translate}}
+       </ion-label>
+       <ion-select [(ngModel)]="sport" >
+        <ion-option value="baseball">{{"SPORTS.BASEBALL" | translate}}</ion-option>
+        <ion-option value="football">{{"SPORTS.FOOTBALL" | translate}}</ion-option>
+       </ion-select>
+     </ion-item>
+
+  </ion-list>
+
+  <button ion-button block (click)="save()" >{{"SAVE" | translate}}</button>
+
+</ion-content>

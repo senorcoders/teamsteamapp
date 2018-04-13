@@ -71,6 +71,9 @@ import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 import { TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { Http } from '@angular/http';
+import { ContactsProfilePage } from '../pages/contacts-profile/contacts-profile';
+import { TeamsProfilePage } from '../pages/teams-profile/teams-profile';
+import { AddTeamPage } from '../pages/add-team/add-team';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -112,7 +115,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     TrackingEventComponent,
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
-    ViewProfilePage
+    ViewProfilePage,
+    ContactsProfilePage,
+    TeamsProfilePage,
+    AddTeamPage
   ],
   imports: [
     BrowserModule,
@@ -164,7 +170,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     TrackingEventComponent,
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
-    ViewProfilePage
+    ViewProfilePage,
+    ContactsProfilePage,
+    TeamsProfilePage,
+    AddTeamPage
   ],
   providers: [
     StatusBar,

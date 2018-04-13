@@ -1,10 +1,11 @@
 import { Component, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
-import { NavParams, TextInput, Content, Events } from 'ionic-angular';
+import { NavParams, TextInput, Content, Events, ViewController, ModalController } from 'ionic-angular';
 import { Observable} from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
+import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-chat-to-perfil-player';
 
 @Component({
   selector: 'comments',
@@ -28,7 +29,8 @@ export class CommentsComponent {
   
   constructor(public http: HttpClient, public navParams: NavParams,
     public changeDectRef: ChangeDetectorRef, public zone: NgZone,
-    public eventPush: Events
+    public eventPush: Events, public viewCtrl: ViewController,
+    public modalCtrl: ModalController
   ) {
     let t = this;
     
@@ -158,6 +160,21 @@ export class CommentsComponent {
   
   public customTrackBy(index: number, obj: any): any {
     return index;
+  }
+
+  public exit(){
+    this.viewCtrl.dismiss();
+  }
+
+  public async presentTo(idUser:any){
+    
+    if( MyApp.User.id === idUser )
+      return;
+
+    let user = await this.http.get("/user/"+ idUser).toPromise();
+    this.modalCtrl.create(ToChatToPerfilPlayerComponent, {
+      user: user
+    }).present();
   }
 
 }

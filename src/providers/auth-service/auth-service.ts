@@ -173,6 +173,19 @@ export class AuthServiceProvider {
   }
 
   //para guardar cambios hechos en options del usuario
+  public async updateUser(user:any){
+    
+    let token = MyApp.User.token;
+    let team = MyApp.User.team;
+    user.token = token;
+    user.team = team;
+    await this.storage.set("user", user);
+    MyApp.User = user;
+    this.user = MyApp.User;
+    
+  }
+
+  //para guardar cambios hechos en options del usuario
   public async saveOptions(options:any){
     let user = MyApp.User;
     user.options = options;

@@ -130,7 +130,7 @@ export class EventPage {
         this.load = this.loading.create({
           content: "Loading Map"
         });
-        this.load.present({ disableApp : true });
+        //this.load.present({ disableApp : true });
 
         this.loadMap(this.event.location.lat, this.event.location.lng);
       }

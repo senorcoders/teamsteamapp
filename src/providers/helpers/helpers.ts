@@ -143,7 +143,7 @@ public urlTobase64(url):Promise<string> {
 }
 
 //Para abrir la camera desde cualquier component
-public Camera(parameters):Promise<string>{
+public Camera(parameters: {width?, height?, quality?, resolve?, reject?}):Promise<string>{
   var t = this;
   parameters.width = parameters.width || 300;
   parameters.height = parameters.height || 300;
