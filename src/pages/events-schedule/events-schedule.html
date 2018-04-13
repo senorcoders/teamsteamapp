@@ -33,43 +33,43 @@
     <div class="inner-image">
       <img (click)="goEvent(e)" [src]="e.imageSrc">
       <div class="dateTimeEvent">
-        <h3>{{e.parsedDateTime[0]}}</h3>
-        <h4>{{e.parsedDateTime[1]}}</h4>
+        <h3 class="date-event" >{{e.parsedDateTime[0]}}</h3>
+        <h4 class="date-event" >{{e.parsedDateTime[1]}}</h4>
       </div>
     </div>
 
     <!-- este es para events type -->
     <ion-card-content>
-      <p (click)="goEvent(e)">
+      <p class="text-event" (click)="goEvent(e)">
         {{e.name}}
       </p>
       <!--p [hidden]="e.repeatsDaily" style="text-align: right;">{{e.parsedDateTime}}</p-->
-      <p [hidden]="!e.repeatsDaily" style="text-align: right;">{{e.description}} </p>
+      <p [hidden]="!e.repeatsDaily" class="text-event" style="text-align: right;">{{e.description}} </p>
       
       <div class="divider"> </div>
       <ion-row>
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'yes')" color="plight" [ngClass]="{'select': e.likeUp }" icon-left clear small>
               <ion-icon class="ball mas"></ion-icon>
-              <div class="text-inner-button">{{e.countYes}}</div>
+              <div class="text-inner-button text-event">{{e.countYes}}</div>
             </button>
           </ion-col>
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'no')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
                 <ion-icon class="ball menos"></ion-icon>
-              <div class="text-inner-button">{{e.countNo}}</div>
+              <div class="text-inner-button text-event">{{e.countNo}}</div>
             </button>
           </ion-col>
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'maybe')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
               <ion-icon class="ball talves"></ion-icon>
-              <div class="text-inner-button">{{e.countMaybe}}</div>
+              <div class="text-inner-button text-event">{{e.countMaybe}}</div>
             </button>
           </ion-col>
           <ion-col col-6>
             <button ion-button (click)="viewComment(e)" icon-left>
               <ion-icon name="text"></ion-icon>
-              <div>{{e.comments.length}} Comments</div>
+              <div class="text-event" >{{e.comments.length}} Comments</div>
             </button>
           </ion-col>
         </ion-row>
@@ -97,38 +97,38 @@
 
     <!-- este es para events type practice and game -->
     <div class="dateTime" (click)="goEvent(e)" >
-        <h3>{{e.parsedDateTime[0]}}</h3>
-        <h4>{{e.parsedDateTime[1]}}</h4>
+        <h3 class="date-event" >{{e.parsedDateTime[0]}}</h3>
+        <h4 class="date-event" >{{e.parsedDateTime[1]}}</h4>
     </div>
 
     <div class="details" (click)="goEvent(e)">
-      <h2>{{e.name}}</h2>
-      <p>{{e.description}}</p>
+      <h2 class="text-event">{{e.name}}</h2>
+      <p class="text-event">{{e.description}}</p>
     </div>
 
       <ion-row class="asistencia">
         <ion-col col-2>
           <button ion-button (click)="asingResponse(e, 'yes')" color="plight" [ngClass]="{'select': e.likeUp }" icon-left clear small>
             <ion-icon class="ball mas"></ion-icon>
-            <div class="text-inner-button">{{e.countYes}}</div>
+            <div class="text-inner-button text-event">{{e.countYes}}</div>
           </button>
         </ion-col>
         <ion-col col-2>
           <button ion-button (click)="asingResponse(e, 'no')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
               <ion-icon class="ball menos"></ion-icon>
-            <div class="text-inner-button">{{e.countNo}}</div>
+            <div class="text-inner-button text-event">{{e.countNo}}</div>
           </button>
         </ion-col>
         <ion-col col-2>
           <button ion-button (click)="asingResponse(e, 'maybe')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
             <ion-icon class="ball talves"></ion-icon>
-            <div class="text-inner-button">{{e.countMaybe}}</div>
+            <div class="text-inner-button text-event">{{e.countMaybe}}</div>
           </button>
         </ion-col>
         <ion-col col-6>
           <button ion-button (click)="viewTraking(e)" icon-left>
             <ion-icon name="text"></ion-icon>
-            <div>{{e.comments.length}} Comments</div>
+            <div class="text-event">{{e.comments.length}} Comments</div>
           </button>
         </ion-col>
       </ion-row>

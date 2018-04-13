@@ -15,6 +15,23 @@
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
 
+
+/*
+*para importar las nueveas fuentes de los eventos
+*/
+@font-face {
+	font-family: Text_Event;
+	src: url(../assets/fonts/LaoSangam.ttf) format("ttf");
+	font-weight: 200
+}
+
+@font-face {
+	font-family: Date_Event;
+	src: url(../assets/fonts/OratorStd.ttf) format("ttf");
+	font-weight: 200
+}
+
+
 /*menu style*/
 .toolbar-background-md, .toolbar-background{
 	background: rgba(0,102,235,.7)

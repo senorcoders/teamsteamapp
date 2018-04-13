@@ -85,6 +85,9 @@ export class ViewProfilePage {
     try{
 
       let image = await this.helper.Camera({ width: 600, height: 600, quality : 80 });
+      if( image === undefined )
+        return;
+        
       load.present({ disableApp : true });
 
       await this.http.post("/images/users", {

@@ -37,6 +37,8 @@ export class EventPage {
 
   private tracking:any;
 
+  private index = 0;
+
   public user:any;
   public event:any;
 
@@ -62,6 +64,10 @@ export class EventPage {
     this.user = MyApp.User;
 
     this.event = e;
+    this.index = this.navParams.get("index");
+    console.log(this.index);
+
+    console.log(this.event);
 
     //for image user that published events
     let r = new Date().getTime();
@@ -99,6 +105,7 @@ export class EventPage {
       if( this.location.useMap === true ){
         this.location.position = { lat: this.event.location.lat, lng: this.event.location.lng };
         let places = await this.helper.locationToPlaces(this.location.position);
+        if( places === null) return;
         this.location.place = places[0];
         this.location.change = true;
       }
@@ -309,7 +316,8 @@ export class EventPage {
     let t = this;
     this.navCtrl.pop({animation: "ios-transition"}, function(){
       t.navCtrl.push(EditEventPage, {
-        event: t.event
+        event: t.event,
+        index: t.index
       }, {animation: "ios-transition"});
     })
   }

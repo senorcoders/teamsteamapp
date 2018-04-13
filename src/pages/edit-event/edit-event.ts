@@ -69,6 +69,8 @@ export class EditEventPage {
   public description:string="";
   public address='';
 
+  //index of event to update
+  public index=0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public geolocation: Geolocation,
@@ -76,7 +78,11 @@ export class EditEventPage {
     private auth: AuthServiceProvider, private http: HttpClient,
     private helper: HelpersProvider, public modalCtrl: ModalController
   ) {
+
     this.event = this.navParams.get("event");
+    this.index = this.navParams.get("index");
+    console.log(this.index);
+
     //for remove reference
     this.eventOriginal = JSON.parse( JSON.stringify(this.navParams.get("event")) );
     
@@ -156,8 +162,11 @@ export class EditEventPage {
   public changePhoto(){
     let t = this;
 
-    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
-      let base64Image = result;
+    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((base64Image)=>{
+      
+      if( base64Image === undefined )
+        return;
+
       this.imageSrc = base64Image;
       document.getElementById("imgT").setAttribute("src", base64Image);
       this.image = true;
@@ -347,15 +356,6 @@ export class EditEventPage {
         return;
     }
 
-    /*if( this.imageSrc == '' ){
-      this.load.dismiss();
-        this.alertCtrl.create({
-          title: requiredM,
-          message: "Image "+ isRequired,
-          buttons: ["Ok"]
-        }).present();
-        return;
-    }*/
 
     let event:any = {
       team: this.team,
@@ -430,11 +430,13 @@ export class EditEventPage {
       return;
     }
 
+    this.load.dismiss();
+
     let t = this;
+    await this.navCtrl.pop();
+    EventsSchedulePage.openEvent = { valid: true, index: this.index };
+    this.navCtrl.setRoot(EventsSchedulePage);
     
-    this.navCtrl.setRoot(EventsSchedulePage, {}, {animation: "wp-transition"}, function(){
-      t.navCtrl.push(EventPage, {event: updateEvent, user: t.auth.User() });
-    });
 
   }
 

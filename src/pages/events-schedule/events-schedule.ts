@@ -29,6 +29,8 @@ export class EventsSchedulePage {
     }
   };
 
+  public static openEvent = { valid : false, index : 0 };
+
   public team:any;
 
   public events:Array<any>=[];
@@ -62,6 +64,11 @@ export class EventsSchedulePage {
 
   async ngOnInit(){
     await this.getEvents();
+    console.log(this.events, EventsSchedulePage.openEvent);
+    if( EventsSchedulePage.openEvent.valid === true ){
+      this.goEvent(this.events[EventsSchedulePage.openEvent.index]);
+      EventsSchedulePage.openEvent = { valid : false, index : 0 };
+    }
   }
 
   private async getEvents(){
@@ -329,7 +336,17 @@ export class EventsSchedulePage {
       console.log("actualizamos el evento", data);
       //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
       //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
-      t.zone.run(function(){ t.getEvents(); });
+      t.zone.run(function(){ 
+        
+        let index = t.events.findIndex(function(el){ return el.id === data.id });
+        if( index === -1 ) return;
+        let event = t.events[index];
+        for(let name in event){
+          event[name] = data[name];
+        }
+        t.events[index] = event; 
+
+      });
 
     }, function(data){
       console.log("eliminamos el evento", data);
@@ -373,9 +390,14 @@ export class EventsSchedulePage {
   }
 
   public goEvent(event:any){
+    
+    let index = this.events.findIndex(function(el){ return el.id === event.id });
+    console.log(index);
+    if( index === -1 ) return;
     this.navCtrl.push(EventPage, {
       event,
-      user : this.user
+      user : this.user,
+      index
     })
   }
 
