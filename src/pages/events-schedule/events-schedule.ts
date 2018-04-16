@@ -64,7 +64,7 @@ export class EventsSchedulePage {
 
   async ngOnInit(){
     await this.getEvents();
-    console.log(this.events, EventsSchedulePage.openEvent);
+    //console.log(this.events, EventsSchedulePage.openEvent);
     if( EventsSchedulePage.openEvent.valid === true ){
       this.goEvent(this.events[EventsSchedulePage.openEvent.index]);
       EventsSchedulePage.openEvent = { valid : false, index : 0 };
@@ -74,8 +74,8 @@ export class EventsSchedulePage {
   private async getEvents(){
 
     try{
-      this.user = await this.auth.User();
-
+      this.user = MyApp.User;//await this.auth.User();
+      console.log(this.user);
       this.team = this.user.team;
       let url = "/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team;
       console.log(url);

@@ -5,7 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title>{{"NEWTEAM.TITLE" | translate}}</ion-title>
+    <ion-title [hidden]="update" >{{"NEWTEAM.TITLE" | translate}}</ion-title>
+    <ion-title [hidden]="!update" >{{"NEWTEAM.TITLE2" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -37,14 +38,14 @@
       <ion-label floating>
         {{"NAME" | translate}}
       </ion-label>
-      <ion-input type="text" (ngModel)="name" ></ion-input>
+      <ion-input type="text" [(ngModel)]="name" ></ion-input>
     </ion-item>
 
     <ion-item>
        <ion-label floating>
         {{"DESCRIPTION" | translate}}
       </ion-label>
-      <ion-textarea (ngModel)="descripcion" ></ion-textarea>
+      <ion-textarea [(ngModel)]="description" ></ion-textarea>
     </ion-item>
 
     <ion-item>
@@ -59,6 +60,7 @@
 
   </ion-list>
 
-  <button ion-button block (click)="save()" >{{"SAVE" | translate}}</button>
+  <button ion-button block [hidden]="update" (click)="save()" >{{"SAVE" | translate}}</button>
+  <button ion-button block [hidden]="!update" (click)="updateAction()" >{{"UPDATE" | translate}}</button>
 
 </ion-content>

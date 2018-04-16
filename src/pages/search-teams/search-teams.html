@@ -1,0 +1,30 @@
+
+<ion-header>
+
+  <ion-navbar color="base" >
+    <ion-title>{{"SEARCHTEAM.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>{{"SEARCHTEAM.ACTION" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="filtro" (keyup)="search()" ></ion-input>
+    </ion-item>
+
+    <ion-item *ngFor="let team of teams;">
+      <ion-avatar item-start>
+        <img src="./assets/imgs/team.png" [hidden]="team.loadImage" >
+        <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)" >
+      </ion-avatar> 
+      {{team.name}}
+    </ion-item>
+
+  </ion-list>
+
+</ion-content>

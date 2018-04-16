@@ -74,6 +74,7 @@ import { Http } from '@angular/http';
 import { ContactsProfilePage } from '../pages/contacts-profile/contacts-profile';
 import { TeamsProfilePage } from '../pages/teams-profile/teams-profile';
 import { AddTeamPage } from '../pages/add-team/add-team';
+import { SearchTeamsPage } from '../pages/search-teams/search-teams';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -118,7 +119,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewProfilePage,
     ContactsProfilePage,
     TeamsProfilePage,
-    AddTeamPage
+    AddTeamPage,
+    SearchTeamsPage
   ],
   imports: [
     BrowserModule,
@@ -173,7 +175,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewProfilePage,
     ContactsProfilePage,
     TeamsProfilePage,
-    AddTeamPage
+    AddTeamPage,
+    SearchTeamsPage
   ],
   providers: [
     StatusBar,

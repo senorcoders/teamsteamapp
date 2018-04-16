@@ -36,6 +36,7 @@
     },
     "NEWTEAM":{
         "TITLE": "New Team",
+        "TITLE2": "Update Team",
         "ADD": "Add Team"
     },
     "DAYSWEEKS": {
@@ -56,6 +57,10 @@
     "SPORTS":{
         "BASEBALL": "Baseball",
         "FOOTBALL": "Football"
+    },
+    "SEARCHTEAM": {
+        "TITLE": "Search Teams",
+        "ACTION": "Name of the Team"
     },
     "LOCATION": "Location",
     "WEBSITE": "Website",
@@ -89,5 +94,6 @@
     "LASTNAME": "Apellido",
     "CANCEL": "Cancel",
     "EDIT": "Edit",
-    "TEAMS": "Teams"
+    "TEAMS": "Teams",
+    "TEAM": "Team"
 }

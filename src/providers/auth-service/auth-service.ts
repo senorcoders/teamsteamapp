@@ -137,6 +137,7 @@ export class AuthServiceProvider {
     this.user = user;
     if(user != null){
       this.user.team = team;
+      MyApp.User = this.user;
       this.menuCtrl.swipeEnable(true);
       return true;
     }
@@ -192,6 +193,14 @@ export class AuthServiceProvider {
     await this.storage.set("user", user);
     MyApp.User = user;
     this.user = MyApp.User;
+  }
+
+  public async updateTeam(id:string){
+
+    await this.storage.set("team", id);
+    MyApp.User.team = id;
+    this.user.team = id;
+
   }
 
 }

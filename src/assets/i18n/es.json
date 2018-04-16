@@ -36,7 +36,8 @@
     },
     "NEWTEAM":{
         "TITLE": "Nuevo Equipo",
-        "ADD": "Agregar Equipo"
+        "ADD": "Agregar Equipo",
+        "TITLE2": "Actualizar Equipo"
     },
     "DAYSWEEKS": {
         "M": "L",
@@ -56,6 +57,10 @@
     "SPORTS":{
         "BASEBALL": "Béisbol",
         "FOOTBALL": "Fútbol"
+    },
+    "SEARCHTEAM": {
+        "TITLE": "Buscar Equipo",
+        "ACTION": "Nombre del Equipo"
     },
     "LOCATION": "Ubicación",
     "WEBSITE": "Sitio Web",
@@ -89,5 +94,6 @@
     "LASTNAME": "Last Name",
     "CANCEL": "Cancelar",
     "EDIT": "Editar",
-    "TEAMS": "Equipos"
+    "TEAMS": "Equipos",
+    "TEAM": "Equipo"
 }
