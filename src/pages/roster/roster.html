@@ -56,7 +56,7 @@
   </ion-grid>
 
 
-  <ion-fab bottom right [hidden]="!isManager" >
+  <ion-fab bottom right [hidden]="user.role.name != 'Manager' " >
     <button color="base" ion-fab icon-only (click)="addPlayer()" >
       <ion-icon name="md-add"></ion-icon>
     </button>

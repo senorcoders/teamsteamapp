@@ -95,5 +95,19 @@
     "CANCEL": "Cancel",
     "EDIT": "Edit",
     "TEAMS": "Teams",
-    "TEAM": "Team"
+    "TEAM": "Team",
+    "CITY": "City",
+    "REQUESTTEAM": "Join the team",
+    "PRIVACY&POLICY": "Privacy Policy",
+    "ABOUT": "About",
+    "TERMOFUSER": "Terms of Use",
+    "REQUESTSEND": "Request sent",
+    "REQUESTS": "Requests",
+    "REQUEST": "Request",
+    "ACCEPT": "Accept",
+    "REQUESTACCEPT": "Request Accepted",
+    "FULLNAME": "Full Name",
+    "EMAIL": "Email",
+    "SENT": "Sent",
+    "EMAILREADY": "Correo ya está en uso"
 }

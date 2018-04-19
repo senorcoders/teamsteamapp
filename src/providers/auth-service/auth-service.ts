@@ -113,7 +113,12 @@ export class AuthServiceProvider {
       console.log("team "+ team);
       this.user.team = team;
       MyApp.User = this.user;
-      this.storage.set("team", team);
+      await this.storage.set("team", team);
+      
+      //Para actualizar el nombre del equipo en menu slide
+      let t:any = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
+      document.getElementById("nameTeam").innerHTML = t.name;
+      
       this.changesUpdate();
       callback();
     }catch(e){
@@ -157,10 +162,11 @@ export class AuthServiceProvider {
   }
 
   public async logout(){
-    this.user = null;
     this.menuCtrl.swipeEnable(false);
     var data = await this.storage.remove("user");
     data = await this.storage.remove("team");
+    this.user = null;
+    delete MyApp.User;
     return data === undefined;
   }
 

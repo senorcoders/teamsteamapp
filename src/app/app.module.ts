@@ -75,6 +75,11 @@ import { ContactsProfilePage } from '../pages/contacts-profile/contacts-profile'
 import { TeamsProfilePage } from '../pages/teams-profile/teams-profile';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { SearchTeamsPage } from '../pages/search-teams/search-teams';
+import { ViewTeamPage } from '../pages/view-team/view-team';
+import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
+import { ViewRequestPage } from '../pages/view-request/view-request';
+import { ViewRequestsPage } from '../pages/view-requests/view-requests';
+import { FormJoinTeamPage } from '../pages/form-join-team/form-join-team';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -120,7 +125,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactsProfilePage,
     TeamsProfilePage,
     AddTeamPage,
-    SearchTeamsPage
+    SearchTeamsPage,
+    ViewTeamPage,
+    PrivacyPolicePage,
+    ViewRequestPage,
+    ViewRequestsPage,
+    FormJoinTeamPage
   ],
   imports: [
     BrowserModule,
@@ -176,7 +186,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactsProfilePage,
     TeamsProfilePage,
     AddTeamPage,
-    SearchTeamsPage
+    SearchTeamsPage,
+    ViewTeamPage,
+    PrivacyPolicePage,
+    ViewRequestPage,
+    ViewRequestsPage,
+    FormJoinTeamPage
   ],
   providers: [
     StatusBar,

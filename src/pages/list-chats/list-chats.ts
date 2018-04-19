@@ -21,6 +21,7 @@ export class ListChatsPage {
   public listUsers:Array<any>=[];
   public team:any={ name : "" };
   public idTeam:string;
+  public loadImage=false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modal: ModalController, private http: HttpClient
@@ -40,9 +41,10 @@ export class ListChatsPage {
 
       });
 
-      let team:any = await this.http.get("/team/"+ this.idTeam).toPromise();
-      this.team = team.team;
-
+      let team:any = await this.http.get("/teams/"+ this.idTeam).toPromise();
+      this.team = team;
+      let random = new Date().getTime();
+      this.team.imageSrc = interceptor.transformUrl("/images/"+ random+ "/teams&thumbnail/"+ this.team.id);
     }
     catch(e){
       console.error(e);
@@ -62,6 +64,10 @@ export class ListChatsPage {
     this.navCtrl.push(ChatOnePersonPage, {
       user
     });
+  }
+
+  public successImage(){
+    this.loadImage = true;
   }
 
 }

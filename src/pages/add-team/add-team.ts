@@ -18,6 +18,7 @@ export class AddTeamPage {
   public imageSrc="";
   public sport="";
   public description="";
+  public city="";
 
   //Para cuando se va actualizar un team
   public update=false;
@@ -34,6 +35,7 @@ export class AddTeamPage {
       this.name = this.team.name;
       this.sport = this.team.sport;
       this.description = this.team.description;
+      this.city = this.team.city;
       let ramdon = new Date().getTime();
       this.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams/"+ this.team.id);
       this.update = true;
@@ -61,7 +63,8 @@ export class AddTeamPage {
 
   public async save(){
 
-    if( this.name === "" || this.sport === "" || this.description === "" ){
+    if( this.name === "" || this.sport === "" || this.description === ""
+    || this.city === "" ){
       let requiredM = await this.helper.getWords("REQUIRED"),
       emptyFields = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: emptyFields })
@@ -77,14 +80,14 @@ export class AddTeamPage {
 
     try{
       let newTeam:any = await this.http.post("/teams", { name: this.name, userID: MyApp.User.id,
-        description: this.description, sport: this.sport, configuration: { valid : true } }).toPromise();
+        description: this.description, city: this.city, sport: this.sport, configuration: { valid : true } }).toPromise();
         
         if( this.imageSrc !== "" )
           await this.http.post("/images/teams", { id : newTeam.id, image : this.imageSrc }).toPromise();
 
       console.log(newTeam);
       load.dismiss();
-      this.navCtrl.setRoot(TeamsProfilePage);
+      this.navCtrl.setRoot(TeamsProfilePage, { menu : true });
     }
     catch(e){
       load.dismiss();
@@ -96,7 +99,8 @@ export class AddTeamPage {
   
   public async updateAction(){
 
-    if( this.name === "" || this.sport === "" || this.description === "" ){
+    if( this.name === "" || this.sport === "" || this.description === ""
+    || this.city === "" ){
       let requiredM = await this.helper.getWords("REQUIRED"),
       emptyFields = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: emptyFields })
@@ -112,7 +116,7 @@ export class AddTeamPage {
 
     try{
       let newTeam:any = await this.http.put("/teams/"+ this.team.id, { name: this.name,  description: this.description,
-          sport: this.sport, configuration: { valid : true } }).toPromise();
+          sport: this.sport, city: this.city }).toPromise();
         
         if( this.updateImage === true )
           await this.http.post("/images/teams", { id : newTeam.id, image : this.imageSrc }).toPromise();

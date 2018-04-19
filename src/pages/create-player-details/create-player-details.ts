@@ -5,6 +5,7 @@ import { RosterPage } from '../roster/roster';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import * as moment from 'moment';
+import { MyApp } from '../../app/app.component';
 
 /**
  * para agregar los detalles del jugador
@@ -43,18 +44,8 @@ export class CreatePlayerDetailsPage {
   }
 
   async ngOnInit(){
-    let user:any = await this.auth.User();
-    let url;
-    if( user.role.name === "Player"){
-      url = "/team/player/"+ user.id;
-    }else if( user.role.name === "Manager" ){
-      url = "/team/manager/"+ user.id;
-    }else if( user.role.name === "Parent" ){
-      url = "/team/parent/"+ user.id;
-    }
-    
-    var res = await this.http.get(url).toPromise();
-
+    let user:any = MyApp.User;
+    let res = this.http.get("/teams/"+ this.user.team).toPromise();
     this.team = res;
   }
 
@@ -140,7 +131,7 @@ export class CreatePlayerDetailsPage {
     let positions:Array<any> = this.positions.split(",");
 
     let user:any, player:any = {
-      team: this.team.team,
+      team: MyApp.User.team,
       birthDay: moment(this.birthDay, "DD MMM YYYY").toISOString(),
       yerseyNumber: this.yerseyNumber,
       gender: this.gender,
@@ -150,6 +141,7 @@ export class CreatePlayerDetailsPage {
     };
 
     try{
+      
       this.user.contacts = this.contacts;
       user = await this.http.post("/user/player", this.user).toPromise();
       

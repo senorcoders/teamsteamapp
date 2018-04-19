@@ -95,5 +95,19 @@
     "CANCEL": "Cancelar",
     "EDIT": "Editar",
     "TEAMS": "Equipos",
-    "TEAM": "Equipo"
+    "TEAM": "Equipo",
+    "CITY": "Cuidad",
+    "REQUESTTEAM": "Unirme al equipo",
+    "PRIVACY&POLICY": "Política de Privacidad",
+    "ABOUT": "Acerca de",
+    "TERMOFUSER": "Términos de Uso",
+    "REQUESTSEND": "Solicitud Enviada",
+    "REQUESTS": "Solicitudes",
+    "REQUEST": "Solicitud",
+    "ACCEPT": "Aceptar",
+    "REQUESTACCEPT": "Solicitud Aceptada",
+    "FULLNAME": "Nombre Completo",
+    "EMAIL": "Correo",
+    "SENT": "Enviar",
+    "EMAILREADY": "Mail is Already in Use"
 }

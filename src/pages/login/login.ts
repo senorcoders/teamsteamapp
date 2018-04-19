@@ -5,6 +5,8 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HttpClient } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
+import { SearchTeamPage } from '../search-team/search-team';
+import { SearchTeamsPage } from '../search-teams/search-teams';
 
 /**
  * para logearse en el app
@@ -89,6 +91,10 @@ export class LoginPage {
 
   public toUserName(){
     this.showPassword = false;
+  }
+
+  public goSearchTeam(){
+    this.navCtrl.push(SearchTeamsPage)
   }
 
 }

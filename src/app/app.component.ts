@@ -26,6 +26,7 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
+import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
 
 
 @Component({
@@ -43,6 +44,9 @@ export class MyApp {
   private static permision:boolean=false;
   public static User:any;
   private static event:Events;
+
+  public nameReady=false;
+  public teamName="";
 
   public user:any={
     username: "SenorCoders"
@@ -63,6 +67,7 @@ export class MyApp {
     { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball" },
     { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball" },
     { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball" },
+    { title: "PRIVACY&POLICY", component : PrivacyPolicePage, icon: "md-lock" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
@@ -153,6 +158,10 @@ export class MyApp {
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
+      //Para actualizar el nombre del equipo en menu slide
+      let team:any = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
+      document.getElementById("nameTeam").innerHTML = team.name;
+
       //console.log(this.user);
       let ramdon = new Date().getTime();
       this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
@@ -174,7 +183,8 @@ export class MyApp {
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
     let t = this;
-    this.auth.changeUser(function(){
+    this.auth.changeUser(async function(){
+
       t.defaultImageUser = true;
       t.user = t.auth.User();
 

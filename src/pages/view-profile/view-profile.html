@@ -67,6 +67,12 @@
       <ion-icon hidden name="md-create" item-end></ion-icon>
     </ion-item>
 
+    <ion-item (click)="goViewRequests()" >
+        <ion-icon name="md-git-pull-request" item-start></ion-icon>
+        {{ "REQUESTS" | translate}}
+        {{team.request.length}}
+      </ion-item>
+
     <ion-item>
       <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
       <ion-select [(ngModel)]="lang" (ionChange)='changeLang()' >

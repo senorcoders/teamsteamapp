@@ -1,6 +1,10 @@
 <ion-header>
 
   <ion-navbar color="base" >
+    <button ion-button icon-only menuToggle start [hidden]="!menu" >
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
     <ion-title>{{"TEAMS" | translate}}</ion-title>
   </ion-navbar>
 

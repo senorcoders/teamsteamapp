@@ -1,0 +1,31 @@
+
+<ion-header>
+  <ion-navbar color="base">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>{{"FULLNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="fullName" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+      <ion-input type="email" [(ngModel)]="email" ></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button block (click)="sent()" >{{"SENT" | translate}}</button>
+
+</ion-content>

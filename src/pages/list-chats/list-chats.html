@@ -18,6 +18,9 @@
   <ion-list>
 
     <ion-item>
+      <ion-avatar item-start [hidden]="!loadImage" >
+        <img [src]="team.imageSrc" (load)="successImage()" >
+      </ion-avatar>
       <h2 (click)="goChatTeam()" >{{team.name}}</h2>
     </ion-item>
 

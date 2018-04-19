@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ContactsProfilePage } from '../contacts-profile/contacts-profile';
 import { TeamsProfilePage } from '../teams-profile/teams-profile';
+import { ViewRequestsPage } from '../view-requests/view-requests';
 
 
 @IonicPage()
@@ -19,8 +20,9 @@ export class ViewProfilePage {
   public user:any={ options : { language: "en" } };
   public lang:string='';
   public image=false;
-  public team:any={ name : "" };
+  public team:any={ name : "", request: [] };
   public edit=false;
+  public request:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
@@ -44,8 +46,14 @@ export class ViewProfilePage {
   async ionViewWillEnter(){
     try{
 
-      this.team = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
-      //console.log(this.team);
+      this.team = await this.http.get("/team/profile/"+ MyApp.User.team).toPromise();
+      console.log(this.team);
+      if( !this.team.hasOwnProperty("request") ){
+        this.team.request = [];
+      }
+
+      console.log(this.team.request);
+      this.request = this.team.request;
     }
     catch(e){
       console.error(e);
@@ -194,6 +202,10 @@ export class ViewProfilePage {
 
   public viewContacts(){
     this.navCtrl.push(ContactsProfilePage);
+  }
+
+  public goViewRequests(){
+    this.navCtrl.push(ViewRequestsPage, {requests: this.team.request});
   }
 
 }

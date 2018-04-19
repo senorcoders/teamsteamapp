@@ -1,0 +1,41 @@
+
+<ion-header>
+
+  <ion-navbar color="base">
+    <ion-title>{{team.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+    
+  <ion-card>
+
+    <ion-item>
+        <h2>{{team.name}}</h2>
+    </ion-item>
+
+    <img width="100%" (load)="success()" [src]="team.imageSrc" [hidden]="!image">
+    
+    <img width="100%" src="./assets/imgs/logo-default.png" [hidden]="image">
+
+    <ion-card-content>
+      <p>{{team.description}}</p>
+      <p>{{team.city}}</p>
+    </ion-card-content>
+    
+    <ion-item [hidden]="!requestReady" >
+      {{"REQUESTSEND" | translate}}
+    </ion-item>
+
+    <button ion-button ion-block (click)="sendRequest()" [hidden]="enableRequest()" >{{"REQUESTTEAM" | translate}}</button>
+  </ion-card>
+
+  <ion-fab bottom right >
+    <button color="base" ion-fab icon-only (click)="addEvent()" >
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

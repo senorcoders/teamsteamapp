@@ -1,0 +1,35 @@
+
+<ion-header>
+
+  <ion-navbar color="base">
+    <ion-title>{{"REQUEST" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card>
+
+    <img [src]="imageSrc" [hidden]="!image" (load)="loadImage()" >
+
+    <ion-card-content>
+      <ion-list>
+        <ion-item>
+          {{user.fullName}}
+        </ion-item>
+        <ion-item>
+          {{user.email}}
+        </ion-item>
+      </ion-list>
+
+      <h3 [hidden]="!request.acept" >{{"REQUESTACCEPT" | translate}}</h3>
+
+      <button ion-button (click)="acceptRequest()" style="margin-top: 30px;" [hidden]="request.acept" >{{"ACCEPT" | translate}}</button>
+
+    </ion-card-content>
+    
+  </ion-card>
+  
+</ion-content>

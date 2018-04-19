@@ -47,24 +47,8 @@ export class RosterPage {
 
     this.user = MyApp.User;
     try{
-    let url;
-    if( this.user.role.name === "Player"){
-      url = "/team/player/"+ this.user.id;
-    }else if( this.user.role.name === "Manager" ){
-      url = "/team/manager/"+ this.user.id;
-      this.isManager = true;
-    }else if( this.user.role.name === "Parent" ){
-      url = "/team/parent/"+ this.user.id;
-    }
-    
-    this.team = await this.http.get(url).toPromise();
-    
-    var players:any;
-    if( this.team.hasOwnProperty('team') ){
-      players = await this.http.get("/players/team/"+ this.team.team).toPromise();
-    }else if( Object.prototype.toString.call(this.team) === '[object Array]'){
-      players = await this.http.get("/players/team/"+ this.team[0].team).toPromise();
-    }
+      
+    let players:any = await this.http.get("/players/team/"+ this.user.team).toPromise();
 
     this.players = players;
 
