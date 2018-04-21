@@ -109,5 +109,23 @@
     "FULLNAME": "Full Name",
     "EMAIL": "Email",
     "SENT": "Sent",
-    "EMAILREADY": "Correo ya está en uso"
+    "EMAILREADY": "Correo ya está en uso",
+    "ROLE": "Role",
+    "PLAYER": "Player",
+    "MANAGER": "Manager",
+    "FAMILY": "Family",
+    "PASSWORD": "Password",
+    "INVALIDUSERNAMEYPASS": "Incorrect username or password",
+    "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
+    "REGISTRATION": "Registration",
+    "SELECTFAMILY": "Select Your Family Member",
+    "CHANGEPASS": "Change Password",
+    "CHANGEPASSALERT": {
+        "CURRENT": "Current password",
+        "NEWPASS": "New Password",
+        "AGAINNEWPASS": "Enter the Password again"
+    },
+    "PASSWORDINCORRECTO": "Incorrect password",
+    "CHANGED": "Changed",
+    "PASSWORDNOT": "Password are not equal"
 }

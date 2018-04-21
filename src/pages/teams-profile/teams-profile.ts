@@ -33,13 +33,38 @@ export class TeamsProfilePage {
   async getTeams(){
     try{
 
-      let teams:any = await this.http.get("/manager/teams/"+ MyApp.User.id).toPromise();
-      this.teams = teams.map(function(it){
-        let ramdon = new Date().getTime();
-        it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
-        it.loadImage=false; 
-        return it;
-      });
+      if( this.user.role.name === "Manager"){
+
+        let teams:any = await this.http.get("/teams/manager/"+ MyApp.User.id).toPromise();
+        this.teams = teams.map(function(it){
+          let ramdon = new Date().getTime();
+          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
+          it.loadImage=false; 
+          return it;
+        });
+      }else if( this.user.role.name === "Player" ){
+
+        let teams:any = await this.http.get("/teams/player/"+ MyApp.User.id).toPromise();
+        console.log(teams);
+        this.teams = teams.map(function(it){
+          let ramdon = new Date().getTime();
+          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
+          it.loadImage=false; 
+          return it;
+        });
+
+      }else if( this.user.role.name === "Family" ){
+
+        let teams:any = await this.http.get("/teams/family/"+ MyApp.User.id).toPromise();
+        console.log(teams);
+        this.teams = teams.map(function(it){
+          let ramdon = new Date().getTime();
+          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
+          it.loadImage=false; 
+          return it;
+        });
+
+      }
       
     }
     catch(e){

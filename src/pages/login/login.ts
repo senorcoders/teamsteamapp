@@ -7,6 +7,7 @@ import { HttpClient } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SearchTeamPage } from '../search-team/search-team';
 import { SearchTeamsPage } from '../search-teams/search-teams';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * para logearse en el app
@@ -23,55 +24,78 @@ export class LoginPage {
   public firstname:string="";
   public lastname:string="";
   public email:string="";
-  public remember:boolean;
+  public password="";
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public alertCtrl:AlertController,
     public authService: AuthServiceProvider,
     private ngZone: NgZone,
-    public http : HttpClient, public statusBar: StatusBar
+    public http : HttpClient, public statusBar: StatusBar,
+    private helper: HelpersProvider
   ) {
     this.statusBar.backgroundColorByName("white");
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+    this.helper.setLenguagueLocal();
   }
+
   public forgotPassword(){
     console.log('forgot password');
   }
+
   public Register(){
     console.log('register');
   }
-  public Login(){
+
+  public async Login(){
     
-    if( this.firstname == '' || this.lastname == '' ){
-      this.presentAlert("There's empty fields");
+    if( this.email == '' || this.password == '' ){
+
+      let emptyM = await this.helper.getWords("EMPTYFIELDS");
+      this.presentAlert(emptyM);
+
     }else{
-      let t = this;
-     this.authService.Login(this.firstname, this.lastname, function(err, user){
+
+     this.authService.Login(this.email, this.password, async function(err, user){
+
         if(user){
-          t.statusBar.backgroundColorByHexString("#008e76");
-          t.ngZone.run(() => t.navCtrl.setRoot(EventsSchedulePage));
-        }else if(err){
-          t.presentAlert("Invalid username or password");
-          return;
+          this.statusBar.backgroundColorByHexString("#008e76");
+          this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+        }else if( err ){
+
+          if( !err.hasOwnProperty("password") ){
+
+            let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
+            this.presentAlert(passwordM);
+            return;
+          }else{
+
+            let invalidM = await this.helper.getWords("INVALIDPASS");
+            this.presentAlert(invalidM);
+            return;
+          }
+          
         }else{
-          t.alertCtrl.create({
+          this.alertCtrl.create({
             title: "Error",
             message: "Error In The Connection",
             buttons: ["Ok"]
           }).present();
         }
-      });
+
+      }.bind(this));
 
     }
   }
 
-  presentAlert(message) {
+  async presentAlert(message) {
+
+    let requiredM = await this.helper.getWords("REQUIRED");
+
     let alert = this.alertCtrl.create({
-      title: 'Required',
+      title: requiredM,
       subTitle: message,
       buttons: ['Ok']
     });

@@ -40,35 +40,39 @@ export class AuthServiceProvider {
   /**
    * Login
    */
-  public Login(username:String, password:String, callback:Function) {
-    var t = this;
-    this.http.post('/login', { username, password})
-    .subscribe(function(data:any){
-      if( data.hasOwnProperty("message") && data.message == "User not found" ){
+  public async Login(email:String, password:String, callback:Function) {
+
+    try{
+
+      let data:any = await this.http.post('/login', { email, password}).toPromise()
+
+      this.menuCtrl.swipeEnable(true);
+  
+      if( data.hasOwnProperty("message") ){
         callback(data, null);
       }else{
-        
-        t.menuCtrl.swipeEnable(true);
 
         //For save
-        t.storage.set('user', data);
-        t.user = new User();
-        t.user.id = data.id;
-        t.user.username = data.username;
-        t.user.firstName = data.firstName;
-        t.user.lastName = data.lastName;
-        t.user.email = data.email;
-        t.user.role = data.role;
-        t.user.token = data.token;
+        await this.storage.set('user', data);
+        this.user = new User();
+        this.user.id = data.id;
+        this.user.username = data.username;
+        this.user.firstName = data.firstName;
+        this.user.lastName = data.lastName;
+        this.user.email = data.email;
+        this.user.role = data.role;
+        this.user.token = data.token;
 
-        t.SaveTeam(function(){
+        this.SaveTeam(function(){
           callback(null, data);
         });
+
       }
-    }, function(err){
+    }
+    catch(err){
       console.log(err);
       callback(null, null);
-    });
+    }
     
   }
   
@@ -104,7 +108,9 @@ export class AuthServiceProvider {
 
       let events:any;
 
-      if( team.hasOwnProperty('team') ){
+      if( res.hasOwnProperty("child") ){
+        team = team.child.team;
+      }else if( team.hasOwnProperty('team') ){
         team = team.team;
       }else if( Object.prototype.toString.call(team) === '[object Array]'){
         team = team[0].team;

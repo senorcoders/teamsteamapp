@@ -41,6 +41,11 @@ export class HelpersProvider {
     return this.translate.get(key).toPromise();
   }
 
+  public setLenguagueLocal(){
+    let lang = this.translate.getBrowserLang();
+    this.setLanguage(lang);
+  }
+
   //Para devolver la position de ejemplo para pruebas
   public static Position(){
     return { lat : HelpersProvider.lat, lng: HelpersProvider.lng };

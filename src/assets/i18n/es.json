@@ -109,5 +109,23 @@
     "FULLNAME": "Nombre Completo",
     "EMAIL": "Correo",
     "SENT": "Enviar",
-    "EMAILREADY": "Mail is Already in Use"
+    "EMAILREADY": "Mail is Already in Use",
+    "ROLE": "Rol",
+    "PLAYER": "Jugador",
+    "MANAGER": "Manager",
+    "FAMILY": "Familiar",
+    "PASSWORD": "Contraseñas",
+    "INVALIDUSERNAMEYPASS": "Nombre de usuario o contraseña incorrecta",
+    "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
+    "REGISTRATION": "Registración",
+    "SELECTFAMILY": "Selecciona tu Familiar",
+    "CHANGEPASS": "Cambiar Contraseña",
+    "CHANGEPASSALERT": {
+        "CURRENT": "Contraseña Actual",
+        "NEWPASS": "Nueva contraseña",
+        "AGAINNEWPASS": "Digita otra vez La Contraseña"
+    },
+    "PASSWORDINCORRECTO": "Contraseña Incorrecta",
+    "CHANGED": "Cambiado",
+    "PASSWORDNOT": "Contraseña no son iguales"
 }

@@ -13,16 +13,41 @@ export class FormJoinTeamPage {
 
   public fullName = "";
   public email = "";
+  public role="";
+  public players:Array<any>=[];
+  private team:any={};
+  public player="";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public viewCtrl: ViewController, public alertCtrl: AlertController,
   private helper: HelpersProvider, private http:HttpClient
   ) {
+
+    this.team = this.navParams.get("team");
+
+  }
+
+  async ngOnInit(){
+    try{
+      let ps:any = await this.http.get("/players/team/"+ this.team.id).toPromise();
+      this.players = ps;
+    }
+    catch(e){
+      console.error(e);
+    } 
   }
 
   public async sent(){
 
-    if( this.fullName == "" || this.email == "" ){
+    if( this.fullName == "" || this.email == "" || this.role == "" ){
+      let requiredM = await this.helper.getWords("REQUIRED"),
+      unex = await this.helper.getWords("EMPTYFIELDS");
+      this.alertCtrl.create({ title: requiredM, message: unex })
+      .present();
+      return;
+    }
+
+    if( this.role === "Family" && this.player === "" ){
       let requiredM = await this.helper.getWords("REQUIRED"),
       unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
@@ -38,8 +63,13 @@ export class FormJoinTeamPage {
       return;
     }
 
+    let user:any;
+    if( this.role === "Family" ){
+      user = { fullName: this.fullName, email: this.email, player: this.player, role: this.role };
+    }else{
+      user = { fullName: this.fullName, email: this.email, role: this.role };
+    }
     
-    let user = { fullName: this.fullName, email: this.email };
     this.viewCtrl.dismiss(user);
 
   }

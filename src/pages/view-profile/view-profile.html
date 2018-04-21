@@ -73,6 +73,11 @@
         {{team.request.length}}
       </ion-item>
 
+    <ion-item (click)="changePassword()" >
+      <ion-icon name="md-create" item-start></ion-icon>
+      {{ "CHANGEPASS" | translate}}
+    </ion-item>
+
     <ion-item>
       <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
       <ion-select [(ngModel)]="lang" (ionChange)='changeLang()' >

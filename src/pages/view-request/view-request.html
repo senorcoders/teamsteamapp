@@ -22,6 +22,9 @@
         <ion-item>
           {{user.email}}
         </ion-item>
+        <ion-item>
+          {{request.role.toUpperCase() | translate}}
+        </ion-item>
       </ion-list>
 
       <h3 [hidden]="!request.acept" >{{"REQUESTACCEPT" | translate}}</h3>

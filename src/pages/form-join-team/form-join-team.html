@@ -6,6 +6,7 @@
         <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
+    <ion-title>{{"REQUEST" | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -22,6 +23,22 @@
     <ion-item>
       <ion-label floating>{{"EMAIL" | translate}}</ion-label>
       <ion-input type="email" [(ngModel)]="email" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"ROLE" | translate}}</ion-label>
+      <ion-select [(ngModel)]="role" >
+        <ion-option value="Manager">{{"MANAGER" | translate}}</ion-option>
+        <ion-option value="Player">{{"PLAYER" | translate}}</ion-option>
+        <ion-option value="Family">{{"FAMILY" | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item [hidden]="role!='Family'">
+      <ion-label floating>{{"SELECTFAMILY" | translate}}</ion-label>
+      <ion-select [(ngModel)]="player" >
+        <ion-option *ngFor="let player of players;" [value]="player.id" >{{player.user.email}}</ion-option>
+      </ion-select>
     </ion-item>
 
   </ion-list>

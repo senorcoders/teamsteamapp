@@ -24,6 +24,13 @@
       <p>{{team.description}}</p>
       <p>{{team.city}}</p>
     </ion-card-content>
+
+    <ion-item [hidden]="!requestReady">
+      <ion-label floating>{{"SELECTFAMILY" | translate}}</ion-label>
+      <ion-select [(ngModel)]="player">
+        <ion-option *ngFor="let player players" [value]="player.id" >{{player.user.email}}</ion-option>
+      </ion-select>    
+    </ion-item>
     
     <ion-item [hidden]="!requestReady" >
       {{"REQUESTSEND" | translate}}
@@ -31,11 +38,5 @@
 
     <button ion-button ion-block (click)="sendRequest()" [hidden]="enableRequest()" >{{"REQUESTTEAM" | translate}}</button>
   </ion-card>
-
-  <ion-fab bottom right >
-    <button color="base" ion-fab icon-only (click)="addEvent()" >
-      <ion-icon name="md-add"></ion-icon>
-    </button>
-  </ion-fab>
 
 </ion-content>

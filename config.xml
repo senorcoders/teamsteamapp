@@ -123,4 +123,5 @@
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.1.0" />
     <allow-navigation href="http://192.168.1.2:8100" />
+    <plugin name="com.paypal.cordova.mobilesdk" spec="^3.5.0" />
 </widget>

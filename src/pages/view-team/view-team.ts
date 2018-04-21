@@ -17,6 +17,7 @@ export class ViewTeamPage {
   public image=false;
   public request:any={acept: false, idUser : "" };
   public requestReady=false;
+  public players:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private modalCtrl: ModalController
@@ -43,6 +44,16 @@ export class ViewTeamPage {
 
   }
 
+  async ngOnInit(){
+    try{
+      let ps:any = await this.http.get("/players/team/"+ this.team.id).toPromise();
+      this.players = ps;
+    }
+    catch(e){
+      console.error(e);
+    } 
+  }
+
   public enableRequest(){
     if( this.team.hasOwnProperty("ready") || this.requestReady === true )
       return true;
@@ -65,7 +76,7 @@ export class ViewTeamPage {
         }
       }
 
-      requests.push({ acept: false, idUser : MyApp.User.id });
+      requests.push({ acept: false, idUser : MyApp.User.id, role: MyApp.User.role.name });
 
       let request:any = await this.http.put("/teams/"+ this.team.id, { request: requests }).toPromise();
 
@@ -75,7 +86,7 @@ export class ViewTeamPage {
 
     }else{
 
-      let m = this.modalCtrl.create(FormJoinTeamPage);
+      let m = this.modalCtrl.create(FormJoinTeamPage, { team : this.team });
       m.present();
       m.onDidDismiss(async function(user){
 
@@ -88,8 +99,11 @@ export class ViewTeamPage {
               requests.push(r);
             }
           }
-    
-          requests.push({ acept: false, idUser : "", user: user });
+          
+          let role = user.role;
+          delete user.role;
+
+          requests.push({ acept: false, idUser : "", user: user, role });
     
           let request:any = await this.http.put("/teams/"+ this.team.id, { request: requests }).toPromise();
     

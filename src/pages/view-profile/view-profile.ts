@@ -208,4 +208,76 @@ export class ViewProfilePage {
     this.navCtrl.push(ViewRequestsPage, {requests: this.team.request});
   }
 
+  public async changePassword(){
+    
+    let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
+    newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
+    newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
+    cancelM = await this.helper.getWords("CANCEL"),
+    passM = await this.helper.getWords("PASSWORD");
+
+
+    let c = this.alertCtrl.create({ title: passM, inputs: [
+        { type: "password", name: "current", placeholder: currentM  },
+        { type: "password", name: "newPass", placeholder: newPassM },
+        { type: "password", name: "passAgain", placeholder: newPassMAgain },
+      ], buttons: [
+        { text: cancelM },
+        {text: "Ok", handler: function(data){ this.changePass(data) }.bind(this) }
+      ] });
+
+    c.present();
+    
+  }
+
+  private async changePass(data){
+    console.log(data);
+    let current = data.current || "",
+    newPass = data.newPass || "",
+    againPass = data.passAgain || "";
+    
+    if( newPass == "" || againPass == "" ){
+
+      let emptM = await this.helper.getWords("EMPTYFIELDS");
+      this.alertCtrl.create({ title: "Error", message: emptM })
+      .present();
+      return;
+
+    }else if( newPass !== againPass ){
+      let emptM = await this.helper.getWords("PASSWORDNOT");
+      this.alertCtrl.create({ title: "Error", message: emptM })
+      .present();
+      return;
+
+    }
+
+    try{
+
+      let params = { password: current, 
+        passwordHash: MyApp.User.password,
+        newPassword : newPass,
+        id : MyApp.User.id
+      };
+
+      let v:any = await this.http.post("/password/change", params).toPromise();
+      console.log(v);
+
+      if( v.hasOwnProperty("id") && v.id === true ){
+        let changedM = await this.helper.getWords("CHANGED");
+        this.alertCtrl.create({ message: changedM, buttons: ["Ok"] })
+        .present();
+      }else{
+        let inconM = await this.helper.getWords("PASSWORDINCORRECTO");
+        this.alertCtrl.create({ message: inconM, buttons: ["Ok"] })
+        .present();
+        return;
+      }
+
+    }
+    catch(e){
+      console.error(e);
+    }
+
+  }
+
 }
