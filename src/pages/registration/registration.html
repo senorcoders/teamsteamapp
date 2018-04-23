@@ -1,6 +1,6 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="base">
     <ion-title>{{"REGISTRATION" | translate}}</ion-title>
   </ion-navbar>
 
@@ -8,7 +8,108 @@
 
 
 <ion-content padding>
-  <ion-list>
+
+    <ion-list>
     
-  </ion-list>
+        <ion-item>
+          <ion-label floating>
+            username
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="username" ></ion-input>
+        </ion-item>
+    
+        <ion-item>
+           <ion-label floating>
+            {{"FIRSTNAME" | translate}}
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="firstname" ></ion-input>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label floating>
+           {{"LASTNAME" | translate}}
+         </ion-label>
+         <ion-input type="text" [(ngModel)]="lastname" ></ion-input>
+       </ion-item>
+
+       <ion-item>
+          <ion-label floating>
+           {{"EMAIL" | translate}}
+         </ion-label>
+         <ion-input type="email" [(ngModel)]="email" ></ion-input>
+       </ion-item>
+
+       <ion-item>
+          <ion-label floating>
+           {{"PASSWORD" | translate}}
+         </ion-label>
+         <ion-input type="password" [(ngModel)]="password" ></ion-input>
+       </ion-item>
+
+       <ion-item>
+          <ion-label floating>
+           {{"CHANGEPASSALERT.AGAINNEWPASS" | translate}}
+         </ion-label>
+         <ion-input type="password" [(ngModel)]="againpassword" ></ion-input>
+       </ion-item>
+    
+      </ion-list>
+
+    <h2 style="margin-top: 20px;">{{"TEAM" | translate}}</h2>
+
+    <ion-avatar [hidden]="!image" >
+        <img width="100%" (load)="success()" [src]="imageSrc">
+        <ion-fab top right edge class="button-fab-right">
+          <button ion-fab color="base" (click)="changePhoto()" >
+            <ion-icon name="md-camera"></ion-icon>
+          </button>
+        </ion-fab>
+    </ion-avatar>
+    
+    <ion-avatar [hidden]="image" >
+      <img width="100%" src="./assets/imgs/logo-default.png">
+      <ion-fab top right edge class="button-fab-right">
+        <button ion-fab color="base" (click)="changePhoto()" >
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-avatar>
+    
+      <ion-list>
+    
+        <ion-item>
+          <ion-label floating>
+            {{"NAMEOFTEAM" | translate}}
+          </ion-label>
+          <ion-input type="text" [(ngModel)]="nameteam" ></ion-input>
+        </ion-item>
+    
+        <ion-item>
+           <ion-label floating>
+            {{"DESCRIPTION" | translate}}
+          </ion-label>
+          <ion-textarea [(ngModel)]="description" ></ion-textarea>
+        </ion-item>
+    
+        <ion-item>
+          <ion-label floating>
+           {{"CITY" | translate}}
+         </ion-label>
+         <ion-textarea [(ngModel)]="city" ></ion-textarea>
+       </ion-item>
+    
+        <ion-item>
+            <ion-label floating>
+             {{"SPORT" | translate}}
+           </ion-label>
+           <ion-select [(ngModel)]="sport" >
+            <ion-option value="baseball">{{"SPORTS.BASEBALL" | translate}}</ion-option>
+            <ion-option value="football">{{"SPORTS.FOOTBALL" | translate}}</ion-option>
+           </ion-select>
+         </ion-item>
+    
+      </ion-list>
+    
+      <button ion-button block (click)="save()" >{{"SAVE" | translate}}</button>
+
 </ion-content>

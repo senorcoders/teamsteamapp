@@ -127,5 +127,6 @@
     },
     "PASSWORDINCORRECTO": "Incorrect password",
     "CHANGED": "Changed",
-    "PASSWORDNOT": "Password are not equal"
+    "PASSWORDNOT": "Password are not equal",
+    "NAMEOFTEAM": "Name of the team"
 }

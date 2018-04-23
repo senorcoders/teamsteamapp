@@ -62,12 +62,12 @@ export class MyApp {
   public defaultImageUser=true;
 
   public pages:Array<Object> = [
-    { title : "NAVMENU.EVENTS", component : EventsSchedulePage, icon:"basketball" },
-    { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball" },
-    { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball" },
-    { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball" },
-    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball" },
-    { title: "PRIVACY&POLICY", component : PrivacyPolicePage, icon: "md-lock" }
+    { title : "NAVMENU.EVENTS", component : EventsSchedulePage, icon:"basketball", role: "*" },
+    { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball", role: "*" },
+    { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball", role: "*" },
+    { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball", role: "*" },
+    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball", role: "Manager" },
+    { title: "PRIVACY&POLICY", component : PrivacyPolicePage, icon: "md-lock", role: "*" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
@@ -99,22 +99,6 @@ export class MyApp {
       statusBar.overlaysWebView(false);
       statusBar.backgroundColorByHexString("#008e76");
       splashScreen.hide();
-
-      if( platform.is("android") || platform.is("ios") ){
-        t.locationAccuracy.canRequest().then((canRequest: boolean) => {
-
-          if(canRequest) {
-            // the accuracy option will be ignored by iOS
-            t.locationAccuracy.request(this.locationAccuracy.REQUEST_PRIORITY_HIGH_ACCURACY).then(
-              () =>{
-                t.getLocationDebug();
-              } ,
-              error => console.log('Error requesting location permissions', error)
-            );
-          }
-
-        });
-      }
       
       t.push.hasPermission()
       .then((res: any) => {
@@ -201,16 +185,6 @@ export class MyApp {
     this.defaultImageUser=false;
   }
 
-  private getLocationDebug(){
-
-    this.geolocation.getCurrentPosition().then((resp) => {
-      // resp.coords.latitude
-      // resp.coords.longitude
-      console.log(resp.coords.latitude, resp.coords.longitude);
-     }).catch((error) => {
-       console.log('Error getting location', error);
-     });
-  }
 
   public static async initConnetionSockets(){
 
@@ -244,6 +218,19 @@ export class MyApp {
   public goProfile(){
     this.nav.setRoot(ViewProfilePage);
     this.menuCtrl.close();
+  }
+
+  public validRolePage(page){
+
+    if( page.role === "*" ) return true;
+
+    let valid = MyApp.User === undefined || MyApp.User === null;
+
+    if( valid === true ){
+      return true;
+    }
+    //console.log(MyApp.User.role.name, page.role);
+    return MyApp.User.role.name === page.role;
   }
 
   public static async initNotifcations(){

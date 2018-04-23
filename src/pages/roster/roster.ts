@@ -7,6 +7,7 @@ import { ViewPlayerPage } from '../view-player/view-player';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { CreatePlayerPage } from '../create-player/create-player';
 import { MyApp } from '../../app/app.component';
+import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 
 /**
  * para mostrar la lista de jugadores del equipo
@@ -95,8 +96,8 @@ export class RosterPage {
     this.navCtrl.push(CreatePlayerPage);
   }
 
-  public goChat(){
-
+  public goChat(user){
+    this.navCtrl.push(ChatOnePersonPage, { user });
   }
 
 }

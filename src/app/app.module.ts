@@ -80,7 +80,6 @@ import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
 import { ViewRequestPage } from '../pages/view-request/view-request';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { FormJoinTeamPage } from '../pages/form-join-team/form-join-team';
-import { PayPal, } from '@ionic-native/paypal';
 import { RegistrationPage } from '../pages/registration/registration';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -219,8 +218,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     NativeGeocoder,
     PhotoViewer,
     DatePicker,
-    WebSocketsProvider,
-    PayPal
+    WebSocketsProvider
   ]
 })
 export class AppModule {}

@@ -8,6 +8,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SearchTeamPage } from '../search-team/search-team';
 import { SearchTeamsPage } from '../search-teams/search-teams';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { RegistrationPage } from '../registration/registration';
 
 /**
  * para logearse en el app
@@ -46,7 +47,7 @@ export class LoginPage {
   }
 
   public Register(){
-    console.log('register');
+    this.navCtrl.push(RegistrationPage);
   }
 
   public async Login(){

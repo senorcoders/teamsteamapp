@@ -13,7 +13,7 @@ import { MyApp } from '../../app/app.component';
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url:string = 'http://138.68.19.227:8187'; // 'http://192.168.1.2:8187'; 'http://localhost:8087';
+  public static url:string = 'http://138.68.19.227:8187'; // 'http://192.168.8.108:8187'; 'http://localhost:8087';
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
@@ -22,7 +22,7 @@ export class interceptor implements HttpInterceptor {
     if( MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token') ){
 
       let token = MyApp.User.token;
-      if( token !== undefined && token !== undefined){
+      if( token !== undefined && token !== null){
 
         req = req.clone({
           url : interceptor.url+ req.url,

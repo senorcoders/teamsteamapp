@@ -127,5 +127,6 @@
     },
     "PASSWORDINCORRECTO": "Contraseña Incorrecta",
     "CHANGED": "Cambiado",
-    "PASSWORDNOT": "Contraseña no son iguales"
+    "PASSWORDNOT": "Contraseña no son iguales",
+    "NAMEOFTEAM": "Nombre del equipo"
 }
