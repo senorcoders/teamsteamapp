@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title></ion-title>
+    <ion-title>{{"PAYMENTSUBS" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -9,8 +9,10 @@
 
 <ion-content padding>
 
+  <h2 [hidden]="try">{{month}}</h2>
+
   <button ion-button block (click)="pay()" >{{"PAYMONTH" | translate}}</button>
 
-  <button ion-button block (click)="demo()" >{{"TRY15" | translate}}</button>
+  <button ion-button block [hidden]="!try" (click)="demo()" >{{"TRY15" | translate}}</button>
 
 </ion-content>

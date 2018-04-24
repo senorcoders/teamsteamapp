@@ -10,8 +10,8 @@
 
 <ion-content padding>
 
-  <ion-list *ngFor="let paid of paids;">
-    <ion-item>{{paid.month+ " - "+ paid.paid}}</ion-item>
+  <ion-list >
+    <ion-item *ngFor="let paid of paids;" (click)="goPayment(paid)" >{{paid.month+ " - "+ paid.paid}}</ion-item>
   </ion-list>
 
 </ion-content>

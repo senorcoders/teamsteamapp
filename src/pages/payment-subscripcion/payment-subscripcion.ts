@@ -15,13 +15,54 @@ import * as moment from 'moment';
 })
 export class PaymentSubscripcionPage {
 
+  public try = true;
+  public month = "";
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private iab: InAppBrowser
   ) {
+
+    let t = this.navParams.get("try");
+
+    if( t !== undefined && t !== null ){
+      this.try = false;
+      this.month = this.navParams.get("month");
+    }
+
   }
 
   public async pay(){
     
+    if( this.try === false ){
+      await this.payMonth();
+    }else{
+      await this.payInit();
+    }
+
+  }
+
+  private async payMonth(){
+
+    let payer = {
+      quantity: 10.45,
+      nameSale: "Subscripcion mensual",
+      description: "el pago mensual de equipo",
+      user: MyApp.User.id,
+      team: MyApp.User.team,
+      month: this.month
+    };
+
+    let p:any = await this.http.post("/payment-team", payer).toPromise();
+    let link = p.payment.links[1].href;
+
+    let browser = this.iab.create(link);
+
+    this.navCtrl.push(CheckPaidPage);
+
+  }
+
+  private async payInit(){
+
     let payer = {
       quantity: 10.45,
       nameSale: "Subscripcion mensual",
