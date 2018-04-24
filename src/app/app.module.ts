@@ -16,6 +16,8 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DatePicker } from '@ionic-native/date-picker';
 import { LongPressModule } from 'ionic-long-press';
 import { TranslateModule } from '@ngx-translate/core';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+
 
 import { MyApp } from './app.component';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -81,6 +83,9 @@ import { ViewRequestPage } from '../pages/view-request/view-request';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { FormJoinTeamPage } from '../pages/form-join-team/form-join-team';
 import { RegistrationPage } from '../pages/registration/registration';
+import { PaymentSubscripcionPage } from '../pages/payment-subscripcion/payment-subscripcion';
+import { CheckPaidPage } from '../pages/check-paid/check-paid';
+import { PaymentMonthlyPage } from '../pages/payment-monthly/payment-monthly';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -132,7 +137,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewRequestPage,
     ViewRequestsPage,
     FormJoinTeamPage,
-    RegistrationPage
+    RegistrationPage,
+    PaymentSubscripcionPage,
+    CheckPaidPage,
+    PaymentMonthlyPage
   ],
   imports: [
     BrowserModule,
@@ -194,7 +202,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewRequestPage,
     ViewRequestsPage,
     FormJoinTeamPage,
-    RegistrationPage
+    RegistrationPage,
+    PaymentSubscripcionPage,
+    CheckPaidPage,
+    PaymentMonthlyPage
   ],
   providers: [
     StatusBar,
@@ -218,7 +229,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NativeGeocoder,
     PhotoViewer,
     DatePicker,
-    WebSocketsProvider
+    WebSocketsProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

@@ -1,0 +1,17 @@
+
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{"PAYMENTSUBS" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list *ngFor="let paid of paids;">
+    <ion-item>{{paid.month+ " - "+ paid.paid}}</ion-item>
+  </ion-list>
+
+</ion-content>

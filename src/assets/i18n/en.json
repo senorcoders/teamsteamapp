@@ -62,6 +62,13 @@
         "TITLE": "Search Teams",
         "ACTION": "Name of the Team"
     },
+    "LOGIN":{
+        "TITLE": "Welcome To Team Steam",
+        "INIT": "Sign into your pages account",
+        "NOTACCOUNT": "Still no account? Please go to ",
+        "REGISTER": "Register",
+        "LOGIN": "Login"
+    },
     "LOCATION": "Location",
     "WEBSITE": "Website",
     "TRACKING": "Tracking",
@@ -128,5 +135,11 @@
     "PASSWORDINCORRECTO": "Incorrect password",
     "CHANGED": "Changed",
     "PASSWORDNOT": "Password are not equal",
-    "NAMEOFTEAM": "Name of the team"
+    "NAMEOFTEAM": "Name of the team",
+    "PAYMENTSUBS": "Payment Subscription",
+    "PAYMONTH": "Pay this Month",
+    "TRY15": "Try 15 Days",
+    "CHECKPAYMENT": "Check Payment",
+    "PAYERNOTCOMPLETAD": "Payment not completed",
+    "CHECK": "Check"
 }

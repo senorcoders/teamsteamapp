@@ -2,8 +2,8 @@
   <div class="content-login">
     <div class="icon-login"><ion-icon name="unlock"></ion-icon></div>
     <div class="title">
-      <p>Welcome To Team Steam</p>
-      <h2>Sign into your pages account</h2>
+      <p>{{"LOGIN.TITLE" | translate}}</p>
+      <h2>{{"LOGIN.INIT" | translate}}</h2>
     </div>
     
     <ion-list>
@@ -30,10 +30,10 @@
     </ion-list>
 
     <div>
-      <button ion-button color="primary" block (click)="Login()" >Sign In</button>
+      <button ion-button color="primary" block (click)="Login()" >{{"LOGIN.LOGIN" | translate}}</button>
     </div>
     <div>
-      <span class="btn-register">Still no account? Please go to <a href="#" (click)="Register()">Register</a> </span>
+      <span class="btn-register">{{"LOGIN.NOTACCOUNT" | translate}} <a href="#" (click)="Register()">{{"LOGIN.REGISTER" | translate}}</a> </span>
     </div>
     <!--div class="social-network">
       <ion-icon name="logo-googleplus"></ion-icon>

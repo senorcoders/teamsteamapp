@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+import { StatusBar } from '@ionic-native/status-bar';
 
 
 @IonicPage()
@@ -29,7 +31,8 @@ export class RegistrationPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
-    private http: HttpClient, public auth:AuthServiceProvider
+    private http: HttpClient, public auth:AuthServiceProvider,
+    public statusBar: StatusBar
   ) {
   
   
@@ -59,7 +62,7 @@ export class RegistrationPage {
 
     for(let it of Object.keys(this) ){
 
-      if( Object.prototype.toString.call(this[it]) === "[object String]" ){
+      if( Object.prototype.toString.call(this[it]) === "[object String]" && it !== "imageSrc" ){
 
         if( this[it] === "" ){
           invalid = true;
@@ -109,7 +112,36 @@ export class RegistrationPage {
 
     let newUserTeam = await this.http.post("/user/team", user).toPromise();
     
-    this.navCtrl.pop();
+    let call = async function(err:any, user:any){
+
+      if(user){
+        this.statusBar.backgroundColorByHexString("#008e76");
+        this.navCtrl.push(PaymentSubscripcionPage);
+      }else if( err ){
+
+        if( !err.hasOwnProperty("password") ){
+
+          let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
+          this.presentAlert(passwordM);
+          return;
+        }else{
+
+          let invalidM = await this.helper.getWords("INVALIDPASS");
+          this.presentAlert(invalidM);
+          return;
+        }
+        
+      }else{
+        this.alertCtrl.create({
+          title: "Error",
+          message: "Error In The Connection",
+          buttons: ["Ok"]
+        }).present();
+      }
+
+    }.bind(this);
+
+    await this.auth.Login(user.email, user.password, call)
 
   }
 

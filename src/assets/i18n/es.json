@@ -62,6 +62,13 @@
         "TITLE": "Buscar Equipo",
         "ACTION": "Nombre del Equipo"
     },
+    "LOGIN":{
+        "TITLE": "Bienvenido a TeamSteam",
+        "INIT": "Inicia sesión",
+        "NOTACCOUNT": "Todavía no tiene cuenta? Por favor vaya a",
+        "REGISTER": "Registro",
+        "LOGIN": "Iniciar Sesión"
+    },
     "LOCATION": "Ubicación",
     "WEBSITE": "Sitio Web",
     "TRACKING": "Asistencia",
@@ -128,5 +135,11 @@
     "PASSWORDINCORRECTO": "Contraseña Incorrecta",
     "CHANGED": "Cambiado",
     "PASSWORDNOT": "Contraseña no son iguales",
-    "NAMEOFTEAM": "Nombre del equipo"
+    "NAMEOFTEAM": "Nombre del equipo",
+    "PAYMENTSUBS": "Suscripción de pago",
+    "PAYMONTH": "Pagar este Mes",
+    "TRY15": "Probar 15 Dias",
+    "CHECKPAYMENT": "Comprobar Pago",
+    "PAYERNOTCOMPLETAD": "Pago no completado",
+    "CHECK": "Comprobar"
 }

@@ -8,6 +8,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ContactsProfilePage } from '../contacts-profile/contacts-profile';
 import { TeamsProfilePage } from '../teams-profile/teams-profile';
 import { ViewRequestsPage } from '../view-requests/view-requests';
+import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 
 
 @IonicPage()
@@ -278,6 +279,10 @@ export class ViewProfilePage {
       console.error(e);
     }
 
+  }
+
+  public paymentsMonthly(){
+    this.navCtrl.push(PaymentMonthlyPage);
   }
 
 }
