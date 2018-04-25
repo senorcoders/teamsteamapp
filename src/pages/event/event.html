@@ -18,11 +18,11 @@
           <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>  
     </ion-item>
 
-      <img [src]="event.imageSrc" (click)="viewPhoto(event.imageSrc, event.name)" />
+      <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)" />
     
       <ion-item>
         <p style="text-align: right;">{{event.parsedTime}}</p>
-        <ion-row>
+        <ion-row hidden>
           <ion-col col-3>
             <button ion-button icon-left clear small (click)="like(event, true)">
               <ion-icon name="thumbs-up"></ion-icon>
@@ -46,10 +46,10 @@
 
       <div class="divider"> </div>
 
-      <div id="tracking-section" (click)="viewTrakingEvent()" >
+      <div id="tracking-section" >
         <div class="tracking">
           <h3>Tracking</h3>
-          <!--ion-icon name="md-arrow-dropdown-circle"></ion-icon-->
+          <ion-icon name="ios-arrow-up-outline" (click)="viewTrakingEvent()"></ion-icon>
         </div>
         <div class="count">
           <h5 (click)="asingResponse('yes')" >Yes {{event.countYes}} </h5>

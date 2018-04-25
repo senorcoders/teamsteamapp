@@ -1,7 +1,7 @@
 $color-text: rgba(0, 0, 0, 0.616) !important;
 page-event {
     #tracking-section{
-        height: 100px;
+        height: auto;
         text-align: center;
         background-color: rgba(0, 0, 0, .1);
         display: flex;
@@ -12,20 +12,20 @@ page-event {
         }
         .tracking{
             display: flex;
+            flex-wrap: nowrap;
+            justify-content: center;
+            align-items: center;
             h3{
-                width: 100%;
-                flex-basis: 100%;
+                width: auto;
+                flex-basis: auto;
                 line-height: 50px;
                 text-align: center;
                 font-size: 2rem;
             }
-            /*ion-icon{
-                width: 33.33%;
-                flex-basis: 33.33%;
-                text-align: center;
-                line-height: 50px;
+            ion-icon{
+                margin-left: 10px;
                 font-size: 3rem;
-            }*/
+            }
         }
         .count{
             height: 50px;

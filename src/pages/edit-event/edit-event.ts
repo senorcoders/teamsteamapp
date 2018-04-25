@@ -36,7 +36,7 @@ export class EditEventPage {
   public callbackUpdate:Function;
 
   public location:any={
-    position : { lat: 51.5033640, lng : -0.12762500 },
+    position : { },
     place : {
       placesubAdministrativeArea:"",
       thoroughfare:""
@@ -49,6 +49,7 @@ export class EditEventPage {
   markerEvent:Marker;
   markerEventOld:Marker;
   public image:boolean=false;
+  private imageUpdate=false;
   public imageSrc:string="";
 
   //var for inputs location
@@ -95,7 +96,7 @@ export class EditEventPage {
     this.name = this.event.name;
     this.type = this.event.type || "";
     this.repeats = this.event.repeats;
-    this.repeatsDays = this.event.repeatsDays || [];
+    this.repeatsDays = this.event.repeatsDays.split(",") || [];
     this.repeatsDaily = this.event.repeatsDaily;
     this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("DD MMM YYYY");
     this.time = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("HH:mm");
@@ -116,6 +117,23 @@ export class EditEventPage {
         this.location.place = places[0];
     }
     
+  }
+
+  public selectDay(key:string){
+
+    let index = this.repeatsDays.findIndex(function(el){ return el === key });
+    console.log(index, key);
+    if( index === -1 )
+      this.repeatsDays.push(key);
+    else{
+
+      if( this.repeatsDays.length === 1 )
+        this.repeatsDays = [];
+      else
+        this.repeatsDays.splice(index, 1);
+      
+    }
+
   }
 
   public setDate(){
@@ -169,7 +187,7 @@ export class EditEventPage {
 
       this.imageSrc = base64Image;
       document.getElementById("imgT").setAttribute("src", base64Image);
-      this.image = true;
+      this.imageUpdate = true;
     })
     .catch((err)=>{
       console.error(err);
@@ -186,119 +204,6 @@ export class EditEventPage {
     }
   }
 
-  /*
-  public async update(){
-
-
-    this.load = this.loading.create({ content: "Updating..." });
-    this.load.present({ disableApp: true });
-
-    //create el object fo send to location event
-    let location:any = this.location.position;
-    location.link = this.locationLink || "";
-    location.detail = this.locationDetail || "";
-
-    console.log(location);
-
-    //Check if the fields required is ok
-    let inputsRequired = ["name", "time"], valid = true;
-    for(let name of inputsRequired){
-      if( this[name] == "" ){
-        this.load.dismiss();
-        this.alertCtrl.create({
-          title: "Required",
-          message: name.toUpperCase()+ " Is Required",
-          buttons: ["Ok"]
-        }).present();
-        valid = false;
-        break;
-      }
-    }
-    
-    if( valid === false ){
-      return;
-    }
-
-    if( this.imageSrc == '' ){
-      this.load.dismiss();
-        this.alertCtrl.create({
-          title: "Required",
-          message: "Image Is Required",
-          buttons: ["Ok"]
-        }).present();
-        return;
-    }
-
-    let event:any = {
-      team: this.team,
-      name : this.name,
-      type : this.type,
-      attendeceTracking: this.attendeceTracking,
-      notifyTeam: this.notifyTeam,
-      optionalInfo : this.optionalInfo,
-      description: this.description,
-      user: this.auth.User().id,
-      repeats: this.repeats
-    };
-
-    //Para chekear como se guardara la fecha de los eventos
-    if( this.repeats == true && this.repeatsDaily == false ){
-      event.repeatsDays = this.repeatsDays;
-      event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
-    }else if( this.repeats == false ){
-
-      if( this.date == '' ){
-        this.load.dismiss();
-        this.alertCtrl.create({
-          title: "Required",
-          message:"Date Is Required",
-          buttons: ["Ok"]
-        }).present();
-
-        return;
-      }
-
-      event.dateTime =  moment(this.date+ " "+ this.time, "DD MMM YYYY HH:mm").toISOString();
-    }else{
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
-    }
-
-    valid = true;
-    let updateEvent:any;
-    try{
-      updateEvent = await this.http.put("/event/"+ this.event.id, event).toPromise();
-      
-      if( this.image === true )
-        await this.http.post("/images/events", { id : this.event.id, image : this.imageSrc }).toPromise();
-
-    }
-    catch(e){
-      console.error(e);
-      valid = false;
-    }
-    
-    if( valid === false ){
-      this.load.dismiss();
-      this.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
-      return;
-    }
-
-    this.load.dismiss();
-
-
-    this.updateEvent = true;
-    let t = this;
-    
-    this.navCtrl.setRoot(EventsSchedulePage, {}, {animation: "wp-transition"}, function(){
-      t.navCtrl.push(EventPage, {event: updateEvent, user: t.auth.User() });
-    });
-    
-  }
-  */
 
   public async update(){
 
@@ -409,7 +314,7 @@ export class EditEventPage {
       
       updateEvent = await this.http.put("/event/"+ this.event.id, event).toPromise();
       
-      if( this.image === true )
+      if( this.imageUpdate === true )
         await this.http.post("/images/events", { id : this.event.id, image : this.imageSrc }).toPromise();
 
 

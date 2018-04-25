@@ -55,6 +55,10 @@ export class RosterPage {
 
     let src = interceptor.url;
     let t = this;
+    
+    this.players = this.players.filter(function(item){
+      return item.user !== undefined;
+    });
 
     this.players = await Promise.all(this.players.map(async function(item){
       

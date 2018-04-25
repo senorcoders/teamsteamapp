@@ -9,6 +9,7 @@ import { ContactsProfilePage } from '../contacts-profile/contacts-profile';
 import { TeamsProfilePage } from '../teams-profile/teams-profile';
 import { ViewRequestsPage } from '../view-requests/view-requests';
 import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
+import { PrivacyPolicePage } from '../privacy-police/privacy-police';
 
 
 @IonicPage()
@@ -55,6 +56,16 @@ export class ViewProfilePage {
 
       console.log(this.team.request);
       this.request = this.team.request;
+
+      if( this.user.verified === false ){
+        let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
+        console.log(v);
+        if( v.verified === true ){
+          this.user.verified = true;
+          await this.auth.updateUser(this.user);
+        }
+      }
+
     }
     catch(e){
       console.error(e);
@@ -125,10 +136,18 @@ export class ViewProfilePage {
   }
 
   public async mCode(){
-    let message = await this.helper.getWords("MCODE");
-    this.alertCtrl.create({ message: message})
+
+    let message = await this.helper.getWords("MCODE"),
+    cancelM = await this.helper.getWords("CANCEL"),
+    resendVer = await this.helper.getWords("RESENDVERIFICATIONCODE");
+
+    this.alertCtrl.create({ message: message, buttons: [ 
+      { text:cancelM },
+      { text: resendVer, handler: function(){ this.resendCode() }.bind(this) }
+    ]})
     .present();
   }
+
 
   public async editNameFull(){
 
@@ -283,6 +302,29 @@ export class ViewProfilePage {
 
   public paymentsMonthly(){
     this.navCtrl.push(PaymentMonthlyPage);
+  }
+
+  private async resendCode(){
+    
+    try{
+
+      let resend = await this.http.post("/user/resend-code", { 
+        id: MyApp.User.id,
+        email: MyApp.User.email,
+        verificationCode: MyApp.User.verificationCode
+      }).toPromise();
+
+      console.log(resend);
+
+    }
+    catch(e){
+      console.error(e);
+    }
+
+  }
+
+  public goAbout(){
+    this.navCtrl.push(PrivacyPolicePage);
   }
 
 }

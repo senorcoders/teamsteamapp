@@ -113,6 +113,8 @@
     "REQUEST": "Request",
     "ACCEPT": "Accept",
     "REQUESTACCEPT": "Request Accepted",
+    "REQUESTDENIED": "Denied Application",
+    "DENED": "Deny",
     "FULLNAME": "Full Name",
     "EMAIL": "Email",
     "SENT": "Sent",
@@ -141,5 +143,6 @@
     "TRY15": "Try 15 Days",
     "CHECKPAYMENT": "Check Payment",
     "PAYERNOTCOMPLETAD": "Payment not completed",
-    "CHECK": "Check"
+    "CHECK": "Check",
+    "RESENDVERIFICATIONCODE": "Resend Verification Email"
 }

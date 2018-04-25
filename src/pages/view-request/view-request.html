@@ -29,7 +29,11 @@
 
       <h3 [hidden]="!request.acept" >{{"REQUESTACCEPT" | translate}}</h3>
 
+      <h3 [hidden]="!request.dened" >{{"REQUESTDENIED" | translate}}</h3>
+
       <button ion-button (click)="acceptRequest()" style="margin-top: 30px;" [hidden]="request.acept" >{{"ACCEPT" | translate}}</button>
+      
+      <button ion-button (click)="denRequest()" style="margin-top: 30px;" [hidden]="request.dened || request.acept" >{{"DENED" | translate}}</button>
 
     </ion-card-content>
     

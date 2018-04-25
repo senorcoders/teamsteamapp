@@ -45,7 +45,7 @@ export class CreatePlayerDetailsPage {
 
   async ngOnInit(){
     let user:any = MyApp.User;
-    let res = this.http.get("/teams/"+ this.user.team).toPromise();
+    let res = this.http.get("/teams/"+ MyApp.User.team).toPromise();
     this.team = res;
   }
 

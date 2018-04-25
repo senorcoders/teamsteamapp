@@ -14,4 +14,22 @@ page-edit-event {
         padding-top: 30px !important;
         margin-bottom: 0 !important;
     }
+    
+    #repeats-days{
+        display: flex;
+        width: 100%;
+        flex-wrap: wrap;
+        justify-content: space-around;
+        h4{
+            width: 10%;
+            flex-basis: 10%;
+            text-align: center;
+            border: 1px solid black;
+            margin-top: 0 !important;
+            font-size: 2rem !important;
+        }
+        h4.select{
+            background-color: darkcyan;
+        }
+    }
 }

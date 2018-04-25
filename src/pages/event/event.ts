@@ -35,6 +35,8 @@ export class EventPage {
   map: GoogleMap;
   load:Loading;
 
+  public loadImage=false;
+
   private tracking:any;
 
   private index = 0;
@@ -147,6 +149,10 @@ export class EventPage {
       this.event.countYes = counts.countYes;
       this.event.countNo = counts.countNo;
       this.event.countMaybe = counts.countMaybe;
+  }
+
+  public successLoadImage(){
+    this.loadImage = true;
   }
 
   //Para obtener los tracking de event

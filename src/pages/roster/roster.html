@@ -49,6 +49,7 @@
         <h4>{{player.user.lastName}}</h4>
 
         <a href="#" (click)="goChat(player.user)" >Chat</a>
+        <a href="#" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)" >{{"EDIT" | translate}}</a>
       </ion-col>
 
     </ion-row>

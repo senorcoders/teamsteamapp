@@ -113,6 +113,8 @@
     "REQUEST": "Solicitud",
     "ACCEPT": "Aceptar",
     "REQUESTACCEPT": "Solicitud Aceptada",
+    "REQUESTDENIED": "Solicitud Denegada",
+    "DENED": "Denegar",
     "FULLNAME": "Nombre Completo",
     "EMAIL": "Correo",
     "SENT": "Enviar",
@@ -141,5 +143,6 @@
     "TRY15": "Probar 15 Dias",
     "CHECKPAYMENT": "Comprobar Pago",
     "PAYERNOTCOMPLETAD": "Pago no completado",
-    "CHECK": "Comprobar"
+    "CHECK": "Comprobar",
+    "RESENDVERIFICATIONCODE": "Reenviar correo electrónico de verificación"
 }

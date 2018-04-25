@@ -111,12 +111,12 @@ export class RegistrationPage {
     };
 
     let newUserTeam = await this.http.post("/user/team", user).toPromise();
-    
+
     let call = async function(err:any, user:any){
 
       if(user){
         this.statusBar.backgroundColorByHexString("#008e76");
-        this.navCtrl.push(PaymentSubscripcionPage);
+        this.navCtrl.setRoot(PaymentSubscripcionPage);
       }else if( err ){
 
         if( !err.hasOwnProperty("password") ){

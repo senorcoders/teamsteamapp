@@ -77,7 +77,7 @@ export class PaymentSubscripcionPage {
 
     let browser = this.iab.create(link);
 
-    this.navCtrl.push(CheckPaidPage);
+    this.navCtrl.setRoot(CheckPaidPage);
 
   }
 

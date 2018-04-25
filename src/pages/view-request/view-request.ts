@@ -29,6 +29,10 @@ export class ViewRequestPage {
     this.requests = this.navParams.get("requests");
 
     console.log(this.request, this.requests);
+    if( !this.request.hasOwnProperty("dened") ){
+      this.request.dened = false;
+    }
+
   }
 
   public loadImage(){
@@ -52,6 +56,24 @@ export class ViewRequestPage {
     let requests = await this.http.put("/team/request", { id: MyApp.User.team, request: this.requests, index }).toPromise();
     console.log(requests);
 
+  }
+
+  public async denRequest(){
+
+    this.request.dened = true;
+    let index = this.requests.findIndex(function(it){ return it.user.email === this.request.user.email }.bind(this));
+    if( index === -1 ){
+      let unexM = await this.helper.getWords("ERORUNEXC");
+      this.alertCtrl.create({ title: "Error", message: unexM})
+      .present();
+      return;
+    }
+
+    let request = JSON.parse( JSON.stringify(this.request) );
+    delete request.imageSrc;
+    this.requests[index] = request;
+    let requests = await this.http.put("/team/request", { id: MyApp.User.team, request: this.requests, index }).toPromise();
+    console.log(requests);
   }
 
 }

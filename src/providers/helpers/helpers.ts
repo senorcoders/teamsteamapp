@@ -206,4 +206,33 @@ public nativeDatePicker(options?:DatePickerOptions):Promise<Date>{
   return this.datePicker.show(options);
 }
 
+//Para validar email
+public validEmail(email:string):boolean{
+  return !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
+}
+
+//para obtener el tamaño adecuado segun la tamaño del dispositivo
+public getSizeImage():{text:string, width:number, height:number}{
+
+  let sizes = [ 
+    {text : "@250x200", width: 250, height: 200},
+    {text : "@450x350", width: 450, height: 350},
+    {text: "@700x600", width: 700, height: 600 }
+  ];
+
+  let width = window.innerWidth;
+
+  if( sizes[0].width <= width && width < sizes[1].width ){
+
+    return sizes[0];
+  }else if( sizes[1].width <= width && width < sizes[2].width ){
+
+    return sizes[1];
+  }
+  
+  return sizes[2]
+
+
+}
+
 }
