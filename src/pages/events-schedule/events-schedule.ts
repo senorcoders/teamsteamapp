@@ -109,6 +109,7 @@ export class EventsSchedulePage {
         if( it.weeks === true ){
           let day = th.getDayCercano(it.repeatsDays);
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
+          console.log(it.name, it.parsedDateTime);
         }else{
           let day = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
@@ -241,12 +242,7 @@ export class EventsSchedulePage {
     //console.log(days);
     let daysMoment=[];
     let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
-
-    if( Days.length === 1 ){
-      let newmoment = moment();
-      newmoment.day(daysNumber[Days[0]]);
-      return newmoment;
-    }
+    
     
     for(let day of Days){
       let newmoment = moment();
@@ -254,11 +250,24 @@ export class EventsSchedulePage {
       daysMoment.push( newmoment );
     }
 
+    //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
+    if( moment().day() > daysMoment[ daysMoment.length -1 ].day() ){
+      let d = daysMoment[0];
+      d.add(7, "days");
+      return d;
+    } 
+
+    if( Days.length === 1 ){
+      let newmoment = moment();
+      newmoment.day(daysNumber[Days[0]]);
+      return newmoment;
+    }
+
     let cercanoMoment;
     for(let i=0; i<daysMoment.length; i++){
       if( i === 0 ) cercanoMoment = daysMoment[i];
       else{
-        if( cercanoMoment.diff( moment() ) > daysMoment[i].diff(moment()) ){
+        if( cercanoMoment.diff( moment() ) < daysMoment[i].diff(moment()) ){
           cercanoMoment = daysMoment[i];
         }
       } 
