@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title>Member Roster</ion-title>
+    <ion-title>{{"ROSTER.UPDATE&DELETE" | translate}}</ion-title>
     <!--ion-buttons end>
         <button ion-button icon-only (click)="goEditFamily()">
             <ion-icon name="ios-people"></ion-icon>
@@ -37,63 +37,63 @@
     <ion-list>
 
         <ion-item>
-          <ion-label floating>First Name</ion-label>
+          <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
           <ion-input type="text" value="" [(ngModel)]="player.user.firstName" ></ion-input>
         </ion-item>
     
         <ion-item>
-          <ion-label floating>Last Name</ion-label>
+          <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
           <ion-input type="text" value="" [(ngModel)]="player.user.lastName"></ion-input>
         </ion-item>
 
           <ion-item>
-              <h4 class="date-time" (click)="setDate()">BirthDay: {{player.birthDayParsed}}</h4>
+              <h4 class="date-time" (click)="setDate()">{{"BIRTHDAY" | translate}}: {{player.birthDayParsed}}</h4>
             </ion-item>
 
             <ion-item>
-                <ion-label floating>Gender</ion-label>
+                <ion-label floating>{{"ROSTER.GENDER" | translate}}</ion-label>
                 <ion-select [(ngModel)]="player.gender">
                     <ion-option value="male">
-                        Male
+                        {{"ROSTER.MALE" | translate}}
                     </ion-option>
                     <ion-option value="female">
-                        Female
+                        {{"ROSTER.FEMALE" | translate}}
                     </ion-option>
                 </ion-select>
               </ion-item>
     
               <ion-item>
-                  <ion-label floating>Jersey Number</ion-label>
+                  <ion-label floating>{{"ROSTER.YERSERYNUMBER" | translate}}</ion-label>
                   <ion-input type="number" value="" [(ngModel)]="player.yerseyNumber"></ion-input>
                 </ion-item>
 
             <ion-item>
-              <ion-label floating>Position</ion-label>
+              <ion-label floating>{{"ROSTER.POSITIONS" | translate}}</ion-label>
               <ion-input type="text" value="" [(ngModel)]="player.positions"></ion-input>
             </ion-item>
 
       </ion-list>
 
-    <h2>Contact Information</h2>
+    <h2>{{"ROSTER.CONTACTINFORMATION" | translate}}</h2>
 
     <ion-list>
+
+       <ion-item>
+            <ion-label floating>{{"NEWEVENT.TYPE" | translate}}</ion-label>
+            <ion-select [(ngModel)]="typeContact" multiple="false">
+                <ion-option value="email">{{"EMAIL" | translate}}</ion-option>
+                <ion-option value="telephone">{{"TELEPHONE" | translate}}</ion-option>
+            </ion-select>
+        </ion-item>
+
         <ion-item>
-            <ion-label floating>Name</ion-label>
+            <ion-label floating>{{"NAME" | translate}}</ion-label>
             <ion-input type="text" value="" [(ngModel)]="nameContact"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>Value</ion-label>
+            <ion-label floating>{{"ROSTER.VALUE" | translate}}</ion-label>
             <ion-input type="text" value="" [(ngModel)]="infoContact"></ion-input>
         </ion-item>
-
-        <ion-item>
-            <ion-label floating>Type</ion-label>
-            <ion-select [(ngModel)]="typeContact" multiple="false">
-              <ion-option value="email">Email</ion-option>
-              <ion-option value="telephone">Telephone</ion-option>
-            </ion-select>
-        </ion-item>
-        
 
         <button [hidden]="!save" (click)="addContact()" style="margin-top: 10pt;" ion-button clear item-end>
             <ion-icon name="md-add-circle" style="font-size: 20pt; font-weight: bold;"></ion-icon>
@@ -121,8 +121,8 @@
         </ion-item>
       </ion-list>
     
-    <button ion-button block color="base" (click)="update()">Update</button>
+    <button ion-button block color="base" (click)="update()">{{"UPDATE" | translate}}</button>
 
-    <button ion-button block color="danger" (click)="remove()" >Delete</button>
+    <button ion-button block color="danger" (click)="remove()" >{{"DELETE" | translate}}</button>
 
 </ion-content>

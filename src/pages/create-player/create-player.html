@@ -1,7 +1,7 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title>Create Player</ion-title>
+    <ion-title>{{"ROSTER.CREATEPLAYER" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -35,34 +35,34 @@
   </ion-item>
 
     <ion-item>
-      <ion-label floating>First Name</ion-label>
+      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
       <ion-input type="text" value="" [(ngModel)]="firstName" ></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>Last Name</ion-label>
+      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
       <ion-input type="text" value="" [(ngModel)]="lastName"></ion-input>
     </ion-item>
 
       <ion-item>
-          <ion-label floating>Email</ion-label>
+          <ion-label floating>{{"EMAIL" | translate}}</ion-label>
           <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Password</ion-label>
+        <ion-label floating>{{"PASSWORD" | translate}}</ion-label>
         <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>Write Your Password Again</ion-label>
+        <ion-label floating>{{"CHANGEPASSALERT.AGAINNEWPASS" | translate}}</ion-label>
         <ion-input type="password" value="" [(ngModel)]="passwordCheck"></ion-input>
       </ion-item>
 
   </ion-list>
 
   <button ion-button block color="base" (click)="save()">
-    Detail Players
+    {{"ROSTER.DETAILSPLAYER" | translate}}
     <ion-icon style="margin-left: 20px;" name="md-arrow-forward"></ion-icon>
   </button>
 
