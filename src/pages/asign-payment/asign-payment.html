@@ -1,0 +1,49 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{"PAYMENT" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <!-- para cuando es solo para un player-->
+  <ion-card>
+    <ion-card-header>
+        {{player.user.firstName+ " "+ player.user.lastName}}
+    </ion-card-header>
+    <img (load)="success(event)" [hidden]="!image" [src]="imageSrc"/>
+    <img [hidden]="image" src="./assets/imgs/user.png"/>
+    <ion-card-content>
+      <ion-list>
+        
+        <ion-item>
+          {{player.user.email}}
+        </ion-item>
+
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-list>
+    
+    <ion-list-header>{{"PAYMENT" | translate}}</ion-list-header>
+
+    <ion-item *ngFor="let payment of player.payments">
+      {{ payment.nameSale }}
+      <ion-icon item-end [hidden]="payment.paid" name="logo-usd" color="danger" style="font-size: 2rem;" ></ion-icon>
+      <p item-end [hidden]="payment.paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+      <p item-end [hidden]="!payment.paid" style="font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-fab bottom right >
+    <button color="base" ion-fab icon-only (click)="assingPayment()" >
+      <ion-icon name="md-open"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

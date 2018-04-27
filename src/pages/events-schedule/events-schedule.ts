@@ -75,14 +75,14 @@ export class EventsSchedulePage {
 
     try{
       this.user = MyApp.User;//await this.auth.User();
-      console.log(this.user);
+      //console.log(this.user);
       this.team = this.user.team;
       let url = "/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team;
-      console.log(url);
+      //console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
-      console.log(events);
+      //console.log(events);
       this.events = await this.parserEvents(events);
-      console.log(this.events);
+      //console.log(this.events);
       let user = this.user;
 
       //this.events = this.events.reverse();
@@ -97,7 +97,7 @@ export class EventsSchedulePage {
 
     let user = MyApp.User, th = this;
     let size = this.helper.getSizeImage().text;
-    console.log(size);
+    //console.log(size);
     try{
 
       //preformarting for events
@@ -109,7 +109,7 @@ export class EventsSchedulePage {
         if( it.weeks === true ){
           let day = th.getDayCercano(it.repeatsDays);
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
-          console.log(it.name, it.parsedDateTime);
+          //console.log(it.name, it.parsedDateTime);
         }else{
           let day = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];

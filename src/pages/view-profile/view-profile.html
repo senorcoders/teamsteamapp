@@ -80,7 +80,12 @@
       {{ "CHANGEPASS" | translate}}
     </ion-item>
 
-    <ion-item (click)="paymentsMonthly()" >
+    <ion-item (click)="viewsPlayerPayments()" [hidden]="user.role.name != 'Manager' " >
+      <ion-icon name="logo-usd" item-start></ion-icon>
+      {{ "PAYMENTPLAYERS" | translate}}
+    </ion-item>
+
+    <ion-item (click)="paymentsMonthly()" [hidden]="user.role.name != 'Manager' " >
       <ion-icon name="md-cash" item-start></ion-icon>
       {{"PAYMENTSUBS" | translate}}
     </ion-item>

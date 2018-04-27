@@ -86,6 +86,9 @@ import { RegistrationPage } from '../pages/registration/registration';
 import { PaymentSubscripcionPage } from '../pages/payment-subscripcion/payment-subscripcion';
 import { CheckPaidPage } from '../pages/check-paid/check-paid';
 import { PaymentMonthlyPage } from '../pages/payment-monthly/payment-monthly';
+import { AsignPaymentPage } from '../pages/asign-payment/asign-payment';
+import { ListPlayersPaymentPage } from '../pages/list-players-payment/list-players-payment';
+import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -140,7 +143,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegistrationPage,
     PaymentSubscripcionPage,
     CheckPaidPage,
-    PaymentMonthlyPage
+    PaymentMonthlyPage,
+    AsignPaymentPage,
+    ListPlayersPaymentPage,
+    AsingpaymentComponent
   ],
   imports: [
     BrowserModule,
@@ -205,7 +211,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegistrationPage,
     PaymentSubscripcionPage,
     CheckPaidPage,
-    PaymentMonthlyPage
+    PaymentMonthlyPage,
+    AsignPaymentPage,
+    ListPlayersPaymentPage,
+    AsingpaymentComponent
   ],
   providers: [
     StatusBar,

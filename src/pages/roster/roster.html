@@ -13,39 +13,18 @@
 
 
 <ion-content padding>
-    <!--ion-list>
-        <ion-item *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
 
-          <ion-avatar style="cursor: pointer;" item-start [hidden]="!player.loadImage">
-            <img [src]="player.image" (load)="success(event, player);">
-          </ion-avatar>
-
-          <ion-avatar style="cursor: pointer;" (click)="viewPlayer(player)" item-start [hidden]="player.loadImage">
-              <img src="./assets/imgs/user.png">
-          </ion-avatar>
-
-          <h2 style="cursor: pointer;" (click)="viewPlayer(player)" >{{player.user.firstName+ " "+ player.user.lastName}}</h2>
-          <p [hidden]="!player.positions" (click)="viewPlayer(player)">{{player.positions}} </p>
-
-          
-          <button (click)="editMember(i, player)" [hidden]="user.role.name != 'Manager'" ion-button clear item-end>Edit</button>
-        </ion-item>
-      </ion-list-->
-  
   <ion-grid>
 
     <ion-row>
       
       <ion-col col-4 *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
-        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" [hidden]="!player.loadImage">
-          <img [src]="player.image" (load)="success(event, player);">
+        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" >
+          <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
+          <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
         </ion-avatar>
 
-        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" (click)="viewPlayer(player)" [hidden]="player.loadImage">
-            <img src="./assets/imgs/user.png">
-        </ion-avatar>
-
-        <h4 (click)="viewPlayer(player)">{{player.user.firstName}}</h4>
+        <h4>{{player.user.firstName}}</h4>
         <h4>{{player.user.lastName}}</h4>
 
         <a href="#" (click)="goChat(player.user)" >Chat</a>

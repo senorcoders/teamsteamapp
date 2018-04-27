@@ -141,7 +141,7 @@
     "MANAGER": "Manager",
     "FAMILY": "Familiar",
     "PASSWORD": "Contraseñas",
-    "INVALIDUSERNAMEYPASS": "Nombre de usuario o contraseña incorrecta",
+    "INVALIDUSERNAMEYPASS": "Correo o Contraseña incorrecta",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registración",
     "SELECTFAMILY": "Selecciona tu Familiar",
@@ -156,10 +156,14 @@
     "PASSWORDNOT": "Contraseña no son iguales",
     "NAMEOFTEAM": "Nombre del equipo",
     "PAYMENTSUBS": "Suscripción de pago",
+    "QUANTITY": "Cantidad",
+    "PAYMENT": "Pagos",
     "PAYMONTH": "Pagar este Mes",
     "TRY15": "Probar 15 Dias",
     "CHECKPAYMENT": "Comprobar Pago",
     "PAYERNOTCOMPLETAD": "Pago no completado",
     "CHECK": "Comprobar",
-    "RESENDVERIFICATIONCODE": "Reenviar correo electrónico de verificación"
+    "RESENDVERIFICATIONCODE": "Reenviar correo electrónico de verificación",
+    "PAYMENTPLAYERS": "Pagos de Jugadores",
+    "ASYNGPAYMENT": "Asignar Pago"
 }

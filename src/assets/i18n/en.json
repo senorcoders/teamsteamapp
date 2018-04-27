@@ -128,6 +128,7 @@
     "REQUESTS": "Requests",
     "REQUEST": "Request",
     "ACCEPT": "Accept",
+    "QUANTITY": "Quantity",
     "REQUESTACCEPT": "Request Accepted",
     "REQUESTDENIED": "Denied Application",
     "DENED": "Deny",
@@ -141,7 +142,7 @@
     "MANAGER": "Manager",
     "FAMILY": "Family",
     "PASSWORD": "Password",
-    "INVALIDUSERNAMEYPASS": "Incorrect username or password",
+    "INVALIDUSERNAMEYPASS": "Incorrect email or password",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",
     "SELECTFAMILY": "Select Your Family Member",
@@ -156,10 +157,13 @@
     "PASSWORDNOT": "Password are not equal",
     "NAMEOFTEAM": "Name of the team",
     "PAYMENTSUBS": "Payment Subscription",
+    "PAYMENT": "Payment",
     "PAYMONTH": "Pay this Month",
     "TRY15": "Try 15 Days",
     "CHECKPAYMENT": "Check Payment",
     "PAYERNOTCOMPLETAD": "Payment not completed",
     "CHECK": "Check",
-    "RESENDVERIFICATIONCODE": "Resend Verification Email"
+    "RESENDVERIFICATIONCODE": "Resend Verification Email",
+    "PAYMENTPLAYERS": "Player Payments",
+    "ASYNGPAYMENT": "Assign Payment"
 }

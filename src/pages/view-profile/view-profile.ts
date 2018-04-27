@@ -10,6 +10,7 @@ import { TeamsProfilePage } from '../teams-profile/teams-profile';
 import { ViewRequestsPage } from '../view-requests/view-requests';
 import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 import { PrivacyPolicePage } from '../privacy-police/privacy-police';
+import { ListPlayersPaymentPage } from '../list-players-payment/list-players-payment';
 
 
 @IonicPage()
@@ -325,6 +326,10 @@ export class ViewProfilePage {
 
   public goAbout(){
     this.navCtrl.push(PrivacyPolicePage);
+  }
+
+  public viewsPlayerPayments(){
+    this.navCtrl.push(ListPlayersPaymentPage)
   }
 
 }

@@ -108,7 +108,9 @@ export class AuthServiceProvider {
 
       let events:any;
 
-      if( res.hasOwnProperty("child") ){
+      if( Object.prototype.toString.call(team) === "[object Object]"){
+        team = team.id;
+      }else if( res.hasOwnProperty("child") ){
         team = team.child.team;
       }else if( team.hasOwnProperty('team') ){
         team = team.team;
