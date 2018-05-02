@@ -1,0 +1,20 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{"PAYMENT" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let payment of payments" (click)="goPayment(payment)" >
+      {{ payment.nameSale }}
+      <ion-icon item-end [hidden]="payment.paid" style="font-size: 2rem;" name="logo-usd" color="danger" ></ion-icon>
+      <p item-end [hidden]="payment.paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

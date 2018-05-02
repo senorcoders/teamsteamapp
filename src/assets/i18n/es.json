@@ -165,5 +165,6 @@
     "CHECK": "Comprobar",
     "RESENDVERIFICATIONCODE": "Reenviar correo electrónico de verificación",
     "PAYMENTPLAYERS": "Pagos de Jugadores",
-    "ASYNGPAYMENT": "Asignar Pago"
+    "ASYNGPAYMENT": "Asignar Pago",
+    "PAY": "Pagar"
 }

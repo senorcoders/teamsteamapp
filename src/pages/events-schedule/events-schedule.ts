@@ -81,6 +81,7 @@ export class EventsSchedulePage {
       //console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
       //console.log(events);
+      
       this.events = await this.parserEvents(events);
       //console.log(this.events);
       let user = this.user;
@@ -247,15 +248,24 @@ export class EventsSchedulePage {
     for(let day of Days){
       let newmoment = moment();
       newmoment.day(daysNumber[day]);
-      daysMoment.push( newmoment );
+      daysMoment.push(newmoment);
     }
 
+
     //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
-    if( moment().day() > daysMoment[ daysMoment.length -1 ].day() ){
+    let mayor = false, ind = 0, day = 0;
+    for(let i=0; i<daysMoment.length; i++){
+      if( daysMoment[i].day() > day ){
+        day = daysMoment[i].day();
+        ind = i;
+      }
+    }
+    if( moment().day() > daysMoment[ ind ].day() ){
       let d = daysMoment[0];
       d.add(7, "days");
       return d;
-    } 
+    }
+
 
     if( Days.length === 1 ){
       let newmoment = moment();
@@ -263,15 +273,31 @@ export class EventsSchedulePage {
       return newmoment;
     }
 
-    let cercanoMoment;
+    let cercanoMoment, diasNumber=[], diaNumber=0;
     for(let i=0; i<daysMoment.length; i++){
-      if( i === 0 ) cercanoMoment = daysMoment[i];
-      else{
-        if( cercanoMoment.diff( moment() ) < daysMoment[i].diff(moment()) ){
-          cercanoMoment = daysMoment[i];
-        }
-      } 
+      diasNumber.push({ diff: daysMoment[i].diff( moment() ), i: i });
     }
+
+    for(let i=0; i<diasNumber.length; i++){
+      if( diasNumber[i].diff < 0 )
+        diasNumber.splice(i, 1);
+    }
+
+    for(let i=0; i<diasNumber.length; i++){
+      console.log(diasNumber[i]);
+      if( i === 0 ){
+        cercanoMoment = daysMoment[diasNumber[i].i];
+        diaNumber = diasNumber[i].diff;
+      }
+      
+      if( diaNumber > diasNumber[i].diff){
+        cercanoMoment = daysMoment[diasNumber[i].i];
+        diaNumber = diasNumber[i].diff;
+      }
+
+    }
+
+    console.log(cercanoMoment.format("DD/MM/YYYY"));
 
     return cercanoMoment;
     

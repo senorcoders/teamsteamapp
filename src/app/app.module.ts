@@ -89,6 +89,8 @@ import { PaymentMonthlyPage } from '../pages/payment-monthly/payment-monthly';
 import { AsignPaymentPage } from '../pages/asign-payment/asign-payment';
 import { ListPlayersPaymentPage } from '../pages/list-players-payment/list-players-payment';
 import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
+import { ViewPaymentsPlayerPage } from '../pages/view-payments-player/view-payments-player';
+import { PaymentPage } from '../pages/payment/payment';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -146,14 +148,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentMonthlyPage,
     AsignPaymentPage,
     ListPlayersPaymentPage,
-    AsingpaymentComponent
+    AsingpaymentComponent,
+    ViewPaymentsPlayerPage,
+    PaymentPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'teamsnap',
-         driverOrder: ['indexeddb', 'sqlite', 'websql']
+        driverOrder: ['indexeddb', 'sqlite', 'websql']
     }),
     HttpModule,
     HttpClientModule,
@@ -214,7 +218,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentMonthlyPage,
     AsignPaymentPage,
     ListPlayersPaymentPage,
-    AsingpaymentComponent
+    AsingpaymentComponent,
+    ViewPaymentsPlayerPage,
+    PaymentPage
   ],
   providers: [
     StatusBar,

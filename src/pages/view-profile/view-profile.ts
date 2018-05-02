@@ -11,6 +11,7 @@ import { ViewRequestsPage } from '../view-requests/view-requests';
 import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 import { PrivacyPolicePage } from '../privacy-police/privacy-police';
 import { ListPlayersPaymentPage } from '../list-players-payment/list-players-payment';
+import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-player';
 
 
 @IonicPage()
@@ -330,6 +331,10 @@ export class ViewProfilePage {
 
   public viewsPlayerPayments(){
     this.navCtrl.push(ListPlayersPaymentPage)
+  }
+
+  public viewsPayments(){
+    this.navCtrl.push(ViewPaymentsPlayerPage);
   }
 
 }

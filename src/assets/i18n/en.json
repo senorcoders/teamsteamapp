@@ -165,5 +165,6 @@
     "CHECK": "Check",
     "RESENDVERIFICATIONCODE": "Resend Verification Email",
     "PAYMENTPLAYERS": "Player Payments",
-    "ASYNGPAYMENT": "Assign Payment"
+    "ASYNGPAYMENT": "Assign Payment",
+    "PAY": "Pay"
 }

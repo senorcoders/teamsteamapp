@@ -94,7 +94,7 @@ export class AuthServiceProvider {
       }
       
       let url;
-      if( user.role.name === "Player"){
+      if( user.role.name === "Player" ){
         url = "/team/player/"+ user.id;
       }else if( user.role.name === "Manager" ){
         url = "/team/manager/"+ user.id;
@@ -107,15 +107,13 @@ export class AuthServiceProvider {
       let team:any = res;
 
       let events:any;
-
-      if( Object.prototype.toString.call(team) === "[object Object]"){
-        team = team.id;
-      }else if( res.hasOwnProperty("child") ){
+      console.log(team);
+      if( user.role.name === "Player"){
+        team = team.team.id;
+      }else if( res.hasOwnProperty("child") && user.role.name === "Family" ){
         team = team.child.team;
-      }else if( team.hasOwnProperty('team') ){
+      }else if( user.role.name === "Manager" ){
         team = team.team;
-      }else if( Object.prototype.toString.call(team) === '[object Array]'){
-        team = team[0].team;
       }
 
       console.log("team "+ team);

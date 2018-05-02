@@ -80,6 +80,11 @@
       {{ "CHANGEPASS" | translate}}
     </ion-item>
 
+    <ion-item (click)="viewsPayments()" >
+      <ion-icon name="logo-usd" item-start></ion-icon>
+      {{ "PAYMENT" | translate}}
+    </ion-item>
+    
     <ion-item (click)="viewsPlayerPayments()" [hidden]="user.role.name != 'Manager' " >
       <ion-icon name="logo-usd" item-start></ion-icon>
       {{ "PAYMENTPLAYERS" | translate}}
