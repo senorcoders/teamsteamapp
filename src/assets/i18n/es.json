@@ -166,5 +166,17 @@
     "RESENDVERIFICATIONCODE": "Reenviar correo electrónico de verificación",
     "PAYMENTPLAYERS": "Pagos de Jugadores",
     "ASYNGPAYMENT": "Asignar Pago",
-    "PAY": "Pagar"
+    "INVADDATA": "Campos vacíos o Datos Inválidos",
+    "PAY": "Pagar",
+    "INVOICE": {
+        "TITLE": "Datos Generales de Pagos",
+        "BUSINESSNAME": "Nombre del Negocio",
+        "COUNTRYCODE": "Código de Telefono de tu país",
+        "NUMBERTEL": "Número de Teléfono",
+        "LINE1": "Linea 1",
+        "CITY": "Cuidad",
+        "STATE": "Estado",
+        "COUNTRYCODEADDRESS": "Codigo de Dirección",
+        "INEEDDATA": "Necesita Ingresar Datos Generales de Pagos"
+    }
 }

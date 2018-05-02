@@ -208,7 +208,7 @@ public nativeDatePicker(options?:DatePickerOptions):Promise<Date>{
 
 //Para validar email
 public validEmail(email:string):boolean{
-  return !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
+  return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
 }
 
 //para obtener el tamaño adecuado segun la tamaño del dispositivo

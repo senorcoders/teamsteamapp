@@ -68,7 +68,7 @@ export class AsingpaymentComponent {
 
     payment.player = this.player.id;
     try{
-      let pay = await this.http.post("/paymentuser", payment).toPromise();
+      let pay = await this.http.post("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team, payment).toPromise();
       console.log(pay);
 
       this.viewCtrl.dismiss(pay);
@@ -89,7 +89,7 @@ export class AsingpaymentComponent {
      for(let player of this.players){
 
       payment.player = player.id;
-      let pay = await this.http.post("/paymentuser", payment).toPromise();
+      let pay = await this.http.post("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team, payment).toPromise();
       console.log(pay);
 
       this.viewCtrl.dismiss();

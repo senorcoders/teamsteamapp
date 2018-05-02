@@ -1,0 +1,79 @@
+<ion-header>
+
+  <ion-navbar color="primary">
+    <ion-title>{{"INVOICE.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+      <ion-input type="email" [(ngModel)]="merchant_info.email" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="merchant_info.first_name" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="merchant_info.last_name" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.BUSINESSNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="merchant_info.business_name" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.COUNTRYCODE" | translate}}</ion-label>
+      <ion-input type="number" [(ngModel)]="phone.country_code" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.NUMBERTEL" | translate}}</ion-label>
+      <ion-input type="tel" [(ngModel)]="phone.national_number" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.LINE1" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="address.line1" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.CITY" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="address.city" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.STATE" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="address.state" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.POSTALCODE" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="address.postal_code" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"INVOICE.COUNTRYCODEADDRESS" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="address.country_code" ></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button (click)="saveOrUpdate()" >{{"SAVE" | translate}}</button>
+
+  <ion-fab bottom right >
+    <button color="base" ion-fab icon-only (click)="goProfile()" >
+      <ion-icon name="md-contact"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

@@ -91,6 +91,7 @@ import { ListPlayersPaymentPage } from '../pages/list-players-payment/list-playe
 import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
 import { ViewPaymentsPlayerPage } from '../pages/view-payments-player/view-payments-player';
 import { PaymentPage } from '../pages/payment/payment';
+import { DataGeneralInvoicePage } from '../pages/data-general-invoice/data-general-invoice';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -150,7 +151,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListPlayersPaymentPage,
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
-    PaymentPage
+    PaymentPage,
+    DataGeneralInvoicePage
   ],
   imports: [
     BrowserModule,
@@ -220,7 +222,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListPlayersPaymentPage,
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
-    PaymentPage
+    PaymentPage,
+    DataGeneralInvoicePage
   ],
   providers: [
     StatusBar,

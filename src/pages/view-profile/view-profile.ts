@@ -27,6 +27,7 @@ export class ViewProfilePage {
   public team:any={ name : "", request: [] };
   public edit=false;
   public request:Array<any>=[];
+  public manager:any={};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
@@ -49,6 +50,8 @@ export class ViewProfilePage {
 
   async ionViewWillEnter(){
     try{
+
+      console.log(this.manager);
 
       this.team = await this.http.get("/team/profile/"+ MyApp.User.team).toPromise();
       console.log(this.team);

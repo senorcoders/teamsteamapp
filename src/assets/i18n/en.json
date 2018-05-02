@@ -166,5 +166,18 @@
     "RESENDVERIFICATIONCODE": "Resend Verification Email",
     "PAYMENTPLAYERS": "Player Payments",
     "ASYNGPAYMENT": "Assign Payment",
-    "PAY": "Pay"
+    "INVADDATA": "Empty fields or invalid data",
+    "PAY": "Pay",
+    "INVOICE": {
+        "TITLE": "General Payment Information",
+        "BUSINESSNAME": "Business Name",
+        "COUNTRYCODE": "Phone Code of Your Country",
+        "NUMBERTEL": "Phone Number",
+        "LINE1": "Line 1",
+        "CITY": "City",
+        "STATE": "State",
+        "POSTALCODE": "Postal Code",
+        "COUNTRYCODEADDRESS": "Country Code Address",
+        "INEEDDATA": "You Need to Enter General Payment Data"
+    }
 }

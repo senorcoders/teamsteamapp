@@ -1,10 +1,12 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController, ToastController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
 import { AsignPaymentPage } from '../asign-payment/asign-payment';
 import { AsingpaymentComponent } from '../../components/asingpayment/asingpayment';
+import { DataGeneralInvoicePage } from '../data-general-invoice/data-general-invoice';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @IonicPage()
@@ -18,17 +20,44 @@ export class ListPlayersPaymentPage {
   public players:Array<any>=[];
   public multi=false;
   private down=false;
+  private manager:any={};
 
   private playersSelects:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public http: HttpClient,
-    public modelCtrl: ModalController, public zone: NgZone
+    public modelCtrl: ModalController, public zone: NgZone, 
+    private toasCtrl: ToastController, private helper: HelpersProvider
   ) {
+
+  }
+
+  private async openForm(){
+    let message = await this.helper.getWords("INVOICE.INEEDDATA");
+    this.toasCtrl.create({
+      message: message,
+      duration: 3000,
+      position: "bottom"
+    })
+    .present();
+
+    this.navCtrl.push(DataGeneralInvoicePage, {manager: this.manager});
   }
 
   async ionViewWillEnter() {
     
+    //Para checkear si tienes los datos nesesarios para agregar pagos
+    
+    /*this.manager = await this.http.get("/manager/data/"+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise() as any;
+    
+    if( !this.manager.hasOwnProperty("generalDataInvoice") ){
+      this.openForm();
+      return;
+    }else if( this.manager.generalDataInvoice.email === "" ){
+      this.openForm();
+      return;
+    }*/
+
     let load = this.loading.create({ content: "Loading Roster..."});
     load.present({ disableApp : true });
 
@@ -64,6 +93,7 @@ export class ListPlayersPaymentPage {
     load.dismiss();
 
   }
+
 
   public success(event, player){
     player.loadImage = true;
