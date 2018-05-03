@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { PaymentPage } from '../payment/payment';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @IonicPage()
@@ -15,14 +16,18 @@ export class ViewPaymentsPlayerPage {
   public payments:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient
+    public http: HttpClient, private helper: HelpersProvider
   ) {
   }
 
   async ngOnInit(){
-    let ts:any = await this.http.get("/player/payment/"+ MyApp.User.id).toPromise();
+    let load = this.helper.getLoadingStandar();
+
+    let ts:any = await this.http.get("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise();
     this.payments = ts;
     console.log(this.payments);
+    
+    load.dismiss();
   }
 
   public goPayment(payment){ 

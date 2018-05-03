@@ -33,9 +33,9 @@
 
     <ion-item *ngFor="let payment of player.payments">
       {{ payment.nameSale }}
-      <ion-icon item-end [hidden]="payment.paid" name="logo-usd" color="danger" style="font-size: 2rem;" ></ion-icon>
-      <p item-end [hidden]="payment.paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
-      <p item-end [hidden]="!payment.paid" style="font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+      <ion-icon item-end [hidden]="payment.invoice_paid" name="logo-usd" color="danger" style="font-size: 2rem;" ></ion-icon>
+      <p item-end [hidden]="payment.invoice_paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+      <p item-end [hidden]="!payment.invoice_paid" style="font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
     </ion-item>
 
   </ion-list>

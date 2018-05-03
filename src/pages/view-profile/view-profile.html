@@ -60,7 +60,7 @@
       <ion-icon name="md-mail" item-start></ion-icon> 
       {{user.email}} 
       <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon>
-      <ion-icon name="md-create" [hidden]="!edit" item-end></ion-icon>
+      <ion-icon name="md-create" [hidden]="!edit" (click)="changeEmailAlert()" item-end></ion-icon>
     </ion-item>
 
     <ion-item (click)="selectTeams()" >
@@ -80,7 +80,7 @@
       {{ "CHANGEPASS" | translate}}
     </ion-item>
 
-    <ion-item (click)="viewsPayments()" >
+    <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'" >
       <ion-icon name="logo-usd" item-start></ion-icon>
       {{ "PAYMENT" | translate}}
     </ion-item>

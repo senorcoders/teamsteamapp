@@ -1,7 +1,7 @@
 <ion-header>
 
-  <ion-navbar>
-    <ion-title>Payment</ion-title>
+  <ion-navbar color="primary">
+    <ion-title >{{"PAYMENT" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -10,11 +10,11 @@
 <ion-content padding>
   
   <ion-card>
-    <ion-card-title>{{payment.nameSale}}</ion-card-title>
 
     <ion-card-content>
-
-      <button ion-button (click)="pay()">{{"PAY" | translate}}</button>
+        <ion-card-title>{{payment.nameSale}}</ion-card-title>
+      <p>{{payment.description}}</p>
+      <!--button ion-button (click)="pay()">{{"PAY" | translate}}</button-->
     </ion-card-content>
     
   </ion-card>

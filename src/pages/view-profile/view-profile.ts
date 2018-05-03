@@ -340,4 +340,42 @@ export class ViewProfilePage {
     this.navCtrl.push(ViewPaymentsPlayerPage);
   }
 
+  public async changeEmailAlert(){
+
+    let emailM = await this.helper.getWords("EMAIL");
+    this.alertCtrl.create({ 
+      inputs: [ {name: "email", placeholder: emailM, type:"email"} ],
+      buttons: 
+      [
+        "Cancel",
+        {text: "Ok", handler: function(data){ this.changeEmail(data.email) }.bind(this) }
+      ]
+    })
+    .present();
+  }
+
+  public async changeEmail(email){
+
+    let valid = this.helper.validEmail(email);
+    if( valid === false ){
+      let M = await this.helper.getWords("EMAILINVALID");
+      this.alertCtrl.create({ title: "Error", message: M })
+      .present();
+      return;
+    }
+
+    try{
+      let user:any = await this.http.put("/user/"+ MyApp.User.id, { email, verified: false }).toPromise();
+      await this.auth.updateUser(user);
+      this.user.email = user.email;
+    }
+    catch(e){
+      console.error(e);
+      let unexpectM = await this.helper.getWords("ERORUNEXC");
+      this.alertCtrl.create({ title: "Error", message: unexpectM })
+      .present();
+    }
+
+  }
+
 }

@@ -142,6 +142,7 @@
     "MANAGER": "Manager",
     "FAMILY": "Family",
     "PASSWORD": "Password",
+    "EMAILINVALID": "Malformed Email",
     "INVALIDUSERNAMEYPASS": "Incorrect email or password",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",

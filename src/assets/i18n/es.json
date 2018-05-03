@@ -133,6 +133,7 @@
     "DENED": "Denegar",
     "FULLNAME": "Nombre Completo",
     "EMAIL": "Correo",
+    "EMAILINVALID": "Email con Formato Incorrecto",
     "TELEPHONE": "Teléfono",
     "SENT": "Enviar",
     "EMAILREADY": "Mail is Already in Use",

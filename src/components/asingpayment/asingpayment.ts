@@ -53,11 +53,14 @@ export class AsingpaymentComponent {
       team: MyApp.User.team, manager: MyApp.User.id
     };
 
+    let load = this.helper.getLoadingStandar();
+
      if( this.multi === true )
       await this.asingPaymentMore(payment);
     else
       await this.asingPaymentOne(payment);
 
+    load.dismiss();
   }
 
   public successPlayer(event, player){
@@ -92,9 +95,9 @@ export class AsingpaymentComponent {
       let pay = await this.http.post("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team, payment).toPromise();
       console.log(pay);
 
-      this.viewCtrl.dismiss();
-
      }
+
+     this.viewCtrl.dismiss();
 
     }
     catch(e){

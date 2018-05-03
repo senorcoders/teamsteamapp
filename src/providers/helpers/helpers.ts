@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform } from 'ionic-angular';
+import { Platform, Loading, LoadingController } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -25,7 +25,7 @@ export class HelpersProvider {
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder:NativeGeocoder,
     public datePicker: DatePicker, private translate: TranslateService,
-    private zone:NgZone
+    private zone:NgZone, private loading: LoadingController
   ) {
     //console.log(this);
   }
@@ -234,5 +234,16 @@ public getSizeImage():{text:string, width:number, height:number}{
 
 
 }
+
+  public getLoadingStandar(present?:boolean):Loading{
+    let load = this.loading.create({ spinner: 'show', content: `<img src="./assets/imgs/loading.gif" />` });
+    present = present || true;
+    if( present === true ){
+      load.present({ disableApp: true });
+    }
+
+    return load;
+
+  }
 
 }
