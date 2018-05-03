@@ -61,12 +61,12 @@ export class TaskPage {
 
   //comprobar si la contraseña es correcta
   public checkPassword(password){
-    let username = this.auth.User().username;
+    let email = this.auth.User().email;
 
     this.load = this.loading.create({ content: "Deleting..." });
     this.load.present({ disableApp : true });
     let t = this;
-    this.http.post('/login', { username, password})
+    this.http.post('/login', { email, password})
     .subscribe(function(data:any){
 
       if( data.hasOwnProperty("message") && data.message == "User not found" ){
