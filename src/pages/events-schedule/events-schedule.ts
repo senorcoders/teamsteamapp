@@ -165,52 +165,25 @@ export class EventsSchedulePage {
         }else if( b.repeatsDaily == true ){
           return 1;
 
-        }else if( a.repeats == true && a.repeatsDaily === false && b.repeats == false ){
-          let d1 = th.getDayCercano(a.repeatsDays), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
-          if (d1.isBefore(d2)) {            // a comes first
-            return -1
-          } else if (d1.isAfter(d2)) {     // b comes first
-              return 1
-          } else {                // equal, so order is irrelevant
-              return 0            // note: sort is not necessarily stable in JS
-          }
-
-        }else if( a.repeats == false && b.repeats == true && b.repeatsDaily == false ){
-          let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = th.getDayCercano(b.repeatsDays);
-          if (d1.isBefore(d2)) {            // a comes first
-            return -1
-          } else if (d1.isAfter(d2)) {     // b comes first
-              return 1
-          } else {                // equal, so order is irrelevant
-              return 0            // note: sort is not necessarily stable in JS
-          }
-          
-        }else if( a.repeats == true && a.repeatsDaily === false && b.repeatsDaily == true ){
-          let d1 = th.getDayCercano(a.repeatsDays), d2 = moment();
-          if (d1.isBefore(d2)) {            // a comes first
-            return 1
-          } else if (d1.isAfter(d2)) {     // b comes first
-              return -1
-          } else {                // equal, so order is irrelevant
-              return 0            // note: sort is not necessarily stable in JS
-          }
-          
-        }else if( a.repeatsDaily === true && b.repeats == true && b.repeatsDaily === false ){
-          let d1 = moment(), d2 = th.getDayCercano(b.repeatsDays);
-          if (d1.isBefore(d2)) {            // a comes first
-            return -1
-          } else if (d1.isAfter(d2)) {     // b comes first
-              return 1
-          } else {                // equal, so order is irrelevant
-              return 0            // note: sort is not necessarily stable in JS
-          }
-          
+        }
+        
+        //obtenemos la fecha de los eventos
+        let a1, b1;
+        if( a.repeats === true ){
+          a1 = th.getDayCercano(a.repeatsDays)
+        }else{
+          a1 = moment(a.dateTime, "MM/DD/YYYY hh:mm");
         }
 
-        let d1 = moment(a.dateTime, "MM/DD/YYYY hh:mm"), d2 = moment(b.dateTime, "MM/DD/YYYY hh:mm");
-        if (d1.isBefore(d2)) {            // a comes first
+        if( b.repeats === true ){
+          b1 = th.getDayCercano(b.repeatsDays)
+        }else{
+          b1 = moment(b.dateTime, "MM/DD/YYYY hh:mm")
+        }
+        console.log(a1.format("DD/MM/YYYY"), b1.format("DD/MM/YYYY"));
+        if (a1.isBefore(b1)) {            // a comes first
           return -1
-        } else if (d1.isAfter(d2)) {     // b comes first
+        } else if (a1.isAfter(b1)) {     // b comes first
             return 1
         } else {                // equal, so order is irrelevant
             return 0            // note: sort is not necessarily stable in JS

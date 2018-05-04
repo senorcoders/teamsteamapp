@@ -16,7 +16,7 @@ export class WebSocketsProvider {
   }
 
   public async initConexion():Promise<any>{
-    return new Promise( async function(resolve, reject){
+    /*return new Promise( async function(resolve, reject){
 
       try{
         console.log("iniciando conexion");
@@ -39,7 +39,7 @@ export class WebSocketsProvider {
         reject(e)
       }
 
-    }.bind(this) );
+    }.bind(this) );*/
   }
 
   public async loopCheckConnect():Promise<Object>{
