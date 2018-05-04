@@ -81,7 +81,8 @@ export class EventsSchedulePage {
       //console.log(url);
       let events:any= await this.http.get("/event/team/"+ this.by+ "/"+ moment().format("MM-DD-YYYY-hh:mm") + "/"+ this.team).toPromise();
       //console.log(events);
-      
+      /*events = [events[2]];
+      console.log(events);*/
       this.events = await this.parserEvents(events);
       //console.log(this.events);
       let user = this.user;
@@ -275,12 +276,21 @@ export class EventsSchedulePage {
 
     let cercanoMoment, diasNumber=[], diaNumber=0;
     for(let i=0; i<daysMoment.length; i++){
-      diasNumber.push({ diff: daysMoment[i].diff( moment() ), i: i });
+      diasNumber.push({ diff: daysMoment[i].diff( moment(), "hours"), i: i });
     }
-
+    
+    let diasNumberTemp = [];
     for(let i=0; i<diasNumber.length; i++){
-      if( diasNumber[i].diff < 0 )
-        diasNumber.splice(i, 1);
+      if( diasNumber[i].diff < 0 ){}else{
+        diasNumberTemp.push(diasNumber[i]);
+      }
+    }
+    diasNumber = diasNumberTemp;
+
+    if( diasNumber.length === 0 ){
+      let d = daysMoment[0];
+      d.add(7, "days");
+      return d;
     }
 
     for(let i=0; i<diasNumber.length; i++){

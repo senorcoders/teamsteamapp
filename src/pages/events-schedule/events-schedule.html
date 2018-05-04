@@ -33,8 +33,9 @@
     <div class="inner-image">
       <img (click)="goEvent(e)" [src]="e.imageSrc">
       <div class="dateTimeEvent">
-        <h3 class="date-event" >{{e.parsedDateTime[0]}}</h3>
-        <h4 class="date-event" >{{e.parsedDateTime[1]}}</h4>
+        <h3 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[0]}}</h3>
+        <h4 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[1]}}</h4>
+        <h4 class="date-event" [hidden]="!e.repeatsDaily"  >{{"DAILY" | translate}}</h4>
       </div>
     </div>
 
@@ -97,8 +98,9 @@
 
     <!-- este es para events type practice and game -->
     <div class="dateTime" (click)="goEvent(e)" >
-        <h3 class="date-event" >{{e.parsedDateTime[0]}}</h3>
-        <h4 class="date-event" >{{e.parsedDateTime[1]}}</h4>
+        <h3 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[0]}}</h3>
+        <h4 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[1]}}</h4>
+        <h4 class="date-event" [hidden]="!e.repeatsDaily" >{{"DAILY" | translate}}</h4>
     </div>
 
     <div class="details" (click)="goEvent(e)">

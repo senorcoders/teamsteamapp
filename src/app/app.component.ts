@@ -150,7 +150,6 @@ export class MyApp {
       this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
       document.getElementById("nameSlide").innerText = this.user.username;
-      MyApp.initConnetionSockets();
 
       //ahora asignamos el lenaguaje si es que esta definido
       if( MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language') ){
@@ -184,19 +183,6 @@ export class MyApp {
     this.defaultImageUser=false;
   }
 
-
-  public static async initConnetionSockets(){
-
-    let socket = document.getElementById("sockets-sails");
-    if( socket !== null && socket !== undefined )
-      return;
-
-    let script = await document.createElement("script");
-    script.setAttribute("id", "sockets-sails");
-    script.setAttribute("src", interceptor.url+ "/js/sails.io.js");
-    return await document.body.appendChild(script);
-
-  }
 
   /**
    * logout
