@@ -22,7 +22,10 @@ export class SelectNewChatComponent {
 
   async ngOnInit(){
     let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
-    this.players = team._players;
+    console.log(team);
+    this.players = team.players.filter(function(item){
+      return item.hasOwnProperty("user");
+    });
     let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
 
     for(let it of managers){
@@ -33,6 +36,7 @@ export class SelectNewChatComponent {
       item.show = true;
       return item;
     }));
+
     
   }
 

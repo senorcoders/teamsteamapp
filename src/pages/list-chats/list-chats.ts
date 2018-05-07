@@ -29,7 +29,8 @@ export class ListChatsPage {
     this.idTeam = MyApp.User.team;
   }
 
-  async ngOnInit(){
+  async ionViewWillEnter(){
+    
     try{
       let users:any = await this.http.get("/chat-list/"+ MyApp.User.id).toPromise();
       

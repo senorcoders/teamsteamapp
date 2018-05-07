@@ -280,8 +280,6 @@ export class EventsSchedulePage {
 
     }
 
-    console.log(cercanoMoment.format("DD/MM/YYYY"));
-
     return cercanoMoment;
     
   }

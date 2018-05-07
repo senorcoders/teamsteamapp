@@ -17,7 +17,7 @@ export class PaymentPage {
   ) {
 
     this.payment = this.navParams.get("payment");
-
+    
   }
 
 
@@ -27,7 +27,7 @@ export class PaymentPage {
     let pay = await this.http.post("/player/pay/", { id : this.payment.id }).toPromise();
     console.log(pay);
 
-    //load.dismiss();
+    load.dismiss();
   }
 
 }

@@ -5,6 +5,8 @@ import * as moment from 'moment';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
+import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 
 
 @IonicPage()
@@ -14,25 +16,34 @@ import { MyApp } from '../../app/app.component';
 })
 export class CheckPaidPage {
 
+  public moth:any;
+  private init=false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   private http: HttpClient, private helper: HelpersProvider, 
   public alertCtrl: AlertController
   ) {
 
+    this.moth = this.navParams.get("month");
+    this.init = this.navParams.get("init");
 
   }
 
   public async checkPayment(){
 
-    let paid:any = await this.http.get(`/payments-monthly/${moment().toISOString()}/${MyApp.User.team}`).toPromise();
+    let paid:any = await this.http.get(`/payments-monthly/${moment(this.moth, "MM/YYYY").toISOString()}/${MyApp.User.team}`).toPromise();
     console.log(paid);
 
     let pay = false;
 
     for(let p of paid){
       if( p.paid === true ){
-        this.navCtrl.setRoot(EventsSchedulePage);
+        if( this.init === true ){
+          this.navCtrl.setRoot(EventsSchedulePage);
+        }else{
+          this.navCtrl.pop()
+          this.navCtrl.pop()
+        }
         pay = true;
         break;
       }

@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
 import { MyApp } from '../../app/app.component';
 import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @IonicPage()
@@ -17,7 +18,7 @@ export class PaymentMonthlyPage {
   public team:any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  private http: HttpClient
+  private http: HttpClient, private helper: HelpersProvider
   ) {
   }
 
@@ -36,16 +37,19 @@ export class PaymentMonthlyPage {
       month= monthInit.format("MM/YYYY");
     }
 
-    console.log(this.paids);
-
   }
 
-  async ionViewDidLoad() {
-
+  async ionViewDidLoad(){
     await this.calcMonths();
+  }
 
-    let paids:Array<any> = await this.http.get(`/payments-monthly/${moment().toISOString()}/${MyApp.User.team}`).toPromise() as any;
-    
+  async ionViewDidEnter() {
+
+    let load = this.helper.getLoadingStandar();
+
+    let paids:Array<any> = await this.http.get(`/payments-monthly/${MyApp.User.team}`).toPromise() as any;
+    console.log(paids);
+
     let i=0;
       for(let p of this.paids){
 
@@ -58,11 +62,12 @@ export class PaymentMonthlyPage {
         i += 1;
 
       }
-
+    
+      load.dismiss();
   }
 
   public goPayment(paid){
-    this.navCtrl.push(PaymentSubscripcionPage, { month: paid.month, try: true });
+    this.navCtrl.push(PaymentSubscripcionPage, { paid, month: paid.month, try: true });
   }
 
 }

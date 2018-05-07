@@ -17,6 +17,7 @@ export class PaymentSubscripcionPage {
 
   public try = true;
   public month = "";
+  public paid:any={ paid: false };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private iab: InAppBrowser
@@ -27,6 +28,7 @@ export class PaymentSubscripcionPage {
     if( t !== undefined && t !== null ){
       this.try = false;
       this.month = this.navParams.get("month");
+      this.paid = this.navParams.get("paid");
     }
 
   }
@@ -57,7 +59,7 @@ export class PaymentSubscripcionPage {
 
     let browser = this.iab.create(link);
 
-    this.navCtrl.push(CheckPaidPage);
+    this.navCtrl.push(CheckPaidPage, { month: this.month, init: false });
 
   }
 
@@ -69,7 +71,7 @@ export class PaymentSubscripcionPage {
       description: "el pago mensual de equipo",
       user: MyApp.User.id,
       team: MyApp.User.team,
-      month: moment().toISOString()
+      month: moment().format("MM/YYYY")
     };
 
     let p:any = await this.http.post("/payment-team", payer).toPromise();
@@ -77,13 +79,11 @@ export class PaymentSubscripcionPage {
 
     let browser = this.iab.create(link);
 
-    this.navCtrl.setRoot(CheckPaidPage);
+    this.navCtrl.setRoot(CheckPaidPage, { month: moment().format("MM/YYYY"), init: true });
 
   }
 
   public async demo(){
-
-
     this.navCtrl.setRoot(EventsSchedulePage);
   }
 

@@ -236,7 +236,9 @@ public getSizeImage():{text:string, width:number, height:number}{
 }
 
   public getLoadingStandar(present?:boolean):Loading{
-    let load = this.loading.create({ spinner: 'show', content: `<img src="./assets/imgs/loading.gif" />` });
+    let load = this.loading.create({ spinner: 'hide', content: `
+    <div class="loader"></div>
+    ` });
     present = present || true;
     if( present === true ){
       load.present({ disableApp: true });
