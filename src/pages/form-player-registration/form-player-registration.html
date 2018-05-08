@@ -1,0 +1,24 @@
+<ion-header>
+
+  <ion-navbar color="base">
+    <ion-title>{{"FORMREGISTER" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+
+    <ion-item *ngFor="let field of form.fields">
+      <ion-label floating>{{field.label}}</ion-label>
+      <ion-input [type]="field.type" [(ngModel)]="field.value" ></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button (click)="save()">{{"SAVE" | translate}}</button>
+  <button ion-button (click)="agregar()">numero</button>
+
+</ion-content>

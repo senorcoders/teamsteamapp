@@ -72,6 +72,8 @@ export class EventsSchedulePage {
   }
 
   private async getEvents(){
+    
+    let load = this.helper.getLoadingStandar();
 
     try{
       this.user = MyApp.User;//await this.auth.User();
@@ -92,6 +94,8 @@ export class EventsSchedulePage {
     catch(e){
       console.error(e);
     }
+
+    load.dismiss();
   }
 
 

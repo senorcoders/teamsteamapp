@@ -34,7 +34,8 @@ export class AsignPaymentPage {
 
   public assingPayment(){
     let payments = this.modalCtrl.create(AsingpaymentComponent, {
-      player : this.player
+      player : this.player,
+      modal: true
     });
 
     payments.onDidDismiss(function(data){
@@ -54,65 +55,49 @@ export class AsignPaymentPage {
 
   }
 
-  /*public async checkPassForDelete(id){
-    
-    let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
-    newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
-    newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
-    cancelM = await this.helper.getWords("CANCEL"),
-    passM = await this.helper.getWords("PASSWORD");
 
+  public async delete(pay){
 
-    let c = this.alertCtrl.create({ title: passM, inputs: [
-        { type: "password", name: "current", placeholder: currentM  },
-        { type: "password", name: "newPass", placeholder: newPassM },
-        { type: "password", name: "passAgain", placeholder: newPassMAgain },
-      ], buttons: [
-        { text: cancelM },
-        {text: "Ok", handler: function(data){ this.deletePayment(data, id) }.bind(this) }
-      ] });
+    let m = await this.helper.getWords("PAYMENTSECURE");
+    this.alertCtrl.create({
+      message: m+ " "+ pay.description,
+      buttons: [
+        { text: "Cancel" },
+        { text: "Ok", handler: function(){
+          this.deletePayment(pay);
+        }.bind(this) }
+      ]
+    })
+    .present();
 
-    c.present();
-    
   }
 
-  private checkPass(data){
-    this.http.post('/login', { username, password})
-    .subscribe(function(data:any){
+  private async deletePayment(pay){
+    
+    let load = this.helper.getLoadingStandar();
+    try{
 
-      if( data.hasOwnProperty("message") && data.message == "User not found" ){
-        t.load.dismiss();
-        t.alertCtrl.create({
-          title: "Error",
-          message: "Passwords do not match",
-          buttons: ["Ok"]
-        }).present();
+      await this.http.delete("/paymentuser/"+ pay.id).toPromise();
 
-      }else{
-
-        console.log("success");
-        t.deletePlayer();
-
+      let index = this.player.payments.findIndex(function(it){ return it.id === pay.id; });
+      if( this.player.payments.length === 1 ){
+        this.player.payments = [];
+      }else if(index !== -1 ){
+        this.player.payments.splice(index, 1);
       }
-    }, function(err){
-      
-      this.load.dismiss();
 
-      t.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
+      load.dismiss();
 
-      console.error(err);
+    }
+    catch(e){
+      load.dismiss();
+      console.error(e);
+      let unexM = await this.helper.getWords("ERORUNEXC");
+      this.alertCtrl.create({ title: "Error", message: unexM, buttons: ["Ok"]})
+      .present();
+    }
 
-    });
   }
 
-  //no se elimina lo que hacemos es actualizar para que no lo muestre
-  public deletePayment(){
-
-  }*/
-
-
+  
 }

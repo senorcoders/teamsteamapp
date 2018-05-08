@@ -179,5 +179,8 @@
         "STATE": "Estado",
         "COUNTRYCODEADDRESS": "Codigo de Dirección",
         "INEEDDATA": "Necesita Ingresar Datos Generales de Pagos"
-    }
+    },
+    "FORMREGISTER": "Formulario de Registro",
+    "INVITATION": "Invitación",
+    "PAYMENTSECURE": "Esta seguro de borrar el pago"
 }

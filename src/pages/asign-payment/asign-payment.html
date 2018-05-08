@@ -32,7 +32,8 @@
     <ion-list-header>{{"PAYMENT" | translate}}</ion-list-header>
 
     <ion-item *ngFor="let payment of player.payments">
-      {{ payment.nameSale }}
+      {{ payment.description }}
+      <ion-icon item-end name="trash" (click)="delete(payment)" ></ion-icon>
       <ion-icon item-end [hidden]="payment.invoice_paid" name="logo-usd" color="danger" style="font-size: 2rem;" ></ion-icon>
       <p item-end [hidden]="payment.invoice_paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
       <p item-end [hidden]="!payment.invoice_paid" style="font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
@@ -42,7 +43,7 @@
 
   <ion-fab bottom right >
     <button color="base" ion-fab icon-only (click)="assingPayment()" >
-      <ion-icon name="md-open"></ion-icon>
+      <ion-icon name="md-add"></ion-icon>
     </button>
   </ion-fab>
 

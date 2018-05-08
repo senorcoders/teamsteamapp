@@ -21,11 +21,16 @@ export class AsingpaymentComponent {
   public name="";
   public description="";
   public quantity=0.0;
+  public modal=false;
 
   constructor(public viewCtrl: ViewController, public alertCtrl: AlertController,
     public http: HttpClient, public navParams: NavParams, 
     public helper: HelpersProvider
   ) {
+
+    if( this.navParams.get("modal") !== undefined ){
+      this.modal = true;
+    }
 
     if( this.navParams.get("player") !== undefined ){
       this.player = this.navParams.get("player");
@@ -40,7 +45,6 @@ export class AsingpaymentComponent {
   public async asingPayment(){
 
     if(
-      this.name === "" ||
       this.description === "" || 
       this.quantity === 0
     ){
@@ -49,7 +53,7 @@ export class AsingpaymentComponent {
       .present();
       return;
     }
-     let payment = { nameSale : this.name, description: this.description, quantity : Number(this.quantity),
+     let payment = { description: this.description, quantity : Number(this.quantity),
       team: MyApp.User.team, manager: MyApp.User.id
     };
 

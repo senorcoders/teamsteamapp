@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import * as moment from 'moment';
 
@@ -9,7 +9,10 @@ import {
   GoogleMapOptions,
   CameraPosition,
   MarkerOptions,
-  Marker
+  Marker,
+  Geocoder,
+  GeocoderRequest,
+  GeocoderResult
  } from '@ionic-native/google-maps';
 import { EditEventPage } from '../edit-event/edit-event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
@@ -18,12 +21,14 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { AndroidSystemUiFlags } from '@ionic-native/android-full-screen';
 import { interceptor } from '../../providers/auth-service/interceptor';
-import { MyApp } from '../../app/app.component';
+import { MyApp } from '../../app/app.component';;
 import { PhotoViewer, PhotoViewerOptions } from '@ionic-native/photo-viewer';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { TrackingEventComponent } from '../../components/tracking-event/tracking-event';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
+import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
+declare var google:any;
 
 @IonicPage()
 @Component({
@@ -59,7 +64,8 @@ export class EventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private googleMaps: GoogleMaps, public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
-    public photoViewer: PhotoViewer, public modalCtrl: ModalController
+    public photoViewer: PhotoViewer, public modalCtrl: ModalController, 
+    private zone: NgZone
   ) {
     //this.init();
     let e = this.navParams.get("event");
@@ -68,8 +74,6 @@ export class EventPage {
     this.event = e;
     this.index = this.navParams.get("index");
     console.log(this.index);
-
-    console.log(this.event);
 
     //for image user that published events
     let r = new Date().getTime();
@@ -110,6 +114,27 @@ export class EventPage {
         if( places === null) return;
         this.location.place = places[0];
         this.location.change = true;
+      }else{
+        
+        if( google ){
+          
+          let geocoder = new google.maps.Geocoder()
+          geocoder.geocode({ address: this.event.location.address }, function(res, status){
+
+            if( res.length === 0 ) return;
+
+            res = res[0];
+            if( res.geometry ){
+              let lat = res.geometry.location.lat();
+              let lot = res.geometry.location.lng();
+              let t = this;
+              this.zone.run(function(){ t.location.change = true; });
+              this.loadMap(lat, lot);
+            }
+
+          }.bind(this));
+        }
+
       }
 
     }
@@ -223,6 +248,7 @@ export class EventPage {
           });
 
       });
+
   }
 
   public remove(){

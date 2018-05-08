@@ -7,7 +7,7 @@ import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/commo
 
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
-import { GoogleMaps } from '@ionic-native/google-maps';
+import { GoogleMaps, Geocoder } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
@@ -91,6 +91,7 @@ import { ListPlayersPaymentPage } from '../pages/list-players-payment/list-playe
 import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
 import { ViewPaymentsPlayerPage } from '../pages/view-payments-player/view-payments-player';
 import { PaymentPage } from '../pages/payment/payment';
+import { FormPlayerRegistrationPage } from '../pages/form-player-registration/form-player-registration';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -150,7 +151,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListPlayersPaymentPage,
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
-    PaymentPage
+    PaymentPage,
+    FormPlayerRegistrationPage
   ],
   imports: [
     BrowserModule,
@@ -220,7 +222,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListPlayersPaymentPage,
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
-    PaymentPage
+    PaymentPage,
+    FormPlayerRegistrationPage
   ],
   providers: [
     StatusBar,
@@ -245,7 +248,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhotoViewer,
     DatePicker,
     WebSocketsProvider,
-    InAppBrowser
+    InAppBrowser,
+    Geocoder
   ]
 })
 export class AppModule {}

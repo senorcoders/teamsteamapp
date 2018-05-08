@@ -10,6 +10,7 @@ import { SearchTeamsPage } from '../search-teams/search-teams';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { RegistrationPage } from '../registration/registration';
 import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+import { FormPlayerRegistrationPage } from '../form-player-registration/form-player-registration';
 
 /**
  * para logearse en el app
@@ -124,4 +125,7 @@ export class LoginPage {
     this.navCtrl.push(SearchTeamsPage)
   }
 
+  public goInvitation(){
+    this.navCtrl.push(FormPlayerRegistrationPage);
+  }
 }

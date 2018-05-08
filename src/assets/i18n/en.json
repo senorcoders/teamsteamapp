@@ -180,5 +180,8 @@
         "POSTALCODE": "Postal Code",
         "COUNTRYCODEADDRESS": "Country Code Address",
         "INEEDDATA": "You Need to Enter General Payment Data"
-    }
+    },
+    "FORMREGISTER": "Registration Form",
+    "INVITATION": "Invitation",
+    "PAYMENTSECURE": "You are sure to delete the payment"
 }
