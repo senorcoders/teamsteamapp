@@ -11,6 +11,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { RegistrationPage } from '../registration/registration';
 import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { FormPlayerRegistrationPage } from '../form-player-registration/form-player-registration';
+import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 
 /**
  * para logearse en el app
@@ -128,4 +129,9 @@ export class LoginPage {
   public goInvitation(){
     this.navCtrl.push(FormPlayerRegistrationPage);
   }
+
+  public goForgotPassword(){
+    this.navCtrl.push(ForgotPasswordPage);
+  }
+
 }

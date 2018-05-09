@@ -155,6 +155,7 @@
     },
     "PASSWORDINCORRECTO": "Incorrect password",
     "CHANGED": "Changed",
+    "CHANGE": "Change",
     "PASSWORDNOT": "Password are not equal",
     "NAMEOFTEAM": "Name of the team",
     "PAYMENTSUBS": "Payment Subscription",
@@ -183,5 +184,14 @@
     },
     "FORMREGISTER": "Registration Form",
     "INVITATION": "Invitation",
-    "PAYMENTSECURE": "You are sure to delete the payment"
+    "PAYMENTSECURE": "You are sure to delete the payment",
+    "FORGOTPASSWORD": "Forgot Password",
+    "SEND": "Send",
+    "EMAILNOT": "Mail Not Found",
+    "RESETPASS": {
+        "TITLE" : "Change Password",
+        "CODE" : "Code",
+        "NEWPASSWORD" : "New Password",
+        "SENDCODE": "Send Code to Mail"
+    }
 }

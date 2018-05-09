@@ -92,6 +92,8 @@ import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
 import { ViewPaymentsPlayerPage } from '../pages/view-payments-player/view-payments-player';
 import { PaymentPage } from '../pages/payment/payment';
 import { FormPlayerRegistrationPage } from '../pages/form-player-registration/form-player-registration';
+import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
+import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -152,7 +154,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
     PaymentPage,
-    FormPlayerRegistrationPage
+    FormPlayerRegistrationPage,
+    ForgotPasswordPage,
+    ResetPasswordPage
   ],
   imports: [
     BrowserModule,
@@ -223,7 +227,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AsingpaymentComponent,
     ViewPaymentsPlayerPage,
     PaymentPage,
-    FormPlayerRegistrationPage
+    FormPlayerRegistrationPage,
+    ForgotPasswordPage,
+    ResetPasswordPage
   ],
   providers: [
     StatusBar,

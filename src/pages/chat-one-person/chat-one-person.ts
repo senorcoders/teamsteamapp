@@ -125,6 +125,7 @@ export class ChatOnePersonPage {
     from: this.from.id,
     to: this.to.id,
     text: this.editorMsg,
+    team: MyApp.User.team,
     dateTime : moment().toISOString(),
     status: 'pending'
   };

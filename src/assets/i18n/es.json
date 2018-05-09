@@ -154,6 +154,7 @@
     },
     "PASSWORDINCORRECTO": "Contraseña Incorrecta",
     "CHANGED": "Cambiado",
+    "CHANGE": "Cambiar",
     "PASSWORDNOT": "Contraseña no son iguales",
     "NAMEOFTEAM": "Nombre del equipo",
     "PAYMENTSUBS": "Suscripción de pago",
@@ -182,5 +183,15 @@
     },
     "FORMREGISTER": "Formulario de Registro",
     "INVITATION": "Invitación",
-    "PAYMENTSECURE": "Esta seguro de borrar el pago"
+    "PAYMENTSECURE": "Esta seguro de borrar el pago",
+    "FORGOTPASSWORD": "Se te olvidó tu contraseña",
+    "SEND": "Enviar",
+    "EMAILNOT": "Correo No Encontrado",
+    "RESETPASS": {
+        "TITLE" : "Cambiar Contraseñar",
+        "CODE" : "Codigo",
+        "NEWPASSWORD" : "Nueva Contraseña",
+        "CODEINVALID": "Codigo Invalido",
+        "SENDCODE": "Enviar Código a Correo"
+    }
 }
