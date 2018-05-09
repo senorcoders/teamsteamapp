@@ -11,9 +11,14 @@
   
   <ion-card>
 
+      <ion-refresher (ionRefresh)="load($event)">
+        <ion-refresher-content></ion-refresher-content>
+      </ion-refresher>
+
     <ion-card-content>
       <ion-card-title>{{payment.description}}</ion-card-title>
-      <!--button ion-button (click)="pay()">{{"PAY" | translate}}</button-->
+      <p>$ {{payment.quantity}}</p>
+      <button ion-button [hidden]="payment.invoice_paid" (click)="pay()">{{"PAY" | translate}}</button>
     </ion-card-content>
     
   </ion-card>

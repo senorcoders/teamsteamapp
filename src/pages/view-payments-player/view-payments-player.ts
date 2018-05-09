@@ -20,7 +20,7 @@ export class ViewPaymentsPlayerPage {
   ) {
   }
 
-  async ngOnInit(){
+  async ionViewDidEnter(){
     let load = this.helper.getLoadingStandar();
 
     let ts:any = await this.http.get("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise();
