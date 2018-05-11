@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -11,6 +11,7 @@ import { NativeGeocoder,
   NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
 import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
+import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 
 
 /**
@@ -25,7 +26,8 @@ export class HelpersProvider {
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder:NativeGeocoder,
     public datePicker: DatePicker, private translate: TranslateService,
-    private zone:NgZone, private loading: LoadingController
+    private zone:NgZone, private loading: LoadingController,
+    private modalCtrl: ModalController
   ) {
     //console.log(this);
   }
@@ -246,6 +248,20 @@ public getSizeImage():{text:string, width:number, height:number}{
 
     return load;
 
+  }
+
+  public async pickerDateTime(doceHoras:boolean):Promise<any>{
+    let time = this.modalCtrl.create(DateTimePickerComponent,  { doceHoras })
+    time.present();
+    return new Promise(function(resolve, reject){
+      time.onDidDismiss(function(date){
+        if(date !== undefined)
+          resolve(date);
+        else
+          reject("not hour");
+      })
+    });
+    
   }
 
 }

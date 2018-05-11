@@ -15,8 +15,11 @@
             <img [src]="imgUser">
           </ion-thumbnail>
           <p style="font-size: 12pt !important; font-weight: bold !important;">{{username}}</p>  
-          <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>  
     </ion-item>
+
+    <ion-card-content>
+      <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>  
+    </ion-card-content>
 
       <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)" />
     

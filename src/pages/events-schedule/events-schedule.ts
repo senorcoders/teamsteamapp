@@ -117,15 +117,15 @@ export class EventsSchedulePage {
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
           //console.log(it.name, it.parsedDateTime);
         }else{
-          let day = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]");
+          let day = moment(it.dateTime);
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
         }
         
         if( it.repeatsDaily === true ){
-          it.Time = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("hh:mm");
+          it.Time = moment(it.dateTime).format("hh:mm a");
         }
 
-        it.dateTime = moment(it.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]").format("MM/DD/YYYY hh:mm");
+        it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
         it.loadImage = false;
         let ramdon = new Date().getTime();
         it.imageSrc = interceptor.transformUrl('/images/'+ ramdon+ '/events/'+ it.id+ size);

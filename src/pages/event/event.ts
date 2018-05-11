@@ -141,12 +141,12 @@ export class EventPage {
     catch(e){
       console.error(e);
     }
-
+    
     if( moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid() ){
-      this.event.dateTime = moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss").format("MM/DD/YYYY HH:mm");
+      this.event.dateTime = moment(this.event.dateTime).format("MM/DD/YYYY hh:mm a");
     }
 
-    this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("Do MMMM YYYY hh:mm");
+    this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a").format("Do MMMM YYYY hh:mm a");
     
     this.event.link = '';
     if( this.event.location.hasOwnProperty('link') ){

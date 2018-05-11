@@ -94,6 +94,7 @@ import { PaymentPage } from '../pages/payment/payment';
 import { FormPlayerRegistrationPage } from '../pages/form-player-registration/form-player-registration';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
+import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -156,7 +157,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentPage,
     FormPlayerRegistrationPage,
     ForgotPasswordPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    DateTimePickerComponent
   ],
   imports: [
     BrowserModule,
@@ -229,7 +231,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PaymentPage,
     FormPlayerRegistrationPage,
     ForgotPasswordPage,
-    ResetPasswordPage
+    ResetPasswordPage,
+    DateTimePickerComponent
   ],
   providers: [
     StatusBar,

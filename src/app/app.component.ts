@@ -27,6 +27,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
+import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
 
 
 @Component({
@@ -43,6 +44,7 @@ export class MyApp {
   private static pusherNotification:Push;
   private static permision:boolean=false;
   public static User:any;
+  public static pushObject:PushObject;
   private static event:Events;
 
   public nameReady=false;
@@ -135,6 +137,7 @@ export class MyApp {
   }
 
   async ngOnInit(){
+    
     var authenticated = await this.auth.checkUser();
     if( authenticated === true ){
       this.nav.root = EventsSchedulePage;
@@ -176,7 +179,6 @@ export class MyApp {
       document.getElementById("imageSlide").setAttribute("src", t.userimg);
       document.getElementById("nameSlide").innerText = t.user.username;
     });
-
   }
 
   public loadImageMenu(){
@@ -261,9 +263,9 @@ export class MyApp {
     try{
 
       //#region for notification in team
-      const pushObject: PushObject = MyApp.pusherNotification.init(options);
+      MyApp.pushObject = MyApp.pusherNotification.init(options);
 
-      pushObject.on('notification').subscribe((notification: any) =>{
+      MyApp.pushObject.on('notification').subscribe((notification: any) =>{
 
         let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
@@ -271,13 +273,14 @@ export class MyApp {
         console.log('Received a notification', notification);
       });
       
-      pushObject.on('registration').subscribe((registration: any) => {
+      MyApp.pushObject.on('registration').subscribe((registration: any) => {
         MyApp.notificationEnable=true;
         MyApp.authService.updateTokenReg(registration.registrationId);
         console.log('Device registered', registration);
       });
             
-      pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      MyApp.pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      MyApp.pushObject.unregister()
       //#endregion
 
       //#region for chat personal

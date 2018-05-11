@@ -99,7 +99,7 @@ export class EditEventPage {
     this.repeatsDays = this.event.repeatsDays.split(",") || [];
     this.repeatsDaily = this.event.repeatsDaily;
     this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("DD MMM YYYY");
-    this.time = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("HH:mm");
+    this.time = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("hh:mm a");
     this.attendeceTracking = this.event.attendeceTracking;
     this.optionalInfo = this.event.optionalInfo;
     this.description = this.event.description;
@@ -144,10 +144,11 @@ export class EditEventPage {
   }
 
   public setTime(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'time' })
+    this.helper.pickerDateTime(true)
     .then(date=>{
-      this.time = moment(date).format("HH:mm");
-    })
+      console.log(moment(date, "hh:mm a").format("DD/MM/YYYY hh:mm a"));
+      this.time = date;
+    });
   }
 
   public getSelectDays(key:string){
@@ -274,7 +275,6 @@ export class EditEventPage {
       repeatsDays: this.repeatsDays.join(","),
       location: locate
     };
-    console.log(event);
 
     //si es por semana entonces hay que chequear que este seleccionado almenos un dia
     let dayM = await this.helper.getWords("DAY");
@@ -286,7 +286,7 @@ export class EditEventPage {
         this.alertCtrl.create({ title: requiredM, message: dayM+ " "+ isRequired}).present();
         return;
       }else{
-        event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
+        event.dateTime = moment(this.time, "hh:mm a").toISOString();
       }
 
     }else if( this.repeats === false ){
@@ -303,13 +303,15 @@ export class EditEventPage {
         return;
       }
 
-      event.dateTime = moment(this.date+ " "+ this.time, "DD MMM YYYY HH:mm").toISOString();
+      event.dateTime = moment(this.date+ " "+ this.time, "DD MMM YYYY hh:mm a").toISOString();
     }else{
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
+      event.dateTime = moment(this.time, "hh:mm a").toISOString()
     }
+    console.log(event);
 
     let valid = true;
     let updateEvent:any;
+    
     try{
       
       updateEvent = await this.http.put("/event/"+ this.event.id, event).toPromise();

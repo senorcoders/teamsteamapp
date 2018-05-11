@@ -173,6 +173,8 @@ export class AuthServiceProvider {
     data = await this.storage.remove("team");
     this.user = null;
     delete MyApp.User;
+    let un = await MyApp.pushObject.unregister();
+    console.log(un);
     return data === undefined;
   }
 

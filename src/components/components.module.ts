@@ -10,6 +10,7 @@ import { TrackingEventComponent } from './tracking-event/tracking-event';
 import { TrackingEventManagerComponent } from './tracking-event-manager/tracking-event-manager';
 import { ToChatToPerfilPlayerComponent } from './to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { AsingpaymentComponent } from './asingpayment/asingpayment';
+import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -19,7 +20,8 @@ import { AsingpaymentComponent } from './asingpayment/asingpayment';
     TrackingEventComponent,
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
-    AsingpaymentComponent/*EmojiPickerComponent*/],
+    AsingpaymentComponent,
+    DateTimePickerComponent/*EmojiPickerComponent*/],
 	imports: [ /*IonicPageModule.forChild(EmojiPickerComponent),*/ ],
 	exports: [GoogleMapsComponent,
     CommentsComponent,
@@ -29,6 +31,7 @@ import { AsingpaymentComponent } from './asingpayment/asingpayment';
     TrackingEventComponent,
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
-    AsingpaymentComponent/*EmojiPickerComponent*/]
+    AsingpaymentComponent,
+    DateTimePickerComponent/*EmojiPickerComponent*/]
 })
 export class ComponentsModule {}

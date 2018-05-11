@@ -106,9 +106,9 @@ export class NewEventPage {
   }
 
   public setTime(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'time' })
+    this.helper.pickerDateTime(true)
     .then(date=>{
-      this.time = moment(date).format("HH:mm");
+      this.time = date;
     })
   }
 
@@ -249,7 +249,7 @@ export class NewEventPage {
         this.alertCtrl.create({ title: requiredM, message: dayM+ " "+ isRequired}).present();
         return;
       }else{
-        event.dateTime = moment(moment().format("YYYY/MM/DD")+ " "+ this.time, "YYYY/MM/DD HH:mm").toISOString();
+        event.dateTime = moment(this.time, "hh:mm a").toISOString();
       }
 
     }else if( this.repeats === false ){
@@ -266,9 +266,9 @@ export class NewEventPage {
         return;
       }
 
-      event.dateTime = moment(this.date+ " "+ this.time, "DD MMM YYYY HH:mm").toISOString();
+      event.dateTime = moment(this.date+ " "+ this.time, "DD MMM YYYY hh:mm a").toISOString();
     }else{
-      event.dateTime = moment().format("YYYY/MM/DD")+ " "+this.time;
+      event.dateTime = moment(this.time, "hh:mm a").toISOString();
     }
 
     let valid = true;
