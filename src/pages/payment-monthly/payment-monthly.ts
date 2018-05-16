@@ -47,7 +47,7 @@ export class PaymentMonthlyPage {
 
     let load = this.helper.getLoadingStandar();
 
-    let paids:Array<any> = await this.http.get(`/payments-monthly/${MyApp.User.team}`).toPromise() as any;
+    let paids:Array<any> = await this.http.get(`/payments-monthly/${MyApp.User.id}`).toPromise() as any;
     console.log(paids);
 
     let i=0;

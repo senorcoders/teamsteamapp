@@ -104,7 +104,7 @@ export class AuthServiceProvider {
       } else if (user.role.name === "Family") {
         url = "/team/family/" + user.id;
       }
-
+      //console.log(url);
       var res = await this.http.get(url).toPromise();
 
       let team: any = res;
