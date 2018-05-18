@@ -29,8 +29,8 @@ export class FormJoinTeamPage {
 
   async ngOnInit(){
     try{
-      let ps:any = await this.http.get("/players/team/"+ this.team.id).toPromise();
-      this.players = ps;
+      let ps:Array<any> = await this.http.get("/players/team/"+ this.team.id).toPromise() as any;
+      this.players = ps.filter(function(it){ return it.hasOwnProperty("user") });
     }
     catch(e){
       console.error(e);
@@ -55,13 +55,13 @@ export class FormJoinTeamPage {
       return;
     }
 
-    let email:any = await this.http.get("/user/enable/"+ this.email).toPromise();
+    /*let email:any = await this.http.get("/user/enable/"+ this.email).toPromise();
     if( email.valid === false ){
       let emailM = await this.helper.getWords("EMAILREADY");
       this.alertCtrl.create({ message:  emailM, buttons: ["Ok"]})
       .present();
       return;
-    }
+    }*/
 
     let user:any;
     if( this.role === "Family" ){

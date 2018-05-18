@@ -261,12 +261,12 @@ export class MemberRosterPage {
 
   //Para comprobar si es el usuario legitimo el que esta borrando datos se le pedi la contraseña nuevamente
   public checkPassword(password){
-    let username = this.auth.User().username;
+    let email = this.auth.User().email;
 
     this.load = this.loading.create({ content: "Deleting..." });
     this.load.present({ disableApp : true });
     let t = this;
-    this.http.post('/login', { username, password})
+    this.http.post('/login', { email, password})
     .subscribe(function(data:any){
 
       if( data.hasOwnProperty("message") && data.message == "User not found" ){
@@ -301,11 +301,11 @@ export class MemberRosterPage {
   public async deletePlayer(){
     let t = this;
     try{
-      await this.http.delete("/user/"+ this.player.user.id).toPromise();
+      //await this.http.delete("/user/"+ this.player.user.id).toPromise();
       await this.http.delete("/players/"+ this.player.id).toPromise();
-      await Promise.all(this.contacts.map(async function(item){
+      /*await Promise.all(this.contacts.map(async function(item){
         await t.http.delete("/contacts/"+ item.id).toPromise();
-      }));
+      }));*/
 
       if( t.image === true ){
         await this.http.delete("/images/users/"+ this.player.user.id).toPromise();

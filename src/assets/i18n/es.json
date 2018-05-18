@@ -25,6 +25,7 @@
         "OPTIONALINFO": "Información Opcional",
         "LOCATIONDETAIL": "Detalles",
         "TYPE": "Tipo",
+        "NEWTEAMACTION": "Crear Nuevo Equipo",
         "TYPES": {
             "GAME": "Juego",
             "PRACTICE": "Practica",

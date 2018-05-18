@@ -216,6 +216,59 @@ export class ViewProfilePage {
 
   }
 
+  public async editUserName(){
+    let entryM = await this.helper.getWords("ENTRYFULLNAME"),
+    cancelM = await this.helper.getWords("CANCEL");
+
+    try{
+      
+      this.alertCtrl.create({ title: entryM,
+        inputs: [
+        {name: "username", type: "text", placeholder: "username"},
+      ], buttons: [
+        {text: cancelM },
+        { text: "Ok", handler : function(data){ this.updateUsername(data.username) }.bind(this) }
+      ]}).present();
+
+    }
+    catch(e){
+      console.log(e);
+    }
+  }
+
+  public async updateUsername(username){
+
+    username = username || "";
+
+    let params:any = {};
+    
+    if( username === "" )
+      return;
+
+    params.username = username;
+
+    let updatingM = await this.helper.getWords("UPDATING");
+    let load = this.loadingCtrl.create({ content: updatingM });
+    load.present({ disableApp : true });
+
+    try{
+      console.log(params);
+      let newUser = await this.http.put("/user/"+ this.user.id, params).toPromise();
+      console.log(newUser);
+      this.auth.updateUser(newUser);
+      this.user = newUser;
+
+      load.dismiss();
+    }
+    catch(e){
+      load.dismiss();
+      let unecxM = await this.helper.getWords("ERORUNEXC");
+      this.alertCtrl.create({ title: "Error", message: unecxM }).present();
+      console.error(e);
+    }
+
+  }
+
   //este es para comprobar si el usuario desea editar datos
   public editable(){
     return this.user.role.name != 'Manager' && !this.edit;

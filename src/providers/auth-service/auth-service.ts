@@ -197,8 +197,8 @@ export class AuthServiceProvider {
       console.log(un);
     }
 
-    let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
-    console.log(success);
+    //let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
+    //console.log(success);
 
     var data = await this.storage.remove("user");
     data = await this.storage.remove("team");

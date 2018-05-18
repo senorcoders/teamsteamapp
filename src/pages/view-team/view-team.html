@@ -25,12 +25,12 @@
       <p>{{team.city}}</p>
     </ion-card-content>
 
-    <ion-item [hidden]="!requestReady">
+    <!--ion-item [hidden]="!requestReady">
       <ion-label floating>{{"SELECTFAMILY" | translate}}</ion-label>
       <ion-select [(ngModel)]="player">
         <ion-option *ngFor="let player players" [value]="player.id" >{{player.user.email}}</ion-option>
       </ion-select>    
-    </ion-item>
+    </ion-item-->
     
     <ion-item [hidden]="!requestReady" >
       {{"REQUESTSEND" | translate}}

@@ -148,6 +148,7 @@
     "REGISTRATION": "Registration",
     "SELECTFAMILY": "Select Your Family Member",
     "CHANGEPASS": "Change Password",
+    "NEWTEAMACTION": "Crear Nuevo Equipo",
     "CHANGEPASSALERT": {
         "CURRENT": "Current password",
         "NEWPASS": "New Password",
