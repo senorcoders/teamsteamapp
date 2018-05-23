@@ -120,7 +120,8 @@
     <plugin name="cordova-plugin-photo-library" spec="^2.1.1">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
     </plugin>
-    <engine name="android" spec="~7.1.0" />
-    <engine name="ios" spec="~4.5.4" />
     <allow-navigation href="http://169.254.168.66:8100" />
+    <engine name="android" spec="7.1.0" />
+    <engine name="ios" spec="4.5.4" />
+    <allow-navigation href="http://169.254.49.156:8100" />
 </widget>
