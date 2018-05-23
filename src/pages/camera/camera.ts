@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController } from 'ionic-angular';
 import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
-import { File } from '@ionic-native/file';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../library-images/library-images';
 import { AndroidFullScreen } from '@ionic-native/android-full-screen';
@@ -26,7 +25,7 @@ export class CameraPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public cameraPreview: CameraPreview,
-    public file: File, public photoLibrary: PhotoLibrary,
+     public photoLibrary: PhotoLibrary,
     private androidFullScreen: AndroidFullScreen, public loadCtrl: LoadingController
   ) {
     
@@ -48,17 +47,7 @@ export class CameraPage {
     // Extract filename
     fileName = fileName.split("/").pop();
 
-    // Move the file
-    this.file.moveFile(currentPath, fileName,
-                  externalStoragePath, fileName).then(_ => {
-        this.toastCtrl.create(
-            {
-                message: "Saved one photo", 
-                position: "bottom",
-                duration: 2000
-            }
-        ).present();
-    });
+   
   }
 
   //Para tomar la foto

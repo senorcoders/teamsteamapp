@@ -46,7 +46,6 @@ import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { CameraPage } from '../pages/camera/camera';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { File } from '@ionic-native/file';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../pages/library-images/library-images';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
@@ -249,7 +248,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     Push,
     EmojiProvider,
     CameraPreview,
-    File,
     Diagnostic,
     PhotoLibrary,
     AndroidFullScreen,
