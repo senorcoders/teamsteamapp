@@ -68,7 +68,7 @@ export class MyApp {
     { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball", role: "*" },
     { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball", role: "*" },
     { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball", role: "*" },
-    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball", role: "Manager" }
+    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball", role: "*" }
    ];
 
   constructor(platform: Platform, statusBar: StatusBar, 
