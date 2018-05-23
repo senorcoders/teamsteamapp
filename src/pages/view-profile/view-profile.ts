@@ -430,4 +430,16 @@ export class ViewProfilePage {
 
   }
 
+  public isManagerRequest(){
+    
+    if( Object.prototype.toString.call(MyApp.User) !== "[object Object]" )
+      return false;
+
+    if( this.team.request.length === 0 ) return true;
+
+    if( this.team.request.length !== 0 && MyApp.User.role.name === "Manager" ) return false;
+
+    return false;
+  }
+
 }

@@ -122,6 +122,7 @@
     <plugin name="cordova-plugin-photo-library" spec="^2.1.1">
         <variable name="PHOTO_LIBRARY_USAGE_DESCRIPTION" value="To choose photos" />
     </plugin>
+    <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <allow-navigation href="http://169.254.117.123:8100" />
     <allow-navigation href="http://169.254.61.170:8100" />
     <engine name="android" spec="7.1.0" />

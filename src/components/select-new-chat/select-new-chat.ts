@@ -26,16 +26,29 @@ export class SelectNewChatComponent {
     this.players = team.players.filter(function(item){
       return item.hasOwnProperty("user");
     });
+    
+    for(let it of team.family){
+      if( it.hasOwnProperty("user") === true ){
+        this.players.push(it);
+      }
+    }
+
     let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
 
     for(let it of managers){
-      this.players.push(it);
+      if( it.hasOwnProperty("user") === true ){
+        this.players.push(it);
+      }
     }
     
-    this.players = await Promise.all(this.players.map(async (item)=>{
+    this.players = this.players.filter((it)=>{
+      return it.hasOwnProperty("user") && it.user.id !== MyApp.User.id;
+    });
+
+    this.players = this.players.map((item)=>{
       item.show = true;
       return item;
-    }));
+    });
 
     
   }

@@ -69,7 +69,7 @@
       <ion-icon hidden name="md-create" item-end></ion-icon>
     </ion-item>
 
-    <ion-item (click)="goViewRequests()" [hidden]="team.request.length === 0" >
+    <ion-item (click)="goViewRequests()" [hidden]="isManagerRequest()" >
         <ion-icon name="md-git-pull-request" item-start></ion-icon>
         {{ "REQUESTS" | translate}}
         {{team.request.length}}

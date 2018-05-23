@@ -28,6 +28,7 @@ import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
 import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
+import { bindCallback } from 'rxjs/observable/bindCallback';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class MyApp {
   public teamName="";
 
   public user:any={
-    username: "SenorCoders"
+    username: ""
   };
 
   public toas:Toast;
@@ -152,7 +153,7 @@ export class MyApp {
       let ramdon = new Date().getTime();
       this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
-      document.getElementById("nameSlide").innerText = this.user.username;
+      //document.getElementById("nameSlide").innerText = this.user.username;
 
       //ahora asignamos el lenaguaje si es que esta definido
       if( MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language') ){
@@ -163,22 +164,22 @@ export class MyApp {
 
     }else{
       this.nav.root = LoginPage;
-      return;
     }
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
     let t = this;
-    this.auth.changeUser(async function(){
+    this.auth.changeUser(function(){
 
-      t.defaultImageUser = true;
-      t.user = t.auth.User();
+      this.defaultImageUser = true;
+      this.user = t.auth.User();
 
-      console.log(t.user);
+      console.log("cambiooo", t.user);
       let ramdon = new Date().getTime();
-      t.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id);
+      this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id);
       document.getElementById("imageSlide").setAttribute("src", t.userimg);
-      document.getElementById("nameSlide").innerText = t.user.username;
-    });
+      //document.getElementById("nameSlide").innerText = t.user.username;
+      this.user = MyApp.User;
+    }.bind(this));
   }
 
   public loadImageMenu(){
