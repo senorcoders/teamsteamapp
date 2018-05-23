@@ -36,7 +36,6 @@ export class ViewProfilePage {
   ) {
 
     this.user = MyApp.User;
-    console.log(this.user);
     if( !this.user.hasOwnProperty("options") ){
       this.user.options = { language : 'en' };
     }
@@ -51,20 +50,20 @@ export class ViewProfilePage {
   async ionViewWillEnter(){
     try{
 
-      console.log(this.manager);
+      //console.log(this.manager);
 
       this.team = await this.http.get("/team/profile/"+ MyApp.User.team).toPromise();
-      console.log(this.team);
+      //console.log(this.team);
       if( !this.team.hasOwnProperty("request") ){
         this.team.request = [];
       }
 
-      console.log(this.team.request);
+      //console.log(this.team.request);
       this.request = this.team.request;
 
       if( this.user.verified === false ){
         let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
-        console.log(v);
+        //console.log(v);
         if( v.verified === true ){
           this.user.verified = true;
           await this.auth.updateUser(this.user);
@@ -90,7 +89,7 @@ export class ViewProfilePage {
 
       let updatedUser = await this.http.put("/user/"+ this.user.id, { options }).toPromise();
       await this.auth.saveOptions(options);
-      console.log(updatedUser);
+      //console.log(updatedUser);
       this.helper.setLanguage(this.lang);
 
     }
@@ -129,7 +128,7 @@ export class ViewProfilePage {
       load.dismiss();
     }
     catch(e){
-      console.log("");
+      //console.log("");
       load.dismiss();
       this.alertCtrl.create({ title: "Error", message: unexpectM }).present();
     }
@@ -173,7 +172,7 @@ export class ViewProfilePage {
 
     }
     catch(e){
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -232,7 +231,7 @@ export class ViewProfilePage {
 
     }
     catch(e){
-      console.log(e);
+      console.error(e);
     }
   }
 
@@ -252,9 +251,9 @@ export class ViewProfilePage {
     load.present({ disableApp : true });
 
     try{
-      console.log(params);
+      //console.log(params);
       let newUser = await this.http.put("/user/"+ this.user.id, params).toPromise();
-      console.log(newUser);
+      //console.log(newUser);
       this.auth.updateUser(newUser);
       this.user = newUser;
 
@@ -309,7 +308,7 @@ export class ViewProfilePage {
   }
 
   private async changePass(data){
-    console.log(data);
+    //console.log(data);
     let current = data.current || "",
     newPass = data.newPass || "",
     againPass = data.passAgain || "";
@@ -338,7 +337,7 @@ export class ViewProfilePage {
       };
 
       let v:any = await this.http.post("/password/change", params).toPromise();
-      console.log(v);
+      //console.log(v);
 
       if( v.hasOwnProperty("id") && v.id === true ){
         let changedM = await this.helper.getWords("CHANGED");
@@ -372,7 +371,7 @@ export class ViewProfilePage {
         verificationCode: MyApp.User.verificationCode
       }).toPromise();
 
-      console.log(resend);
+      //console.log(resend);
 
     }
     catch(e){

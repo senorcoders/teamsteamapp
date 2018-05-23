@@ -124,7 +124,7 @@
     "PRIVACY&POLICY": "Privacy Policy",
     "ABOUT": "About",
     "TERMOFUSER": "Terms of Use",
-    "REQUESTSEND": "Request sent",
+    "REQUESTSEND": "Request Join",
     "REQUESTS": "Requests",
     "REQUEST": "Request",
     "ACCEPT": "Accept",
@@ -148,7 +148,7 @@
     "REGISTRATION": "Registration",
     "SELECTFAMILY": "Select Your Family Member",
     "CHANGEPASS": "Change Password",
-    "NEWTEAMACTION": "Crear Nuevo Equipo",
+    "NEWTEAMACTION": "Create New Team",
     "CHANGEPASSALERT": {
         "CURRENT": "Current password",
         "NEWPASS": "New Password",

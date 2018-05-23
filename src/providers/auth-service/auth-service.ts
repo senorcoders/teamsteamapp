@@ -10,26 +10,11 @@ import { HelpersProvider } from '../helpers/helpers';
  */
 
 //#region Class of User
-class User {
-  public id: String;
-  public username: String;
-  public email: String;
-  public firstName: string;
-  public lastName: String;
-  public team: string;
-  public token: string;
-  public role: Object = {
-    name: ""
-  };
-  public tokenReg:Array<string>;
-  tokenReady:boolean;
-
-}
 
 @Injectable()
 export class AuthServiceProvider {
 
-  private user: User = new User();
+  private user: any = {};
   public functions: any = function () { };
 
   constructor(public http: HttpClient, public storage: Storage,
@@ -55,18 +40,21 @@ export class AuthServiceProvider {
       } else {
 
         //For save
+        data.tokenReady = false;
         await this.storage.set('user', data);
-        this.user = new User();
-        this.user.id = data.id;
-        this.user.username = data.username;
-        this.user.firstName = data.firstName;
-        this.user.lastName = data.lastName;
-        this.user.email = data.email;
-        this.user.role = data.role;
-        this.user.token = data.token;
+        this.user = data;
         this.user.tokenReg = data.tokenReg || [];
 
-        this.SaveTeam(function () {
+        //ahora asignamos el lenaguaje si es que esta definido
+        if (this.user.hasOwnProperty('options') && this.user.options.hasOwnProperty('language')) {
+          await this.helper.setLanguage(this.user.options.language);
+        } else {
+          await this.helper.setLanguage('en');
+        }
+
+        console.log(this.user);
+
+        this.saveRole(function () {
           callback(null, data);
         });
 
@@ -80,53 +68,20 @@ export class AuthServiceProvider {
   }
 
   //guardar el team del usuario para evitar estar cargando del servidor el equipo
-  public async SaveTeam(callback: Function) {
+  public async saveRole(callback: Function) {
     let user;
 
     try {
 
       user = this.User();
       MyApp.User = user;
+      MyApp.User.role = user.roles[0];
+      MyApp.User.team = user.roles[0].team.id;
 
-      //ahora asignamos el lenaguaje si es que esta definido
-      if (user.hasOwnProperty('options') && user.options.hasOwnProperty('language')) {
-        //console.log("asignamos language", user.options.language);
-        await this.helper.setLanguage(user.options.language);
-      } else {
-        await this.helper.setLanguage('en')
-      }
-
-      let url;
-      if (user.role.name === "Player") {
-        url = "/team/player/" + user.id;
-      } else if (user.role.name === "Manager") {
-        url = "/team/manager/" + user.id;
-      } else if (user.role.name === "Family") {
-        url = "/team/family/" + user.id;
-      }
-      //console.log(url);
-      var res = await this.http.get(url).toPromise();
-
-      let team: any = res;
-
-      let events: any;
-      //console.log(team);
-      if (user.role.name === "Player") {
-        team = team.team.id;
-      } else if (res.hasOwnProperty("child") && user.role.name === "Family") {
-        team = team.child.team;
-      } else if (user.role.name === "Manager") {
-        team = team.team;
-      }
-
-      //console.log("team " + team);
-      this.user.team = team;
-      MyApp.User = this.user;
-      await this.storage.set("team", team);
+      await this.storage.set("role", MyApp.User.role);
 
       //Para actualizar el nombre del equipo en menu slide
-      let t: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-      document.getElementById("nameTeam").innerHTML = t.name;
+      document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
 
       this.changesUpdate();
       callback();
@@ -140,7 +95,7 @@ export class AuthServiceProvider {
   public async updateTokenReg(token) {
     try {
 
-      let tokens = [];console.log(MyApp.User);
+      let tokens = [];
       if (MyApp.User.hasOwnProperty("tokenReg") && Object.prototype.toString.call(MyApp.User.tokenReg) === '[object Array]') {
         tokens = MyApp.User.tokenReg;
       }
@@ -162,12 +117,13 @@ export class AuthServiceProvider {
   //comprobar si ya un usuario guardado
   public async checkUser() {
     let user = await this.storage.get("user");
-    let team = await this.storage.get("team");
+    let role = await this.storage.get("role");
 
     this.user = user;
     if (user != null) {
-      this.user.team = team;
-      MyApp.User = this.user;
+      MyApp.User = user;
+      MyApp.User.role = role;
+      MyApp.User.team = role.team.id;
       this.menuCtrl.swipeEnable(true);
       return true;
     }
@@ -181,10 +137,6 @@ export class AuthServiceProvider {
     return this.user;
   }
 
-  //Obtener el nombre completo del usuario
-  public fullName() {
-    return this.user.firstName + " " + this.user.lastName;
-  }
 
   public async logout() {
     this.menuCtrl.swipeEnable(false);
@@ -201,10 +153,10 @@ export class AuthServiceProvider {
     //console.log(success);
 
     var data = await this.storage.remove("user");
-    data = await this.storage.remove("team");
+    data = await this.storage.remove("role");
     this.user = null;
     delete MyApp.User;
-    
+
     return data === undefined;
   }
 
@@ -222,8 +174,10 @@ export class AuthServiceProvider {
 
     let token = MyApp.User.token;
     let team = MyApp.User.team;
+    let role = MyApp.User.role;
     user.token = token;
     user.team = team;
+    user.role = role;
     await this.storage.set("user", user);
     MyApp.User = user;
     this.user = MyApp.User;
@@ -239,12 +193,12 @@ export class AuthServiceProvider {
     this.user = MyApp.User;
   }
 
-  public async updateTeam(id: string) {
+  public async updateRole(role) {
 
-    await this.storage.set("team", id);
-    MyApp.User.team = id;
-    this.user.team = id;
-
+    await this.storage.set("role", role);
+    MyApp.User.role = role;
+    this.user.team = role.team.id;
+    MyApp.notifcations(MyApp.User.team);
   }
 
 }

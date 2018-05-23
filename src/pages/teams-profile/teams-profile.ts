@@ -16,7 +16,7 @@ import { SearchTeamsPage } from '../search-teams/search-teams';
 export class TeamsProfilePage {
 
   public menu=false;
-  public teams:Array<any>=[];
+  public roles:Array<any>=[];
   public user:any={ role: {} };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -32,39 +32,12 @@ export class TeamsProfilePage {
   
   async getTeams(){
     try{
-
-      if( this.user.role.name === "Manager"){
-
-        let teams:any = await this.http.get("/teams/manager/"+ MyApp.User.id).toPromise();
-        this.teams = teams.map(function(it){
-          let ramdon = new Date().getTime();
-          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
-          it.loadImage=false; 
-          return it;
-        });
-      }else if( this.user.role.name === "Player" ){
-
-        let teams:any = await this.http.get("/teams/player/"+ MyApp.User.id).toPromise();
-        console.log(teams);
-        this.teams = teams.map(function(it){
-          let ramdon = new Date().getTime();
-          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
-          it.loadImage=false; 
-          return it;
-        });
-
-      }else if( this.user.role.name === "Family" ){
-
-        let teams:any = await this.http.get("/teams/family/"+ MyApp.User.id).toPromise();
-        console.log(teams);
-        this.teams = teams.map(function(it){
-          let ramdon = new Date().getTime();
-          it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
-          it.loadImage=false; 
-          return it;
-        });
-
-      }
+      this.roles = MyApp.User.roles.map(function(it){
+        let ramdon = new Date().getTime();
+        it.team.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
+        it.team.loadImage=false; 
+        return it;
+      });
       
     }
     catch(e){
@@ -72,8 +45,8 @@ export class TeamsProfilePage {
     }
   }
 
-  public loadImage(team:any){
-    team.loadImage = true;
+  public loadImage(role:any){
+    role.team.loadImage = true;
   }
 
   async addTeam(){
@@ -82,20 +55,19 @@ export class TeamsProfilePage {
 
   }
 
-  public isSelect(team){
-    return team.team.id === MyApp.User.team;
+  public isSelect(role){
+    return role.team.id === MyApp.User.team;
   }
 
-  public async setTeam(team){
-    await this.auth.updateTeam(team.team.id);
+  public async setTeam(role){
+    await this.auth.updateRole(role);
     
     //Para actualizar el nombre del equipo en menu slide
-    let t:any = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
-    document.getElementById("nameTeam").innerHTML = t.name;
+    document.getElementById("nameTeam").innerHTML = role.team.name;
   }
 
-  public editTeam(team){
-    this.navCtrl.push(AddTeamPage, { team });
+  public editTeam(role){
+    this.navCtrl.push(AddTeamPage, { role });
   }
 
   public searchTeams(){

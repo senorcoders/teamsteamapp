@@ -232,7 +232,7 @@ export class MyApp {
 
 
   //#region for push notifications configuration
-  private static notifcations(team){
+  public static notifcations(team){
 
     // Return a list of currently configured channels
     MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))

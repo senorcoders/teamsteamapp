@@ -11,7 +11,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FormJoinTeamPage {
 
-  public fullName = "";
+  public firstName = "";
+  public lastName = "";
   public email = "";
   public role="";
   public players:Array<any>=[];
@@ -39,7 +40,7 @@ export class FormJoinTeamPage {
 
   public async sent(){
 
-    if( this.fullName == "" || this.email == "" || this.role == "" ){
+    if( this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "" ){
       let requiredM = await this.helper.getWords("REQUIRED"),
       unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
@@ -65,9 +66,9 @@ export class FormJoinTeamPage {
 
     let user:any;
     if( this.role === "Family" ){
-      user = { fullName: this.fullName, email: this.email, player: this.player, role: this.role };
+      user = { firstName: this.firstName, lastName: this.lastName, email: this.email, player: this.player, role: this.role };
     }else{
-      user = { fullName: this.fullName, email: this.email, role: this.role };
+      user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
     }
     
     this.viewCtrl.dismiss(user);

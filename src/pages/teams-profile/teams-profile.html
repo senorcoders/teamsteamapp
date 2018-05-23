@@ -15,14 +15,14 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let team of teams;" >
+    <ion-item *ngFor="let role of roles;" >
       <ion-avatar item-start>
-        <img src="./assets/imgs/team.png" [hidden]="team.loadImage" (click)="setTeam(team)" >
-        <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)" (click)="setTeam(team)" >
+        <img src="./assets/imgs/team.png" [hidden]="role.team.loadImage" (click)="setTeam(role)" >
+        <img [src]="role.team.imageSrc" [hidden]="!role.team.loadImage" (load)="loadImage(role)" (click)="setTeam(role)" >
       </ion-avatar> 
-      <p (click)="setTeam(team)">{{team.team.name}}</p>
-      <ion-icon color="secondary" [hidden]="!isSelect(team)" name="md-checkmark" item-end></ion-icon>
-      <ion-icon color="danger" (click)="editTeam(team.team)" [hidden]="user.role.name != 'Manager'" name="ios-create-outline" item-end></ion-icon>
+      <p (click)="setTeam(role)">{{role.team.name}}</p>
+      <ion-icon color="secondary" [hidden]="!isSelect(role)" name="md-checkmark" item-end></ion-icon>
+      <ion-icon color="danger" (click)="editTeam(role)" [hidden]="user.role.name != 'Manager'" name="ios-create-outline" item-end></ion-icon>
     </ion-item>
 
   </ion-list>

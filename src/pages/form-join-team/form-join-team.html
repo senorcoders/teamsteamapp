@@ -16,8 +16,13 @@
   <ion-list>
 
     <ion-item>
-      <ion-label floating>{{"FULLNAME" | translate}}</ion-label>
-      <ion-input type="text" [(ngModel)]="fullName" ></ion-input>
+      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="firstName" ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="lastName"></ion-input>
     </ion-item>
 
     <ion-item>
