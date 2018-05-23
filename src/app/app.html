@@ -12,7 +12,7 @@
 				<img (click)="goProfile()" [hidden]="defaultImageUser" id="imageSlide" (load)="loadImageMenu()" class="userimg">
 				<img src="./assets/imgs/gear-icon.png" class="icon-gear" >
 			</div>
-			<p id="nameSlide" class="username"></p>
+			<p id="nameSlide" class="username">{{user.username}}</p>
     </div>
 	</ion-header>
     <ion-content>

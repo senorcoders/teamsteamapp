@@ -82,8 +82,8 @@ export class AuthServiceProvider {
 
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
-
-      this.changesUpdate();
+      let t=this;
+      this.zone.run(function(){ t.changesUpdate(); });
       callback();
     } catch (e) {
       console.error(e);
@@ -181,7 +181,7 @@ export class AuthServiceProvider {
     await this.storage.set("user", user);
     MyApp.User = user;
     this.user = MyApp.User;
-
+    this.changesUpdate();
   }
 
   //para guardar cambios hechos en options del usuario

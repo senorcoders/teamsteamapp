@@ -94,6 +94,8 @@ import { FormPlayerRegistrationPage } from '../pages/form-player-registration/fo
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
+import { Camera } from '@ionic-native/camera';
+
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -256,7 +258,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DatePicker,
     WebSocketsProvider,
     InAppBrowser,
-    Geocoder
+    Geocoder,
+    Camera
   ]
 })
 export class AppModule {}
