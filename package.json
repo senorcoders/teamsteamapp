@@ -49,7 +49,7 @@
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-camera-preview": "^0.9.0",
     "cordova-plugin-datepicker": "^0.9.3",
-    "cordova-plugin-file": "@5.0.0",
+    "cordova-plugin-file": "5.0.0",
     "cordova-plugin-fullscreen": "^1.2.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-googlemaps": "^2.3.3",
