@@ -26,6 +26,7 @@ export class ViewProfilePage {
   public image=false;
   public team:any={ name : "", request: [] };
   public edit=false;
+  public icon = 'ios-create-outline';
   public request:Array<any>=[];
   public manager:any={};
 
@@ -440,6 +441,18 @@ export class ViewProfilePage {
     if( this.team.request.length !== 0 && MyApp.User.role.name === "Manager" ) return false;
 
     return false;
+  }
+
+ 
+
+  showEdit(){
+    this.edit = !this.edit;
+    if(this.edit == false){
+      this.icon = 'ios-create-outline';
+    }else{
+      this.icon = 'md-checkmark';
+
+    }
   }
 
 }

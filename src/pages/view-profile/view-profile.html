@@ -1,15 +1,21 @@
 <ion-header>
 
   <ion-navbar color="base" >
-    <button ion-button icon-only menuToggle start>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-
-    <ion-title> {{"NAVMENU.PROFILE" | translate}} <h1 class="text-right-navbar" >{{"EDIT"  | translate}}</h1> </ion-title>
-
-    <ion-buttons end>
-      <ion-toggle [(ngModel)]="edit"></ion-toggle>
+    <ion-buttons start>
+        <button ion-button icon-only menuToggle >
+            <ion-icon name="menu"></ion-icon>
+          </button>
     </ion-buttons>
+   
+
+    <ion-title> {{"NAVMENU.PROFILE" | translate}} {{edit}}</ion-title>
+
+    <ion-buttons end > 
+        <button ion-button  icon-only (click)="showEdit()">
+            <ion-icon name="{{icon}}"></ion-icon>
+          </button>      
+  </ion-buttons> 
+    
 
   </ion-navbar>
 
