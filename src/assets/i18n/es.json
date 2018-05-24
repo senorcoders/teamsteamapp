@@ -60,13 +60,13 @@
         "FOOTBALL": "Fútbol"
     },
     "SEARCHTEAM": {
-        "TITLE": "Buscar Equipo",
+        "TITLE": "para unirse a una búsqueda de equipo aquí",
         "ACTION": "Nombre del Equipo"
     },
     "LOGIN":{
         "TITLE": "Bienvenido a TeamSteam",
         "INIT": "Inicia sesión",
-        "NOTACCOUNT": "Todavía no tiene cuenta? Por favor vaya a",
+        "NOTACCOUNT": "¿Comenzando un nuevo equipo? Click aquí para ",
         "REGISTER": "Registro",
         "LOGIN": "Iniciar Sesión"
     },

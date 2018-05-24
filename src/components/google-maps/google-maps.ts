@@ -53,11 +53,7 @@ export class GoogleMapsComponent {
   ngOnInit(){
     //esto sirve para ocultar todas las paginas y mostra linear layout del plugin
     let style = document.createElement("style");
-    style.innerText = String.raw`
-      .ion-page.show-page:not(google-maps) {
-        opacity: 0 !important;
-      }
-    `;
+    style.innerText = String.raw` .ion-page.show-page:not(google-maps) { opacity: 0 !important; } `;
     document.getElementsByTagName('google-maps')[0].appendChild(style);
   }
 
