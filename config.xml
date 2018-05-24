@@ -3,7 +3,7 @@
     <name>Team Steam</name>
     <description>An awesome Ionic/Cordova app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content src="index.html" />
+    <content original-src="index.html" src="http://169.254.93.147:8100" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -117,8 +117,6 @@
     <plugin name="com-sarriaroman-photoviewer" spec="^1.1.16" />
     <plugin name="cordova-plugin-datepicker" spec="^0.9.3" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.0.0" />
-    <engine name="android" spec="~7.1.0" />
-    <engine name="ios" spec="~4.5.4" />
     <allow-navigation href="http://169.254.168.66:8100" />
     <plugin name="cordova-plugin-file" spec="^5.0.0" />
     <plugin name="cordova-plugin-photo-library" spec="^2.1.1">
@@ -127,4 +125,9 @@
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <allow-navigation href="http://169.254.117.123:8100" />
     <allow-navigation href="http://192.168.8.105:8100" />
+    <allow-navigation href="http://169.254.61.170:8100" />
+    <allow-navigation href="http://169.254.21.207:8100" />
+    <allow-navigation href="http://169.254.93.147:8100" />
+    <engine name="android" spec="7.1.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
