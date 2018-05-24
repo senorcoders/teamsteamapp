@@ -84,8 +84,7 @@ export class AddTeamPage {
 
     try {
       let newTeam: any = await this.http.post("/teams", {
-        name: this.name, userID: MyApp.User.id,
-        description: this.description, city: this.city, sport: this.sport, configuration: { valid: true }
+        name: this.name, description: this.description, city: this.city, sport: this.sport, configuration: { valid: true }
       }).toPromise();
 
       let newRole:any = await this.http.post("/roles", {

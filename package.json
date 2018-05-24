@@ -119,8 +119,8 @@
       "cordova-plugin-camera": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }

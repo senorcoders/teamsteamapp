@@ -75,14 +75,14 @@
         "MALE": "Male",
         "FEMALE": "Female",
         "GENDER": "Gender",
-        "YERSERYNUMBER": "Jersey Number",
-        "POSITIONS": "Positions",
+        "YERSERYNUMBER": "Jersey Number (optional)",
+        "POSITIONS": "Position",
         "CONTACTINFORMATION": "Contact Information",
         "VALUE": "Value",
         "DETAILSPLAYER": "Detail Players",
         "NONPLAYER": "No Is Player",
         "MANAGERACCESS": "Manager Access",
-        "CREATEPLAYER": "Create Player"
+        "CREATEPLAYER": "Add Player"
     },
     "BIRTHDAY": "Birthday",
     "LOCATION": "Location",

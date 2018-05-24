@@ -76,14 +76,14 @@
         "MALE": "Masculino",
         "FEMALE": "Femenino",
         "GENDER": "Género",
-        "YERSERYNUMBER": "Numero de Camisa",
-        "POSITIONS": "Posiciones",
+        "YERSERYNUMBER": "Numero de Camisa (Opcional)",
+        "POSITIONS": "Posición",
         "CONTACTINFORMATION": "Contact Information",
         "VALUE": "Información",
         "DETAILSPLAYER": "Mas Detalles",
         "NONPLAYER": "No Es Jugador",
         "MANAGERACCESS": "Privilegios de Manager",
-        "CREATEPLAYER": "Crear Jugador"
+        "CREATEPLAYER": "Agregar Jugador"
     },
     "BIRTHDAY": "Cumpleaños",
     "LOCATION": "Ubicación",
