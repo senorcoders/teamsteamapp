@@ -47,6 +47,7 @@ export class CreatePlayerDetailsPage {
     let user:any = MyApp.User;
     let res = this.http.get("/teams/"+ MyApp.User.team).toPromise();
     this.team = res;
+    this.birthDay = moment().format("DD MMM YYYY");
   }
 
   public setDate(){
@@ -117,8 +118,7 @@ export class CreatePlayerDetailsPage {
 
     if(
       this.birthDay == '' ||
-      this.gender == '' ||
-      this.yerseyNumber == ''
+      this.gender == ''
     ){
       this.alertCtrl.create({
         title: "Required",
@@ -143,11 +143,8 @@ export class CreatePlayerDetailsPage {
     try{
       
       this.user.contacts = this.contacts;
-      user = await this.http.post("/user/player", this.user).toPromise();
+      user = await this.http.post("/user/player", { user: this.user, player: player }).toPromise();
       
-      player.user = user.id;
-
-      player = await this.http.post("/players", player).toPromise();
 
       if( this.user.hasOwnProperty('image') && this.user.image != '' ){
         await this.http.post("/images/users", {
@@ -155,6 +152,8 @@ export class CreatePlayerDetailsPage {
           image : this.user.image
         }).toPromise();
       }
+
+      this.navCtrl.setRoot(RosterPage);
 
     }catch(e){
       console.error(e);
@@ -166,8 +165,6 @@ export class CreatePlayerDetailsPage {
 
       return;
     }
-
-    this.navCtrl.setRoot(RosterPage);
 
   }
 

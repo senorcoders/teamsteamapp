@@ -32,8 +32,9 @@ export class NewTaskPage {
 
   async ngOnInit(){
 
-    let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
-    this.players = team._players;
+    //let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
+    let players:any = await this.http.get("/players/team/"+ MyApp.User.team).toPromise();
+    this.players = players;
     /*let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
 
     for(let it of managers){
