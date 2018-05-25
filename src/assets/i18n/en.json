@@ -59,13 +59,13 @@
         "FOOTBALL": "Football"
     },
     "SEARCHTEAM": {
-        "TITLE": "Search Teams",
+        "TITLE": "to join a team search here",
         "ACTION": "Name of the Team"
     },
     "LOGIN":{
         "TITLE": "Welcome To Team Steam",
         "INIT": "Sign into your pages account",
-        "NOTACCOUNT": "Still no account? Please go to ",
+        "NOTACCOUNT": "Starting a new Team? Click Here to ",
         "REGISTER": "Register",
         "LOGIN": "Login"
     },
@@ -75,14 +75,14 @@
         "MALE": "Male",
         "FEMALE": "Female",
         "GENDER": "Gender",
-        "YERSERYNUMBER": "Jersey Number",
-        "POSITIONS": "Positions",
+        "YERSERYNUMBER": "Jersey Number (optional)",
+        "POSITIONS": "Position",
         "CONTACTINFORMATION": "Contact Information",
         "VALUE": "Value",
         "DETAILSPLAYER": "Detail Players",
         "NONPLAYER": "No Is Player",
         "MANAGERACCESS": "Manager Access",
-        "CREATEPLAYER": "Create Player"
+        "CREATEPLAYER": "Add Player"
     },
     "BIRTHDAY": "Birthday",
     "LOCATION": "Location",
@@ -186,7 +186,7 @@
     "FORMREGISTER": "Registration Form",
     "INVITATION": "Invitation",
     "PAYMENTSECURE": "You are sure to delete the payment",
-    "FORGOTPASSWORD": "Forgot Password",
+    "FORGOTPASSWORD": "Reset Password",
     "SEND": "Send",
     "EMAILNOT": "Mail Not Found",
     "RESETPASS": {

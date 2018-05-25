@@ -60,13 +60,13 @@
         "FOOTBALL": "Fútbol"
     },
     "SEARCHTEAM": {
-        "TITLE": "Buscar Equipo",
+        "TITLE": "para unirse a una búsqueda de equipo aquí",
         "ACTION": "Nombre del Equipo"
     },
     "LOGIN":{
         "TITLE": "Bienvenido a TeamSteam",
         "INIT": "Inicia sesión",
-        "NOTACCOUNT": "Todavía no tiene cuenta? Por favor vaya a",
+        "NOTACCOUNT": "¿Comenzando un nuevo equipo? Click aquí para ",
         "REGISTER": "Registro",
         "LOGIN": "Iniciar Sesión"
     },
@@ -76,14 +76,14 @@
         "MALE": "Masculino",
         "FEMALE": "Femenino",
         "GENDER": "Género",
-        "YERSERYNUMBER": "Numero de Camisa",
-        "POSITIONS": "Posiciones",
+        "YERSERYNUMBER": "Numero de Camisa (Opcional)",
+        "POSITIONS": "Posición",
         "CONTACTINFORMATION": "Contact Information",
         "VALUE": "Información",
         "DETAILSPLAYER": "Mas Detalles",
         "NONPLAYER": "No Es Jugador",
         "MANAGERACCESS": "Privilegios de Manager",
-        "CREATEPLAYER": "Crear Jugador"
+        "CREATEPLAYER": "Agregar Jugador"
     },
     "BIRTHDAY": "Cumpleaños",
     "LOCATION": "Ubicación",

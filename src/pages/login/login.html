@@ -1,20 +1,14 @@
 <ion-content padding>
   <div class="content-login">
-    <div class="icon-login"><ion-icon name="unlock"></ion-icon></div>
-    <div class="title">
-      <p>{{"LOGIN.TITLE" | translate}}</p>
-      <h2>{{"LOGIN.INIT" | translate}}</h2>
-    </div>
+    <div class="icon-login"></div>
     
     <ion-list>
 
       <ion-item>
-        <ion-label floating>{{"EMAIL" | translate}}</ion-label>
-        <ion-input type="email" value="" [(ngModel)]="email" ></ion-input>
+        <ion-input type="email" value="" [placeholder]="emailTrans" [(ngModel)]="email" ></ion-input>
       </ion-item>
       <ion-item>
-        <ion-label floating>{{"PASSWORD" | translate}}</ion-label>
-        <ion-input type="password" value="" [(ngModel)]="password" ></ion-input>
+        <ion-input type="password" value="" [placeholder]="passwordTrans" [(ngModel)]="password" ></ion-input>
       </ion-item>
       <!--ion-item>
         <ion-label floating>Email Address</ion-label>
@@ -30,19 +24,20 @@
     </ion-list>
 
     <div>
-      <button ion-button color="primary" block (click)="Login()" >{{"LOGIN.LOGIN" | translate}}</button>
+      <button (click)="Login()" >{{"LOGIN.LOGIN" | translate}}</button>
     </div>
-    <div>
-      <span class="btn-register">{{"LOGIN.NOTACCOUNT" | translate}} <a href="#" (click)="Register()">{{"NEWTEAMACTION" | translate}}</a> </span>
-    </div>
-    <!--div class="social-network">
-      <ion-icon name="logo-googleplus"></ion-icon>
-      <ion-icon name="logo-twitter"></ion-icon>
-      <ion-icon name="logo-facebook"></ion-icon>
-      <ion-icon name="logo-instagram"></ion-icon>
-    </div-->
-    <a href="#" style="display: block; text-align: center;" (click)="goSearchTeam()">{{"SEARCHTEAM.TITLE" | translate}}</a>
+    
     <!--a href="#" style="display: block; text-align: center;" (click)="goInvitation()">{{"INVITATION" | translate}}</a-->
+  </div>
+
+  <div>
+    <span class="btn-register">{{"LOGIN.NOTACCOUNT" | translate}} <a href="#" (click)="Register()">{{"LOGIN.REGISTER" | translate}}</a> </span>
+  </div>
+  <span class="join-team">
+    <a href="#" (click)="goSearchTeam()">{{"SEARCHTEAM.TITLE" | translate}}</a>
+  </span>
+
+  <div class="forgot">
     <a href="#" style="display: block; text-align: center;" (click)="goForgotPassword()">{{"FORGOTPASSWORD" | translate}}</a>
   </div>
 

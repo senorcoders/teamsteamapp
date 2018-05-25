@@ -30,6 +30,9 @@ export class LoginPage {
   public email:string="";
   public password="";
 
+  public emailTrans="";
+  public passwordTrans="";
+
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     public alertCtrl:AlertController,
@@ -38,11 +41,14 @@ export class LoginPage {
     public http : HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider
   ) {
-    this.statusBar.backgroundColorByName("white");
+    this.statusBar.overlaysWebView(true);
+    //this.statusBar.backgroundColorByName("white");
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
     this.helper.setLenguagueLocal();
+    this.emailTrans = await this.helper.getWords("EMAIL");
+    this.passwordTrans = await this.helper.getWords("PASSWORD");
   }
 
   public forgotPassword(){
@@ -66,6 +72,7 @@ export class LoginPage {
      this.authService.Login(this.email, this.password, async function(err, user){
 
         if(user){
+          this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByHexString("#008e76");
           this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
         }else if( err ){
