@@ -28,6 +28,11 @@ export class GoogleMapsComponent {
     public navParams: NavParams, public loading: LoadingController,
     public alertCtrl: AlertController
   ) {
+    
+    
+  }
+
+  ionViewDidEnter(){
     console.log(this.height, this.width);
     this.load = this.loading.create({
       content: "Loading Map"
@@ -47,7 +52,6 @@ export class GoogleMapsComponent {
       let lts = this.navParams.get('location');
       this.loadMap(lts.lat, lts.lng);
     }
-    
   }
 
   ngOnInit(){
@@ -71,8 +75,10 @@ export class GoogleMapsComponent {
     };
 
     let t = this;
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
-
+    let m = document.getElementById('map_canvas');
+    console.log(m);
+    this.map = GoogleMaps.create(m, mapOptions);
+    console.log(this.map, GoogleMaps);
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
       .then(() => {
