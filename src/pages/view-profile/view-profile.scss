@@ -13,6 +13,10 @@ page-view-profile {
         }
     }
 
+    ion-buttons[start]{
+        order: 1 !important;
+    }
+
     .text-right-navbar{
         text-align: right !important;
         font-size: 2rem !important;
