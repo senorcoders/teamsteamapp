@@ -116,9 +116,9 @@ export class CameraPage {
       width: window.innerWidth,
       height: window.innerHeight - 80,
       camera: 'rear',
-      tapPhoto: false,
+      tapPhoto: true,
       previewDrag: false,
-      toBack: false,
+      toBack: true,
       alpha: 1,
       tapToFocus: true
     };

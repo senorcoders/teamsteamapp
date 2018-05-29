@@ -82,8 +82,8 @@ export class AuthServiceProvider {
 
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
-      let t=this;
-      this.zone.run(function(){ t.changesUpdate(); });
+      let t = this;
+      this.zone.run(function () { t.changesUpdate(); });
       callback();
     } catch (e) {
       console.error(e);
@@ -147,10 +147,9 @@ export class AuthServiceProvider {
       console.log(un);
       un = await MyApp.pushObject.unsubscribe(MyApp.User.team);
       console.log(un);
+      let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
+      console.log(success);
     }
-
-    //let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
-    //console.log(success);
 
     var data = await this.storage.remove("user");
     data = await this.storage.remove("role");

@@ -41,8 +41,11 @@ export class LoginPage {
     public http : HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider
   ) {
-    this.statusBar.overlaysWebView(true);
     //this.statusBar.backgroundColorByName("white");
+  }
+
+  ionViewDidEnter(){
+    this.statusBar.overlaysWebView(true);
   }
 
   async ionViewDidLoad() {
@@ -56,6 +59,8 @@ export class LoginPage {
   }
 
   public Register(){
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString("#008e76");
     this.navCtrl.push(RegistrationPage);
     //this.navCtrl.push(PaymentSubscripcionPage);
   }
@@ -130,14 +135,20 @@ export class LoginPage {
   }
 
   public goSearchTeam(){
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString("#008e76");
     this.navCtrl.push(SearchTeamsPage)
   }
 
   public goInvitation(){
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString("#008e76");
     this.navCtrl.push(FormPlayerRegistrationPage);
   }
 
   public goForgotPassword(){
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString("#008e76");
     this.navCtrl.push(ForgotPasswordPage);
   }
 

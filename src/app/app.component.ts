@@ -29,61 +29,62 @@ import { AddTeamPage } from '../pages/add-team/add-team';
 import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
 import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
 import { bindCallback } from 'rxjs/observable/bindCallback';
+import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  @ViewChild('mycontent') nav:Nav;
+  @ViewChild('mycontent') nav: Nav;
 
-  private disconnectSubscription:any;
+  private disconnectSubscription: any;
 
-  private static notificationEnable:boolean=false;
-  private static httpCliente:HttpClient;
+  private static notificationEnable: boolean = false;
+  private static httpCliente: HttpClient;
   private static authService: AuthServiceProvider;
-  private static pusherNotification:Push;
-  private static permision:boolean=false;
-  public static User:any;
-  public static pushObject:PushObject;
-  private static event:Events;
+  private static pusherNotification: Push;
+  private static permision: boolean = false;
+  public static User: any;
+  public static pushObject: PushObject;
+  private static event: Events;
 
-  public nameReady=false;
-  public teamName="";
+  public nameReady = false;
+  public teamName = "";
 
-  public user:any={
+  public user: any = {
     username: ""
   };
 
-  public toas:Toast;
-  public team:any;
+  public toas: Toast;
+  public team: any;
 
-  public username="Senorcoders";
-  public userimg="./assets/imgs/user.jpg";
-  public logo="./assets/imgs/logo-sign.png";
-  public defaultImageUserUrl="./assets/imgs/user-menu.png";
-  public defaultImageUser=true;
+  public username = "Senorcoders";
+  public userimg = "./assets/imgs/user.jpg";
+  public logo = "./assets/imgs/logo-sign.png";
+  public defaultImageUserUrl = "./assets/imgs/user-menu.png";
+  public defaultImageUser = true;
 
-  public pages:Array<Object> = [
-    { title : "NAVMENU.EVENTS", component : EventsSchedulePage, icon:"basketball", role: "*" },
-    { title : "NAVMENU.MYTASK", component : MyTaskPage, icon:"basketball", role: "*" },
-    { title : "NAVMENU.ROSTER", component : RosterPage, icon:"baseball", role: "*" },
-    { title : "NAVMENU.MESSAGES", component : ListChatsPage, icon:"baseball", role: "*" },
-    { title : "NEWTEAM.ADD", component : AddTeamPage, icon:"baseball", role: "*" }
-   ];
+  public pages: Array<Object> = [
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*" },
+    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*" }
+  ];
 
-  constructor(platform: Platform, statusBar: StatusBar, 
+  constructor(platform: Platform, statusBar: StatusBar,
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
-    private http: HttpClient, private Evenn: Events, 
+    private http: HttpClient, private Evenn: Events,
     public zone: NgZone, translate: TranslateService,
     private helper: HelpersProvider
   ) {
 
     //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
-    MyApp.httpCliente= this.http;
+    MyApp.httpCliente = this.http;
     MyApp.authService = this.auth;
     MyApp.pusherNotification = this.push;
     MyApp.event = this.Evenn;
@@ -95,26 +96,26 @@ export class MyApp {
 
       // the lang to use, if the lang isn't available, it will use the current loader to get them
       translate.use('es');
-      
+
       // Okay, so the platform is ready and our plugins are available.
       // Here you can do any higher level native things you might need.
       statusBar.overlaysWebView(false);
       statusBar.backgroundColorByHexString("#008e76");
       splashScreen.hide();
-      
+
       t.push.hasPermission()
-      .then((res: any) => {
+        .then((res: any) => {
 
-        if (res.isEnabled) {
-          console.log('We have permission to send push notifications');
-          MyApp.permision=true;
-        } else {
-          console.log('We do not have permission to send push notifications');
-        }
+          if (res.isEnabled) {
+            console.log('We have permission to send push notifications');
+            MyApp.permision = true;
+          } else {
+            console.log('We do not have permission to send push notifications');
+          }
 
-      });
-        
-      });
+        });
+
+    });
 
     this.toas = this.toast.create({
       message: " Internet connection is required",
@@ -127,7 +128,7 @@ export class MyApp {
       this.toas.dismiss();
       console.log(data);
     }, error => console.error(error));
-    
+
     //se ejecuta cuando se desconecta de internet
     //se muestra al usuario que debe estar conectado
     this.network.onDisconnect().subscribe(data => {
@@ -137,53 +138,53 @@ export class MyApp {
 
   }
 
-  async ngOnInit(){
-    
+  async ngOnInit() {
+
     var authenticated = await this.auth.checkUser();
-    if( authenticated === true ){
+    if (authenticated === true) {
       this.nav.root = EventsSchedulePage;
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
       //Para actualizar el nombre del equipo en menu slide
-      let team:any = await this.http.get("/teams/"+ MyApp.User.team).toPromise();
+      let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
       document.getElementById("nameTeam").innerHTML = team.name;
 
       //console.log(this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ this.user.id);
+      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
       //document.getElementById("nameSlide").innerText = this.user.username;
 
       //ahora asignamos el lenaguaje si es que esta definido
-      if( MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language') ){
+      if (MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language')) {
         await this.helper.setLanguage(MyApp.User.options.language);
-      }else{
+      } else {
         this.helper.setLanguage('en')
       }
 
-    }else{
+    } else {
       this.nav.root = LoginPage;
     }
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
     let t = this;
-    this.auth.changeUser(function(){
+    this.auth.changeUser(function () {
 
       this.defaultImageUser = true;
       this.user = t.auth.User();
 
       console.log("cambiooo", t.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ t.user.id);
+      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + t.user.id);
       document.getElementById("imageSlide").setAttribute("src", t.userimg);
       //document.getElementById("nameSlide").innerText = t.user.username;
       this.user = MyApp.User;
     }.bind(this));
   }
 
-  public loadImageMenu(){
-    this.defaultImageUser=false;
+  public loadImageMenu() {
+    this.defaultImageUser = false;
   }
 
 
@@ -192,38 +193,38 @@ export class MyApp {
    */
   public async logout() {
     var response = await this.auth.logout();
-    if( response === true ){
+    if (response === true) {
       this.nav.root = LoginPage;
     }
     this.menuCtrl.close();
   }
 
-  goToPage(page){
+  goToPage(page) {
     this.nav.setRoot(page);
     this.menuCtrl.close();
   }
 
-  public goProfile(){
+  public goProfile() {
     this.nav.setRoot(ViewProfilePage);
     this.menuCtrl.close();
   }
 
-  public validRolePage(page){
+  public validRolePage(page) {
 
-    if( page.role === "*" ) return true;
+    if (page.role === "*") return true;
 
     let valid = MyApp.User === undefined || MyApp.User === null;
 
-    if( valid === true ){
+    if (valid === true) {
       return true;
     }
     //console.log(MyApp.User.role.name, page.role);
     return MyApp.User.role.name === page.role;
   }
 
-  public static async initNotifcations(){
+  public static async initNotifcations() {
 
-    if( MyApp.notificationEnable === true && MyApp.permision === false ){
+    if (MyApp.notificationEnable === true && MyApp.permision === false) {
       return;
     }
 
@@ -233,66 +234,78 @@ export class MyApp {
 
 
   //#region for push notifications configuration
-  public static notifcations(team){
+  public static notifcations(team) {
 
     // Return a list of currently configured channels
     MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
-    
+
     // to initialize push notifications
 
     //console.log(team);
-    const options: PushOptions = {
-        android: {
-          senderID: "414026305021",
-          topics: [team],
-
-          sound: true,
-          vibrate: true
-        },
-        ios: {
-            alert: 'true',
-            badge: true,
-            sound: 'false'
-        },
-        windows: {},
-        browser: {
-            pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
-        }
+    const options: any = {
+      android: {
+        senderID: "414026305021",
+        topics: [team],
+        sound: true,
+        vibrate: true,
+        soundname: "default"
+      },
+      ios: {
+        alert: 'true',
+        badge: true,
+        sound: 'true',
+        soundname: "default"
+      },
+      windows: {},
+      browser: {
+        pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
+      }
     };
 
-    try{
+    try {
 
       //#region for notification in team
       MyApp.pushObject = MyApp.pusherNotification.init(options);
-
-      MyApp.pushObject.on('notification').subscribe((notification: any) =>{
-
-        let verb = notification.additionalData.verb, is = notification.additionalData.is;
-
-        MyApp.event.publish(is+ ":"+ verb, notification.additionalData.dataStringify, Date.now());
-        console.log('Received a notification', notification);
-      });
       
+      MyApp.pushObject.on('notification').subscribe(async (notification: any) => {
+        //Your Logic
+        if (notification.additionalData.coldstart) {
+          // Background
+          console.log(notification.addtionalData.is);
+          if( notification.addtionalData.is === "chat" ){
+            await HelpersProvider.me.toPages([{page: ChatOnePersonPage, data: {user: notification.additionalData.dataStringify.from } }], ListChatsPage);
+          }
+          
+        }else if(notification.additionalData.foreground) {
+          // Foreground
+          let verb = notification.additionalData.verb, is = notification.additionalData.is;
+
+          MyApp.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
+          console.log('Received a notification', notification);
+        }
+
+      });
+
       MyApp.pushObject.on('registration').subscribe((registration: any) => {
-        
-        if( MyApp.User.tokenReady === true ){
-          MyApp.notificationEnable=true;
+
+        if (MyApp.User.tokenReady === true) {
+          MyApp.notificationEnable = true;
           return;
         }
-        MyApp.notificationEnable=true;
+        MyApp.notificationEnable = true;
         MyApp.authService.updateTokenReg(registration.registrationId);
         console.log('Device registered', registration);
       });
-            
+
       MyApp.pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //#endregion
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
-    
-    
+
+
   }
 
   //#endregion

@@ -166,7 +166,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot({
       name: 'teamsnap',
-        driverOrder: ['indexeddb', 'sqlite', 'websql']
+        driverOrder: ['sqlite', 'indexeddb', 'websql']
     }),
     HttpModule,
     HttpClientModule,
