@@ -17,6 +17,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 import { LongPressModule } from 'ionic-long-press';
 import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { WebIntent } from '@ionic-native/web-intent';
 
 
 import { MyApp } from './app.component';
@@ -259,7 +260,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebSocketsProvider,
     InAppBrowser,
     Geocoder,
-    Camera
+    Camera,
+    WebIntent
   ]
 })
 export class AppModule {}

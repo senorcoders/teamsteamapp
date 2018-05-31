@@ -15,6 +15,7 @@ import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
+
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 import { ChatPage } from '../pages/chat/chat';
@@ -30,6 +31,9 @@ import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
 import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
 import { bindCallback } from 'rxjs/observable/bindCallback';
 import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
+import { eachDay } from 'date-fns';
+import { WebIntent } from '@ionic-native/web-intent';
+import { EventPage } from '../pages/event/event';
 
 
 @Component({
@@ -38,6 +42,7 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 export class MyApp {
   @ViewChild('mycontent') nav: Nav;
 
+  public static me: MyApp;
   private disconnectSubscription: any;
 
   private static notificationEnable: boolean = false;
@@ -73,14 +78,14 @@ export class MyApp {
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*" }
   ];
 
-  constructor(platform: Platform, statusBar: StatusBar,
+  constructor(public platform: Platform, statusBar: StatusBar,
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public geolocation: Geolocation,
     private network: Network, public toast: ToastController,
     private locationAccuracy: LocationAccuracy, private push: Push,
     private http: HttpClient, private Evenn: Events,
     public zone: NgZone, translate: TranslateService,
-    private helper: HelpersProvider
+    private helper: HelpersProvider, public webIntent: WebIntent
   ) {
 
     //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
@@ -88,10 +93,10 @@ export class MyApp {
     MyApp.authService = this.auth;
     MyApp.pusherNotification = this.push;
     MyApp.event = this.Evenn;
+    this.init();
 
     let t = this;
     platform.ready().then(() => {
-
       translate.setDefaultLang('en');
 
       // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -136,6 +141,10 @@ export class MyApp {
       this.toas.present();
     }, error => console.error(error));
 
+  }
+
+  public init() {
+    MyApp.me = this;
   }
 
   async ngOnInit() {
@@ -234,7 +243,7 @@ export class MyApp {
 
 
   //#region for push notifications configuration
-  public static notifcations(team) {
+  public static async notifcations(team) {
 
     // Return a list of currently configured channels
     MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
@@ -266,23 +275,15 @@ export class MyApp {
 
       //#region for notification in team
       MyApp.pushObject = MyApp.pusherNotification.init(options);
-      
-      MyApp.pushObject.on('notification').subscribe(async (notification: any) => {
-        //Your Logic
-        if (notification.additionalData.coldstart) {
-          // Background
-          console.log(notification.addtionalData.is);
-          if( notification.addtionalData.is === "chat" ){
-            await HelpersProvider.me.toPages([{page: ChatOnePersonPage, data: {user: notification.additionalData.dataStringify.from } }], ListChatsPage);
-          }
-          
-        }else if(notification.additionalData.foreground) {
-          // Foreground
-          let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
-          MyApp.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
-          console.log('Received a notification', notification);
-        }
+      MyApp.pushObject.on('notification').subscribe(async (notification: any) => {
+        console.log(notification);
+
+        let verb = notification.additionalData.verb, is = notification.additionalData.is;
+
+        MyApp.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
+        console.log('Received a notification', notification);
+
 
       });
 
@@ -305,10 +306,42 @@ export class MyApp {
       console.error(e);
     }
 
+    //#endregion
+
+    //#region para cuando se toca una notification y el app esta cerrada y entra
+    try {
+      let intents = await MyApp.me.webIntent.getIntent();
+      MyApp.me.processNotification(intents);
+    }
+    catch (e) {
+      console.error(e);
+    }
+    //#endregion
+
+    //#region cuando se toca una notification y el app esta en background
+    MyApp.me.webIntent.onIntent().subscribe(function (intent) {
+      MyApp.me.processNotification(intent);
+    }, console.error);
+    //#endregion
 
   }
 
-  //#endregion
+  public async processNotification(intent) {
+
+    console.log(intent);
+
+    if (!intent.hasOwnProperty("extras") || !intent.extras.hasOwnProperty("is")) {
+      return;
+    }
+
+    let data = JSON.parse(intent.extras.dataStringify);
+    if (intent.extras.is === "chat") {
+      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);
+    }else if(intent.extras.is === "event"){
+      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }]);
+    }
+
+  }
 
 }
 

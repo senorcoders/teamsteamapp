@@ -48,7 +48,7 @@ export class HelpersProvider {
   public setLanguage(lang: string) {
     let t = this;
     this.zone.run(function () {
-      t.translate.use(lang);
+      t.translate.use(lang).subscribe(console.log, console.error);
     });
   }
 
@@ -276,7 +276,7 @@ export class HelpersProvider {
 
   }
 
-  public async toPages(pages:Array<{page: Page, data:any}>, root:Page){
+  public async toPages(root:Page, pages:Array<{page: Page, data:any}>){
     let nav = this.app.getActiveNavs()[0];
     await nav.setRoot(root);
     for(let page of pages){

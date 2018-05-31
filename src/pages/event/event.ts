@@ -69,7 +69,16 @@ export class EventPage {
   ) {
     //this.init();
     let e = this.navParams.get("event");
+    console.log(e);
     this.user = MyApp.User;
+
+    if( !e.hasOwnProperty("comments") ){
+      e.comments = [];
+    }
+
+    if( !e.location.hasOwnProperty("address") ){
+      e.location.address = [];
+    }
 
     this.event = e;
     this.index = this.navParams.get("index");
