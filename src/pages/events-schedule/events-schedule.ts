@@ -44,7 +44,9 @@ export class EventsSchedulePage {
     public popoverCtrl: PopoverController, public zone: NgZone,
     private translate: TranslateService, public locationAccuracy: LocationAccuracy
   ) {
-    MyApp.initNotifcations();
+    
+    if( this.navParams.get("notification") === undefined )
+      MyApp.initNotifcations();
 
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
 

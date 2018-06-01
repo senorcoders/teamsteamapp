@@ -276,9 +276,10 @@ export class HelpersProvider {
 
   }
 
-  public async toPages(root:Page, pages:Array<{page: Page, data:any}>){
+  public async toPages(root:Page, pages:Array<{page: Page, data:any}>, data?){
+    data = data || {};
     let nav = this.app.getActiveNavs()[0];
-    await nav.setRoot(root);
+    await nav.setRoot(root, data);
     for(let page of pages){
       await nav.push(page.page, page.data);
     }

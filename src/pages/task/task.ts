@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MyTaskPage } from '../my-task/my-task';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MyApp } from '../../app/app.component';
+import * as moment from 'moment';
 
 /**
  * para ver la tarea
@@ -25,6 +26,7 @@ export class TaskPage {
     public auth: AuthServiceProvider, public loading: LoadingController
       ) {
     this.task = this.navParams.get("task");
+    this.task.dateParsed = moment(this.task.dateTime).format('ddd DD MMM YYYY HH:mm');
     this.manager = MyApp.User.role.name === "Manager";
   }
 

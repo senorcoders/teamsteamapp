@@ -34,6 +34,7 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { eachDay } from 'date-fns';
 import { WebIntent } from '@ionic-native/web-intent';
 import { EventPage } from '../pages/event/event';
+import { TaskPage } from '../pages/task/task';
 
 
 @Component({
@@ -53,6 +54,7 @@ export class MyApp {
   public static User: any;
   public static pushObject: PushObject;
   private static event: Events;
+  public static intent=false;
 
   public nameReady = false;
   public teamName = "";
@@ -338,7 +340,9 @@ export class MyApp {
     if (intent.extras.is === "chat") {
       await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);
     }else if(intent.extras.is === "event"){
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }]);
+      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], {notification: true});
+    }else if(intent.extras.is === "task"){
+      await HelpersProvider.me.toPages(MyTaskPage, [{page: TaskPage, data: {task: data} }]);
     }
 
   }
