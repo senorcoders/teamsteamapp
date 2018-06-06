@@ -85,9 +85,9 @@ export class CameraPage {
 
     let previewOtions: CameraPreviewOptions = {
       x: 0,
-      y: 0,
-      width: window.innerWidth,
-      height: window.innerHeight - 80,
+      y: 56,
+      width: window.screen.width,
+      height: window.screen.height - 156,
       camera: 'rear',
       tapPhoto: false,
       previewDrag: false,
@@ -116,9 +116,9 @@ export class CameraPage {
       width: window.innerWidth,
       height: window.innerHeight - 80,
       camera: 'rear',
-      tapPhoto: false,
+      tapPhoto: true,
       previewDrag: false,
-      toBack: false,
+      toBack: true,
       alpha: 1,
       tapToFocus: true
     };

@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, NavController } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { RequestOptions, Headers, ResponseContentType } from '@angular/http';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -15,6 +15,8 @@ import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { MyApp } from '../../app/app.component';
+import { Page } from 'ionic-angular/navigation/nav-util';
 
 
 
@@ -27,6 +29,8 @@ export class HelpersProvider {
   public static lat: string = "51.5033640";
   public static lng: string = "-0.12762500";
 
+  public static me:HelpersProvider;
+
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder: NativeGeocoder,
     public datePicker: DatePicker, private translate: TranslateService,
@@ -34,7 +38,11 @@ export class HelpersProvider {
     private modalCtrl: ModalController, public camera: Camera,
     public platform: Platform
   ) {
-    //console.log(this);
+    this.init();
+  }
+
+  private init(){
+    HelpersProvider.me = this;
   }
 
   public setLanguage(lang: string) {
@@ -49,8 +57,8 @@ export class HelpersProvider {
   }
 
   public setLenguagueLocal() {
-    let lang = this.translate.getBrowserLang();
-    this.setLanguage(lang);
+    /*let lang = this.translate.getBrowserLang();
+    this.setLanguage(lang);*/
   }
 
   //Para devolver la position de ejemplo para pruebas
@@ -179,93 +187,101 @@ export class HelpersProvider {
           });
         }
       })
-  });
-}
+    });
+  }
 
 
 
   public async locationToPlaces(value) {
-  let response: NativeGeocoderReverseResult;
-  try {
-    let obj: NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
-    console.log(obj);
-    response = obj;
-  } catch (e) {
-    console.error(e);
-    response = null;
+    let response: NativeGeocoderReverseResult;
+    try {
+      let obj: NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      console.log(obj);
+      response = obj;
+    } catch (e) {
+      console.error(e);
+      response = null;
+    }
+    return response;
   }
-  return response;
-}
 
   //Para mostrar un picker native de date time y que se mas rapdio al seleccionar
 
-  public nativeDatePicker(options ?: DatePickerOptions): Promise < Date > {
+  public nativeDatePicker(options?: DatePickerOptions): Promise<Date> {
 
-  options = options || {
-    date: new Date(),
-    mode: 'datetime',
-    androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-  };
-  options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT;
+    options = options || {
+      date: new Date(),
+      mode: 'datetime',
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    };
+    options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT;
 
-  return this.datePicker.show(options);
-}
+    return this.datePicker.show(options);
+  }
 
   //Para validar email
   public validEmail(email: string): boolean {
-  return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
-}
+    return /^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(email);
+  }
 
   //para obtener el tamaño adecuado segun la tamaño del dispositivo
   public getSizeImage(): { text: string, width: number, height: number } {
 
-  let sizes = [
-    { text: "@250x200", width: 250, height: 200 },
-    { text: "@450x350", width: 450, height: 350 },
-    { text: "@700x600", width: 700, height: 600 }
-  ];
+    let sizes = [
+      { text: "@250x200", width: 250, height: 200 },
+      { text: "@450x350", width: 450, height: 350 },
+      { text: "@700x600", width: 700, height: 600 }
+    ];
 
-  let width = window.innerWidth;
+    let width = window.innerWidth;
 
-  if (sizes[0].width <= width && width < sizes[1].width) {
+    if (sizes[0].width <= width && width < sizes[1].width) {
 
-    return sizes[0];
-  } else if (sizes[1].width <= width && width < sizes[2].width) {
+      return sizes[0];
+    } else if (sizes[1].width <= width && width < sizes[2].width) {
 
-    return sizes[1];
+      return sizes[1];
+    }
+
+    return sizes[2]
+
+
   }
 
-  return sizes[2]
-
-
-}
-
-  public getLoadingStandar(present ?: boolean): Loading {
-  let load = this.loading.create({
-    spinner: 'hide', content: `
+  public getLoadingStandar(present?: boolean): Loading {
+    let load = this.loading.create({
+      spinner: 'hide', content: `
     <div class="loader"></div>
     ` });
-  present = present || true;
-  if (present === true) {
-    load.present({ disableApp: true });
+    present = present || true;
+    if (present === true) {
+      load.present({ disableApp: true });
+    }
+
+    return load;
+
   }
 
-  return load;
-
-}
-
-  public async pickerDateTime(doceHoras: boolean): Promise < any > {
-  let time = this.modalCtrl.create(DateTimePickerComponent, { doceHoras })
+  public async pickerDateTime(doceHoras: boolean): Promise<any> {
+    let time = this.modalCtrl.create(DateTimePickerComponent, { doceHoras })
     time.present();
-  return new Promise(function (resolve, reject) {
-    time.onDidDismiss(function (date) {
-      if (date !== undefined)
-        resolve(date);
-      else
-        reject("not hour");
-    })
-  });
+    return new Promise(function (resolve, reject) {
+      time.onDidDismiss(function (date) {
+        if (date !== undefined)
+          resolve(date);
+        else
+          reject("not hour");
+      })
+    });
 
-}
+  }
+
+  public async toPages(pages:Array<{page: Page, data:any}>, root:Page){
+    let nav = this.app.getActiveNavs()[0];
+    await nav.setRoot(root);
+    for(let page of pages){
+      await nav.push(page.page, page.data);
+    }
+  }
 
 }
