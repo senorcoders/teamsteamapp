@@ -4,7 +4,7 @@ import { SearchTeamPage } from './search-team';
 
 @NgModule({
   declarations: [
-    //SearchTeamPage,
+    SearchTeamPage,
   ],
   imports: [
     IonicPageModule.forChild(SearchTeamPage),

@@ -1,11 +1,9 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, Nav, NavController, ToastController, Toast, Events } from 'ionic-angular';
+import { Platform, Nav, NavController, ToastController, /*Toast,*/ Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { Network } from '@ionic-native/network';
-import { Geolocation } from '@ionic-native/geolocation';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Push, PushObject, PushOptions } from '@ionic-native/push';
 
 import { LoginPage } from '../pages/login/login';
@@ -16,8 +14,6 @@ import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
 
-import * as moment from 'moment';
-import { Storage } from '@ionic/storage';
 import { ChatPage } from '../pages/chat/chat';
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
@@ -27,11 +23,7 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
-import { PrivacyPolicePage } from '../pages/privacy-police/privacy-police';
-import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
-import { bindCallback } from 'rxjs/observable/bindCallback';
 import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
-import { eachDay } from 'date-fns';
 import { WebIntent } from '@ionic-native/web-intent';
 import { EventPage } from '../pages/event/event';
 import { TaskPage } from '../pages/task/task';
@@ -63,12 +55,12 @@ export class MyApp {
     username: ""
   };
 
-  public toas: Toast;
+  //public toas: Toast;
   public team: any;
 
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
-  public logo = "./assets/imgs/logo-sign.png";
+  public logo = "./assets/imgs/logo-login.png";
   public defaultImageUserUrl = "./assets/imgs/user-menu.png";
   public defaultImageUser = true;
 
@@ -82,9 +74,9 @@ export class MyApp {
 
   constructor(public platform: Platform, statusBar: StatusBar,
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
-    public menuCtrl: MenuController, public geolocation: Geolocation,
-    private network: Network, public toast: ToastController,
-    private locationAccuracy: LocationAccuracy, private push: Push,
+    public menuCtrl: MenuController,
+    private network: Network, /*public toast: ToastController,*/
+    private push: Push,
     private http: HttpClient, private Evenn: Events,
     public zone: NgZone, translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent
@@ -108,7 +100,6 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       statusBar.overlaysWebView(false);
       statusBar.backgroundColorByHexString("#008e76");
-      splashScreen.hide();
 
       t.push.hasPermission()
         .then((res: any) => {
@@ -124,7 +115,7 @@ export class MyApp {
 
     });
 
-    this.toas = this.toast.create({
+    /*this.toas = this.toast.create({
       message: " Internet connection is required",
       showCloseButton: true,
       position: "bottom"
@@ -141,7 +132,7 @@ export class MyApp {
     this.network.onDisconnect().subscribe(data => {
       console.log(data)
       this.toas.present();
-    }, error => console.error(error));
+    }, error => console.error(error));*/
 
   }
 

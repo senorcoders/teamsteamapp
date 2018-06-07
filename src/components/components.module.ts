@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
-import { IonicPageModule } from 'ionic-angular';
-import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
+import { IonicModule } from 'ionic-angular';
 import { GoogleMapsComponent } from './google-maps/google-maps';
 import { CommentsComponent } from './comments/comments';
 import { ViewTrakingComponent } from './view-traking/view-traking';
@@ -11,6 +10,11 @@ import { TrackingEventManagerComponent } from './tracking-event-manager/tracking
 import { ToChatToPerfilPlayerComponent } from './to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { AsingpaymentComponent } from './asingpayment/asingpayment';
 import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
+import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { HttpLoaderFactory } from '../app/app.module';
+import { HttpClient } from '@angular/common/http';
+import { PipesModule } from '../pipes/pipes.module';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -21,8 +25,14 @@ import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
     AsingpaymentComponent,
-    DateTimePickerComponent/*EmojiPickerComponent*/],
-	imports: [ /*IonicPageModule.forChild(EmojiPickerComponent),*/ ],
+    DateTimePickerComponent,
+    
+     ],
+    imports: [ 
+     IonicModule.forRoot(GoogleMapsComponent),
+     TranslateModule.forChild(),
+      PipesModule
+    ],
 	exports: [GoogleMapsComponent,
     CommentsComponent,
     ViewTrakingComponent,
@@ -32,6 +42,10 @@ import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
     TrackingEventManagerComponent,
     ToChatToPerfilPlayerComponent,
     AsingpaymentComponent,
-    DateTimePickerComponent/*EmojiPickerComponent*/]
+    DateTimePickerComponent,
+    TranslateModule,
+    
+  
+    ]
 })
 export class ComponentsModule {}

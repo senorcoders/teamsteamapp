@@ -4,7 +4,7 @@ import { CameraPage } from './camera';
 
 @NgModule({
   declarations: [
-    //CameraPage,
+    CameraPage,
   ],
   imports: [
     IonicPageModule.forChild(CameraPage),
