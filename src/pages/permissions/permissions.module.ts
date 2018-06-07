@@ -4,7 +4,7 @@ import { PermissionsPage } from './permissions';
 
 @NgModule({
   declarations: [
-    //PermissionsPage,
+    PermissionsPage,
   ],
   imports: [
     IonicPageModule.forChild(PermissionsPage),

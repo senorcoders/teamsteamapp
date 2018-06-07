@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { FormJoinTeamPage } from './form-join-team';
+import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
@@ -8,6 +9,7 @@ import { FormJoinTeamPage } from './form-join-team';
   ],
   imports: [
     IonicPageModule.forChild(FormJoinTeamPage),
+    TranslateModule.forChild()
   ],
 })
 export class FormJoinTeamPageModule {}

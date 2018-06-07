@@ -1,6 +1,6 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { ErrorHandler, NgModule } from '@angular/core';
-import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
+import { IonicApp, IonicErrorHandler, IonicModule, IonicPageModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { HttpClientModule, HttpRequest, HTTP_INTERCEPTORS } from '@angular/common/http';
@@ -15,7 +15,6 @@ import { NativeGeocoder } from '@ionic-native/native-geocoder';
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DatePicker } from '@ionic-native/date-picker';
 import { LongPressModule } from 'ionic-long-press';
-import { TranslateModule } from '@ngx-translate/core';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 
 
@@ -41,8 +40,6 @@ import { HelpersProvider } from '../providers/helpers/helpers';
 import { Push } from '@ionic-native/push';
 import { ChatPage } from '../pages/chat/chat';
 import { EmojiProvider } from '../providers/emoji/emoji';
-import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
-import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { CameraPage } from '../pages/camera/camera';
 import { CameraPreview } from '@ionic-native/camera-preview';
 import { Diagnostic } from '@ionic-native/diagnostic';
@@ -50,28 +47,16 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../pages/library-images/library-images';
 import { ItemDetailsPage } from '../pages/item-details/item-details';
 import { PermissionsPage } from '../pages/permissions/permissions';
-import { CDVPhotoLibraryPipe } from '../pipes/cdvphotolibrary/cdvphotolibrary.pipe';
-import { GoogleMapsComponent } from '../components/google-maps/google-maps';
-import { PlacePipe } from '../pipes/place/place';
-import { CommentsComponent } from '../components/comments/comments';
-import { ViewLikesComponent } from '../components/view-likes/view-likes';
-import { ViewTrakingComponent } from '../components/view-traking/view-traking';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { NewTaskPage } from '../pages/new-task/new-task';
 import { TaskPage } from '../pages/task/task';
 import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
-import { SelectNewChatComponent } from '../components/select-new-chat/select-new-chat';
-import { TrackingEventComponent } from '../components/tracking-event/tracking-event';
-import { TrackingEventManagerComponent } from '../components/tracking-event-manager/tracking-event-manager';
-import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 
 //for  multilanguage
-import { TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { Http } from '@angular/http';
 import { ContactsProfilePage } from '../pages/contacts-profile/contacts-profile';
 import { TeamsProfilePage } from '../pages/teams-profile/teams-profile';
 import { AddTeamPage } from '../pages/add-team/add-team';
@@ -87,14 +72,69 @@ import { CheckPaidPage } from '../pages/check-paid/check-paid';
 import { PaymentMonthlyPage } from '../pages/payment-monthly/payment-monthly';
 import { AsignPaymentPage } from '../pages/asign-payment/asign-payment';
 import { ListPlayersPaymentPage } from '../pages/list-players-payment/list-players-payment';
-import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
 import { ViewPaymentsPlayerPage } from '../pages/view-payments-player/view-payments-player';
 import { PaymentPage } from '../pages/payment/payment';
 import { FormPlayerRegistrationPage } from '../pages/form-player-registration/form-player-registration';
 import { ForgotPasswordPage } from '../pages/forgot-password/forgot-password';
 import { ResetPasswordPage } from '../pages/reset-password/reset-password';
-import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';
+import { ComponentsModule } from '../components/components.module';
+import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
+import { GoogleMapsComponent } from '../components/google-maps/google-maps';
+import { CommentsComponent } from '../components/comments/comments';
+import { ViewLikesComponent } from '../components/view-likes/view-likes';
+import { ViewTrakingComponent } from '../components/view-traking/view-traking';
+import { SelectNewChatComponent } from '../components/select-new-chat/select-new-chat';
+import { TrackingEventComponent } from '../components/tracking-event/tracking-event';
+import { TrackingEventManagerComponent } from '../components/tracking-event-manager/tracking-event-manager';
+import { ToChatToPerfilPlayerComponent } from '../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
+import { AsingpaymentComponent } from '../components/asingpayment/asingpayment';
+import { AddTeamPageModule } from '../pages/add-team/add-team.module';
+import { PipesModule } from '../pipes/pipes.module';
+import { LoginPageModule } from '../pages/login/login.module';
+import { EventsSchedulePageModule } from '../pages/events-schedule/events-schedule.module';
+import { RosterPageModule } from '../pages/roster/roster.module';
+import { MemberRosterPageModule } from '../pages/member-roster/member-roster.module';
+import { EventPageModule } from '../pages/event/event.module';
+import { ViewPlayerPageModule } from '../pages/view-player/view-player.module';
+import { EditFamilyPageModule } from '../pages/edit-family/edit-family.module';
+import { CreatePlayerPageModule } from '../pages/create-player/create-player.module';
+import { CreatePlayerDetailsPageModule } from '../pages/create-player-details/create-player-details.module';
+import { NewEventPageModule } from '../pages/new-event/new-event.module';
+import { EditEventPageModule } from '../pages/edit-event/edit-event.module';
+import { ChatPageModule } from '../pages/chat/chat.module';
+import { CameraPageModule } from '../pages/camera/camera.module';
+import { LibraryImagesPageModule } from '../pages/library-images/library-images.module';
+import { ItemDetailsPageModule } from '../pages/item-details/item-details.module';
+import { PermissionsPageModule } from '../pages/permissions/permissions.module';
+import { MyTaskPageModule } from '../pages/my-task/my-task.module';
+import { NewTaskPageModule } from '../pages/new-task/new-task.module';
+import { TaskPageModule } from '../pages/task/task.module';
+import { ChatOnePersonPageModule } from '../pages/chat-one-person/chat-one-person.module';
+import { ListChatsPageModule } from '../pages/list-chats/list-chats.module';
+import { ViewProfilePageModule } from '../pages/view-profile/view-profile.module';
+import { ContactsProfilePageModule } from '../pages/contacts-profile/contacts-profile.module';
+import { TeamsProfilePageModule } from '../pages/teams-profile/teams-profile.module';
+import { SearchTeamsPageModule } from '../pages/search-teams/search-teams.module';
+import { SearchTeamPageModule } from '../pages/search-team/search-team.module';
+import { ViewTeamPageModule } from '../pages/view-team/view-team.module';
+import { PrivacyPolicePageModule } from '../pages/privacy-police/privacy-police.module';
+import { ViewRequestPageModule } from '../pages/view-request/view-request.module';
+import { ViewRequestsPageModule } from '../pages/view-requests/view-requests.module';
+import { FormJoinTeamPageModule } from '../pages/form-join-team/form-join-team.module';
+import { RegistrationPageModule } from '../pages/registration/registration.module';
+import { PaymentSubscripcionPageModule } from '../pages/payment-subscripcion/payment-subscripcion.module';
+import { CheckPaidPageModule } from '../pages/check-paid/check-paid.module';
+import { PaymentMonthlyPageModule } from '../pages/payment-monthly/payment-monthly.module';
+import { AsignPaymentPageModule } from '../pages/asign-payment/asign-payment.module';
+import { ListPlayersPaymentPageModule } from '../pages/list-players-payment/list-players-payment.module';
+import { ViewPaymentsPlayerPageModule } from '../pages/view-payments-player/view-payments-player.module';
+import { PaymentPageModule } from '../pages/payment/payment.module';
+import { FormPlayerRegistrationPageModule } from '../pages/form-player-registration/form-player-registration.module';
+import { ForgotPasswordPageModule } from '../pages/forgot-password/forgot-password.module';
+import { ResetPasswordPageModule } from '../pages/reset-password/reset-password.module';
+import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
+import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -104,62 +144,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   declarations: [
     MyApp,
-    LoginPage,
-    EventsSchedulePage,
-    RosterPage,
-    MemberRosterPage,
-    EventPage,
-    ViewPlayerPage,
-    EditFamilyPage,
-    CreatePlayerPage,
-    CreatePlayerDetailsPage,
-    NewEventPage,
-    EditEventPage,
-    ChatPage,
-    RelativeTimePipe,
-    PlacePipe,
-    EmojiPickerComponent,
-    GoogleMapsComponent,
-    CameraPage,
-    LibraryImagesPage,
-    ItemDetailsPage,
-    PermissionsPage,
-    CDVPhotoLibraryPipe,
-    CommentsComponent,
-    ViewLikesComponent,
-    ViewTrakingComponent,
-    MyTaskPage,
-    NewTaskPage,
-    TaskPage,
-    ChatOnePersonPage,
-    ListChatsPage,
-    SelectNewChatComponent,
-    TrackingEventComponent,
-    TrackingEventManagerComponent,
-    ToChatToPerfilPlayerComponent,
-    ViewProfilePage,
-    ContactsProfilePage,
-    TeamsProfilePage,
-    AddTeamPage,
-    SearchTeamsPage,
-    ViewTeamPage,
-    PrivacyPolicePage,
-    ViewRequestPage,
-    ViewRequestsPage,
-    FormJoinTeamPage,
-    RegistrationPage,
-    PaymentSubscripcionPage,
-    CheckPaidPage,
-    PaymentMonthlyPage,
-    AsignPaymentPage,
-    ListPlayersPaymentPage,
-    AsingpaymentComponent,
-    ViewPaymentsPlayerPage,
-    PaymentPage,
-    FormPlayerRegistrationPage,
-    ForgotPasswordPage,
-    ResetPasswordPage,
-    DateTimePickerComponent
+    EmojiPickerComponent
   ],
   imports: [
     BrowserModule,
@@ -168,8 +153,6 @@ export function HttpLoaderFactory(http: HttpClient) {
       name: 'teamsnap',
         driverOrder: ['sqlite', 'indexeddb', 'websql']
     }),
-    HttpModule,
-    HttpClientModule,
     TranslateModule.forRoot({
       loader: {
           provide: TranslateLoader,
@@ -177,7 +160,56 @@ export function HttpLoaderFactory(http: HttpClient) {
           deps: [HttpClient]
       }
     }),
-    LongPressModule
+    HttpModule,
+    HttpClientModule,
+    LongPressModule,
+    ComponentsModule,
+    AddTeamPageModule,
+    PipesModule,
+    LoginPageModule,
+    EventsSchedulePageModule,
+    RosterPageModule,
+    MemberRosterPageModule,
+    EventPageModule,
+    ViewPlayerPageModule,
+    EditFamilyPageModule,
+    CreatePlayerPageModule,
+    CreatePlayerDetailsPageModule,
+    NewEventPageModule,
+    EditEventPageModule,
+    ChatPageModule,
+    CameraPageModule,
+    LibraryImagesPageModule,
+    ItemDetailsPageModule,
+    PermissionsPageModule,
+    MyTaskPageModule,
+    NewTaskPageModule,
+    TaskPageModule,
+    ChatOnePersonPageModule,
+    ListChatsPageModule,
+    ViewProfilePageModule,
+    ContactsProfilePageModule,
+    TeamsProfilePageModule,
+    SearchTeamsPageModule,
+    SearchTeamPageModule,
+    ViewTeamPageModule,
+    PrivacyPolicePageModule,
+    ViewRequestPageModule,
+    ViewRequestsPageModule,
+    FormJoinTeamPageModule,
+    RegistrationPageModule,
+    PaymentSubscripcionPageModule,
+    CheckPaidPageModule,
+    PaymentMonthlyPageModule,
+    AsignPaymentPageModule,
+    ListPlayersPaymentPageModule,
+    ViewPaymentsPlayerPageModule,
+    PaymentPageModule,
+    FormPlayerRegistrationPageModule,
+    ForgotPasswordPageModule,
+    ResetPasswordPageModule,
+    PipesModule
+   
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -259,7 +291,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WebSocketsProvider,
     InAppBrowser,
     Geocoder,
-    Camera
+    Camera,
+    EmojiProvider
   ]
 })
 export class AppModule {}

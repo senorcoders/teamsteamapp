@@ -61,7 +61,7 @@ export class MyApp {
 
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
-  public logo = "./assets/imgs/logo-sign.png";
+  public logo = "./assets/imgs/logo-login.png";
   public defaultImageUserUrl = "./assets/imgs/user-menu.png";
   public defaultImageUser = true;
 

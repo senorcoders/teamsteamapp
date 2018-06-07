@@ -1,12 +1,14 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { RosterPage } from './roster';
+import { TranslateModule } from '@ngx-translate/core';
 @NgModule({
   declarations: [
-    //RosterPage,
+    RosterPage,
   ],
   imports: [
-    IonicPageModule.forChild(RosterPage)
+    IonicPageModule.forChild(RosterPage),
+    TranslateModule.forChild()
   ],
 })
 export class RosterPageModule {}
