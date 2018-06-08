@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { StatusBar } from '@ionic-native/status-bar';
+import { EventsSchedulePage } from '../events-schedule/events-schedule';
 
 
 @IonicPage()
@@ -116,7 +117,8 @@ export class RegistrationPage {
 
       if(user){
         this.statusBar.backgroundColorByHexString("#008e76");
-        this.navCtrl.setRoot(PaymentSubscripcionPage);
+        //this.navCtrl.setRoot(PaymentSubscripcionPage);
+        this.navCtrl.setRoot(EventsSchedulePage);
       }else if( err ){
 
         if( !err.hasOwnProperty("password") ){

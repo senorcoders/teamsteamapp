@@ -2,8 +2,10 @@
     "EVENTS": {
         "TITLE" : "Horario de Eventos",
         "PAST": "Anteriores",
-        "UPCOMING": "Proximos"
+        "UPCOMING": "Proximos",
+        "NOEVENT": "Bueno, esto es aburrido. Agregar eventos"
     },
+    "HERE": "Aquí",
     "NAVMENU": {
         "EVENTS" : "Eventos",
         "MYTASK": "Mis Tareas",

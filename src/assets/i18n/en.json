@@ -2,8 +2,10 @@
     "EVENTS": {
         "TITLE": "Events Schedule",
         "PAST": "Past",
-        "UPCOMING": "Upcoming"
+        "UPCOMING": "Upcoming",
+        "NOEVENT": "Well, this is boring.  Add events"
     },
+    "HERE": "here",
     "NAVMENU": {
         "EVENTS" : "Events",
         "MYTASK": "My Task",

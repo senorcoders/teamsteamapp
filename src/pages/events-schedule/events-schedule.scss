@@ -41,6 +41,23 @@ page-events-schedule {
         }
     }
 
+    .no-events{
+        height: 100%;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        h4{
+            text-align: center;
+            width: 100%;
+            flex-basis: 100%;
+            color: #008e76 !important;
+            a{
+                color: #1a5d58 !important;
+                text-decoration: none !important;
+            }
+        }
+    }
+
     .text-event{
         font-family: "Text_Event" !important;
     }

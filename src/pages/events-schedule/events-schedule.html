@@ -24,6 +24,10 @@
     </button>
   </div>
 
+  <div [hidden]="!event0" class="no-events" >
+    <h4>{{"EVENTS.NOEVENT" | translate}} <a href="#" (click)="addEvent()">{{'HERE' | translate}}!</a></h4>
+  </div>
+
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
 
     <!--ion-card-content (click)="goEvent(e)" >
@@ -137,7 +141,7 @@
 
   </ion-card>
 
-  <ion-fab bottom right [hidden]='user.role.name != "Manager"' >
+  <ion-fab bottom right [hidden]='addButtonHidden()' >
     <button color="base" ion-fab icon-only (click)="addEvent()" >
       <ion-icon name="md-add"></ion-icon>
     </button>

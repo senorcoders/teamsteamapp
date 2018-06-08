@@ -17,8 +17,8 @@
 	</ion-header>
     <ion-content>
       <ion-list>
-        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p)" ><ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon>{{p.title | translate}}</ion-item>
-        <ion-item (click)="logout()"><ion-icon name="log-out" class="icon-menu"></ion-icon>{{'NAVMENU.LOGOUT' | translate}}</ion-item>
+        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p)" ><!--ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon-->{{p.title | translate}}</ion-item>
+        <ion-item (click)="logout()"><!--ion-icon name="log-out" class="icon-menu"></ion-icon-->{{'NAVMENU.LOGOUT' | translate}}</ion-item>
       </ion-list>
     </ion-content>
   </ion-menu>
