@@ -21,7 +21,7 @@
       <ion-avatar item-start [hidden]="!loadImage" >
         <img [src]="team.imageSrc" (load)="successImage()" >
       </ion-avatar>
-      <h2 (click)="goChatTeam()" >{{team.name}}</h2>
+      <h2 (click)="goChatTeam()" >{{team.name}} - {{'TEAMCHAT' | translate}}</h2>
     </ion-item>
 
     <ion-item *ngFor='let user of listUsers' (click)="goChat(user)" >

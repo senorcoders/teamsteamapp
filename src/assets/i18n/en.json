@@ -102,6 +102,7 @@
         "CREATEPLAYER": "Add Player"
     },
     "BIRTHDAY": "Birthday",
+    "TEAMCHAT": "Team Chat",
     "LOCATION": "Location",
     "WEBSITE": "Website",
     "TRACKING": "Tracking",
@@ -119,6 +120,7 @@
     "TEST": "Hello, you are using the language English",
     "LANGUAGE": "Language",
     "SELECTUSER": "Players and Managers",
+    "COMPOSEMESSAGE": "Compose Message",
     "SEARCH": "Search",
     "EMPTYFIELDS": "Empty Fields",
     "ASSIGN": "assign",
