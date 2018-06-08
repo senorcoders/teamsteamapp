@@ -94,9 +94,11 @@
         "GENDER": "Gender",
         "YERSERYNUMBER": "Jersey Number (optional)",
         "POSITIONS": "Position",
-        "CONTACTINFORMATION": "Contact Information",
+        "ADDITIONALCONTACTINFORMATION": "Additional Contact Information",
+        "CONTACTNAME": "Contact Name",
+        "EMAILPHONE": "Email / Phone",
         "VALUE": "Value",
-        "DETAILSPLAYER": "Detail Players",
+        "DETAILSPLAYER": "Continue Adding Player",
         "NONPLAYER": "Family Member",
         "MANAGERACCESS": "Manager Access",
         "CREATEPLAYER": "Add Player"
