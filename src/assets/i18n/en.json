@@ -55,8 +55,25 @@
     "DESCRIPTION": "Description",
     "SPORT": "Sport",
     "SPORTS":{
-        "BASEBALL": "Baseball",
-        "FOOTBALL": "Football"
+        "BASEBALL&SOFTBALL": "Baseball & Softball",
+        "SOCCER": "Soccer",
+        "FOOTBALL": "Football",
+        "BASKETBALL": "Basketball",
+        "BOWLING": "Bowling",
+        "CHEERLEADING": "Cheerleading",
+        "CREW&ROWING": "Crew & Rowing",
+        "CROSSCOUNTRY": "Cross Country",
+        "FIELDHOCKEY": "Field Hockey",
+        "GOLF": "Golf",
+        "HOCKEY": "Hockey",
+        "LACROSSE": "Lacrosse",
+        "RUGBY": "Rugby",
+        "SWIMMING&DIVING": "Swimming & Diving",
+        "TENNIS": "Tennis",
+        "TRACK&FIELD": "Track & Field",
+        "VOLLEYBALL": "Volleyball",
+        "WATERPOLO": "Water Polo",
+        "WRESTLING": "Wrestling"
     },
     "SEARCHTEAM": {
         "TITLE": "to join a team search here",
