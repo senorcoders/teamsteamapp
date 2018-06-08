@@ -22,9 +22,12 @@
                     <p>
                         {{msg.username}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
-                <div class="msg-content">
+                <!--div class="msg-content" [hidden]="msg.type === 'image' ">
                     <span class="triangle"></span>
                     <p class="line-breaker ">{{msg.text}}</p>
+                </div-->
+                <div class="msg-content" [innerHTML]="insertMsg(msg)">
+                    
                 </div>
             </div>
         </div>

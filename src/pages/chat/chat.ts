@@ -93,6 +93,17 @@ export class ChatPage {
     this.events.unsubscribe('message');
   }
 
+  public insertMsg(msg){
+    if( msg.hasOwnProperty("type") && msg.type === 'image'){
+      return `<span class="triangle"></span>
+      <img src="${this.urlImg(msg.id)}" alt="">
+      <p class="line-breaker ">${msg.text}</p>`
+    }
+
+    return `<span class="triangle"></span>
+      <p class="line-breaker ">${msg.text}</p>`
+  }
+
   onFocus() {
     this.showEmojiPicker = false;
     this.content.resize();
@@ -121,7 +132,7 @@ export class ChatPage {
         item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
         return item;
       }));
-
+      //console.log(this.msgList);
       /*this.msgListObserver = Rx.Observable.from(this.msgList).toArray();
       this.msgListObserver.subscribe(x => {console.log("new: ", x)});*/
     }
@@ -179,7 +190,9 @@ export class ChatPage {
   }
 
   private async sendImage(data) {
-    
+    if(data === undefined || data == null)
+      return;
+
     try {
       let msg = {
         user: MyApp.User.id,
@@ -196,6 +209,10 @@ export class ChatPage {
     catch (e) {
       console.error(e);
     }
+  }
+
+  public urlImg(id:string){
+    return interceptor.transformUrl(`/api/image/messages/${id}`);
   }
 
   /**
