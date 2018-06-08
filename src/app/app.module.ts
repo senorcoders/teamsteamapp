@@ -136,6 +136,7 @@ import { ForgotPasswordPageModule } from '../pages/forgot-password/forgot-passwo
 import { ResetPasswordPageModule } from '../pages/reset-password/reset-password.module';
 import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
+import { PreviewImageChatComponent } from '../components/preview-image-chat/preview-image-chat';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -209,7 +210,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormPlayerRegistrationPageModule,
     ForgotPasswordPageModule,
     ResetPasswordPageModule,
-    PipesModule
+    PipesModule,
    
   ],
   bootstrap: [IonicApp],
@@ -266,7 +267,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormPlayerRegistrationPage,
     ForgotPasswordPage,
     ResetPasswordPage,
-    DateTimePickerComponent
+    DateTimePickerComponent,
+    PreviewImageChatComponent
   ],
   providers: [
     StatusBar,

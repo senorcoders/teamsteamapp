@@ -105,6 +105,8 @@
         "MANAGERACCESS": "Manager Access",
         "CREATEPLAYER": "Add Player"
     },
+    "ADDIMAGE": "Add Image",
+    "COMMENT": "Comment",
     "BIRTHDAY": "Birthday",
     "TEAMCHAT": "Team Chat",
     "LOCATION": "Location",

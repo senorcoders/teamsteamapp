@@ -1,0 +1,39 @@
+<ion-header>
+  <ion-navbar color="base">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"ADDIMAGE" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <img [src]="image">
+
+  <ion-grid>
+    <ion-row>
+      <ion-item>
+        <ion-label floating>{{'COMMENT' | translate}}</ion-label>
+        <ion-input type="text" [(ngModel)]="comment" ></ion-input>
+      </ion-item>
+    </ion-row>
+    <ion-row>
+      <ion-col text-center>
+        <button ion-button icon-only (click)="sendImg()" >
+          <ion-icon name="md-checkmark"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col>
+      </ion-col>
+      <ion-col text-center>
+        <button ion-button icon-only (click)="viewCtrl.dismiss()">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

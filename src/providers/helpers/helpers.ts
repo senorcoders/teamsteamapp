@@ -174,6 +174,10 @@ export class HelpersProvider {
       parameters.resolve = resolve;
       parameters.reject = reject;
 
+      if(!t.platform.is("cordova")){
+        return t.pickFileBrowser(resolve, reject);
+      }
+
       t.diagnostic.isCameraAuthorized().then(async (authorized) => {
         if (authorized) {
           await t.app.getActiveNavs()[0].push(CameraPage, parameters);
@@ -190,7 +194,40 @@ export class HelpersProvider {
     });
   }
 
+  private pickFileBrowser(resolve, reject) {
 
+    try {
+
+      let pick = document.createElement("input");
+      pick.setAttribute("type", "file");
+
+      document.body.appendChild(pick);
+
+      let handleFile = function (e: any) {
+
+        var files = e.target.files, f = files[0];
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+
+          let target: any = e.target;
+          let data = target.result;
+          resolve(data);
+          document.body.removeChild(pick);
+        };
+
+        reader.readAsDataURL(f);
+      }
+
+      pick.addEventListener('change', handleFile, false);
+
+      pick.click();
+    }
+    catch (e) {
+      reject(e);
+    }
+
+  }
 
   public async locationToPlaces(value) {
     let response: NativeGeocoderReverseResult;

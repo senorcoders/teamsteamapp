@@ -106,6 +106,8 @@
         "MANAGERACCESS": "Privilegios de Manager",
         "CREATEPLAYER": "Agregar Jugador"
     },
+    "ADDIMAGE": "Agregar Imagen",
+    "COMMENT": "Comentario",
     "BIRTHDAY": "Cumpleaños",
     "LOCATION": "Ubicación",
     "WEBSITE": "Sitio Web",

@@ -15,6 +15,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app/app.module';
 import { HttpClient } from '@angular/common/http';
 import { PipesModule } from '../pipes/pipes.module';
+import { PreviewImageChatComponent } from './preview-image-chat/preview-image-chat';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -26,7 +27,7 @@ import { PipesModule } from '../pipes/pipes.module';
     ToChatToPerfilPlayerComponent,
     AsingpaymentComponent,
     DateTimePickerComponent,
-    
+    PreviewImageChatComponent,
      ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
@@ -44,8 +45,7 @@ import { PipesModule } from '../pipes/pipes.module';
     AsingpaymentComponent,
     DateTimePickerComponent,
     TranslateModule,
-    
-  
+    PreviewImageChatComponent,
     ]
 })
 export class ComponentsModule {}
