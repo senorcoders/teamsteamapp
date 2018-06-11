@@ -5,12 +5,9 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { interceptor } from '../../providers/auth-service/interceptor';
-import { RelativeTimePipe } from '../../pipes/relative-time/relative-time';
 import { Observable } from 'rxjs/Observable'
 import 'rxjs/add/operator/map';
-import { toObservable } from '@angular/forms/src/validators';
 import 'rxjs/add/observable/fromEvent';
-import * as Rx from 'rxjs';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { PreviewImageChatComponent } from '../../components/preview-image-chat/preview-image-chat';

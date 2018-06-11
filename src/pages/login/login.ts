@@ -5,11 +5,10 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HttpClient } from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SearchTeamPage } from '../search-team/search-team';
 import { SearchTeamsPage } from '../search-teams/search-teams';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { RegistrationPage } from '../registration/registration';
-import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+//import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { FormPlayerRegistrationPage } from '../form-player-registration/form-player-registration';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 

@@ -5,7 +5,6 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from '../../app/app.component';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { CheckPaidPage } from '../check-paid/check-paid';
-import { MyTaskPage } from '../my-task/my-task';
 import * as moment from 'moment';
 
 @IonicPage()
@@ -57,7 +56,7 @@ export class PaymentSubscripcionPage {
     let p:any = await this.http.post("/payment-team", payer).toPromise();
     let link = p.payment.links[1].href;
 
-    let browser = this.iab.create(link);
+    /*let browser = */this.iab.create(link);
 
     this.navCtrl.push(CheckPaidPage, { month: this.month, init: false });
 
@@ -77,7 +76,7 @@ export class PaymentSubscripcionPage {
     let p:any = await this.http.post("/payment-team", payer).toPromise();
     let link = p.payment.links[1].href;
 
-    let browser = this.iab.create(link);
+    /*let browser = */this.iab.create(link);
 
     this.navCtrl.setRoot(CheckPaidPage, { month: moment().format("MM/YYYY"), init: true });
 

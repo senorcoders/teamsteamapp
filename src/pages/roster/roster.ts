@@ -23,7 +23,6 @@ export class RosterPage {
   public user:any;
   public isManager:boolean=false;
 
-  private team:any;
   public players:Array<any>=[];
 
   public updateImagePlayer = (index:number, stringBase64:string)=>{
@@ -53,9 +52,6 @@ export class RosterPage {
 
     this.players = players;
 
-    let src = interceptor.url;
-    let t = this;
-    
     this.players = this.players.filter(function(item){
       return item.user !== undefined;
     });

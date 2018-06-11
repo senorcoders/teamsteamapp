@@ -88,7 +88,7 @@ export class ViewProfilePage {
       let options = this.user.options;
       options.language = this.lang;
 
-      let updatedUser = await this.http.put("/user/"+ this.user.id, { options }).toPromise();
+      /*let updatedUser = */await this.http.put("/user/"+ this.user.id, { options }).toPromise();
       await this.auth.saveOptions(options);
       //console.log(updatedUser);
       this.helper.setLanguage(this.lang);
@@ -366,7 +366,7 @@ export class ViewProfilePage {
     
     try{
 
-      let resend = await this.http.post("/user/resend-code", { 
+      /*let resend = */await this.http.post("/user/resend-code", { 
         id: MyApp.User.id,
         email: MyApp.User.email,
         verificationCode: MyApp.User.verificationCode

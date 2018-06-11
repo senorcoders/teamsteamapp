@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { HelpersProvider } from '../../providers/helpers/helpers';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { MyApp } from '../../app/app.component';
 
@@ -15,8 +14,7 @@ export class PaymentPage {
 
   public payment:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, private helper: HelpersProvider,
-    private iab: InAppBrowser
+    public http: HttpClient, private iab: InAppBrowser
   ) {
 
     this.payment = this.navParams.get("payment");

@@ -5,8 +5,6 @@ import * as moment from 'moment';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
-import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
-import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 
 
 @IonicPage()

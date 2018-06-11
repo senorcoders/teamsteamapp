@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, ModalController, ToastController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, ModalController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
@@ -19,14 +19,13 @@ export class ListPlayersPaymentPage {
   public players:Array<any>=[];
   public multi=false;
   private down=false;
-  private manager:any={};
 
   private playersSelects:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public http: HttpClient,
-    public modelCtrl: ModalController, public zone: NgZone, 
-    private toasCtrl: ToastController, private helper: HelpersProvider
+    public modelCtrl: ModalController, public zone: NgZone,
+    private helper: HelpersProvider
   ) {
 
   }
@@ -42,9 +41,6 @@ export class ListPlayersPaymentPage {
     let players:any = await this.http.get("/players/team/"+ this.user.team).toPromise();
 
     this.players = players;
-
-    let src = interceptor.url;
-    let t = this;
     
     this.players = this.players.filter(function(item){
       return item.user !== undefined;
@@ -89,7 +85,7 @@ export class ListPlayersPaymentPage {
 
   public pressed(member){
 
-    let multi = JSON.parse( JSON.stringify({ m : this.multi }) ).m;
+    //let multi = JSON.parse( JSON.stringify({ m : this.multi }) ).m;
     this.down = true;
 
     setTimeout(function(){

@@ -3,7 +3,7 @@ import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angu
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
-import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
+//import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { StatusBar } from '@ionic-native/status-bar';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 
@@ -111,7 +111,7 @@ export class RegistrationPage {
       "configuration": { "valid": true }
     };
 
-    let newUserTeam = await this.http.post("/user/team", user).toPromise();
+    /*let newUserTeam = */await this.http.post("/user/team", user).toPromise();
 
     let call = async function(err:any, user:any){
 

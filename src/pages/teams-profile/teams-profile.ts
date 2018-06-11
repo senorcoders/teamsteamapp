@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { AddTeamPage } from '../add-team/add-team';
@@ -20,7 +19,7 @@ export class TeamsProfilePage {
   public user:any={ role: {} };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  private http: HttpClient, private auth: AuthServiceProvider
+    private auth: AuthServiceProvider
   ) {
     this.user = MyApp.User;
     this.menu = this.navParams.get("menu") || false;

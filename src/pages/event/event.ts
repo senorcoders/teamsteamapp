@@ -6,27 +6,18 @@ import {
   GoogleMaps,
   GoogleMap,
   GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
-  Marker,
-  Geocoder,
-  GeocoderRequest,
-  GeocoderResult
+  GoogleMapOptions
  } from '@ionic-native/google-maps';
 import { EditEventPage } from '../edit-event/edit-event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
-import { AndroidSystemUiFlags } from '@ionic-native/android-full-screen';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { MyApp } from '../../app/app.component';;
-import { PhotoViewer, PhotoViewerOptions } from '@ionic-native/photo-viewer';
+import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
-import { TrackingEventComponent } from '../../components/tracking-event/tracking-event';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
-import { NativeGeocoder } from '@ionic-native/native-geocoder';
 
 declare var google:any;
 
@@ -62,7 +53,7 @@ export class EventPage {
   };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private googleMaps: GoogleMaps, public loading: LoadingController, public alertCtrl: AlertController,
+    public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
     public photoViewer: PhotoViewer, public modalCtrl: ModalController, 
     private zone: NgZone
@@ -396,7 +387,7 @@ export class EventPage {
     //console.log(like);
 
     if(event.likeUp === true && likeUp === true){
-      let li = await this.http.delete("/likes/"+ like.id).toPromise();
+      /*let li = */await this.http.delete("/likes/"+ like.id).toPromise();
       event.likeUp = false;
       if( event.likes.length === 1)
         event.likes = [];
@@ -407,7 +398,7 @@ export class EventPage {
       return;
 
     }else if(event.likeDown === true && likeUp === false ){
-      let li = await this.http.delete("/likes/"+ like.id).toPromise();
+      /*let li = */await this.http.delete("/likes/"+ like.id).toPromise();
       event.likeDown = false;
       if( event.likes.length === 1)
         event.likes = [];
@@ -420,7 +411,7 @@ export class EventPage {
     }
     
     if(event.likeUp === false && likeUp === true && event.likeDown === true){
-      let li = await this.http.put("/likes/"+ like.id, like).toPromise();
+      /*let li = */await this.http.put("/likes/"+ like.id, like).toPromise();
       //console.log(li);
       event.likeDown = false;
       event.likeUp = true;
@@ -428,7 +419,7 @@ export class EventPage {
       await this.countLikes(event);
       
     }else if(event.likeUp === true && likeUp === false && event.likeDown === false){
-      let li = await this.http.put("/likes/"+ like.id, like).toPromise();
+      /*let li = */await this.http.put("/likes/"+ like.id, like).toPromise();
       //console.log(li);
       event.likeDown = true;
       event.likeUp = false;
@@ -439,7 +430,7 @@ export class EventPage {
   }
 
   private async countLikes(event):Promise<Object>{
-    let user = this.user;
+    //let user = this.user;
     return new Promise(function(resolve, reject){
       let likesUp=0, likesDown = 0;
         for(var t of event.likes){

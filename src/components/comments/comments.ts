@@ -2,7 +2,6 @@ import { Component, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
 import { NavParams, TextInput, Content, Events, ViewController, ModalController } from 'ionic-angular';
-import { Observable} from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-chat-to-perfil-player';
@@ -32,8 +31,6 @@ export class CommentsComponent {
     public eventPush: Events, public viewCtrl: ViewController,
     public modalCtrl: ModalController
   ) {
-    let t = this;
-    
     this.event = this.navParams.get("e");
     this.user = MyApp.User;
     this.commentsList = this.event.comments;
@@ -73,6 +70,7 @@ export class CommentsComponent {
   }
 
   ionViewDidLeave(){
+    clearInterval(this.updateTimeMessage);
     this.eventPush.unsubscribe('comment:received', ()=>{
       console.log("unsubscribe comment")
     });

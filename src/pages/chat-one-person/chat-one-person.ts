@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavController, Content, Events, NavParams, TextInput, ModalController } from 'ionic-angular';
+import { IonicPage, Content, NavParams, TextInput, ModalController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable'
@@ -31,15 +31,15 @@ export class ChatOnePersonPage {
   public to: any;
   public from: any;
 
-  private static enableChat: boolean = false;
+  //private static enableChat: boolean = false;
   public static eventChat: Function = (payload: any) => {
     /*if( ChatPage.enableChat === false ) return;
     ChatPage.changeMessages(payload);*/
   }
 
-  private static changeMessages: Function = function (payload) { console.log(payload) };
+  //private static changeMessages: Function = function (payload) { console.log(payload) };
 
-  constructor(private events: Events, private http: HttpClient,
+  constructor(private http: HttpClient,
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
     public navParams: NavParams, public sockets: WebSocketsProvider,
     public helper: HelpersProvider, public modal: ModalController

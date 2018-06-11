@@ -44,7 +44,7 @@ export class CreatePlayerDetailsPage {
   }
 
   async ngOnInit(){
-    let user:any = MyApp.User;
+    //let user:any = MyApp.User;
     let res = this.http.get("/teams/"+ MyApp.User.team).toPromise();
     this.team = res;
     this.birthDay = moment().format("DD MMM YYYY");

@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController, LoadingController, Platform } from 'ionic-angular';
-import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
+import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from '@ionic-native/camera-preview';
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../library-images/library-images';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen';
 import { Camera, CameraOptions } from '@ionic-native/camera';
-declare var cordova: any; // global variable for paths
+//declare var cordova: any; // global variable for paths
 
 /**
  * este es una page donde poder visualizar correctamente la camera
@@ -26,9 +25,8 @@ export class CameraPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public cameraPreview: CameraPreview,
-    public photoLibrary: PhotoLibrary, private androidFullScreen: AndroidFullScreen,
-    public loadCtrl: LoadingController, public camera: Camera,
-    public platform: Platform
+    public photoLibrary: PhotoLibrary, public loadCtrl: LoadingController, 
+    public camera: Camera, public platform: Platform
   ) {
 
     this.resolve = this.navParams.get("resolve");
@@ -39,7 +37,7 @@ export class CameraPage {
 
   }
 
-  moveFileToExternalStorage(fileName: string) {
+  /*moveFileToExternalStorage(fileName: string) {
     // Determine paths
     let externalStoragePath: string =
       cordova.file.externalApplicationStorageDirectory;
@@ -50,7 +48,7 @@ export class CameraPage {
     fileName = fileName.split("/").pop();
 
 
-  }
+  }*/
 
   //Para tomar la foto
   takePicture() {

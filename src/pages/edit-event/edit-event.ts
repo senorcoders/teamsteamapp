@@ -2,12 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import {
-  GoogleMaps,
   GoogleMap,
-  GoogleMapsEvent,
-  GoogleMapOptions,
-  CameraPosition,
-  MarkerOptions,
   Marker
  } from '@ionic-native/google-maps';
 
@@ -74,7 +69,7 @@ export class EditEventPage {
   public index=0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private googleMaps: GoogleMaps, public geolocation: Geolocation,
+    public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController, 
     private auth: AuthServiceProvider, private http: HttpClient,
     private helper: HelpersProvider, public modalCtrl: ModalController
@@ -179,7 +174,6 @@ export class EditEventPage {
   }
 
   public changePhoto(){
-    let t = this;
 
     this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((base64Image)=>{
       
@@ -310,11 +304,10 @@ export class EditEventPage {
     console.log(event);
 
     let valid = true;
-    let updateEvent:any;
     
     try{
       
-      updateEvent = await this.http.put("/event/"+ this.event.id, event).toPromise();
+      await this.http.put("/event/"+ this.event.id, event).toPromise();
       
       if( this.imageUpdate === true )
         await this.http.post("/images/events", { id : this.event.id, image : this.imageSrc }).toPromise();
@@ -339,7 +332,6 @@ export class EditEventPage {
 
     this.load.dismiss();
 
-    let t = this;
     await this.navCtrl.pop();
     EventsSchedulePage.openEvent = { valid: true, index: this.index };
     this.navCtrl.setRoot(EventsSchedulePage);

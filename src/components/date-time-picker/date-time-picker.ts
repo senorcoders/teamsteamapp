@@ -42,23 +42,23 @@ export class DateTimePickerComponent {
   private setHours(doceHoras:boolean){
     
     // Can I use transition ?
-    var transitionSupported = (function(){
+    /*var transitionSupported = (function(){
       var style = document.createElement('div').style;
       return 'transition' in style ||
         'WebkitTransition' in style ||
         'MozTransition' in style ||
         'msTransition' in style ||
         'OTransition' in style;
-    })();
+    })();*/
     
     //para calculos de posicionamiento
     let dialRadius = 100,
 		outerRadius = 80,
 		// innerRadius = 80 on 12 hour clock
 		innerRadius = 54,
-		tickRadius = 13,
-		diameter = dialRadius * 2,
-    duration = transitionSupported ? 350 : 1;
+		tickRadius = 13;
+		/*diameter = dialRadius * 2,
+    duration = transitionSupported ? 350 : 1;*/
     
     let  tickTpl = document.createElement("div");
     tickTpl.classList.add("clockpicker-tick");
@@ -109,7 +109,7 @@ export class DateTimePickerComponent {
 
     let  tickTpl = document.createElement("div");
     tickTpl.classList.add("clockpicker-tick");
-    let i, tick:HTMLDivElement, radian, radius;
+    let i, tick:HTMLDivElement, radian;
 
     for (i = 0; i < 60; i += 15) {
       tick = tickTpl.cloneNode() as HTMLDivElement;

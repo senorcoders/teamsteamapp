@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, PopoverController, ViewController, ModalController, Events } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, PopoverController, ModalController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import moment from 'moment';
@@ -7,11 +7,8 @@ import { EventPage } from '../event/event';
 import { NewEventPage } from '../new-event/new-event';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { MyApp } from '../../app/app.component';
-import { CameraPage } from '../camera/camera';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
-import { TranslateService } from '@ngx-translate/core';
 import { CommentsComponent } from '../../components/comments/comments';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
@@ -43,7 +40,7 @@ export class EventsSchedulePage {
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper: HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone,
-    private translate: TranslateService, public locationAccuracy: LocationAccuracy
+    public locationAccuracy: LocationAccuracy
   ) {
 
     if (this.navParams.get("notification") === undefined)
@@ -92,7 +89,7 @@ export class EventsSchedulePage {
       this.user = MyApp.User;//await this.auth.User();
       ////console.log(this.user);
       this.team = this.user.team;
-      let url = "/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team;
+      //let url = "/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team;
       ////console.log(url);
       let events: any = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
       ////console.log(events);
@@ -100,7 +97,7 @@ export class EventsSchedulePage {
       //console.log(events);*/
       this.events = await this.parserEvents(events);
       ////console.log(this.events);
-      let user = this.user;
+      //let user = this.user;
 
       //this.events = this.events.reverse();
       if (this.events.length === 0 && this.by === "upcoming")
@@ -251,7 +248,7 @@ export class EventsSchedulePage {
 
 
     //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
-    let mayor = false, ind = 0, day = 0;
+    let ind = 0, day = 0;
     for (let i = 0; i < daysMoment.length; i++) {
       if (daysMoment[i].day() > day) {
         day = daysMoment[i].day();
@@ -490,7 +487,7 @@ export class EventsSchedulePage {
     ////console.log(like);
 
     if (event.likeUp === true && likeUp === true) {
-      let li = await this.http.delete("/likes/" + like.id).toPromise();
+      /*let li = */ await this.http.delete("/likes/" + like.id).toPromise();
       event.likeUp = false;
       if (event.likes.length === 1)
         event.likes = [];
@@ -501,7 +498,7 @@ export class EventsSchedulePage {
       return;
 
     } else if (event.likeDown === true && likeUp === false) {
-      let li = await this.http.delete("/likes/" + like.id).toPromise();
+      /*let li = */ await this.http.delete("/likes/" + like.id).toPromise();
       event.likeDown = false;
       if (event.likes.length === 1)
         event.likes = [];
@@ -514,7 +511,7 @@ export class EventsSchedulePage {
     }
 
     if (event.likeUp === false && likeUp === true && event.likeDown === true) {
-      let li = await this.http.put("/likes/" + like.id, like).toPromise();
+      /*let li = */ await this.http.put("/likes/" + like.id, like).toPromise();
       ////console.log(li);
       event.likeDown = false;
       event.likeUp = true;
@@ -522,7 +519,7 @@ export class EventsSchedulePage {
       await this.countLikes(event);
 
     } else if (event.likeUp === true && likeUp === false && event.likeDown === false) {
-      let li = await this.http.put("/likes/" + like.id, like).toPromise();
+      /*let li = */ await this.http.put("/likes/" + like.id, like).toPromise();
       ////console.log(li);
       event.likeDown = true;
       event.likeUp = false;
@@ -533,7 +530,7 @@ export class EventsSchedulePage {
   }
 
   private async countLikes(event): Promise<Object> {
-    let user = this.user;
+    //let user = this.user;
     return new Promise(function (resolve, reject) {
       let likesUp = 0, likesDown = 0;
       for (var t of event.likes) {

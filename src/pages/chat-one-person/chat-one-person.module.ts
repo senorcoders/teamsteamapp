@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatOnePersonPage } from './chat-one-person';
-import { RelativeTimePipe } from '../../pipes/relative-time/relative-time';
 import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({

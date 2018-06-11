@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { AsingpaymentComponent } from '../../components/asingpayment/asingpayment';
 

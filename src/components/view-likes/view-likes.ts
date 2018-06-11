@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { HelpersProvider } from '../../providers/helpers/helpers';
 import { interceptor } from '../../providers/auth-service/interceptor';
 
 /**

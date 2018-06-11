@@ -1,13 +1,11 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
  import moment from 'moment';
-import { VALID } from '@angular/forms/src/model';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
-import { Observable } from 'rxjs/Observable';
 import { MyApp } from '../../app/app.component';
  
 

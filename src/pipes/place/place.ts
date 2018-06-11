@@ -1,7 +1,6 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import { NativeGeocoder, 
-  NativeGeocoderReverseResult, 
-  NativeGeocoderForwardResult } from '@ionic-native/native-geocoder';
+  NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
 
 @Pipe({
   name: 'place',

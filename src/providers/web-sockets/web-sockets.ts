@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { MyApp } from '../../app/app.component';
-import { interceptor } from '../auth-service/interceptor';
 import { Events } from 'ionic-angular';
 
-declare var io:any;
+//declare var io:any;
 
 @Injectable()
 export class WebSocketsProvider {

@@ -10,10 +10,7 @@ import { TrackingEventManagerComponent } from './tracking-event-manager/tracking
 import { ToChatToPerfilPlayerComponent } from './to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { AsingpaymentComponent } from './asingpayment/asingpayment';
 import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
-import { RelativeTimePipe } from '../pipes/relative-time/relative-time';
-import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
-import { HttpLoaderFactory } from '../app/app.module';
-import { HttpClient } from '@angular/common/http';
+import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
 import { PreviewImageChatComponent } from './preview-image-chat/preview-image-chat';
 @NgModule({

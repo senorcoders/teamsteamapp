@@ -1,10 +1,10 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, Nav, NavController, ToastController, /*Toast,*/ Events } from 'ionic-angular';
+import { Platform, Nav, /*ToastController, Toast,*/ Events } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import { Network } from '@ionic-native/network';
-import { Push, PushObject, PushOptions } from '@ionic-native/push';
+//import { Network } from '@ionic-native/network';
+import { Push, PushObject, /*PushOptions*/ } from '@ionic-native/push';
 
 import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -14,7 +14,7 @@ import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
 
-import { ChatPage } from '../pages/chat/chat';
+/*import { ChatPage } from '../pages/chat/chat';*/
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
@@ -36,10 +36,9 @@ export class MyApp {
   @ViewChild('mycontent') nav: Nav;
 
   public static me: MyApp;
-  private disconnectSubscription: any;
 
   private static notificationEnable: boolean = false;
-  private static httpCliente: HttpClient;
+  /*private static httpCliente: HttpClient;*/
   private static authService: AuthServiceProvider;
   private static pusherNotification: Push;
   private static permision: boolean = false;
@@ -75,7 +74,7 @@ export class MyApp {
   constructor(public platform: Platform, statusBar: StatusBar,
     splashScreen: SplashScreen, public auth: AuthServiceProvider,
     public menuCtrl: MenuController,
-    private network: Network, /*public toast: ToastController,*/
+    /*private network: Network, public toast: ToastController,*/
     private push: Push,
     private http: HttpClient, private Evenn: Events,
     public zone: NgZone, translate: TranslateService,
@@ -83,7 +82,7 @@ export class MyApp {
   ) {
 
     //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
-    MyApp.httpCliente = this.http;
+    //MyApp.httpCliente = this.http;
     MyApp.authService = this.auth;
     MyApp.pusherNotification = this.push;
     MyApp.event = this.Evenn;

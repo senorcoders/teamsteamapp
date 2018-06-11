@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Platform, InfiniteScroll } from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ToastController, ModalController } from 'ionic-angular';
 

@@ -195,7 +195,7 @@ export class EditFamilyPage {
       person.firstName = this.person1.firstName;
       person.lastName = this.person1.lastName;
       person.email = this.person1.email;
-      let user:any = await this.http.put("/user/"+ this.person1.idUser, person).toPromise();
+      /*let user:any = */await this.http.put("/user/"+ this.person1.idUser, person).toPromise();
 
       //update in family
       person = new Object();
