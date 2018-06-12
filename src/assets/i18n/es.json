@@ -3,7 +3,8 @@
         "TITLE" : "Horario de Eventos",
         "PAST": "Anteriores",
         "UPCOMING": "Proximos",
-        "NOEVENT": "Bueno, esto es aburrido. Agregar eventos"
+        "NOEVENT": "Bueno, esto es aburrido. Agregar eventos",
+        "AREYOU": "Vienes?"
     },
     "HERE": "Aquí",
     "NAVMENU": {

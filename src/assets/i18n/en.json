@@ -3,7 +3,8 @@
         "TITLE": "Events Schedule",
         "PAST": "Past",
         "UPCOMING": "Upcoming",
-        "NOEVENT": "Well, this is boring.  Add events"
+        "NOEVENT": "Well, this is boring.  Add events",
+        "AREYOU": "Are You Coming?"
     },
     "HERE": "here",
     "NAVMENU": {
