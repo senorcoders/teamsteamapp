@@ -37,6 +37,7 @@ export class ListChatsPage {
       let ramdon = new Date().getTime();
       this.listUsers = users.map(function(item){
         
+        item.loadImage = false;
         item.imgSrc = interceptor.transformUrl(`/images/${ramdon}/users&thumbnail/`+ item._id);
         return item;
 
@@ -69,6 +70,10 @@ export class ListChatsPage {
 
   public successImage(){
     this.loadImage = true;
+  }
+
+  public success(event, user){
+    user.loadImage = true;
   }
 
 }
