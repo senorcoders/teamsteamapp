@@ -2,6 +2,15 @@ page-login {
 	ion-content{
 		background: url(./../assets/imgs/login-bg.jpg);
 	}
+	.item-md.item-block .item-inner {
+		padding-right: 0px !important;
+		border-bottom: transparent !important;
+	  }
+
+	  ion-item, .item-inner{
+		  box-shadow: 0 0 0 !important;
+	  }
+
 	.content{
 	    background-size: cover;
 		background-position: center;

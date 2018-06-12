@@ -95,9 +95,6 @@
 	.item{
 		background: transparent;
 		color:white;
-		.item-inner{
-			border-bottom: 0 !important
-		}
 	}
 	.icon-menu{
 		margin-right: 10px;
@@ -132,4 +129,9 @@ add icon config
 @keyframes spin {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
+}
+
+.loading-wrapper{
+	background-color: transparent !important;
+	box-shadow: 0 0 0 !important;
 }

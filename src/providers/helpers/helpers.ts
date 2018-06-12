@@ -285,7 +285,7 @@ export class HelpersProvider {
   public getLoadingStandar(present?: boolean): Loading {
     let load = this.loading.create({
       spinner: 'hide', content: `
-    <div class="loader"></div>
+    <img src="./assets/imgs/loading.gif">
     ` });
     present = present || true;
     if (present === true) {
