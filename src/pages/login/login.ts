@@ -66,14 +66,14 @@ export class LoginPage {
 
   public async Login(){
     
-    if( this.email == '' || this.password == '' ){
+    if( this.email == '' ){
 
       let emptyM = await this.helper.getWords("EMPTYFIELDS");
       this.presentAlert(emptyM);
 
     }else{
 
-     this.authService.Login(this.email, this.password, async function(err, user){
+     this.authService.Login(this.email, async function(err, user){
 
         if(user){
           this.statusBar.overlaysWebView(false);
@@ -81,10 +81,15 @@ export class LoginPage {
           this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
         }else if( err ){
 
-          if( !err.hasOwnProperty("password") ){
+          if( err.hasOwnProperty("message") ){
 
             let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
             this.presentAlert(passwordM);
+            return;
+
+          }else if( err.hasOwnProperty("verify") ){
+            let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
+            this.presentAlert(msgVerifiedEmail);
             return;
           }else{
 

@@ -170,7 +170,7 @@
     "FAMILY": "Family",
     "PASSWORD": "Password",
     "EMAILINVALID": "Malformed Email",
-    "INVALIDUSERNAMEYPASS": "Incorrect email or password",
+    "INVALIDUSERNAMEYPASS": "Incorrect Email",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",
     "SELECTFAMILY": "Select Your Family Member",
@@ -222,5 +222,6 @@
         "NEWPASSWORD" : "New Password",
         "SENDCODE": "Send Code to Mail"
     },
-    "ERRORUNEX" : "Unexpected Error"
+    "ERRORUNEX" : "Unexpected Error",
+    "VERFIEDDEVICE": "Go to your email and verify your device and return login"
 }

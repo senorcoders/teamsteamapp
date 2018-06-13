@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 //import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { StatusBar } from '@ionic-native/status-bar';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
+import { Device } from '@ionic-native/device';
 
 
 @IonicPage()
@@ -19,8 +20,8 @@ export class RegistrationPage {
   public firstname="";
   public lastname="";
   public email="";
-  public password="";
-  public againpassword="";
+  public password="standar";
+  public againpassword="standar";
 
   public nameteam="";
   public description="";
@@ -33,7 +34,7 @@ export class RegistrationPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
     private http: HttpClient, public auth:AuthServiceProvider,
-    public statusBar: StatusBar
+    public statusBar: StatusBar, public device: Device
   ) {
   
   
@@ -89,13 +90,16 @@ export class RegistrationPage {
       return;
     }
 
-    if( this.password !== this.againpassword ){
+    /*if( this.password !== this.againpassword ){
       let emptM = await this.helper.getWords("PASSWORDNOT");
       this.alertCtrl.create({ title: "Error", message: emptM })
       .present();
       return;
 
-    }
+    }*/
+
+    let uuid = this.device.uuid, model = this.device.model, platform = this.device.platform,
+    versionOS = this.device.version;
 
     let user = {
       "username": this.username,
@@ -108,7 +112,11 @@ export class RegistrationPage {
       "description": this.description,
       "sport": this.sport,
       "city": this.city,
-      "configuration": { "valid": true }
+      "configuration": { "valid": true },
+      uuid,
+      model,
+      platform,
+      versionOS
     };
 
     /*let newUserTeam = */await this.http.post("/user/team", user).toPromise();
@@ -143,7 +151,7 @@ export class RegistrationPage {
 
     }.bind(this);
 
-    await this.auth.Login(user.email, user.password, call)
+    await this.auth.Login(user.email, call)
 
   }
 

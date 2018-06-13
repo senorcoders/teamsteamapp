@@ -133,7 +133,8 @@
     </plugin>
     <plugin name="cordova-plugin-camera" spec="^4.0.3" />
     <allow-navigation href="http://169.254.18.13:8100" />
-    <engine name="ios" spec="4.5.4" />
-    <engine name="android" spec="7.0.0" />
     <allow-navigation href="http://192.168.1.8:8100" />
+    <plugin name="cordova-plugin-device" spec="^2.0.2" />
+    <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="7.1.0" />
 </widget>

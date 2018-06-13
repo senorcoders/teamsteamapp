@@ -170,7 +170,7 @@
     "MANAGER": "Manager",
     "FAMILY": "Familiar",
     "PASSWORD": "Contraseñas",
-    "INVALIDUSERNAMEYPASS": "Correo o Contraseña incorrecta",
+    "INVALIDUSERNAMEYPASS": "Correo Electronico",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registración",
     "SELECTFAMILY": "Selecciona tu Familiar",
@@ -222,5 +222,6 @@
         "CODEINVALID": "Codigo Invalido",
         "SENDCODE": "Enviar Código a Correo"
     },
-    "ERRORUNEX" : "Error Inesperado"
+    "ERRORUNEX" : "Error Inesperado",
+    "VERFIEDDEVICE": "Vaya a su correo y verifique su dispositivo y vuelve e inicia sesión"
 }
