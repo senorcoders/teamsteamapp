@@ -127,8 +127,8 @@ export class EventPage {
             if( res.geometry ){
               let lat = res.geometry.location.lat();
               let lot = res.geometry.location.lng();
-              let t = this;
-              this.zone.run(function(){ t.location.change = true; });
+              this.zone.run(function(){ this.location.change = true; }.bind(this));
+              this.loadMap = this.loadMap.bind(this);
               this.loadMap(lat, lot);
             }
 
@@ -160,12 +160,6 @@ export class EventPage {
 
       
       if( this.location.useMap === true ){
-
-        this.load = this.loading.create({
-          content: "Loading Map"
-        });
-        //this.load.present({ disableApp : true });
-
         this.loadMap(this.event.location.lat, this.event.location.lng);
       }
 
@@ -209,7 +203,8 @@ export class EventPage {
   }
 
   loadMap(lat, lot) {
-    console.log(lat, lot);
+    this.load = this.helper.getLoadingStandar();
+
     let mapOptions: GoogleMapOptions = {
       camera: {
         target: {
@@ -222,7 +217,7 @@ export class EventPage {
     };
 
     let t = this;
-    this.map = GoogleMaps.create('map_canvas', mapOptions);
+    this.map = GoogleMaps.create(document.getElementById("map_canvas"), mapOptions);
 
     // Wait the MAP_READY before using any methods.
     this.map.one(GoogleMapsEvent.MAP_READY)
@@ -251,43 +246,19 @@ export class EventPage {
 
   }
 
-  public remove(){
-    let t = this;
-    let alert = this.alertCtrl.create({
-      title: 'Confirm Password',
-      inputs: [
-        {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Go!',
-          handler: data => {
-            t.checkPassword(data.password);
-          }
-        }
-      ]
-    });
-    alert.present();
+  public async remove(){
+    
+    await this.helper.presentAlertStandar(this.deleteEvent.bind(this));
+    
   }
 
-  public checkPassword(password){
-    let username = this.auth.User().username;
+  /*public checkPassword(password){
+    let email = this.auth.User().email;
 
     this.load = this.loading.create({ content: "Deleting..." });
     this.load.present({ disableApp : true });
     let t = this;
-    this.http.post('/login', { username, password})
+    this.http.post('/login', { email, password})
     .subscribe(function(data:any){
 
       if( data.hasOwnProperty("message") && data.message == "User not found" ){
@@ -317,30 +288,26 @@ export class EventPage {
       console.error(err);
 
     });
-  }
+  }*/
 
   private async deleteEvent(){
-    let t = this, valid:boolean=true;
+
+    let valid=true;
+    let load = this.helper.getLoadingStandar();
     try{
-      await t.http.delete("/event/"+ t.event.id).toPromise();
-      await t.http.delete("/locationevent/"+ t.event.location[0].id).toPromise();
-      await t.http.delete("/images/events/"+ t.event.id).toPromise();
+      await this.http.delete("/event/"+ this.event.id).toPromise();
+      await this.http.delete("/images/events/"+ this.event.id).toPromise();
     }
     catch(e){
       console.error(e);
       valid = false;
-      t.load.dismissAll();
-      t.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
+      await this.helper.presentAlertErrorStandar();
     }
 
     if( valid === false )
       return;
     
-    t.load.dismiss();
+    load.dismiss();
     this.navCtrl.setRoot(EventsSchedulePage);
   }
 

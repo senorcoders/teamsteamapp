@@ -138,9 +138,9 @@ export class EventsSchedulePage {
           it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
         }
 
-        if (it.repeatsDaily === true) {
+        //if (it.repeatsDaily === true) {
           it.Time = moment(it.dateTime).format("hh:mm a");
-        }
+        //}
 
         it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
         it.loadImage = false;

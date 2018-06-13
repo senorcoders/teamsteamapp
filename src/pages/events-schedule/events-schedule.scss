@@ -1,21 +1,37 @@
 page-events-schedule {
+    ion-navbar{
+        height: 10rem !important;
+    }
+    .toolbar-background-md, .toolbar-background{
+        background-color: white !important;
+    }
+    button[menutoggle]{
+        color: #0076a4 !important;
+    }
+    .toolbar-title,.toolbar-title-md{
+        color: black !important;
+        text-align: center;
+        font-size: 2.5rem;
+    }
+
     #select-by{
         margin-top: -4px;
         width: 100%;
         height: 44px;
         display: flex;
         flex-direction: row;
-        justify-content: flex-start;
+        background-color: white !important;
+        justify-content: space-around;
+        padding-bottom: 20px !important;
         /*box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14),
             0 3px 0 0 rgba(0, 0, 0, 0.2), 
             0 1px 0 0 rgba(0, 0, 0, 0.12);*/
 
         .select-by{
-            width: 50%;
-            flex-basis: 50%;
-            margin: 0 !important;
+            width: auto;
+            flex-basis: auto;
             height: 100%;
-            border-radius: 0 !important;
+            border-radius: 20px !important;
             box-shadow: 0 0 0 0 transparent !important;
             .button-inner{
                 display: flex !important;
@@ -58,8 +74,23 @@ page-events-schedule {
         }
     }
 
+    .asistence{
+        ion-col{
+            padding: 0 !important;
+            button{
+                padding: 0 !important;
+            }
+        }
+    }
+
     .text-event{
         font-family: "Text_Event" !important;
+        display: flex;
+        justify-content: space-between;
+        i{
+            width: auto;
+            flex-basis: auto;
+        }
     }
 
     .date-event{
@@ -70,7 +101,8 @@ page-events-schedule {
         background-color: #e8eaf6 !important;
 
         .select{
-            color: #014c46 !important;
+            background-color: #0076a4 !important;
+            color: white !important;
         }
     }
 
@@ -100,13 +132,22 @@ page-events-schedule {
         .mas{
             background-color: #088c75 !important;
         }
+        .mas-text{
+            color: #088c75 !important;
+        }
 
         .menos{
             background-color: #ffe430 !important;
         }
+        .menos-text{
+            color: #ffe430 !important;
+        }
 
         .talves{
             background-color: #e20666 !important;
+        }
+        .talves-text{
+            color: #e20666 !important;
         }
     }
 
@@ -134,12 +175,12 @@ page-events-schedule {
                 position: relative;
                 top: -124px;
                 display: inline-block;
-                right: calc(-73.3% + 20px);
+                right: calc(-73.3% + 30px);
                 h3{
                     font-size: 3rem !important;
                 }
                 h4{
-                    font-size: 3.5rem !important;
+                    font-size: 2.4rem !important;
                 }
                 h3, h4{
                     color: #272928 !important;
@@ -179,10 +220,16 @@ page-events-schedule {
             flex-basis: 100px;
             padding-top: 10px;
             h3{
-                font-size: 2rem !important;
+                font-size: 2.2rem !important;
             }
             h4{
-                font-size: 2.5rem !important;
+                font-size: 2.8rem !important;
+            }
+            h4.daily{
+                font-size: 2.4rem !important;
+                height: 100%;
+                position: relative;
+                line-height: 7rem;
             }
         }
         .details{
@@ -192,6 +239,12 @@ page-events-schedule {
             padding-left: 0;
             h2, p{
                 color: black !important;
+            }
+            h2{
+                font-size: 1.8rem !important;
+            }
+            p{
+                font-size: 1.4rem !important;
             }
         }
     }

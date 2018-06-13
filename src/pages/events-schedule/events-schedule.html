@@ -1,6 +1,6 @@
-<ion-header color="base">
+<ion-header>
 
-  <ion-navbar color="base">
+  <ion-navbar>
     <button ion-button icon-only menuToggle start>
         <ion-icon name="menu"></ion-icon>
     </button>
@@ -16,11 +16,11 @@
   <div ion-fixed id="select-by">
     <button color="pdark" ion-button [ngClass]="by == 'past' ? 'select' : ''" class="select-by" (click)="byS('past')">
         <pre>{{ 'EVENTS.PAST' | translate }}</pre>
-        <ion-icon [hidden]="by == 'upcoming'" name="md-arrow-dropdown"></ion-icon>
+        <!--ion-icon [hidden]="by == 'upcoming'" name="md-arrow-dropdown"></ion-icon-->
     </button>
     <button ion-button color="pdark" [ngClass]="by == 'upcoming' ? 'select' : ''" class="select-by" (click)="byS('upcoming')">
         <pre>{{ 'EVENTS.UPCOMING' | translate }}</pre>
-        <ion-icon [hidden]="by == 'past'" name="md-arrow-dropdown"></ion-icon>
+        <!--ion-icon [hidden]="by == 'past'" name="md-arrow-dropdown"></ion-icon-->
     </button>
   </div>
 
@@ -47,32 +47,33 @@
     <ion-card-content>
       <p class="text-event" (click)="goEvent(e)">
         {{e.name}}
+        <i>{{e.Time}}</i>
       </p>
       <!--p [hidden]="e.repeatsDaily" style="text-align: right;">{{e.parsedDateTime}}</p-->
       <p [hidden]="!e.repeatsDaily" class="text-event" style="text-align: right;">{{e.description}} </p>
       
       <div class="divider"> </div>
-      <ion-row>
+      <ion-row class="asistence">
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'yes')" color="plight" [ngClass]="{'select': e.likeUp }" icon-left clear small>
               <ion-icon class="ball mas"></ion-icon>
-              <div class="text-inner-button text-event">{{e.countYes}}</div>
+              <div class="text-inner-button text-event mas-text">{{e.countYes}}</div>
             </button>
           </ion-col>
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'no')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
                 <ion-icon class="ball menos"></ion-icon>
-              <div class="text-inner-button text-event">{{e.countNo}}</div>
+              <div class="text-inner-button text-event menos-text">{{e.countNo}}</div>
             </button>
           </ion-col>
           <ion-col col-2>
             <button ion-button (click)="asingResponse(e, 'maybe')" color="plight" [ngClass]="{'select': e.likeDown }" icon-left clear small>
               <ion-icon class="ball talves"></ion-icon>
-              <div class="text-inner-button text-event">{{e.countMaybe}}</div>
+              <div class="text-inner-button text-event talves-text">{{e.countMaybe}}</div>
             </button>
           </ion-col>
           <ion-col col-6>
-            <button ion-button (click)="viewComment(e)" icon-left>
+            <button ion-button (click)="viewComment(e)" icon-left style="padding: 0 1.1em !important;">
               <ion-icon name="text"></ion-icon>
               <div class="text-event" >{{e.comments.length}} Comments</div>
             </button>
@@ -104,12 +105,12 @@
     <div class="dateTime" (click)="goEvent(e)" >
         <h3 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[0]}}</h3>
         <h4 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[1]}}</h4>
-        <h4 class="date-event" [hidden]="!e.repeatsDaily" >{{"DAILY" | translate}}</h4>
+        <h4 class="date-event daily" [hidden]="!e.repeatsDaily" >{{"DAILY" | translate}}</h4>
     </div>
 
     <div class="details" (click)="goEvent(e)">
       <h2 class="text-event">{{e.name}}</h2>
-      <p class="text-event">{{e.description}}</p>
+      <p class="text-event" [hidden]="e.description === ''">{{e.description}}</p>
     </div>
 
       <ion-row class="asistencia">

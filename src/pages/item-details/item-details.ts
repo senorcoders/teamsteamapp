@@ -35,10 +35,12 @@ export class ItemDetailsPage {
   public async selectd(){
     var c = document.createElement('canvas');
     var ctx = c.getContext('2d');
-    c.width = this.width;
-    c.height = this.height;
-    ctx.drawImage((document.getElementById('imageSelect') as any), 0,0, this.width, this.height);
+    let img = document.getElementById('imageSelect') as HTMLImageElement;
+    c.width = img.naturalWidth;
+    c.height = img.naturalHeight;
+    ctx.drawImage(img, 0,0, img.naturalWidth, img.naturalHeight);
     var dataURL = c.toDataURL('image/jpg');
+    console.log(img.naturalWidth, img.naturalHeight);
 
     //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
     c=null;ctx=null;

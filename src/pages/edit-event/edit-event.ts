@@ -175,7 +175,7 @@ export class EditEventPage {
 
   public changePhoto(){
 
-    this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((base64Image)=>{
+    this.helper.Camera({ width : 200, height: 200, quality: 80 }).then((base64Image)=>{
       
       if( base64Image === undefined )
         return;

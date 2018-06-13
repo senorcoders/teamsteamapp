@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
@@ -33,7 +33,7 @@ export class HelpersProvider {
     public datePicker: DatePicker, private translate: TranslateService,
     private zone: NgZone, private loading: LoadingController,
     private modalCtrl: ModalController, public camera: Camera,
-    public platform: Platform
+    public platform: Platform, public alertCtrl: AlertController
   ) {
     this.init();
   }
@@ -164,7 +164,7 @@ export class HelpersProvider {
     var t = this;
     parameters.width = parameters.width || 300;
     parameters.height = parameters.height || 300;
-    parameters.quality = parameters.quality || 50;
+    parameters.quality = parameters.quality || 100;
 
     return new Promise(async function (resolve, reject) {
 
@@ -317,6 +317,37 @@ export class HelpersProvider {
     for(let page of pages){
       await nav.push(page.page, page.data);
     }
+  }
+
+  public async presentAlertStandar(acept:Function, cancel?:Function){
+
+    cancel = cancel || new Function();
+    let si = await this.getWords("YES"), no = await this.getWords("NO"),
+    msg = await this.getWords("MESSAGEALERT");
+    let alert = this.alertCtrl.create({
+      title: msg,
+      buttons: [
+        {
+          text: no,
+          role: 'cancel',
+          handler: ()=> cancel()
+        },
+        {
+          text: si,
+          handler: () => acept()
+        }
+      ]
+    });
+    alert.present();
+  }
+
+  public async presentAlertErrorStandar(){
+    let msgUnrer = await this.getWords("ERRORUNEX");
+    this.alertCtrl.create({
+      title: "Error",
+      message: msgUnrer,
+      buttons: ["Ok"]
+    }).present();
   }
 
 }

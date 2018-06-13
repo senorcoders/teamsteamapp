@@ -135,9 +135,10 @@
     "CONTACTS": "Contactos",
     "MCODE": "Usted Debe Confirmar El Codigo de Verificación",
     "COMMENTS": "Comentarios",
-    "ASSISTANCE": "Asistencia",
+    "ASSISTANCE": "Quienés Vienen, Detalles",
     "YES": "Si",
     "NO": "No",
+    "MESSAGEALERT": "Esta Seguro?",
     "MAYBE": "Talvez",
     "ENTRYFULLNAME": "Digita Tus Nuevos Datos",
     "FIRSTNAME": "Nombre",
@@ -163,7 +164,7 @@
     "EMAILINVALID": "Email con Formato Incorrecto",
     "TELEPHONE": "Teléfono",
     "SENT": "Enviar",
-    "EMAILREADY": "Mail is Already in Use",
+    "EMAILREADY": "Correo ya está en uso",
     "ROLE": "Rol",
     "PLAYER": "Jugador",
     "MANAGER": "Manager",
@@ -220,5 +221,6 @@
         "NEWPASSWORD" : "Nueva Contraseña",
         "CODEINVALID": "Codigo Invalido",
         "SENDCODE": "Enviar Código a Correo"
-    }
+    },
+    "ERRORUNEX" : "Error Inesperado"
 }

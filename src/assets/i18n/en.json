@@ -134,9 +134,10 @@
     "CONTACTS": "Contacts",
     "MCODE": "You Should Confirm Your Verification Code",
     "COMMENTS": "Comments",
-    "ASSISTANCE": "Assistance",
+    "ASSISTANCE": "Who's coming details",
     "YES": "Yes",
     "NO": "No",
+    "MESSAGEALERT": "Are you sure?",
     "MAYBE": "Maybe",
     "ENTRYFULLNAME": "Enter Your New Data",
     "FIRSTNAME": "First Name",
@@ -220,5 +221,6 @@
         "CODE" : "Code",
         "NEWPASSWORD" : "New Password",
         "SENDCODE": "Send Code to Mail"
-    }
+    },
+    "ERRORUNEX" : "Unexpected Error"
 }

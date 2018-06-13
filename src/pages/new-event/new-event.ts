@@ -135,7 +135,7 @@ export class NewEventPage {
     try{
       message = await this.helper.getWords("ERORUNEXC");
 
-      this.helper.Camera({ width : 200, height: 200, quality: 50 }).then((result)=>{
+      this.helper.Camera({ width : 200, height: 200, quality: 80 }).then((result)=>{
         if( result ){
           t.imageSrc = result;
         }

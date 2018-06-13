@@ -55,7 +55,7 @@ export class CameraPage {
     const pictureOpts: CameraPreviewPictureOptions = {
       width: this.width,
       height: this.height,
-      quality: this.quality
+      quality: 100
     }
 
     this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
@@ -151,7 +151,7 @@ export class CameraPage {
 
     if ( this.platform.is("ios") ) {
       let options: CameraOptions = {
-        quality: this.quality,
+        quality: 100,
         destinationType: this.camera.DestinationType.DATA_URL,
         encodingType: this.camera.EncodingType.JPEG,
         mediaType: this.camera.MediaType.PICTURE,
