@@ -30,6 +30,8 @@ export class ChatPage {
   showEmojiPicker = false;
   public nameTeam: string = "";
 
+  ramdon:number;
+
   private updateTimeMessage: any;
 
   public user: any;
@@ -47,6 +49,8 @@ export class ChatPage {
     public changeDectRef: ChangeDetectorRef, private subscription: WebSocketsProvider,
     public helper: HelpersProvider, public modal: ModalController
   ) {
+
+    this.ramdon = new Date().getTime();
 
     this.user = MyApp.User;
 
@@ -90,6 +94,10 @@ export class ChatPage {
     this.events.unsubscribe('message');
   }
 
+  public loadImage(msg){
+    msg.loadImage = true;
+  }
+
   public insertMsg(msg){
     if( msg.hasOwnProperty("type") && msg.type === 'image'){
       return `<span class="triangle"></span>
@@ -123,10 +131,11 @@ export class ChatPage {
   */
   private async getMsg() {
     try {
+      let ramdon = this.ramdon;
       let mgs: any = await this.http.get("/messages/team/" + MyApp.User.team).toPromise();
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        let ramdon = new Date().getTime();
         item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+        item.loadImage = false;
         return item;
       }));
       //console.log(this.msgList);
@@ -220,7 +229,7 @@ export class ChatPage {
     let index = this.getMsgIndexById(msg.dateTime);
     console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/random/users/" + msg.user);
+      msg.photo = interceptor.transformUrl("/images/"+ this.ramdon+ "/users/" + msg.user);
       this.ngZone.run(() => { this.msgList.push(msg); })
       console.log("add new message", this.msgList);
       this.scrollToBottom();
