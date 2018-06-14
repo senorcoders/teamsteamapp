@@ -21,7 +21,7 @@ export class CameraPage {
 
   private width: number;
   private height: number;
-  private quality: number;
+  //private quality: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public cameraPreview: CameraPreview,
@@ -33,7 +33,7 @@ export class CameraPage {
     this.reject = this.navParams.get("reject");
     this.width = this.navParams.get("width");
     this.height = this.navParams.get("height");
-    this.quality = this.navParams.get("quality");
+    //this.quality = this.navParams.get("quality");
 
   }
 

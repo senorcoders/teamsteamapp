@@ -2,7 +2,9 @@
   "rules": {
     "no-duplicate-variable": true,
     "no-unused-variable": [
-      true
+      true,
+      { "ignore-pattern": "^resendCode|changePass|calcDebe|down|deletePayment|update|ngZone|auth|viewCtrl|editEvent|zone"
+      }
     ]
   },
   "rulesDirectory": [
