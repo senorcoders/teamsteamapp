@@ -51,6 +51,7 @@ export class LoginPage {
     this.helper.setLenguagueLocal();
     this.emailTrans = await this.helper.getWords("EMAIL");
     this.passwordTrans = await this.helper.getWords("PASSWORD");
+    this.statusBar.overlaysWebView(true);
   }
 
   public forgotPassword(){

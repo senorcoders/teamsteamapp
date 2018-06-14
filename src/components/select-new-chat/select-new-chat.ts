@@ -10,7 +10,7 @@ import { ChatOnePersonPage } from '../../pages/chat-one-person/chat-one-person';
 })
 export class SelectNewChatComponent {
 
-  public players:Array<any>=[];
+  public peoples:Array<any>=[];
   public search:string='';
   public user:any={};
 
@@ -21,43 +21,19 @@ export class SelectNewChatComponent {
   }
 
   async ngOnInit(){
-    let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
-    console.log(team);
-    this.players = team.players.filter(function(item){
-      return item.hasOwnProperty("user");
+    let peoples = await this.http.get("/chat-list/"+ MyApp.User.id+ "/"+ MyApp.User.team+ "/"+ MyApp.User.role.name).toPromise() as Array<any>;
+    this.peoples = peoples.map((it)=>{
+      it.show = true;
+
+      return it;
     });
-    
-    for(let it of team.family){
-      if( it.hasOwnProperty("user") === true ){
-        this.players.push(it);
-      }
-    }
-
-    let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
-
-    for(let it of managers){
-      if( it.hasOwnProperty("user") === true ){
-        this.players.push(it);
-      }
-    }
-    
-    this.players = this.players.filter((it)=>{
-      return it.hasOwnProperty("user") && it.user.id !== MyApp.User.id;
-    });
-
-    this.players = this.players.map((item)=>{
-      item.show = true;
-      return item;
-    });
-
-    
   }
 
   //filtrando la lista de players con el valor de entrada del input search
   public async filter(){
     let sear = this.search;
 
-    this.players = await Promise.all(this.players.map(async (item)=>{
+    this.peoples = await Promise.all(this.peoples.map(async (item)=>{
       let usn = item.user.username.toLowerCase();
       if( sear === '' ){
         item.show = true;
@@ -72,10 +48,11 @@ export class SelectNewChatComponent {
     }));
   }
 
-  public async newChat(player){
+  public async newChat(people){
     try{
+      let user = await this.http.get("/user/"+ people.id).toPromise();
       await this.navCtrl.push(ChatOnePersonPage, {
-        user: player.user
+        user
       });
 
       this.viewCtrl.dismiss();

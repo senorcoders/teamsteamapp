@@ -21,8 +21,12 @@
   </ion-list>
 
   <ion-list>
-    <ion-item *ngFor='let player of players;' (click)='newChat(player)' [hidden]='!player.show || user.id == player.user.id' >
-      <h2>{{player.user.username}}</h2>
+    <ion-item *ngFor='let people of peoples;' (click)='newChat(people)' [hidden]='!people.show || user.id == people.id' >
+      <h2>
+        {{people.username}}
+        <i>{{people.role}}</i>
+        <i [hidden]="!people.relationship">{{people.relationship}}</i>
+      </h2>
     </ion-item>
   </ion-list>
 
