@@ -224,7 +224,7 @@ export class EventPage {
       .then(() => {
         console.log('Map is ready!');
 
-        t.load.dismiss();
+        t.load.dismissAll();
 
         // Now you can use all methods safely.
         this.map.addMarker({

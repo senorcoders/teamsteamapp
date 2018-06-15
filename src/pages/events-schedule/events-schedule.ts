@@ -115,6 +115,9 @@ export class EventsSchedulePage {
     load.dismiss();
   }
 
+  public loadImage(e){
+    e.loadImage = true;
+  }
 
   private async parserEvents(events) {
 
@@ -174,6 +177,8 @@ export class EventsSchedulePage {
         it.countYes = counts.countYes;
         it.countNo = counts.countNo;
         it.countMaybe = counts.countMaybe;
+
+        it.loadImage = false;
 
         return it;
       }));

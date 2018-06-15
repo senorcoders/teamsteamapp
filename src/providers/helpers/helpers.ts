@@ -14,7 +14,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';
 import { Page } from 'ionic-angular/navigation/nav-util';
-
+import { Device } from '@ionic-native/device';
 
 
 /**
@@ -33,7 +33,8 @@ export class HelpersProvider {
     public datePicker: DatePicker, private translate: TranslateService,
     private zone: NgZone, private loading: LoadingController,
     private modalCtrl: ModalController, public camera: Camera,
-    public platform: Platform, public alertCtrl: AlertController
+    public platform: Platform, public alertCtrl: AlertController,
+    public device:Device
   ) {
     this.init();
   }
@@ -348,6 +349,23 @@ export class HelpersProvider {
       message: msgUnrer,
       buttons: ["Ok"]
     }).present();
+  }
+  
+  public getDeviceInfo(){
+    let data;
+    if( this.platform.is("cordova") ){
+      data = { uuid : this.device.uuid, 
+        model : this.device.model, 
+        platform : this.device.platform,
+        versionOS : this.device.version};
+    }else{
+      data = { uuid : "zxy6352", 
+        model : "Navigator", 
+        platform : "N",
+        versionOS : "3.0.1"};
+    }
+
+    return data;
   }
 
 }

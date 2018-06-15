@@ -98,10 +98,9 @@ export class RegistrationPage {
 
     }*/
 
-    let uuid = this.device.uuid, model = this.device.model, platform = this.device.platform,
-    versionOS = this.device.version;
+    let info = this.helper.getDeviceInfo();
 
-    let user = {
+    let user:any = {
       "username": this.username,
       "password": this.password,
       "firstName": this.firstname,
@@ -112,12 +111,12 @@ export class RegistrationPage {
       "description": this.description,
       "sport": this.sport,
       "city": this.city,
-      "configuration": { "valid": true },
-      uuid,
-      model,
-      platform,
-      versionOS
+      "configuration": { "valid": true }
     };
+
+    for(let n of Object.keys(info)){
+      user[n] = info[n];
+    }
 
     /*let newUserTeam = */await this.http.post("/user/team", user).toPromise();
 

@@ -212,7 +212,7 @@ export class NewEventPage {
         return;
     }
 
-    if( this.imageSrc == '' && this.type == "event" ){
+    /*if( this.imageSrc == '' && this.type == "event" ){
       this.load.dismiss();
         this.alertCtrl.create({
           title: requiredM,
@@ -220,7 +220,7 @@ export class NewEventPage {
           buttons: ["Ok"]
         }).present();
         return;
-    }
+    }*/
 
     let event:any = {
       team: this.team,
@@ -277,7 +277,7 @@ export class NewEventPage {
       }).toPromise();
       console.log(newEvent);
       
-      if( this.type === 'event' ){
+      if( this.imageSrc !== '' ){
         await this.http.post("/images/events", { id : newEvent.id, image : this.imageSrc }).toPromise();
       }
 

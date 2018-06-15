@@ -4,7 +4,6 @@ import { Storage } from '@ionic/storage';
 import { MenuController, Platform } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
-import { Device } from '@ionic-native/device';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -20,8 +19,7 @@ export class AuthServiceProvider {
 
   constructor(public http: HttpClient, public storage: Storage,
     public menuCtrl: MenuController, public zone: NgZone,
-    public helper: HelpersProvider, public platform: Platform,
-    public device:Device
+    public helper: HelpersProvider, public platform: Platform
   ) {
 
   }
@@ -30,11 +28,12 @@ export class AuthServiceProvider {
    * Login
    */
   public async Login(email: String, callback: Function) {
-    let uuid = this.device.uuid, model = this.device.model, platform = this.device.platform,
-    versionOS = this.device.version;
+    
     try {
+      let info = this.helper.getDeviceInfo();
+      info.email = email;
 
-      let data: any = await this.http.post('/login', { email, uuid, model, platform, versionOS }).toPromise()
+      let data: any = await this.http.post('/login', info).toPromise()
 
       this.menuCtrl.swipeEnable(true);
 

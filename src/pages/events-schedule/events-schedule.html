@@ -34,8 +34,8 @@
         <ion-card-title>{{e.name}}</ion-card-title>
     </ion-card-content-->
     
-    <div class="inner-image">
-      <img (click)="goEvent(e)" [src]="e.imageSrc">
+    <div class="inner-image" [hidden]="!e.loadImage">
+      <img (click)="goEvent(e)" [src]="e.imageSrc" (load)="loadImage(e)">
       <div class="dateTimeEvent">
         <h3 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[0]}}</h3>
         <h4 class="date-event" [hidden]="e.repeatsDaily" >{{e.parsedDateTime[1]}}</h4>
