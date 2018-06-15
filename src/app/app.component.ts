@@ -27,6 +27,7 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { WebIntent } from '@ionic-native/web-intent';
 import { EventPage } from '../pages/event/event';
 import { TaskPage } from '../pages/task/task';
+import { ChatPage } from '../pages/chat/chat';
 
 
 @Component({
@@ -249,7 +250,8 @@ export class MyApp {
         topics: [team],
         sound: true,
         vibrate: true,
-        soundname: "default"
+        soundname: "default",
+        forceShow: true
       },
       ios: {
         alert: 'true',
@@ -269,13 +271,14 @@ export class MyApp {
       MyApp.pushObject = MyApp.pusherNotification.init(options);
 
       MyApp.pushObject.on('notification').subscribe(async (notification: any) => {
-        console.log(notification);
-
+        
         let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
         MyApp.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
         console.log('Received a notification', notification);
 
+        let intents = {extras: {is: is, dataStringify: notification.additionalData.dataStringify } };
+        MyApp.me.processNotification(intents);
 
       });
 
@@ -326,13 +329,20 @@ export class MyApp {
       return;
     }
 
-    let data = JSON.parse(intent.extras.dataStringify);
+    let data;
+    if(Object.prototype.toString.call(intent.extras.dataStringify) === "[object String]"){
+      data = JSON.parse(intent.extras.dataStringify);
+    }else{
+      data = intent.extras.dataStringify
+    }
     if (intent.extras.is === "chat") {
       await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);
     }else if(intent.extras.is === "event"){
       await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], {notification: true});
     }else if(intent.extras.is === "task"){
       await HelpersProvider.me.toPages(MyTaskPage, [{page: TaskPage, data: {task: data} }]);
+    }else if(intent.extras.is === "message" ){
+      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatPage, data: {} }]);
     }
 
   }
