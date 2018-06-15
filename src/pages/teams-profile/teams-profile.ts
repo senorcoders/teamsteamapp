@@ -63,6 +63,8 @@ export class TeamsProfilePage {
     
     //Para actualizar el nombre del equipo en menu slide
     document.getElementById("nameTeam").innerHTML = role.team.name;
+
+    this.navCtrl.pop();
   }
 
   public editTeam(role){

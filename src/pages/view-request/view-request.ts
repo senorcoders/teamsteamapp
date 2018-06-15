@@ -18,6 +18,8 @@ export class ViewRequestPage {
   public image=false;
   private requests:Array<any>=[];
 
+  public player:any = { user: {firstName: "", lastName: "" } };
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public helper: HelpersProvider,
     public http: HttpClient
@@ -28,12 +30,21 @@ export class ViewRequestPage {
     this.imageSrc = this.user.imageSrc;
     this.requests = this.navParams.get("requests");
 
-    console.log(this.request, this.requests);
+    console.log(this.request, this.requests, this.player);
     if( !this.request.hasOwnProperty("dened") ){
       this.request.dened = false;
     }
 
   }
+
+  async ionViewDidLoad(){
+    if(this.request.role === "Family"){
+      let player = await this.http.get("/players/"+ this.request.user.player).toPromise();
+      //console.log(player);
+      this.player = player;
+    }
+  }
+
 
   public loadImage(){
     this.image = true;

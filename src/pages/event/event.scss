@@ -1,5 +1,38 @@
 $color-text: rgba(0, 0, 0, 0.616) !important;
 page-event {
+
+    .ball{
+        width: 1em;
+        height: 1em;
+        border-radius: 50%;
+        margin-right: 7px;
+    }
+
+    .text-inner-button{
+        font-size: 1.4em !important;
+    }
+
+    .mas{
+        background-color: #088c75 !important;
+    }
+    .mas-text{
+        color: #088c75 !important;
+    }
+
+    .menos{
+        background-color: #ffe430 !important;
+    }
+    .menos-text{
+        color: #ffe430 !important;
+    }
+
+    .talves{
+        background-color: #e20666 !important;
+    }
+    .talves-text{
+        color: #e20666 !important;
+    }
+    
     #tracking-section{
         height: auto;
         text-align: center;

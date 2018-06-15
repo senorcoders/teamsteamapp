@@ -163,7 +163,7 @@
     "EMAIL": "Correo Electrónico",
     "EMAILINVALID": "Email con Formato Incorrecto",
     "TELEPHONE": "Teléfono",
-    "SENT": "Enviar",
+    "SENT": "Enviar Solicitud",
     "EMAILREADY": "Correo ya está en uso",
     "ROLE": "Rol",
     "PLAYER": "Jugador",
@@ -223,5 +223,6 @@
         "SENDCODE": "Enviar Código a Correo"
     },
     "ERRORUNEX" : "Error Inesperado",
-    "VERFIEDDEVICE": "Vaya a su correo y verifique su dispositivo y vuelve e inicia sesión"
+    "VERFIEDDEVICE": "Vaya a su correo y verifique su dispositivo y vuelve e inicia sesión",
+    "RELATIONSHIP": "Parentesco"
 }

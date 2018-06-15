@@ -18,6 +18,7 @@ export class FormJoinTeamPage {
   public players:Array<any>=[];
   private team:any={};
   public player="";
+  public relationship="";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
   public viewCtrl: ViewController, public alertCtrl: AlertController,
@@ -48,7 +49,7 @@ export class FormJoinTeamPage {
       return;
     }
 
-    if( this.role === "Family" && this.player === "" ){
+    if( this.role === "Family" && this.player === "" && this.relationship === "" ){
       let requiredM = await this.helper.getWords("REQUIRED"),
       unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
@@ -66,7 +67,8 @@ export class FormJoinTeamPage {
 
     let user:any;
     if( this.role === "Family" ){
-      user = { firstName: this.firstName, lastName: this.lastName, email: this.email, player: this.player, role: this.role };
+      user = { firstName: this.firstName, lastName: this.lastName, 
+        email: this.email, player: this.player, role: this.role, relationship: this.relationship };
     }else{
       user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
     }

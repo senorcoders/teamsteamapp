@@ -1,4 +1,3 @@
-
 <ion-header>
 
   <ion-navbar color="base">
@@ -12,7 +11,7 @@
 
   <ion-card>
 
-    <img [src]="imageSrc" [hidden]="!image" (load)="loadImage()" >
+    <img [src]="imageSrc" [hidden]="!image" (load)="loadImage()">
 
     <ion-card-content>
       <ion-list>
@@ -25,18 +24,24 @@
         <ion-item>
           {{request.role.toUpperCase() | translate}}
         </ion-item>
+        <ion-item [hidden]="player.user.firstName === ''">
+          {{player.user.firstName+ " "+ player.user.lastName}}
+        </ion-item>
+        <ion-item [hidden]="player.user.firstName === ''">
+          {{'RELATIONSHIP' | translate}}: {{request.user.relationship}}
+        </ion-item>
       </ion-list>
 
-      <h3 [hidden]="!request.acept" >{{"REQUESTACCEPT" | translate}}</h3>
+      <h3 [hidden]="!request.acept">{{"REQUESTACCEPT" | translate}}</h3>
 
-      <h3 [hidden]="!request.dened" >{{"REQUESTDENIED" | translate}}</h3>
+      <h3 [hidden]="!request.dened">{{"REQUESTDENIED" | translate}}</h3>
 
-      <button ion-button (click)="acceptRequest()" style="margin-top: 30px;" [hidden]="request.acept" >{{"ACCEPT" | translate}}</button>
-      
-      <button ion-button (click)="denRequest()" style="margin-top: 30px;" [hidden]="request.dened || request.acept" >{{"DENED" | translate}}</button>
+      <button ion-button (click)="acceptRequest()" style="margin-top: 30px;" [hidden]="request.acept">{{"ACCEPT" | translate}}</button>
+
+      <button ion-button (click)="denRequest()" style="margin-top: 30px;" [hidden]="request.dened || request.acept">{{"DENED" | translate}}</button>
 
     </ion-card-content>
-    
+
   </ion-card>
-  
+
 </ion-content>

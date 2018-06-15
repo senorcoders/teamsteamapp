@@ -11,85 +11,94 @@
   <ion-card>
 
     <ion-item class="description">
-        <ion-thumbnail hidden item-start>
-            <img [src]="imgUser">
-          </ion-thumbnail>
-          <p style="font-size: 12pt !important; font-weight: bold !important;">{{username}}</p>  
+      <ion-thumbnail hidden item-start>
+        <img [src]="imgUser">
+      </ion-thumbnail>
+      <p style="font-size: 12pt !important; font-weight: bold !important;">{{username}}</p>
     </ion-item>
 
     <ion-card-content>
-      <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>  
+      <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>
     </ion-card-content>
 
-      <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)" />
-    
-      <ion-item>
-        <p style="text-align: right;">{{event.parsedTime}}</p>
-        <ion-row hidden>
-          <ion-col col-3>
-            <button ion-button icon-left clear small (click)="like(event, true)">
-              <ion-icon name="thumbs-up"></ion-icon>
-              <div>{{event.likesUp}}</div>
-            </button>
-          </ion-col>
-          <ion-col col-3>
-              <button ion-button icon-left clear small (click)="like(event, false)">
-                <ion-icon name="thumbs-down"></ion-icon>
-                <div>{{event.likesDown}}</div>
-              </button>
-            </ion-col>
-          <ion-col col-6>
-            <button ion-button icon-left (click)="viewTraking(event)">
-              <ion-icon name="text"></ion-icon>
-              <div>{{event.comments.length}} Comments</div>
-            </button>
-          </ion-col>
-        </ion-row>
-      </ion-item>
+    <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)"
+    />
 
-      <div class="divider"> </div>
+    <ion-item>
+      <p style="text-align: right;">{{event.parsedTime}}</p>
+      <ion-row hidden>
+        <ion-col col-3>
+          <button ion-button icon-left clear small (click)="like(event, true)">
+            <ion-icon name="thumbs-up"></ion-icon>
+            <div>{{event.likesUp}}</div>
+          </button>
+        </ion-col>
+        <ion-col col-3>
+          <button ion-button icon-left clear small (click)="like(event, false)">
+            <ion-icon name="thumbs-down"></ion-icon>
+            <div>{{event.likesDown}}</div>
+          </button>
+        </ion-col>
+        <ion-col col-6>
+          <button ion-button icon-left (click)="viewTraking(event)">
+            <ion-icon name="text"></ion-icon>
+            <div>{{event.comments.length}} Comments</div>
+          </button>
+        </ion-col>
+      </ion-row>
+    </ion-item>
 
-      <div id="tracking-section" >
-        <div class="tracking">
-          <h3>{{'EVENTS.AREYOU' | translate}}</h3>
-          <!--ion-icon name="ios-arrow-up-outline" (click)="viewTrakingEvent()"></ion-icon-->
-          <img src="./assets/imgs/tracking-details.png" (click)="viewTrakingEvent()" >
-        </div>
-        <div class="count">
-          <h5 (click)="asingResponse('yes')" >Yes {{event.countYes}} </h5>
-          <h5 (click)="asingResponse('no')" >No {{event.countNo}} </h5>
-          <h5 (click)="asingResponse('maybe')"  >Maybe {{event.countMaybe}} </h5>
-        </div>
+    <div class="divider"> </div>
+
+    <div id="tracking-section">
+      <div class="tracking">
+        <h3>{{'EVENTS.AREYOU' | translate}}</h3>
+        <!--ion-icon name="ios-arrow-up-outline" (click)="viewTrakingEvent()"></ion-icon-->
+        <img src="./assets/imgs/tracking-details.png" (click)="viewTrakingEvent()">
       </div>
-      
-      <ion-item class="location-event">
-        <h2 style="text-transform: uppercase;" class="titles-event">Location</h2>
-      </ion-item>
+      <div class="count">
+        <h5 (click)="asingResponse('yes')">
+          <ion-icon class="ball mas"></ion-icon>
+          Yes {{event.countYes}} </h5>
+        <h5 (click)="asingResponse('no')">
+          <ion-icon class="ball menos"></ion-icon>
+          No {{event.countNo}} </h5>
+        <h5 (click)="asingResponse('maybe')">
+          <ion-icon class="ball talves"></ion-icon>
+          Maybe {{event.countMaybe}} </h5>
+      </div>
+    </div>
 
-      <ion-item>
-        <p>{{event.location.address}}</p>
-      </ion-item>
+    <ion-item class="location-event">
+      <h2 style="text-transform: uppercase;" class="titles-event">Location</h2>
+    </ion-item>
 
-      <div [hidden]="!location.change" id="map_canvas" style="width: 100%; height: 250px; "></div>
-      
-      <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
-        <p>{{location.place.subAdministrativeArea}}</p>
-        <p>{{location.place.thoroughfare}}</p>
-        <p [hidden]="!event.location.link" >Link: <a [href]="event.link" target="_black"> {{event.location.link}} </a></p>
-        <p [hidden]="!event.location.detail">Detail: {{event.location.detail}}</p>
-      </ion-item>
-    
-    </ion-card>
+    <ion-item>
+      <p>{{event.location.address}}</p>
+    </ion-item>
 
-    <ion-fab [hidden]="user.role.name != 'Manager'" bottom right class="top-bottom" (click)="editEvent()" >
-      <button color="base" ion-fab icon-only >
-        <ion-icon name="md-create"></ion-icon>
-      </button>
-    </ion-fab>
+    <div [hidden]="!location.change" id="map_canvas" style="width: 100%; height: 250px; "></div>
 
-    <ion-fab [hidden]="user.role.name != 'Manager'" bottom right (click)="remove()" >
-      <button color="base" ion-fab icon-only >
-        <ion-icon name="md-close-circle"></ion-icon>
-      </button>
-    </ion-fab>
+    <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
+      <p>{{location.place.subAdministrativeArea}}</p>
+      <p>{{location.place.thoroughfare}}</p>
+      <p [hidden]="!event.location.link">Link:
+        <a [href]="event.link" target="_black"> {{event.location.link}} </a>
+      </p>
+      <p [hidden]="!event.location.detail">Detail: {{event.location.detail}}</p>
+    </ion-item>
+
+  </ion-card>
+
+  <ion-fab [hidden]="user.role.name != 'Manager'" bottom right class="top-bottom" (click)="editEvent()">
+    <button color="base" ion-fab icon-only>
+      <ion-icon name="md-create"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab [hidden]="user.role.name != 'Manager'" bottom right (click)="remove()">
+    <button color="base" ion-fab icon-only>
+      <ion-icon name="md-close-circle"></ion-icon>
+    </button>
+  </ion-fab>
 </ion-content>

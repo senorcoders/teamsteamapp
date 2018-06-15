@@ -162,7 +162,7 @@
     "FULLNAME": "Full Name",
     "EMAIL": "Email",
     "TELEPHONE": "Telephone",
-    "SENT": "Sent",
+    "SENT": "Sent Request",
     "EMAILREADY": "Mail is already in use",
     "ROLE": "Role",
     "PLAYER": "Player",
@@ -223,5 +223,6 @@
         "SENDCODE": "Send Code to Mail"
     },
     "ERRORUNEX" : "Unexpected Error",
-    "VERFIEDDEVICE": "Go to your email and verify your device and return login"
+    "VERFIEDDEVICE": "Go to your email and verify your device and return login",
+    "RELATIONSHIP": "Relationship"
 }
