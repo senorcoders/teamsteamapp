@@ -15,8 +15,8 @@ export class CreatePlayerPage {
   public firstName:string="";
   public lastName:string="";
   public email:string="";
-  public password:string="";
-  public passwordCheck:string="";
+  public password:string="standard";
+  public passwordCheck:string="standard";
 
   public imageSrc:string;
   public image:boolean=false;

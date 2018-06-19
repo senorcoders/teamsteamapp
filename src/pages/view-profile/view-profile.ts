@@ -61,7 +61,6 @@ export class ViewProfilePage {
 
       //console.log(this.team.request);
       this.request = this.team.request;
-
       if( this.user.verified === false ){
         let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
         //console.log(v);
@@ -433,14 +432,12 @@ export class ViewProfilePage {
 
   public isManagerRequest(){
     
-    if( Object.prototype.toString.call(MyApp.User) !== "[object Object]" )
-      return false;
-
-    if( this.team.request.length === 0 ) return true;
+    if( MyApp.User === null || MyApp.User === undefined )
+      return true;
 
     if( this.team.request.length !== 0 && MyApp.User.role.name === "Manager" ) return false;
 
-    return false;
+    return true;
   }
 
  

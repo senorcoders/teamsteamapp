@@ -60,6 +60,7 @@ export class EventsSchedulePage {
 
     });
 
+
   }
 
   async ngOnInit() {

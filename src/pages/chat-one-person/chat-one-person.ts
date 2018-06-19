@@ -8,6 +8,7 @@ import * as moment from 'moment';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { PreviewImageChatComponent } from '../../components/preview-image-chat/preview-image-chat';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { ListChatsPage } from '../list-chats/list-chats';
 
 /**
  * este es para chat entre el manager y un solo jugador
@@ -49,6 +50,25 @@ export class ChatOnePersonPage {
     if (this.to.hasOwnProperty('_id')) {
       this.to.id = this.to._id;
       delete this.to._id;
+    }
+
+    this.deleteNotificationLocal();
+  }
+
+  deleteNotificationLocal(){
+    //Para quitar la notificacion local
+    let ide = this.to.id;
+    let index = ListChatsPage.newMessages.findIndex(function(id){ return id === ide; });
+    if( index !== -1 ){
+      if( ListChatsPage.newMessages.length === 1 ){
+        ListChatsPage.newMessages = [];
+      }else{
+        ListChatsPage.newMessages.splice(index, 1);
+      }
+    }
+
+    if( ListChatsPage.newMessages.length === 0){
+      MyApp.newDatas["chat"] = false;
     }
   }
 
@@ -220,6 +240,7 @@ export class ChatOnePersonPage {
       this.ngZone.run(() => { this.msgList.push(msg); })
       console.log("add new message", this.msgList);
       this.scrollToBottom();
+      setTimeout(this.deleteNotificationLocal.bind(this), 1000);
     }
 
   }

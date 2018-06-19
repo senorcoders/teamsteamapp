@@ -11,13 +11,18 @@
 				<img (click)="goProfile()" [hidden]="!defaultImageUser" [src]="defaultImageUserUrl" class="userimg">
 				<img (click)="goProfile()" [hidden]="defaultImageUser" id="imageSlide" (load)="loadImageMenu()" class="userimg">
 				<img src="./assets/imgs/gear-icon.png" class="icon-gear" >
+				<div class="new-menu" [hidden]="newData([{id:'request', role: 'Manager'}])"></div>
 			</div>
 			<p id="nameSlide" class="username">{{user.username}}</p>
     </div>
 	</ion-header>
     <ion-content>
       <ion-list>
-        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p)" ><!--ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon-->{{p.title | translate}}</ion-item>
+        <ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p)" >
+					<!--ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon-->
+					{{p.title | translate}}
+					<div class="new-action" [hidden]="newData(p.watch)">New</div>
+				</ion-item>
         <ion-item (click)="logout()"><!--ion-icon name="log-out" class="icon-menu"></ion-icon-->{{'NAVMENU.LOGOUT' | translate}}</ion-item>
       </ion-list>
     </ion-content>

@@ -147,9 +147,9 @@ export class AuthServiceProvider {
 
     //nos desubscribimos de las notifications push
     if (this.platform.is("cordova")) {
-      let un = await MyApp.pushObject.unregister();
+      let un = await MyApp.me.pushObject.unregister();
       console.log(un);
-      un = await MyApp.pushObject.unsubscribe(MyApp.User.team);
+      un = await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
       console.log(un);
       let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
       console.log(success);

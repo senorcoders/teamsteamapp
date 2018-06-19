@@ -138,6 +138,7 @@ import { ResetPasswordPageModule } from '../pages/reset-password/reset-password.
 import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PreviewImageChatComponent } from '../components/preview-image-chat/preview-image-chat';
+import { INotificationProvider } from '../providers/i-notification/i-notification';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -298,7 +299,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     Camera,
     WebIntent,
     EmojiProvider,
-    Device
+    Device,
+    INotificationProvider
   ]
 })
 export class AppModule {}

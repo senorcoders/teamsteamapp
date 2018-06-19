@@ -22,6 +22,7 @@ export class ListChatsPage {
   public team:any={ name : "" };
   public idTeam:string;
   public loadImage=false;
+  public static newMessages:Array<string>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modal: ModalController, private http: HttpClient
@@ -66,6 +67,24 @@ export class ListChatsPage {
     this.navCtrl.push(ChatOnePersonPage, {
       user
     });
+  }
+
+  public newMessagePeople(user){
+    let valid = true, ide:string;
+    if(Object.prototype.toString.call(user) === "[object String]"){
+      ide = user;
+    }else{
+      ide = user._id;
+    }
+
+    for(let id of ListChatsPage.newMessages){
+      if( ide === id ){
+        valid = false;
+        break;
+      }
+    }
+    
+    return valid;
   }
 
   public successImage(){

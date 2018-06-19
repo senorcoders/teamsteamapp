@@ -1,6 +1,6 @@
 {
     "EVENTS": {
-        "TITLE" : "Horario de Eventos",
+        "TITLE" : "Eventos",
         "PAST": "Anteriores",
         "UPCOMING": "Proximos",
         "NOEVENT": "Bueno, esto es aburrido. Agregar eventos",

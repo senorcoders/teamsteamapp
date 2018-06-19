@@ -1,6 +1,6 @@
 page-events-schedule {
     ion-navbar{
-        height: 10rem !important;
+        height: auto !important;
     }
     .toolbar-background-md, .toolbar-background{
         background-color: white !important;
@@ -10,19 +10,22 @@ page-events-schedule {
     }
     .toolbar-title,.toolbar-title-md{
         color: black !important;
-        text-align: center;
-        font-size: 2.5rem;
+        padding-left: calc(50% - 12rem);
+        text-transform: uppercase !important;
+        font-size: 4rem;
+        padding-bottom: 0;
+        padding-top: 0;
     }
 
     #select-by{
         margin-top: -4px;
         width: 100%;
-        height: 44px;
+        height: 50px;
         display: flex;
         flex-direction: row;
         background-color: white !important;
         justify-content: space-around;
-        padding-bottom: 20px !important;
+        padding: 10px 0 14px 0;
         /*box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14),
             0 3px 0 0 rgba(0, 0, 0, 0.2), 
             0 1px 0 0 rgba(0, 0, 0, 0.12);*/
@@ -33,6 +36,9 @@ page-events-schedule {
             height: 100%;
             border-radius: 20px !important;
             box-shadow: 0 0 0 0 transparent !important;
+            background-color: transparent;
+            color: #0076a4;
+            padding: 0 20px;
             .button-inner{
                 display: flex !important;
                 flex-wrap: wrap;
@@ -46,6 +52,7 @@ page-events-schedule {
                 }
                 pre{
                     font-family: inherit !important;
+                    font-size: .8em;
                 }
                 ion-icon, pre{
                     display: block;
@@ -107,7 +114,7 @@ page-events-schedule {
     }
 
     .scroll-content{
-        padding-top: 30px;
+        padding-top: 38px;
     }
 
     ion-card{

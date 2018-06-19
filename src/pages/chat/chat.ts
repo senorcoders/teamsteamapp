@@ -11,6 +11,7 @@ import 'rxjs/add/observable/fromEvent';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { PreviewImageChatComponent } from '../../components/preview-image-chat/preview-image-chat';
+import { ListChatsPage } from '../list-chats/list-chats';
 
 /**
  * este es para chat de todo el equipo
@@ -54,15 +55,34 @@ export class ChatPage {
 
     this.user = MyApp.User;
 
-    ChatPage.enableChat = true;
-
     let t = this;
     ChatPage.changeMessages = (payload) => {
       t.pushNewMsg(payload)
     };
+
+    this.deleteNotificationLocal();
+  }
+
+  deleteNotificationLocal(){
+    //Para quitar la notificacion local
+    let index = ListChatsPage.newMessages.findIndex(function(id){ return id === "team"; });
+    if( index !== -1 ){
+      if( ListChatsPage.newMessages.length === 1 ){
+        ListChatsPage.newMessages = [];
+      }else{
+        ListChatsPage.newMessages.splice(index, 1);
+      }
+    }
+
+    if( ListChatsPage.newMessages.length === 0){
+      MyApp.newDatas["chat"] = false;
+    }
   }
 
   async ionViewDidEnter() {
+
+    ChatPage.enableChat = true;
+    
     //get name of team
     let team: any = await this.http.get("/teams/" + this.user.team).toPromise();
     this.nameTeam = team.name;
@@ -211,6 +231,7 @@ export class ChatPage {
       };
 
       msg = await this.http.post("/api/chat/image", msg).toPromise() as any;
+      
     }
     catch (e) {
       console.error(e);
@@ -230,8 +251,11 @@ export class ChatPage {
     console.log(msg, index);
     if (index === -1) {
       msg.photo = interceptor.transformUrl("/images/"+ this.ramdon+ "/users/" + msg.user);
-      this.ngZone.run(() => { this.msgList.push(msg); })
-      console.log("add new message", this.msgList);
+      this.ngZone.run(() => { this.msgList.push(msg); });
+      console.log(ChatPage.enableChat);
+      if( ChatPage.enableChat === true ){
+        setTimeout(this.deleteNotificationLocal.bind(this), 1000);
+      }
       this.scrollToBottom();
     }
 

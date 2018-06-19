@@ -1,7 +1,7 @@
 {
     "EVENTS": {
-        "TITLE": "Events Schedule",
-        "PAST": "Past",
+        "TITLE": "Events",
+        "PAST": "Previous",
         "UPCOMING": "Upcoming",
         "NOEVENT": "Well, this is boring.  Add events",
         "AREYOU": "Are You Coming?"

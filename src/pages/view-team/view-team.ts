@@ -4,6 +4,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { FormJoinTeamPage } from '../form-join-team/form-join-team';
+import { LoginPage } from '../login/login';
 
 
 @IonicPage()
@@ -111,6 +112,8 @@ export class ViewTeamPage {
           this.request = { acept: false, idUser : "", user: user };
           this.requestReady = true;
 
+          setTimeout(function(){ this.navCtrl.setRoot(LoginPage); }.bind(this), 700);
+          
       }.bind(this));
 
     }

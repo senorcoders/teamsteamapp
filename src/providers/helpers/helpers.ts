@@ -26,7 +26,7 @@ export class HelpersProvider {
   public static lat: string = "51.5033640";
   public static lng: string = "-0.12762500";
 
-  public static me:HelpersProvider;
+  public static me: HelpersProvider;
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder: NativeGeocoder,
@@ -34,19 +34,19 @@ export class HelpersProvider {
     private zone: NgZone, private loading: LoadingController,
     private modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
-    public device:Device
+    public device: Device
   ) {
     this.init();
   }
 
-  private init(){
+  private init() {
     HelpersProvider.me = this;
   }
 
   public setLanguage(lang: string) {
     let t = this;
     this.zone.run(function () {
-      t.translate.use(lang).subscribe(console.log, console.error);
+      t.translate.use(lang).subscribe(function () {/*console.log();*/ }, console.error);
     });
   }
 
@@ -172,7 +172,7 @@ export class HelpersProvider {
       parameters.resolve = resolve;
       parameters.reject = reject;
 
-      if(!t.platform.is("cordova")){
+      if (!t.platform.is("cordova")) {
         return t.pickFileBrowser(resolve, reject);
       }
 
@@ -311,27 +311,27 @@ export class HelpersProvider {
 
   }
 
-  public async toPages(root:Page, pages:Array<{page: Page, data:any}>, data?){
+  public async toPages(root: Page, pages: Array<{ page: Page, data: any }>, data?) {
     data = data || {};
     let nav = this.app.getActiveNavs()[0];
     await nav.setRoot(root, data);
-    for(let page of pages){
+    for (let page of pages) {
       await nav.push(page.page, page.data);
     }
   }
 
-  public async presentAlertStandar(acept:Function, cancel?:Function){
+  public async presentAlertStandar(acept: Function, cancel?: Function) {
 
     cancel = cancel || new Function();
     let si = await this.getWords("YES"), no = await this.getWords("NO"),
-    msg = await this.getWords("MESSAGEALERT");
+      msg = await this.getWords("MESSAGEALERT");
     let alert = this.alertCtrl.create({
       title: msg,
       buttons: [
         {
           text: no,
           role: 'cancel',
-          handler: ()=> cancel()
+          handler: () => cancel()
         },
         {
           text: si,
@@ -342,7 +342,7 @@ export class HelpersProvider {
     alert.present();
   }
 
-  public async presentAlertErrorStandar(){
+  public async presentAlertErrorStandar() {
     let msgUnrer = await this.getWords("ERRORUNEX");
     this.alertCtrl.create({
       title: "Error",
@@ -350,19 +350,23 @@ export class HelpersProvider {
       buttons: ["Ok"]
     }).present();
   }
-  
-  public getDeviceInfo(){
+
+  public getDeviceInfo() {
     let data;
-    if( this.platform.is("cordova") ){
-      data = { uuid : this.device.uuid, 
-        model : this.device.model, 
-        platform : this.device.platform,
-        versionOS : this.device.version};
-    }else{
-      data = { uuid : "zxy6352", 
-        model : "Navigator", 
-        platform : "N",
-        versionOS : "3.0.1"};
+    if (this.platform.is("cordova")) {
+      data = {
+        uuid: this.device.uuid,
+        model: this.device.model,
+        platform: this.device.platform,
+        versionOS: this.device.version
+      };
+    } else {
+      data = {
+        uuid: "zxy6352",
+        model: "Navigator",
+        platform: "N",
+        versionOS: "3.0.1"
+      };
     }
 
     return data;

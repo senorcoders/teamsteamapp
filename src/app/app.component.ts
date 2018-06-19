@@ -1,10 +1,8 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, Nav, /*ToastController, Toast,*/ Events } from 'ionic-angular';
+import { Platform, Nav, Events, ToastController, Toast } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
-import { SplashScreen } from '@ionic-native/splash-screen';
 
-//import { Network } from '@ionic-native/network';
-import { Push, PushObject, /*PushOptions*/ } from '@ionic-native/push';
+import { Push, PushObject } from '@ionic-native/push';
 
 import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -14,7 +12,6 @@ import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
 
-/*import { ChatPage } from '../pages/chat/chat';*/
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
@@ -23,11 +20,9 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
-import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { WebIntent } from '@ionic-native/web-intent';
-import { EventPage } from '../pages/event/event';
-import { TaskPage } from '../pages/task/task';
-import { ChatPage } from '../pages/chat/chat';
+import { INotificationProvider } from '../providers/i-notification/i-notification';
+import { Network } from '@ionic-native/network';
 
 
 @Component({
@@ -38,15 +33,11 @@ export class MyApp {
 
   public static me: MyApp;
 
-  private static notificationEnable: boolean = false;
-  /*private static httpCliente: HttpClient;*/
-  private static authService: AuthServiceProvider;
-  private static pusherNotification: Push;
-  private static permision: boolean = false;
+  public notificationEnable: boolean = false;
+  private permision: boolean = false;
   public static User: any;
-  public static pushObject: PushObject;
-  private static event: Events;
-  public static intent=false;
+  public pushObject: PushObject;
+  public static newDatas: any = {};
 
   public nameReady = false;
   public teamName = "";
@@ -64,58 +55,57 @@ export class MyApp {
   public defaultImageUserUrl = "./assets/imgs/user-menu.png";
   public defaultImageUser = true;
 
-  public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*" },
-    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*" }
-  ];
+  public toas: Toast;
 
-  constructor(public platform: Platform, statusBar: StatusBar,
-    splashScreen: SplashScreen, public auth: AuthServiceProvider,
-    public menuCtrl: MenuController,
-    /*private network: Network, public toast: ToastController,*/
-    private push: Push,
-    private http: HttpClient, private Evenn: Events,
-    public zone: NgZone, translate: TranslateService,
-    private helper: HelpersProvider, public webIntent: WebIntent
+  public pages: Array<Object> = [
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat" },
+    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "" }
+  ];
+  public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
+
+  constructor(public platform: Platform, public statusBar: StatusBar,
+    public auth: AuthServiceProvider, public menuCtrl: MenuController,
+    private network: Network, public toast: ToastController,
+    public pusherNotification: Push, private http: HttpClient,
+    public event: Events, public zone: NgZone,
+    public translate: TranslateService, private helper: HelpersProvider,
+    public webIntent: WebIntent, public iNotification: INotificationProvider
   ) {
 
-    //servicios que nesesitaran otros componentes per o que nesesitan la participacion del app
-    //MyApp.httpCliente = this.http;
-    MyApp.authService = this.auth;
-    MyApp.pusherNotification = this.push;
-    MyApp.event = this.Evenn;
     this.init();
 
-    let t = this;
-    platform.ready().then(() => {
-      translate.setDefaultLang('en');
+    platform.ready().then(this.initPlatform.bind(this));
 
-      // the lang to use, if the lang isn't available, it will use the current loader to get them
-      translate.use('en');
+  }
 
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.overlaysWebView(false);
-      statusBar.backgroundColorByHexString("#008e76");
+  private initPlatform() {
 
-      t.push.hasPermission()
-        .then((res: any) => {
+    this.translate.setDefaultLang('en');
 
-          if (res.isEnabled) {
-            console.log('We have permission to send push notifications');
-            MyApp.permision = true;
-          } else {
-            console.log('We do not have permission to send push notifications');
-          }
+    // the lang to use, if the lang isn't available, it will use the current loader to get them
+    this.translate.use('en');
 
-        });
+    // Okay, so the platform is ready and our plugins are available.
+    // Here you can do any higher level native things you might need.
+    this.statusBar.overlaysWebView(false);
+    this.statusBar.backgroundColorByHexString("#008e76");
 
-    });
+    this.pusherNotification.hasPermission()
+      .then((res: any) => {
 
-    /*this.toas = this.toast.create({
+        if (res.isEnabled) {
+          console.log('We have permission to send push notifications');
+          MyApp.me.permision = true;
+        } else {
+          console.log('We do not have permission to send push notifications');
+        }
+
+      });
+
+    this.toas = this.toast.create({
       message: " Internet connection is required",
       showCloseButton: true,
       position: "bottom"
@@ -132,12 +122,13 @@ export class MyApp {
     this.network.onDisconnect().subscribe(data => {
       console.log(data)
       this.toas.present();
-    }, error => console.error(error));*/
-
+    }, error => console.error(error));
   }
 
   public init() {
     MyApp.me = this;
+    this.serviceNewDatas();
+    setInterval(this.serviceNewDatas.bind(this), 6000);
   }
 
   async ngOnInit() {
@@ -170,29 +161,93 @@ export class MyApp {
     }
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
-    let t = this;
     this.auth.changeUser(function () {
 
       this.defaultImageUser = true;
-      this.user = t.auth.User();
+      this.user = this.auth.User();
 
-      console.log("cambiooo", t.user);
+      console.log("cambiooo", this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + t.user.id);
-      document.getElementById("imageSlide").setAttribute("src", t.userimg);
+      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
+      document.getElementById("imageSlide").setAttribute("src", this.userimg);
       //document.getElementById("nameSlide").innerText = t.user.username;
       this.user = MyApp.User;
     }.bind(this));
+
+    this.serviceNewDatas();
   }
+
+  //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
+  private async serviceNewDatas() {
+    //get new requests
+    if (MyApp.User === null || MyApp.User === undefined)
+      return;
+
+    this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+    //console.log(this.team);
+    if (!this.team.hasOwnProperty("request")) {
+      this.team.request = [];
+    }
+
+    if (this.team.request.length !== 0) {
+      MyApp.newDatas["request"] = true;
+    } else {
+      MyApp.newDatas["request"] = false;
+    }
+
+    this.checkNewDatas();
+    this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+  }
+
+  private checkNewDatas() {
+    console.log(MyApp.newDatas);
+    if (this.newData(this.newDataSchema) === false) {
+      this.insertPointNewMenuToggle();
+    } else {
+      this.deletePointNewMenuToggle();
+    }
+  }
+
+  private insertPointNewMenuToggle() {
+    if (document.querySelector("div.point-new-menu-toggle") !== null) return;
+
+    let div = document.createElement("div");
+    div.setAttribute("class", "point-new-menu-toggle");
+    document.querySelector("button[menutoggle]").appendChild(div);
+  }
+
+  private deletePointNewMenuToggle() {
+    if (document.querySelector("div.point-new-menu-toggle") === null) return;
+    document.querySelector("button[menutoggle]").removeChild(document.querySelector("div.point-new-menu-toggle"));
+  }
+
+  public newData(id): boolean {
+    if (MyApp.User === null || MyApp.User === undefined) return true;
+
+    if (Object.prototype.toString.call(id) === '[object Array]') {
+
+      let valid = false;
+      for (let i of id) {
+        if (MyApp.newDatas.hasOwnProperty(i.id)) {
+          if (MyApp.newDatas[i.id] === true && (i.role === MyApp.User.role.name || i.role === '*') ) {
+            valid = true;
+          }
+        }
+      }
+      return !valid;
+    }
+
+    if (MyApp.newDatas.hasOwnProperty(id))
+      return !MyApp.newDatas[id];
+
+    return !false;
+  }
+  //#endregion
 
   public loadImageMenu() {
     this.defaultImageUser = false;
   }
 
-
-  /**
-   * logout
-   */
   public async logout() {
     var response = await this.auth.logout();
     if (response === true) {
@@ -201,13 +256,15 @@ export class MyApp {
     this.menuCtrl.close();
   }
 
-  goToPage(page) {
-    this.nav.setRoot(page);
+  public async goToPage(page) {
+    await this.nav.setRoot(page);
+    this.checkNewDatas();
     this.menuCtrl.close();
   }
 
-  public goProfile() {
-    this.nav.setRoot(ViewProfilePage);
+  public async goProfile() {
+    await this.nav.setRoot(ViewProfilePage);
+    this.checkNewDatas();
     this.menuCtrl.close();
   }
 
@@ -226,7 +283,7 @@ export class MyApp {
 
   public static async initNotifcations() {
 
-    if (MyApp.notificationEnable === true && MyApp.permision === false) {
+    if (MyApp.me.notificationEnable === true && MyApp.me.permision === false) {
       return;
     }
 
@@ -239,7 +296,7 @@ export class MyApp {
   public static async notifcations(team) {
 
     // Return a list of currently configured channels
-    MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
+    //MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
 
     // to initialize push notifications
 
@@ -250,8 +307,8 @@ export class MyApp {
         topics: [team],
         sound: true,
         vibrate: true,
-        soundname: "default",
-        forceShow: true
+        soundname: "default"/*,
+        forceShow: true*/
       },
       ios: {
         alert: 'true',
@@ -268,32 +325,32 @@ export class MyApp {
     try {
 
       //#region for notification in team
-      MyApp.pushObject = MyApp.pusherNotification.init(options);
+      MyApp.me.pushObject = MyApp.me.pusherNotification.init(options);
 
-      MyApp.pushObject.on('notification').subscribe(async (notification: any) => {
-        
+      MyApp.me.pushObject.on('notification').subscribe(async function (notification: any) {
+
         let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
-        MyApp.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
-        console.log('Received a notification', notification);
+        MyApp.me.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
 
-        let intents = {extras: {is: is, dataStringify: notification.additionalData.dataStringify } };
-        MyApp.me.processNotification(intents);
+        INotificationProvider.me.processNotificationForeGround(is, verb, notification);
+        /*let intents = { extras: { is: is, dataStringify: notification.additionalData.dataStringify } };
+        MyApp.me.processNotification(intents);*/
 
       });
 
-      MyApp.pushObject.on('registration').subscribe((registration: any) => {
+      MyApp.me.pushObject.on('registration').subscribe((registration: any) => {
 
         if (MyApp.User.tokenReady === true) {
-          MyApp.notificationEnable = true;
+          MyApp.me.notificationEnable = true;
           return;
         }
-        MyApp.notificationEnable = true;
-        MyApp.authService.updateTokenReg(registration.registrationId);
+        MyApp.me.notificationEnable = true;
+        MyApp.me.auth.updateTokenReg(registration.registrationId);
         console.log('Device registered', registration);
       });
 
-      MyApp.pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
+      MyApp.me.pushObject.on('error').subscribe(error => console.error('Error with Push plugin', error));
       //#endregion
 
     }
@@ -306,7 +363,7 @@ export class MyApp {
     //#region para cuando se toca una notification y el app esta cerrada y entra
     try {
       let intents = await MyApp.me.webIntent.getIntent();
-      MyApp.me.processNotification(intents);
+      INotificationProvider.me.processNotificacionBackground(intents);
     }
     catch (e) {
       console.error(e);
@@ -315,37 +372,12 @@ export class MyApp {
 
     //#region cuando se toca una notification y el app esta en background
     MyApp.me.webIntent.onIntent().subscribe(function (intent) {
-      MyApp.me.processNotification(intent);
+      INotificationProvider.me.processNotificacionBackground(intent);
     }, console.error);
     //#endregion
 
   }
 
-  public async processNotification(intent) {
-
-    console.log(intent);
-
-    if (!intent.hasOwnProperty("extras") || !intent.extras.hasOwnProperty("is")) {
-      return;
-    }
-
-    let data;
-    if(Object.prototype.toString.call(intent.extras.dataStringify) === "[object String]"){
-      data = JSON.parse(intent.extras.dataStringify);
-    }else{
-      data = intent.extras.dataStringify
-    }
-    if (intent.extras.is === "chat") {
-      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);
-    }else if(intent.extras.is === "event"){
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], {notification: true});
-    }else if(intent.extras.is === "task"){
-      await HelpersProvider.me.toPages(MyTaskPage, [{page: TaskPage, data: {task: data} }]);
-    }else if(intent.extras.is === "message" ){
-      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatPage, data: {} }]);
-    }
-
-  }
 
 }
 
