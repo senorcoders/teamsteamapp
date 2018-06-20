@@ -200,7 +200,7 @@ export class MyApp {
   }
 
   private checkNewDatas() {
-    console.log(MyApp.newDatas);
+    //console.log(MyApp.newDatas);
     if (this.newData(this.newDataSchema) === false) {
       this.insertPointNewMenuToggle();
     } else {

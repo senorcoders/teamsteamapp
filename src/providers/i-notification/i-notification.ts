@@ -40,6 +40,13 @@ export class INotificationProvider {
     }
     if (intent.extras.is === "chat") {
       await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);
+    } else if (intent.extras.is === "event" && intent.extras.verb === 'followig') {
+      let events = data.events;
+      if (events.length === 1) {
+        console.log(events[0]);
+        let event = await this.http.get("/event/" + events[0]._id).toPromise();
+        await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event } }], { notification: true });
+      }
     } else if (intent.extras.is === "event") {
       await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], { notification: true });
     } else if (intent.extras.is === "task") {
@@ -68,7 +75,7 @@ export class INotificationProvider {
         });
 
       } else if (notification.additionalData.dataStringify.hasOwnProperty("team")) {
-        
+
         this.zone.run(function () {
           let ide = "team";
           let index = ListChatsPage.newMessages.findIndex(function (it) { return it === ide; });

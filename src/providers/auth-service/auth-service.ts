@@ -4,6 +4,7 @@ import { Storage } from '@ionic/storage';
 import { MenuController, Platform } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
+import { Globalization } from '@ionic-native/globalization';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -19,7 +20,8 @@ export class AuthServiceProvider {
 
   constructor(public http: HttpClient, public storage: Storage,
     public menuCtrl: MenuController, public zone: NgZone,
-    public helper: HelpersProvider, public platform: Platform
+    public helper: HelpersProvider, public platform: Platform,
+    public globalization: Globalization
   ) {
 
   }
@@ -28,7 +30,7 @@ export class AuthServiceProvider {
    * Login
    */
   public async Login(email: String, callback: Function) {
-    
+
     try {
       let info = this.helper.getDeviceInfo();
       info.email = email;
@@ -39,9 +41,9 @@ export class AuthServiceProvider {
 
       if (data.hasOwnProperty("message")) {
         callback(data, null);
-      } else if(data.hasOwnProperty("verify")){
+      } else if (data.hasOwnProperty("verify")) {
         callback(data, null);
-      }else {
+      } else {
 
         //For save
         data.tokenReady = false;
@@ -56,7 +58,7 @@ export class AuthServiceProvider {
           await this.helper.setLanguage('en');
         }
 
-        console.log(this.user);
+        //console.log(this.user);
 
         this.saveRole(function () {
           callback(null, data);
@@ -84,6 +86,20 @@ export class AuthServiceProvider {
 
       await this.storage.set("role", MyApp.User.role);
 
+      /********
+       * Se tiene que guardar el time zone del equipo para
+       * cuando se quiera obtener los eventos proximos dentro de 15 minutos
+       * el time zona es para que la busquedad se haga correctamente, obteniendo el tiempo
+       * que debe de ser segun su zona horaria
+       */
+      if (MyApp.User.role.name === "Manager") {
+        let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });
+        if (times.hasOwnProperty("iana_timezone")) {
+          let timeZone = times.iana_timezone;
+          let tm = await this.http.put("/teams/" + MyApp.User.team, { timeZone }).toPromise();
+        }
+      }
+
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
       let t = this;
@@ -105,7 +121,7 @@ export class AuthServiceProvider {
       }
       tokens.push(token);
       console.log(tokens);
-      let updated = await this.http.put("/user/" + MyApp.User.id, { "tokenReg": tokens }).toPromise()
+      let updated = await this.http.put("/user/" + MyApp.User.id, { "tokenReg": tokens, tokenReady: false }).toPromise()
       console.log(updated);
       let user = MyApp.User;
       user.tokenReg = token;
