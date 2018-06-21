@@ -16,6 +16,7 @@ export class interceptor implements HttpInterceptor {
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if( req.url.includes("./assets/i18n/") ) return next.handle(req);
+    if( req.url.includes("maps.googleapis.com") ) return next.handle(req);
 
     if( MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token') ){
 

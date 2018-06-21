@@ -85,7 +85,7 @@ export class EventPage {
     //para obtener los trackings del evento
     try{
       this.tracking = await this.http.get("/traking/query/"+ MyApp.User.id+ "/"+ this.event.id).toPromise();
-      console.log(this.tracking);
+      //console.log(this.tracking);
     }
     catch(e){
       console.error(e);
@@ -105,7 +105,7 @@ export class EventPage {
     //for geoconder location
     this.location.change = false;
     this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
-    // console.log(this.location);
+    console.log(this.location);
     try{
 
       if( this.location.useMap === true ){
@@ -116,6 +116,9 @@ export class EventPage {
         this.location.change = true;
       }else{
         
+        if( HelpersProvider.me.enableMapsLocation === false )
+          await HelpersProvider.me.reloadGoogleplaces();
+
         if( google ){
           
           let geocoder = new google.maps.Geocoder()
@@ -181,7 +184,7 @@ export class EventPage {
     try{
       let trackings:any = await this.http.get("/trackingevent/event/"+ event.id).toPromise();
 
-      console.log(trackings);
+      //console.log(trackings);
       await Promise.all( trackings.map( async function(item){
 
         if( item.info == 'yes' )

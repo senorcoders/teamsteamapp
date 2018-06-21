@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController, Header } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
@@ -17,6 +17,8 @@ import { Page } from 'ionic-angular/navigation/nav-util';
 import { Device } from '@ionic-native/device';
 
 
+declare var google: any;
+
 /**
  * este servicio contiene funciones generales que son usadas mas de una por las diferentes componentes
  */
@@ -27,6 +29,8 @@ export class HelpersProvider {
   public static lng: string = "-0.12762500";
 
   public static me: HelpersProvider;
+
+  public enableMapsLocation = false;
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public nativeGeocoder: NativeGeocoder,
@@ -41,6 +45,38 @@ export class HelpersProvider {
 
   private init() {
     HelpersProvider.me = this;
+    if (window.hasOwnProperty("google") === true) {
+      HelpersProvider.me.enableMapsLocation = true;
+    }
+  }
+
+  public async reloadGoogleplaces(sleep?: boolean) {
+
+    sleep = sleep || false;
+    if (sleep === true)
+      await new Promise(function (resolve) { setTimeout(resolve, 2000) });
+
+    try {
+
+      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places",{
+       responseType: 'text' 
+      }).toPromise();
+      
+      let fn = new Function(script);
+      fn();
+
+      if( window.hasOwnProperty("google") === true ){
+        HelpersProvider.me.enableMapsLocation = true;
+      }else{
+        await this.reloadGoogleplaces(true);
+      }
+
+    }
+    catch (e) {
+      console.error(e);
+      await this.reloadGoogleplaces(true);
+    }
+
   }
 
   public setLanguage(lang: string) {
