@@ -14,65 +14,76 @@ export class FormJoinTeamPage {
   public firstName = "";
   public lastName = "";
   public email = "";
-  public role="";
-  public players:Array<any>=[];
-  private team:any={};
-  public player="";
-  public relationship="";
+  public role = "";
+  public players: Array<any> = [];
+  private team: any = {};
+  public playersSelects = [];
+  public relationships:any={};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-  public viewCtrl: ViewController, public alertCtrl: AlertController,
-  private helper: HelpersProvider, private http:HttpClient
+    public viewCtrl: ViewController, public alertCtrl: AlertController,
+    private helper: HelpersProvider, private http: HttpClient
   ) {
 
     this.team = this.navParams.get("team");
 
   }
 
-  async ngOnInit(){
-    try{
-      let ps:Array<any> = await this.http.get("/players/team/"+ this.team.id).toPromise() as any;
-      this.players = ps.filter(function(it){ return it.hasOwnProperty("user") });
+  async ngOnInit() {
+    try {
+      let ps: Array<any> = await this.http.get("/players/team/" + this.team.id).toPromise() as any;
+      this.players = ps.filter(function (it) { return it.hasOwnProperty("user") });
     }
-    catch(e){
+    catch (e) {
       console.error(e);
-    } 
+    }
   }
 
-  public async sent(){
+  public getEmail(id):String{
+    let player = this.players.find(function(it){ return it.id === id; })
+    if(player === undefined){return ""; }
+    return player.user.email;
+  }
 
-    if( this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "" ){
+  public async sent() {
+
+    if (this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
       let requiredM = await this.helper.getWords("REQUIRED"),
-      unex = await this.helper.getWords("EMPTYFIELDS");
+        unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
-      .present();
+        .present();
       return;
     }
 
-    if( this.role === "Family" && this.player === "" && this.relationship === "" ){
+    let lengthR = Object.keys(this.relationships).length
+    if (this.role === "Family" && this.playersSelects.length === 0 && lengthR === 0
+    && this.playersSelects.length !== lengthR 
+    ) {
       let requiredM = await this.helper.getWords("REQUIRED"),
-      unex = await this.helper.getWords("EMPTYFIELDS");
+        unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
-      .present();
+        .present();
       return;
     }
 
-    /*let email:any = await this.http.get("/user/enable/"+ this.email).toPromise();
-    if( email.valid === false ){
-      let emailM = await this.helper.getWords("EMAILREADY");
-      this.alertCtrl.create({ message:  emailM, buttons: ["Ok"]})
-      .present();
-      return;
-    }*/
+    let i = 0;
+    let playersSelects = this.playersSelects.map(function (it) {
+      let p = { id: it, relationship: this.relationships[i] };
+      i += 1;
+      return p;
+    }.bind(this));
+    console.log(playersSelects);
 
-    let user:any;
-    if( this.role === "Family" ){
-      user = { firstName: this.firstName, lastName: this.lastName, 
-        email: this.email, player: this.player, role: this.role, relationship: this.relationship };
-    }else{
+    let user: any;
+    if (this.role === "Family") {
+      user = {
+        firstName: this.firstName, lastName: this.lastName,
+        email: this.email, players: playersSelects, role: this.role
+      };
+    } else {
       user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
     }
-    
+
     this.viewCtrl.dismiss(user);
 
   }

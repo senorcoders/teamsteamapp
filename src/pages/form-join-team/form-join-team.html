@@ -1,4 +1,3 @@
-
 <ion-header>
   <ion-navbar color="base">
     <ion-buttons left>
@@ -17,7 +16,7 @@
 
     <ion-item>
       <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
-      <ion-input type="text" value="" [(ngModel)]="firstName" ></ion-input>
+      <ion-input type="text" value="" [(ngModel)]="firstName"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -27,12 +26,12 @@
 
     <ion-item>
       <ion-label floating>{{"EMAIL" | translate}}</ion-label>
-      <ion-input type="email" [(ngModel)]="email" ></ion-input>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>{{"ROLE" | translate}}</ion-label>
-      <ion-select [(ngModel)]="role" >
+      <ion-select [(ngModel)]="role">
         <ion-option value="Manager">{{"MANAGER" | translate}}</ion-option>
         <ion-option value="Player">{{"PLAYER" | translate}}</ion-option>
         <ion-option value="Family">{{"FAMILY" | translate}}</ion-option>
@@ -41,18 +40,18 @@
 
     <ion-item [hidden]="role!='Family'">
       <ion-label floating>{{"SELECTFAMILY" | translate}}</ion-label>
-      <ion-select [(ngModel)]="player" >
-        <ion-option *ngFor="let player of players;" [value]="player.id" >{{player.user.email}}</ion-option>
+      <ion-select [(ngModel)]="playersSelects" multiple="true">
+        <ion-option *ngFor="let player of players;" [value]="player.id">{{player.user.email}}</ion-option>
       </ion-select>
     </ion-item>
 
-    <ion-item [hidden]="role!='Family'">
-        <ion-label floating>{{"RELATIONSHIP" | translate}}</ion-label>
-        <ion-input type="text" [(ngModel)]="relationship" ></ion-input>
-      </ion-item>
+    <ion-item [hidden]="role!='Family'" *ngFor="let player of playersSelects; let i=index;">
+      <ion-label floating>{{"RELATIONSHIP" | translate}} {{"OF" | translate}} {{getEmail(player)}}</ion-label>
+      <ion-input type="text" [(ngModel)]="relationships[i]"></ion-input>
+    </ion-item>
 
   </ion-list>
 
-  <button ion-button block (click)="sent()" >{{"SENT" | translate}}</button>
+  <button ion-button block (click)="sent()">{{"SENT" | translate}}</button>
 
 </ion-content>

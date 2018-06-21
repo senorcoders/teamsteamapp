@@ -224,5 +224,6 @@
     },
     "ERRORUNEX" : "Unexpected Error",
     "VERFIEDDEVICE": "Go to your email and verify your device and return login",
-    "RELATIONSHIP": "Relationship"
+    "RELATIONSHIP": "Relationship",
+    "OF": "of"
 }

@@ -24,11 +24,8 @@
         <ion-item>
           {{request.role.toUpperCase() | translate}}
         </ion-item>
-        <ion-item [hidden]="player.user.firstName === ''">
-          {{player.user.firstName+ " "+ player.user.lastName}}
-        </ion-item>
-        <ion-item [hidden]="player.user.firstName === ''">
-          {{'RELATIONSHIP' | translate}}: {{request.user.relationship}}
+        <ion-item *ngFor="let player of players;">
+          {{player.user.firstName+ " "+ player.user.lastName}}, {{'RELATIONSHIP' | translate}}: {{player.relationship}}
         </ion-item>
       </ion-list>
 

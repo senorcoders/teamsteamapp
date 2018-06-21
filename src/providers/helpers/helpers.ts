@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController, AlertController, Header } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
@@ -16,8 +16,6 @@ import { Camera } from '@ionic-native/camera';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { Device } from '@ionic-native/device';
 
-
-declare var google: any;
 
 /**
  * este servicio contiene funciones generales que son usadas mas de una por las diferentes componentes

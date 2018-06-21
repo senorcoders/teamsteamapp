@@ -12,13 +12,13 @@ import { MyApp } from '../../app/app.component';
 })
 export class ViewRequestPage {
 
-  public user:any={ fullName: "", email: "", password: "" };
-  public request:any;
-  public imageSrc="";
-  public image=false;
-  private requests:Array<any>=[];
+  public user: any = { fullName: "", email: "", password: "" };
+  public request: any;
+  public imageSrc = "";
+  public image = false;
+  private requests: Array<any> = [];
 
-  public player:any = { user: {firstName: "", lastName: "" } };
+  public players: any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public helper: HelpersProvider,
@@ -30,38 +30,44 @@ export class ViewRequestPage {
     this.imageSrc = this.user.imageSrc;
     this.requests = this.navParams.get("requests");
 
-    console.log(this.request, this.requests, this.player);
-    if( !this.request.hasOwnProperty("dened") ){
+    //console.log(this.request, this.requests, this.players);
+    if (!this.request.hasOwnProperty("dened")) {
       this.request.dened = false;
     }
 
   }
 
-  async ionViewDidLoad(){
-    if(this.request.role === "Family"){
-      let player = await this.http.get("/players/"+ this.request.user.player).toPromise();
-      //console.log(player);
-      this.player = player;
+  async ionViewDidLoad() {
+    if (this.request.role === "Family" && 
+    this.request.user.hasOwnProperty("players") && 
+    Object.prototype.toString.call(this.request.user.players) === "[object Array]" ){
+      let load = HelpersProvider.me.getLoadingStandar();
+      for (let it of this.request.user.players) {
+        let player:any = await this.http.get("/players/" + it.id).toPromise();
+        player.relationship = it.relationship;
+        this.players.push(player);
+      }
+      load.dismiss();
     }
   }
 
 
-  public loadImage(){
+  public loadImage() {
     this.image = true;
   }
 
-  public async acceptRequest(){
+  public async acceptRequest() {
 
     this.request.acept = true;
-    let index = this.requests.findIndex(function(it){ return it.user.email === this.request.user.email }.bind(this));
-    if( index === -1 ){
+    let index = this.requests.findIndex(function (it) { return it.user.email === this.request.user.email }.bind(this));
+    if (index === -1) {
       let unexM = await this.helper.getWords("ERORUNEXC");
-      this.alertCtrl.create({ title: "Error", message: unexM})
-      .present();
+      this.alertCtrl.create({ title: "Error", message: unexM })
+        .present();
       return;
     }
 
-    let request = JSON.parse( JSON.stringify(this.request) );
+    let request = JSON.parse(JSON.stringify(this.request));
     delete request.imageSrc;
     this.requests[index] = request;
     let requests = await this.http.put("/team/request", { id: MyApp.User.team, request: this.requests, index }).toPromise();
@@ -69,18 +75,18 @@ export class ViewRequestPage {
 
   }
 
-  public async denRequest(){
+  public async denRequest() {
 
     this.request.dened = true;
-    let index = this.requests.findIndex(function(it){ return it.user.email === this.request.user.email }.bind(this));
-    if( index === -1 ){
+    let index = this.requests.findIndex(function (it) { return it.user.email === this.request.user.email }.bind(this));
+    if (index === -1) {
       let unexM = await this.helper.getWords("ERORUNEXC");
-      this.alertCtrl.create({ title: "Error", message: unexM})
-      .present();
+      this.alertCtrl.create({ title: "Error", message: unexM })
+        .present();
       return;
     }
 
-    let request = JSON.parse( JSON.stringify(this.request) );
+    let request = JSON.parse(JSON.stringify(this.request));
     delete request.imageSrc;
     this.requests[index] = request;
     let requests = await this.http.put("/team/request", { id: MyApp.User.team, request: this.requests, index }).toPromise();

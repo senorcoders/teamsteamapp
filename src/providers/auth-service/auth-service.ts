@@ -96,7 +96,7 @@ export class AuthServiceProvider {
         let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });
         if (times.hasOwnProperty("iana_timezone")) {
           let timeZone = times.iana_timezone;
-          let tm = await this.http.put("/teams/" + MyApp.User.team, { timeZone }).toPromise();
+          await this.http.put("/teams/" + MyApp.User.team, { timeZone }).toPromise();
         }
       }
 

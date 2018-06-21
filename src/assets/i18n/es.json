@@ -224,5 +224,6 @@
     },
     "ERRORUNEX" : "Error Inesperado",
     "VERFIEDDEVICE": "Vaya a su correo y verifique su dispositivo y vuelve e inicia sesión",
-    "RELATIONSHIP": "Parentesco"
+    "RELATIONSHIP": "Parentesco",
+    "OF": "de"
 }
