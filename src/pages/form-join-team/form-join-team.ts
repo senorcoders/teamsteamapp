@@ -55,9 +55,15 @@ export class FormJoinTeamPage {
       return;
     }
 
-    let lengthR = Object.keys(this.relationships).length
-    if (this.role === "Family" && this.playersSelects.length === 0 && lengthR === 0
-    && this.playersSelects.length !== lengthR 
+    let lengthR = 0;
+    for(let n of Object.keys(this.relationships)){
+      if(this.relationships[n] !== ""){
+        lengthR +=1;
+      }
+    }
+    
+    if (this.role === "Family" && (this.playersSelects.length === 0 ||
+      this.playersSelects.length !== lengthR) 
     ) {
       let requiredM = await this.helper.getWords("REQUIRED"),
         unex = await this.helper.getWords("EMPTYFIELDS");
@@ -72,7 +78,6 @@ export class FormJoinTeamPage {
       i += 1;
       return p;
     }.bind(this));
-    console.log(playersSelects);
 
     let user: any;
     if (this.role === "Family") {
