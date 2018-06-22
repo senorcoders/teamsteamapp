@@ -23,6 +23,7 @@ import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { Network } from '@ionic-native/network';
+import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 
 
 @Component({
@@ -62,6 +63,7 @@ export class MyApp {
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "" },
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "" },
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request" },
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "" }
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];

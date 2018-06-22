@@ -1,6 +1,11 @@
 <ion-header>
 
   <ion-navbar color="base">
+    <ion-buttons start>
+      <button ion-button icon-only menuToggle>
+        <ion-icon name="menu"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>{{ "REQUESTS" | translate}}</ion-title>
   </ion-navbar>
 
@@ -13,7 +18,7 @@
 
     <ion-item *ngFor="let re of request;" (click)="viewRequest(re)">
       <ion-avatar item-start [hidden]="!re.image">
-        <img [src]="re.imageSrc" (load)="loadImage(re)" >
+        <img [src]="re.imageSrc" (load)="loadImage(re)">
       </ion-avatar>
       {{ re.user.fullName }}
     </ion-item>

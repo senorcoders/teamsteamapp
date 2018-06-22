@@ -11,7 +11,7 @@
 				<img (click)="goProfile()" [hidden]="!defaultImageUser" [src]="defaultImageUserUrl" class="userimg">
 				<img (click)="goProfile()" [hidden]="defaultImageUser" id="imageSlide" (load)="loadImageMenu()" class="userimg">
 				<img src="./assets/imgs/gear-icon.png" class="icon-gear" >
-				<div class="new-menu" [hidden]="newData([{id:'request', role: 'Manager'}])"></div>
+				<!--div class="new-menu" [hidden]="newData([{id:'request', role: 'Manager'}])"></div-->
 			</div>
 			<p id="nameSlide" class="username">{{user.username}}</p>
     </div>
