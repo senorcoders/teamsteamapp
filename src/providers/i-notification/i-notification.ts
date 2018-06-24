@@ -35,8 +35,10 @@ export class INotificationProvider {
     let data;
     if (Object.prototype.toString.call(intent.extras.dataStringify) === "[object String]") {
       data = JSON.parse(intent.extras.dataStringify);
+			console.log("DATA: ", data);
     } else {
       data = intent.extras.dataStringify
+			console.log("DATA 2: ", data);
     }
     if (intent.extras.is === "chat") {
       await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatOnePersonPage, data: { user: data.from } }]);

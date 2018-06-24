@@ -24,6 +24,23 @@ import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { Network } from '@ionic-native/network';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
+import { FCM } from '@ionic-native/fcm';
+
+constructor(private fcm: FCM) {
+    fcm.getToken().then(token => {
+        console.log(token);
+    })
+    fcm.onTokenRefresh().subscribe(token => {
+        console.log(token);
+    })
+    fcm.onNotification().subscribe(data => {
+        if (data.wasTapped) {
+            console.log("Received in background");
+        } else {
+            console.log("Received in foreground");
+        };
+    })
+}
 
 
 @Component({
