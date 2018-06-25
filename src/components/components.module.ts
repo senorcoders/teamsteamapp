@@ -13,6 +13,7 @@ import { DateTimePickerComponent } from './date-time-picker/date-time-picker';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../pipes/pipes.module';
 import { PreviewImageChatComponent } from './preview-image-chat/preview-image-chat';
+import { AssistenceComponent } from './assistence/assistence';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -25,6 +26,7 @@ import { PreviewImageChatComponent } from './preview-image-chat/preview-image-ch
     AsingpaymentComponent,
     DateTimePickerComponent,
     PreviewImageChatComponent,
+    AssistenceComponent,
      ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
@@ -43,6 +45,7 @@ import { PreviewImageChatComponent } from './preview-image-chat/preview-image-ch
     DateTimePickerComponent,
     TranslateModule,
     PreviewImageChatComponent,
+    AssistenceComponent,
     ]
 })
 export class ComponentsModule {}

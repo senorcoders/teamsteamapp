@@ -225,5 +225,8 @@
     "ERRORUNEX" : "Unexpected Error",
     "VERFIEDDEVICE": "Go to your email and verify your device and return login",
     "RELATIONSHIP": "Relationship",
-    "OF": "of"
+    "OF": "of",
+    "ASSISTENCEEVENT":{
+        "TITLE": "Attendance of The Event"
+    }
 }

@@ -49,21 +49,103 @@
           <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
       </ion-item>
 
-      <!--ion-item>
-        <ion-label floating>{{"PASSWORD" | translate}}</ion-label>
-        <ion-input type="password" value="" [(ngModel)]="password"></ion-input>
+  </ion-list>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label>{{"ROSTER.NONPLAYER" | translate}}</ion-label>
+      <ion-toggle [(ngModel)]="nonPlayer" ></ion-toggle>
+    </ion-item>
+
+    <ion-item>
+        <ion-label>{{"ROSTER.MANAGERACCESS" | translate}}</ion-label>
+        <ion-toggle [(ngModel)]="managerAccess" ></ion-toggle>
+      </ion-item>
+
+    <ion-item>
+        <h4 class="date-time" (click)='setDate()'>{{"BIRTHDAY" | translate}} {{birthDay}} </h4>
       </ion-item>
 
       <ion-item>
-        <ion-label floating>{{"CHANGEPASSALERT.AGAINNEWPASS" | translate}}</ion-label>
-        <ion-input type="password" value="" [(ngModel)]="passwordCheck"></ion-input>
-      </ion-item-->
+          <ion-label floating>{{"ROSTER.GENDER" | translate}}</ion-label>
+          <ion-select [(ngModel)]="gender">
+              <ion-option value="male">
+                {{"ROSTER.MALE" | translate}}
+              </ion-option>
+              <ion-option value="female">
+                {{"ROSTER.FEMALE" | translate}}
+              </ion-option>
+          </ion-select>
+      </ion-item>
+
+        <ion-item>
+          <ion-label floating>{{"ROSTER.YERSERYNUMBER" | translate}}</ion-label>
+          <ion-input type="number" value="" [(ngModel)]="yerseyNumber"></ion-input>
+        </ion-item>
+
+      <ion-item>
+        <ion-label floating>{{"ROSTER.POSITIONS" | translate}}</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="positions"></ion-input>
+      </ion-item>
 
   </ion-list>
 
-  <button ion-button block color="base" (click)="save()">
+  <ion-list>
+
+    <ion-list-header>
+        {{"ROSTER.ADDITIONALCONTACTINFORMATION" | translate}}
+    </ion-list-header>
+
+    <ion-item>
+        <ion-label floating>{{"NEWEVENT.TYPE" | translate}}</ion-label>
+        <ion-select [(ngModel)]="typeContact" multiple="false">
+          <ion-option value="email">{{"EMAIL" | translate}}</ion-option>
+          <ion-option value="telephone">{{"TELEPHONE" | translate}}</ion-option>
+        </ion-select>
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>{{"ROSTER.CONTACTNAME" | translate}}</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="nameContact"></ion-input>
+    </ion-item>
+    <ion-item>
+        <ion-label floating>{{"ROSTER.EMAILPHONE" | translate}}</ion-label>
+        <ion-input type="text" value="" [(ngModel)]="infoContact"></ion-input>
+    </ion-item>
+  
+
+  <button [hidden]="!save" (click)="addContact()" style="margin-top: 10pt;" ion-button clear item-end>
+      <ion-icon name="md-add-circle" style="font-size: 20pt; font-weight: bold;"></ion-icon>
+  </button>
+
+  <button [hidden]="save" (click)="updateContact()" style="margin-top: 10pt;" ion-button clear item-end>
+      <ion-icon name="md-refresh-circle" style="font-size: 20pt; font-weight: bold;"></ion-icon>
+  </button>
+
+</ion-list>
+
+  <ion-list>
+    <ion-item *ngFor="let contact of contacts; let i = index">
+      <h2>{{contact.name}}</h2>
+      <p>{{contact.info}} </p>
+
+      <button (click)="editContact(contact, i)" ion-button clear item-end>
+          <ion-icon name="md-create"></ion-icon>
+      </button>
+
+      <button (click)="removeContact(i)" ion-button clear item-end>
+          <ion-icon name="md-remove-circle"></ion-icon>
+      </button>
+
+    </ion-item>
+  </ion-list>
+
+  <button ion-button block color="base" (click)="saveAction()" >{{"SAVE" | translate}}</button>
+
+  <!--button ion-button block color="base" (click)="save()">
     {{"ROSTER.DETAILSPLAYER" | translate}}
     <ion-icon style="margin-left: 20px;" name="md-arrow-forward"></ion-icon>
-  </button>
+  </button-->
 
 </ion-content>

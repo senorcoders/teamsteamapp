@@ -199,8 +199,8 @@ export class MemberRosterPage {
     delete player.image;
 
     let user = this.player.user;
-
-    let load = this.loading.create({content : "Updating..."});
+    let msg = await HelpersProvider.me.getWords("UPDATING");
+    let load = this.loading.create({content : msg});
     load.present({ disableApp : true });
     try{
       await this.http.put("/players/"+ this.player.id, player).toPromise();
@@ -228,78 +228,88 @@ export class MemberRosterPage {
     });
   }
 
+  //#region en el futuro eliminar
   //muestra un alert controller para pedirle la contraseña al usuario
-  public remove(){
-    let t = this;
-    let alert = this.alertCtrl.create({
-      title: 'Confirm Password',
-      inputs: [
-        {
-          name: 'password',
-          placeholder: 'Password',
-          type: 'password'
-        }
-      ],
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel',
-          handler: data => {
-            console.log('Cancel clicked');
-          }
-        },
-        {
-          text: 'Go!',
-          handler: data => {
-            t.checkPassword(data.password);
-          }
-        }
-      ]
-    });
-    alert.present();
-  }
+  // public remove(){
+  //   let t = this;
+  //   let alert = this.alertCtrl.create({
+  //     title: 'Confirm Password',
+  //     inputs: [
+  //       {
+  //         name: 'password',
+  //         placeholder: 'Password',
+  //         type: 'password'
+  //       }
+  //     ],
+  //     buttons: [
+  //       {
+  //         text: 'Cancel',
+  //         role: 'cancel',
+  //         handler: data => {
+  //           console.log('Cancel clicked');
+  //         }
+  //       },
+  //       {
+  //         text: 'Go!',
+  //         handler: data => {
+  //           t.checkPassword(data.password);
+  //         }
+  //       }
+  //     ]
+  //   });
+  //   alert.present();
+  // }
 
   //Para comprobar si es el usuario legitimo el que esta borrando datos se le pedi la contraseña nuevamente
-  public checkPassword(password){
-    let email = this.auth.User().email;
+  // public checkPassword(password){
+  //   let email = this.auth.User().email;
 
-    this.load = this.loading.create({ content: "Deleting..." });
-    this.load.present({ disableApp : true });
-    let t = this;
-    this.http.post('/login', { email, password})
-    .subscribe(function(data:any){
+  //   this.load = this.loading.create({ content: "Deleting..." });
+  //   this.load.present({ disableApp : true });
+  //   let t = this;
+  //   this.http.post('/login', { email, password})
+  //   .subscribe(function(data:any){
 
-      if( data.hasOwnProperty("message") && data.message == "User not found" ){
-        t.load.dismiss();
-        t.alertCtrl.create({
-          title: "Error",
-          message: "Passwords do not match",
-          buttons: ["Ok"]
-        }).present();
+  //     if( data.hasOwnProperty("message") && data.message == "User not found" ){
+  //       t.load.dismiss();
+  //       t.alertCtrl.create({
+  //         title: "Error",
+  //         message: "Passwords do not match",
+  //         buttons: ["Ok"]
+  //       }).present();
 
-      }else{
+  //     }else{
 
-        console.log("success");
-        t.deletePlayer();
+  //       console.log("success");
+  //       t.deletePlayer();
 
-      }
-    }, function(err){
+  //     }
+  //   }, function(err){
       
-      this.load.dismiss();
+  //     this.load.dismiss();
 
-      t.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
+  //     t.alertCtrl.create({
+  //       title: "Error",
+  //       message: "Unexpected Error",
+  //       buttons: ["Ok"]
+  //     }).present();
 
-      console.error(err);
+  //     console.error(err);
 
-    });
+  //   });
+  // }
+  //#endregion
+
+  public async answerDelete(){
+    let msgM = await HelpersProvider.me.getWords(["DELETE", "PLAYER"]);
+    console.log(msgM);
+    HelpersProvider.me.presentAlertStandar(this.deletePlayer.bind(this), function(){
+
+    }, msgM["DELETE"]+ " "+ msgM["PLAYER"]);
   }
 
   public async deletePlayer(){
-    let t = this;
+    let t = this, load = HelpersProvider.me.getLoadingStandar();
     try{
       //await this.http.delete("/user/"+ this.player.user.id).toPromise();
       await this.http.delete("/players/"+ this.player.id).toPromise();
@@ -321,7 +331,7 @@ export class MemberRosterPage {
       }).present();
     }
     
-    t.load.dismiss();
+    load.dismiss();
     this.navCtrl.setRoot(RosterPage);
   }
 

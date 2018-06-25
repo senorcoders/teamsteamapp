@@ -84,7 +84,7 @@ export class HelpersProvider {
     });
   }
 
-  public getWords(key: string): Promise<string> {
+  public getWords(key: string | string[]): Promise<any> {
     return this.translate.get(key).toPromise();
   }
 
@@ -354,13 +354,14 @@ export class HelpersProvider {
     }
   }
 
-  public async presentAlertStandar(acept: Function, cancel?: Function) {
+  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?:string) {
 
     cancel = cancel || new Function();
+    concatMessage = concatMessage || "";
     let si = await this.getWords("YES"), no = await this.getWords("NO"),
       msg = await this.getWords("MESSAGEALERT");
     let alert = this.alertCtrl.create({
-      title: msg,
+      title: concatMessage+ ", "+ msg,
       buttons: [
         {
           text: no,
