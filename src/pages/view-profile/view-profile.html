@@ -65,7 +65,7 @@
     <ion-item>
       <ion-icon name="md-mail" item-start></ion-icon>
       {{user.email}}
-      <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon>
+      <!-- <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon> -->
       <ion-icon name="md-create" [hidden]="!edit" (click)="changeEmailAlert()" item-end></ion-icon>
     </ion-item>
 
@@ -75,15 +75,25 @@
       <ion-icon hidden name="md-create" item-end></ion-icon>
     </ion-item>
 
+    <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
+      <ion-icon name="logo-usd" item-start></ion-icon>
+      {{ "PAYMENT" | translate}}
+    </ion-item>
+
+    <ion-item (click)="answerDeleteDevices()">
+      <ion-icon name="phone-portrait" item-start></ion-icon>
+      {{ "CLEARDEVICES" | translate}}
+    </ion-item>
+
     <!--ion-item (click)="goViewRequests()" [hidden]="isManagerRequest()">
       <ion-icon name="md-git-pull-request" item-start></ion-icon>
       {{ "REQUESTS" | translate}} {{team.request.length}}
     </ion-item-->
 
-    <ion-item (click)="changePassword()">
+    <!-- <ion-item (click)="changePassword()">
       <ion-icon name="md-create" item-start></ion-icon>
       {{ "CHANGEPASS" | translate}}
-    </ion-item>
+    </ion-item> -->
 
     <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
       <ion-icon name="logo-usd" item-start></ion-icon>

@@ -228,5 +228,6 @@
     "OF": "de",
     "ASSISTENCEEVENT":{
         "TITLE": "Asistencia del Evento"
-    }
+    },
+    "CLEARDEVICES": "Borra Autorizaciones en Dispositivos"
 }

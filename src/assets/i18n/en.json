@@ -228,5 +228,6 @@
     "OF": "of",
     "ASSISTENCEEVENT":{
         "TITLE": "Attendance of The Event"
-    }
+    },
+    "CLEARDEVICES": "Clears Authorizations in Devices"
 }

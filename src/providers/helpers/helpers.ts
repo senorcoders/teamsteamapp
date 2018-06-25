@@ -358,10 +358,13 @@ export class HelpersProvider {
 
     cancel = cancel || new Function();
     concatMessage = concatMessage || "";
+    if(concatMessage !== "" ){
+      concatMessage += ", ";
+    }
     let si = await this.getWords("YES"), no = await this.getWords("NO"),
       msg = await this.getWords("MESSAGEALERT");
     let alert = this.alertCtrl.create({
-      title: concatMessage+ ", "+ msg,
+      title: concatMessage+ msg,
       buttons: [
         {
           text: no,
@@ -386,7 +389,12 @@ export class HelpersProvider {
     }).present();
   }
 
-  public getDeviceInfo() {
+  public getDeviceInfo():{
+    uuid:string,
+    model: string,
+    platform: string,
+    versionOS: string
+  } {
     let data;
     if (this.platform.is("cordova")) {
       data = {

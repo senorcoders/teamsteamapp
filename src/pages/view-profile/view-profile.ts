@@ -61,14 +61,14 @@ export class ViewProfilePage {
 
       //console.log(this.team.request);
       this.request = this.team.request;
-      if( this.user.verified === false ){
-        let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
-        //console.log(v);
-        if( v.verified === true ){
-          this.user.verified = true;
-          await this.auth.updateUser(this.user);
-        }
-      }
+      // if( this.user.verified === false ){
+      //   let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
+      //   //console.log(v);
+      //   if( v.verified === true ){
+      //     this.user.verified = true;
+      //     await this.auth.updateUser(this.user);
+      //   }
+      // }
 
     }
     catch(e){
@@ -285,77 +285,77 @@ export class ViewProfilePage {
     this.navCtrl.push(ViewRequestsPage, {requests: this.team.request});
   }
 
-  public async changePassword(){
+  // public async changePassword(){
     
-    let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
-    newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
-    newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
-    cancelM = await this.helper.getWords("CANCEL"),
-    passM = await this.helper.getWords("PASSWORD");
+  //   let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
+  //   newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
+  //   newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
+  //   cancelM = await this.helper.getWords("CANCEL"),
+  //   passM = await this.helper.getWords("PASSWORD");
 
 
-    let c = this.alertCtrl.create({ title: passM, inputs: [
-        { type: "password", name: "current", placeholder: currentM  },
-        { type: "password", name: "newPass", placeholder: newPassM },
-        { type: "password", name: "passAgain", placeholder: newPassMAgain },
-      ], buttons: [
-        { text: cancelM },
-        {text: "Ok", handler: function(data){ this.changePass(data) }.bind(this) }
-      ] });
+  //   let c = this.alertCtrl.create({ title: passM, inputs: [
+  //       { type: "password", name: "current", placeholder: currentM  },
+  //       { type: "password", name: "newPass", placeholder: newPassM },
+  //       { type: "password", name: "passAgain", placeholder: newPassMAgain },
+  //     ], buttons: [
+  //       { text: cancelM },
+  //       {text: "Ok", handler: function(data){ this.changePass(data) }.bind(this) }
+  //     ] });
 
-    c.present();
+  //   c.present();
     
-  }
+  // }
 
-  private async changePass(data){
-    //console.log(data);
-    let current = data.current || "",
-    newPass = data.newPass || "",
-    againPass = data.passAgain || "";
+  // private async changePass(data){
+  //   //console.log(data);
+  //   let current = data.current || "",
+  //   newPass = data.newPass || "",
+  //   againPass = data.passAgain || "";
     
-    if( newPass == "" || againPass == "" ){
+  //   if( newPass == "" || againPass == "" ){
 
-      let emptM = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: "Error", message: emptM })
-      .present();
-      return;
+  //     let emptM = await this.helper.getWords("EMPTYFIELDS");
+  //     this.alertCtrl.create({ title: "Error", message: emptM })
+  //     .present();
+  //     return;
 
-    }else if( newPass !== againPass ){
-      let emptM = await this.helper.getWords("PASSWORDNOT");
-      this.alertCtrl.create({ title: "Error", message: emptM })
-      .present();
-      return;
+  //   }else if( newPass !== againPass ){
+  //     let emptM = await this.helper.getWords("PASSWORDNOT");
+  //     this.alertCtrl.create({ title: "Error", message: emptM })
+  //     .present();
+  //     return;
 
-    }
+  //   }
 
-    try{
+  //   try{
 
-      let params = { password: current, 
-        passwordHash: MyApp.User.password,
-        newPassword : newPass,
-        id : MyApp.User.id
-      };
+  //     let params = { password: current, 
+  //       passwordHash: MyApp.User.password,
+  //       newPassword : newPass,
+  //       id : MyApp.User.id
+  //     };
 
-      let v:any = await this.http.post("/password/change", params).toPromise();
-      //console.log(v);
+  //     let v:any = await this.http.post("/password/change", params).toPromise();
+  //     //console.log(v);
 
-      if( v.hasOwnProperty("id") && v.id === true ){
-        let changedM = await this.helper.getWords("CHANGED");
-        this.alertCtrl.create({ message: changedM, buttons: ["Ok"] })
-        .present();
-      }else{
-        let inconM = await this.helper.getWords("PASSWORDINCORRECTO");
-        this.alertCtrl.create({ message: inconM, buttons: ["Ok"] })
-        .present();
-        return;
-      }
+  //     if( v.hasOwnProperty("id") && v.id === true ){
+  //       let changedM = await this.helper.getWords("CHANGED");
+  //       this.alertCtrl.create({ message: changedM, buttons: ["Ok"] })
+  //       .present();
+  //     }else{
+  //       let inconM = await this.helper.getWords("PASSWORDINCORRECTO");
+  //       this.alertCtrl.create({ message: inconM, buttons: ["Ok"] })
+  //       .present();
+  //       return;
+  //     }
 
-    }
-    catch(e){
-      console.error(e);
-    }
+  //   }
+  //   catch(e){
+  //     console.error(e);
+  //   }
 
-  }
+  // }
 
   public paymentsMonthly(){
     this.navCtrl.push(PaymentMonthlyPage);
@@ -449,6 +449,23 @@ export class ViewProfilePage {
     }else{
       this.icon = 'md-checkmark';
 
+    }
+  }
+
+  public answerDeleteDevices(){
+    this.helper.presentAlertStandar(this.deleteDevices.bind(this));
+  }
+
+  public async deleteDevices(){
+    let load = this.helper.getLoadingStandar();
+    try{
+      await this.http.delete("/user/devices/"+ MyApp.User.id+ "/"+ this.helper.getDeviceInfo().uuid).toPromise();
+      load.dismissAll();
+    }
+    catch(e){
+      load.dismissAll();
+      console.error(e);
+      await this.helper.presentAlertErrorStandar();
     }
   }
 

@@ -32,7 +32,7 @@ export class AuthServiceProvider {
   public async Login(email: String, callback: Function) {
 
     try {
-      let info = this.helper.getDeviceInfo();
+      let info:any = this.helper.getDeviceInfo();
       info.email = email;
 
       let data: any = await this.http.post('/login', info).toPromise()
