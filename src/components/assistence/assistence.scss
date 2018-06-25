@@ -1,3 +1,13 @@
 assistence {
+    ion-item{
+        .item-inner{
+            border: none !important;
+        }
+    }
 
+    ion-content{
+        ion-icon{
+            color: gray;
+        }
+    }
 }

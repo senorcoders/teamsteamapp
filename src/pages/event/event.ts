@@ -18,6 +18,7 @@ import { MyApp } from '../../app/app.component';;
 import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
+import { AssistencesComponent } from '../../components/assistences/assistences';
 
 declare var google:any;
 
@@ -463,6 +464,12 @@ export class EventPage {
     catch(e){
       console.error(e);
     }
+  }
+
+
+  public toAssistence(){
+    this.modalCtrl.create(AssistencesComponent, {event: this.event})
+    .present();
   }
 
 }

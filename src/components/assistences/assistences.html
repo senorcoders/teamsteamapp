@@ -1,0 +1,22 @@
+<ion-header>
+  <ion-navbar color="base">
+      <ion-buttons left>
+              <button ion-button icon-only (click)="viewCtrl.dismiss()">
+              <ion-icon name="arrow-back"></ion-icon>
+          </button>
+      </ion-buttons>
+      <ion-title>{{"ASSISTENCEEVENT.TITLES" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+  <ion-fab bottom right [hidden]='user.role.name !== "Manager" ' >
+    <button color="base" ion-fab icon-only (click)="addSheetAtendence()" >
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
+
+</ion-content>

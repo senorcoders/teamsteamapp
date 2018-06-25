@@ -141,6 +141,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PreviewImageChatComponent } from '../components/preview-image-chat/preview-image-chat';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { AssistenceComponent } from '../components/assistence/assistence';
+import { AssistencesComponent } from '../components/assistences/assistences';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -272,7 +273,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ResetPasswordPage,
     DateTimePickerComponent,
     PreviewImageChatComponent,
-    AssistenceComponent
+    AssistenceComponent,
+    AssistencesComponent
   ],
   providers: [
     StatusBar,

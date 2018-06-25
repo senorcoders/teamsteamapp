@@ -1,14 +1,44 @@
 <ion-header>
-  <ion-navbar color="base">
-      <ion-buttons left>
-              <button ion-button icon-only (click)="viewCtrl.dismiss()">
-              <ion-icon name="arrow-back"></ion-icon>
-          </button>
-      </ion-buttons>
-      <ion-title>{{"ASSISTENCEEVENT.TITLE" | translate}}</ion-title>
-  </ion-navbar>
+    <ion-navbar color="base">
+        <ion-buttons left>
+            <button ion-button icon-only (click)="viewCtrl.dismiss()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{"ASSISTENCEEVENT.TITLE" | translate}}</ion-title>
+    </ion-navbar>
 </ion-header>
 
 <ion-content>
-  
+
+    <ion-searchbar [(ngModel)]="search" [showCancelButton]="true" (ionInput)="byPass()">
+    </ion-searchbar>
+
+    <ion-grid>
+        <ion-row *ngFor="let player of players;" [hidden]="isHidden(player)">
+            <ion-col>
+                <ion-item>
+                    {{player.user.username}}
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-icon name="ios-thumbs-up"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-icon name="ios-thumbs-down"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <ion-col>
+                <ion-item>
+                    <ion-icon name="alert"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <!--ion-col>
+                {{now | date:'h:mm a'}}
+            </ion-col-->
+        </ion-row>
+    </ion-grid>
 </ion-content>

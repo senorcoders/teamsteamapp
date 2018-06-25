@@ -227,7 +227,9 @@
     "RELATIONSHIP": "Relationship",
     "OF": "of",
     "ASSISTENCEEVENT":{
-        "TITLE": "Attendance of The Event"
+        "TITLE": "Event Attendance",
+        "TITLES": "Assists of the Event",
+        "SINGULAR": "Assistence"
     },
     "CLEARDEVICES": "Clears Authorizations in Devices"
 }

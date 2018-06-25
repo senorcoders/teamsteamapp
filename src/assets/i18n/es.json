@@ -227,7 +227,12 @@
     "RELATIONSHIP": "Parentesco",
     "OF": "de",
     "ASSISTENCEEVENT":{
-        "TITLE": "Asistencia del Evento"
+        "TITLE": "Asistencia del Evento",
+        "TITLES": "Asistencias del Evento",
+        "SINGULAR": "Asistencia"
     },
-    "CLEARDEVICES": "Borra Autorizaciones en Dispositivos"
+    "CLEARDEVICES": "Borra Autorizaciones en Dispositivos",
+    "ASSISTENCE": {
+        "TITLE" : "Asistencia"
+    }
 }
