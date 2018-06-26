@@ -23,17 +23,17 @@
             </ion-col>
             <ion-col>
                 <ion-item>
-                    <ion-icon name="ios-thumbs-up"></ion-icon>
+                    <ion-icon (click)="asingStatus(player, 'yes')" [ngClass]="player.status==='yes' ? 'select' :'' " name="ios-thumbs-up"></ion-icon>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item>
-                    <ion-icon name="ios-thumbs-down"></ion-icon>
+                    <ion-icon (click)="asingStatus(player, 'not')" [ngClass]="player.status==='not' ? 'select' :'' " name="ios-thumbs-down"></ion-icon>
                 </ion-item>
             </ion-col>
             <ion-col>
                 <ion-item>
-                    <ion-icon name="alert"></ion-icon>
+                    <ion-icon (click)="asingLate(player);" [ngClass]="player.late===true ? 'select-danger' :'' " name="alert"></ion-icon>
                 </ion-item>
             </ion-col>
             <!--ion-col>

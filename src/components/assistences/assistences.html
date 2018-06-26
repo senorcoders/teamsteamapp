@@ -11,6 +11,11 @@
 
 <ion-content>
 
+  <ion-list>
+    <ion-item *ngFor="let assistence of assistences;" (click)="toAssitence(assistence)" >
+      {{assistence.dateTime | date:'EEEE, MMMM d, y, hh a'}}
+    </ion-item>
+  </ion-list>
 
   <ion-fab bottom right [hidden]='user.role.name !== "Manager" ' >
     <button color="base" ion-fab icon-only (click)="addSheetAtendence()" >
