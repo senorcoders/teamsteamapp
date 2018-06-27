@@ -24,9 +24,9 @@ import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { Network } from '@ionic-native/network';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
-import { FCM } from '@ionic-native/fcm';
+//import { FCM } from '@ionic-native/fcm';
 
-constructor(private fcm: FCM) {
+/*constructor(private fcm: FCM) {
     fcm.getToken().then(token => {
         console.log(token);
     })
@@ -40,7 +40,7 @@ constructor(private fcm: FCM) {
             console.log("Received in foreground");
         };
     })
-}
+}*/
 
 
 @Component({
