@@ -123,7 +123,7 @@ export class RegistrationPage {
     let call = async function(err:any, user:any){
 
       if(user){
-        this.statusBar.backgroundColorByHexString("#008e76");
+        this.statusBar.backgroundColorByName("white");
         //this.navCtrl.setRoot(PaymentSubscripcionPage);
         this.navCtrl.setRoot(EventsSchedulePage);
       }else if( err ){

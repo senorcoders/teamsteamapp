@@ -11,6 +11,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { CommentsComponent } from '../../components/comments/comments';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { EventCreatedComponent } from '../../components/event-created/event-created';
 
 @IonicPage()
 @Component({
@@ -557,4 +558,7 @@ export class EventsSchedulePage {
     view.present();
   }
 
+  /*public goEventCreated(event){
+    this.navCtrl.push(EventCreatedComponent, {event});
+  }*/
 }

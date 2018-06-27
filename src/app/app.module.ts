@@ -136,12 +136,12 @@ import { PaymentPageModule } from '../pages/payment/payment.module';
 import { FormPlayerRegistrationPageModule } from '../pages/form-player-registration/form-player-registration.module';
 import { ForgotPasswordPageModule } from '../pages/forgot-password/forgot-password.module';
 import { ResetPasswordPageModule } from '../pages/reset-password/reset-password.module';
-import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { PreviewImageChatComponent } from '../components/preview-image-chat/preview-image-chat';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { AssistenceComponent } from '../components/assistence/assistence';
 import { AssistencesComponent } from '../components/assistences/assistences';
+import { EventCreatedComponent } from '../components/event-created/event-created';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -150,8 +150,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   declarations: [
-    MyApp,
-    EmojiPickerComponent
+    MyApp
   ],
   imports: [
     BrowserModule,
@@ -274,7 +273,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     DateTimePickerComponent,
     PreviewImageChatComponent,
     AssistenceComponent,
-    AssistencesComponent
+    AssistencesComponent,
+    EventCreatedComponent
   ],
   providers: [
     StatusBar,

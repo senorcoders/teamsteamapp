@@ -15,6 +15,8 @@ import { PipesModule } from '../pipes/pipes.module';
 import { PreviewImageChatComponent } from './preview-image-chat/preview-image-chat';
 import { AssistenceComponent } from './assistence/assistence';
 import { AssistencesComponent } from './assistences/assistences';
+import { EventCreatedComponent } from './event-created/event-created';
+import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -29,7 +31,9 @@ import { AssistencesComponent } from './assistences/assistences';
     PreviewImageChatComponent,
     AssistenceComponent,
     AssistencesComponent,
-     ],
+    EventCreatedComponent,
+    EmojiPickerComponent
+    ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
      TranslateModule.forChild(),
@@ -49,6 +53,8 @@ import { AssistencesComponent } from './assistences/assistences';
     PreviewImageChatComponent,
     AssistenceComponent,
     AssistencesComponent,
+    EventCreatedComponent,
+    EmojiPickerComponent
     ]
 })
 export class ComponentsModule {}

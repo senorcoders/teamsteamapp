@@ -1,31 +1,59 @@
 page-roster {
-
-    ion-avatar{
+    .scroll-content{
+        background-color: #f2f5f8 !important;
+    }
+    #list {
         display: flex;
+        flex-wrap: wrap;
         justify-content: space-around;
-
-        img{
-            width: 100%;
-            height: 100%;
-            max-width: 80px !important;
-            max-height: 80px !important;
-            border-radius: 10px;
-            border: 1px solid #bdbdbd;
+        .item {
+            background-color: white;
+            flex-basis: 30.3333%;
+            width: 30.3333%;
+            margin-top: 10px !important;
+            padding: 4px;
+            //border: 1px solid #bdbdbd;
+            padding: 4px;
+            box-shadow:  1px 1px 1px #e3e6e8, 2px 2px 2px #eaedf0, -1px -1px 1px #e3e6e8, -2px -2px 2px #eaedf0;
+            ion-avatar {
+                display: flex;
+                justify-content: space-around;
+                max-height: 102px;
+                img {
+                    width: 100%;
+                    height: 100%;
+                    max-height: 102px;
+                    object-fit: cover;
+                }
+            }
+            h4 {
+                margin: 0 !important;
+                font-size: 1.3rem !important;
+                line-height: 2rem !important;
+            }
+            .actions {
+                border-top: 1px outset #bdbdbd;
+                display: flex;
+                justify-content: space-between;
+                a {
+                    text-decoration: none !important;
+                }
+                .chat{
+                    color: #fe324d !important;
+                    font-size: 1.5rem;
+                    line-height: 1.9rem;
+                }
+                .edit{
+                    color: #c3c6c9 !important;
+                    font-size: 1.3rem;
+                    line-height: 1.9rem;
+                }
+            }
         }
     }
 
-    ion-col{
-        margin-bottom: 10px !important;
-        h4{
-            margin: 0 !important;
-            //margin-top: 5px !important;
-            text-align: center;
-            font-size: 1.5rem !important;
-            line-height: 2rem !important;
-        }
-        a{
-            display: block !important;
-            text-align: center !important;
-        }
+    button[ion-fab]{
+        background-color: #fe324d !important;
+        color: white !important;
     }
 }

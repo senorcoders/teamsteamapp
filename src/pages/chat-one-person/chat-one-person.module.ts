@@ -5,7 +5,7 @@ import { PipesModule } from '../../pipes/pipes.module';
 
 @NgModule({
   declarations: [
-    ChatOnePersonPage,
+    ChatOnePersonPage
   ],
   imports: [
     IonicPageModule.forChild(ChatOnePersonPage),

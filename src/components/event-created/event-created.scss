@@ -1,0 +1,54 @@
+event-created {
+    background-color: #fe324d;
+    color: white;
+    display: flex;
+    padding-top: 60px;
+    padding-left: 40px;
+    padding-right: 40px;
+    div{
+        flex-basis: 100%;
+        width: 100%;
+    }
+    .check{
+        text-align: center;
+        img{
+            width: 12rem;
+            height: 12rem;
+        }
+    }
+    .sucess-text{
+        margin-top: 40px;
+        font-size: 4rem;
+        width: 100%;
+        flex-basis: 100%;
+        span{
+            display: block;
+        }
+    }
+
+    .event-name{
+        margin-top: 50px !important;
+    }
+
+    .event-name, .event-description{
+        margin-top: 30px;
+        span{
+            font-size: 1.7rem;
+        }
+    }
+
+    p{
+        color: #8e2d2a !important;
+        margin: 0;
+        font-size: 1.4rem;
+    }
+
+    .event{
+        position: fixed;
+        z-index: auto;
+        height: 100%;
+        width: 100%;
+        left: 0;
+        top: 0;
+    }
+}

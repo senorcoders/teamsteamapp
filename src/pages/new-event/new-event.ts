@@ -7,6 +7,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 import { MyApp } from '../../app/app.component';
+import { EventCreatedComponent } from '../../components/event-created/event-created';
  
 
 @IonicPage()
@@ -299,9 +300,9 @@ export class NewEventPage {
       return;
     }
 
-    this.load.dismiss();
-
+    await this.load.dismiss();
     this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.push(EventCreatedComponent, { event: newEvent });
 
   }
   

@@ -119,14 +119,13 @@ export class ChatPage {
   }
 
   public insertMsg(msg){
+    //<span class="triangle"></span>
     if( msg.hasOwnProperty("type") && msg.type === 'image'){
-      return `<span class="triangle"></span>
-      <img src="${this.urlImg(msg.id)}" alt="">
+      return `<img src="${this.urlImg(msg.id)}" alt="">
       <p class="line-breaker ">${msg.text}</p>`
     }
 
-    return `<span class="triangle"></span>
-      <p class="line-breaker ">${msg.text}</p>`
+    return `<p class="line-breaker ">${msg.text}</p>`
   }
 
   onFocus() {

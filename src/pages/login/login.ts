@@ -60,7 +60,7 @@ export class LoginPage {
 
   public Register(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByHexString("#008e76");
+    this.statusBar.backgroundColorByName("white");
     this.navCtrl.push(RegistrationPage);
     //this.navCtrl.push(PaymentSubscripcionPage);
   }
@@ -78,7 +78,7 @@ export class LoginPage {
 
         if(user){
           this.statusBar.overlaysWebView(false);
-          this.statusBar.backgroundColorByHexString("#008e76");
+          this.statusBar.backgroundColorByName("white");
           this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
         }else if( err ){
 
@@ -141,19 +141,20 @@ export class LoginPage {
 
   public goSearchTeam(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByHexString("#008e76");
+    this.statusBar.backgroundColorByName("white");
     this.navCtrl.push(SearchTeamsPage)
   }
 
   public goInvitation(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByHexString("#008e76");
+    this.statusBar.backgroundColorByName("white");
     this.navCtrl.push(FormPlayerRegistrationPage);
   }
 
   public goForgotPassword(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByHexString("#008e76");
+    //this.statusBar.backgroundColorByHexString("#008e76");
+    this.statusBar.backgroundColorByName("white");
     this.navCtrl.push(ForgotPasswordPage);
   }
 

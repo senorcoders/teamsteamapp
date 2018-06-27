@@ -100,13 +100,14 @@ export class ChatOnePersonPage {
   }
 
   public insertMsg(msg) {
+    //<span class="triangle"></span>
     if (msg.hasOwnProperty("type") && msg.type === 'image') {
-      return `<span class="triangle"></span>
+      return `
       <img src="${this.urlImg(msg.id)}" alt="">
       <p class="line-breaker ">${msg.text}</p>`
     }
 
-    return `<span class="triangle"></span>
+    return `
       <p class="line-breaker ">${msg.text}</p>`
   }
 

@@ -1,9 +1,9 @@
 <ion-header>
 
   <ion-navbar color="base">
-      <button ion-button icon-only menuToggle start>
-          <ion-icon name="menu"></ion-icon>
-      </button>
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
 
     <ion-title>{{"ROSTER.TITLE" | translate}}</ion-title>
 
@@ -12,32 +12,33 @@
 </ion-header>
 
 
-<ion-content padding>
+<ion-content>
 
-  <ion-grid>
+  <div id="list">
 
-    <ion-row>
-      
-      <ion-col col-4 *ngFor="let player of players; let i = index"  [hidden]="player.user.id == user.id" >
-        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;" >
+    <div class="item" *ngFor="let player of players; let i = index" [hidden]="player.user.id == user.id">
+
+      <div class="inner">
+        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;">
           <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
           <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
         </ion-avatar>
 
-        <h4>{{player.user.firstName}}</h4>
-        <h4>{{player.user.lastName}}</h4>
+        <h4>{{player.user.firstName}} {{player.user.lastName}}</h4>
 
-        <a href="#" (click)="goChat(player.user)" >Chat</a>
-        <a href="#" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)" >{{"EDIT" | translate}}</a>
-      </ion-col>
+        <div class="actions">
+          <a href="#" class="chat" (click)="goChat(player.user)">Chat</a>
+          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" | translate}}</a>
+        </div>
+      </div>
 
-    </ion-row>
+    </div>
 
-  </ion-grid>
+  </div>
 
 
-  <ion-fab bottom right [hidden]="user.role.name != 'Manager' " >
-    <button color="base" ion-fab icon-only (click)="addPlayer()" >
+  <ion-fab bottom right [hidden]="user.role.name != 'Manager' ">
+    <button color="base" ion-fab icon-only (click)="addPlayer()">
       <ion-icon name="md-add"></ion-icon>
     </button>
   </ion-fab>

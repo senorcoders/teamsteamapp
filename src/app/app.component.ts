@@ -110,7 +110,7 @@ export class MyApp {
     // Okay, so the platform is ready and our plugins are available.
     // Here you can do any higher level native things you might need.
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByHexString("#008e76");
+    this.statusBar.backgroundColorByName("white");
 
     this.pusherNotification.hasPermission()
       .then((res: any) => {

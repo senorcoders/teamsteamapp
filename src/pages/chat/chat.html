@@ -20,8 +20,7 @@
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">
-                    <p>
-                        {{msg.username}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
+                    <p>{{msg.username}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
                 <!--div class="msg-content" [hidden]="msg.type === 'image' ">
                     <span class="triangle"></span>
@@ -42,7 +41,7 @@
         <ion-row>
             <ion-col col-1>
                 <button ion-button clear icon-only item-right (click)="sendMgsWitImage()">
-                    <ion-icon name="md-camera"></ion-icon>
+                    <ion-icon name="ios-camera-outline"></ion-icon>
                 </button>
             </ion-col>
             <ion-col col-1>
@@ -56,7 +55,7 @@
             </ion-col>
             <ion-col col-2>
                 <button ion-button clear icon-only item-right (click)="sendMsg()">
-                    <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+                    <ion-icon name="ios-paper-plane-outline" ></ion-icon>
                 </button>
             </ion-col>
         </ion-row>

@@ -36,7 +36,12 @@
         },
         "ATTENDENCETRACKING": "Tomar Asistencia",
         "PINMAP": "O MAPA",
-        "ENTERADDRES": "Digita La Direcciòn"
+        "ENTERADDRES": "Digita La Direcciòn",
+        "SUCCESS-TEXT": {
+            "ONE": "Su evento",
+            "TWO": "se ha guardado",
+            "THREE": "con éxito"
+        }
     },
     "NEWTEAM":{
         "TITLE": "Nuevo Equipo",
@@ -229,9 +234,9 @@
     "ASSISTENCEEVENT":{
         "TITLE": "Asistencia del Evento",
         "TITLES": "Asistencias del Evento",
-        "SINGULAR": "Asistencia"
+        "SINGULAR": "Asistencia para este evento"
     },
-    "CLEARDEVICES": "Borra Autorizaciones en Dispositivos",
+    "CLEARDEVICES": "Salir de otros dispositivos",
     "ASSISTENCE": {
         "TITLE" : "Asistencia"
     }

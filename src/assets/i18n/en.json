@@ -35,7 +35,12 @@
         },
         "ATTENDENCETRACKING": "Attendece Tracking",
         "PINMAP": "OR PIN MAP",
-        "ENTERADDRES": "Enter Address"
+        "ENTERADDRES": "Enter Address",
+        "SUCCESS-TEXT": {
+            "ONE": "Your event",
+            "TWO": "has been saved",
+            "THREE": " successfully"
+        }
     },
     "NEWTEAM":{
         "TITLE": "New Team",
@@ -229,7 +234,7 @@
     "ASSISTENCEEVENT":{
         "TITLE": "Event Attendance",
         "TITLES": "Assists of the Event",
-        "SINGULAR": "Assistence"
+        "SINGULAR": "Attendance for this event"
     },
-    "CLEARDEVICES": "Clears Authorizations in Devices"
+    "CLEARDEVICES": "Logout from other devices"
 }

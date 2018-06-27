@@ -1,0 +1,32 @@
+
+<div class="check">
+  <img src="./assets/imgs/check.png">
+</div>
+
+<div class="sucess-text">
+  <span>
+    {{'NEWEVENT.SUCCESS-TEXT.ONE' | translate}}
+  </span>
+  <span>
+    {{'NEWEVENT.SUCCESS-TEXT.TWO' | translate}}
+  </span>
+  <span>
+    {{'NEWEVENT.SUCCESS-TEXT.THREE' | translate}}
+  </span>
+</div>
+
+<div class="event-name">
+  <span>
+    {{'NAME' | translate}}
+  </span>
+  <p>{{event.name}}</p>
+</div>
+
+<div class="event-description">
+  <span>
+    {{'DESCRIPTION' | translate}}
+  </span>
+  <p>{{event.description}}</p>
+</div>
+
+<div class="event" (click)="leave();"></div>
