@@ -17,35 +17,37 @@ import { MyTaskPage } from '../pages/my-task/my-task';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
+import { FCM } from '@ionic-native/fcm';
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { Network } from '@ionic-native/network';
-import { ViewRequestsPage } from '../pages/view-requests/view-requests';
-import { FCM } from '@ionic-native/fcm';
+import { ViewRequestsPage } from '../pages/view-requests/view-requests'; 
 
-constructor(private fcm: FCM) {
-    fcm.getToken().then(token => {
-        console.log(token);
-    })
-    fcm.onTokenRefresh().subscribe(token => {
-        console.log(token);
-    })
-    fcm.onNotification().subscribe(data => {
-        if (data.wasTapped) {
-            console.log("Received in background");
-        } else {
-            console.log("Received in foreground");
-        };
-    })
-}
 
+
+	constructor(private fcm: FCM) {
+			fcm.getToken().then(token => {
+					console.log(token);
+			};)
+			fcm.onTokenRefresh().subscribe(token => {
+					console.log(token);
+			};)
+			fcm.onNotification().subscribe(data => {
+					if (data.wasTapped) {
+							console.log("Received in background");
+					} else {
+							console.log("Received in foreground");
+					};
+			})
+	}
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild('mycontent') nav: Nav;
 
@@ -399,4 +401,5 @@ export class MyApp {
 
 
 }
+
 
