@@ -168,6 +168,28 @@ page-events-schedule {
                 font-size: 1.4rem !important;
             }
         }
+
+        .details-location{
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            flex-basis: 100%;
+            width: 100%;
+            p{
+                flex-basis: calc(100% - 90px);
+                width: calc(100% - 90px);
+                color: #5d6d81 !important;
+                font-size: 1.6rem;
+                margin: 0 !important;
+            }
+            i{
+                flex-basis: 80px;
+                width: 80px;
+                color: #5d6d81 !important;
+                font-size: 1.3rem !important;
+                margin-top: 5px;
+            }
+        }
     }    
 
     //LINEA QUE DIVIDE LOS DATOS GENERALES DE LOS EVENTO Y LA ASSISTENCIA

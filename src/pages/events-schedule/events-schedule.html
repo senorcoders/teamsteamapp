@@ -66,6 +66,12 @@
       <p class="text-event" [hidden]="e.description === ''">{{e.description}}</p>
     </div>
 
+    <div class="dividir" [hidden]="e.location.detail===''"></div>
+    <div class="details-location" [hidden]="e.location.detail===''">
+      <p>{{e.location.detail}}</p>
+      <i>{{e.Time}}</i>
+    </div>
+
     <div class="dividir"></div>
 
     <ion-row class="asistencia">
