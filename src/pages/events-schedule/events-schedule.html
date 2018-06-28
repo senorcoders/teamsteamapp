@@ -30,7 +30,13 @@
     </h4>
   </div>
 
-  <ion-card *ngFor="let e of events" [ngClass]="e.type">
+  
+   <ion-row style="justify-content: center;">
+    <ion-col col-sm-12 col-md-3 >
+     
+    
+  <ion-card  *ngFor="let e of events" [ngClass]="e.type">
+   
 
     <div class="color-right">
 
@@ -104,8 +110,11 @@
         </button>
       </ion-col>
     </ion-row>
-
+  
   </ion-card>
+       </ion-col>
+    </ion-row>
+   
 
   <ion-fab bottom right [hidden]='addButtonHidden()'>
     <button ion-fab icon-only (click)="addEvent()">

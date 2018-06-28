@@ -264,7 +264,7 @@ export class HelpersProvider {
   public async locationToPlaces(value) {
     let response: NativeGeocoderReverseResult;
     try {
-      let obj: NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      let obj: any = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
       console.log(obj);
       response = obj;
     } catch (e) {

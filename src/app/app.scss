@@ -75,6 +75,7 @@
     width: 90px;
     display: block;
     margin: 0 auto;
+  height: 90px;
 }
 .list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
 	border: 0
@@ -156,4 +157,10 @@ add icon config
 
 ion-title .toolbar-title, ion-title .toolbar-title-md{
 	font-weight: bold;
+}
+
+.fixed-content{
+ max-width: 992px !important;
+  margin-left: auto;
+margin-right: auto;
 }

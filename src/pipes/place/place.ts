@@ -12,7 +12,7 @@ export class PlacePipe implements PipeTransform {
   async transform(value: any, ...args) {
     let response:string;
     try{
-      let obj:NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      let obj:any = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
       console.log(obj);
       response = obj.locality;
     }catch(e){
