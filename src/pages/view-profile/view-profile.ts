@@ -469,4 +469,10 @@ export class ViewProfilePage {
     }
   }
 
+  public async logout(){
+    let load = HelpersProvider.me.getLoadingStandar();
+    await MyApp.me.logout();
+    load.dismissAll();
+  }
+
 }
