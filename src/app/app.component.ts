@@ -23,29 +23,24 @@ import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { Network } from '@ionic-native/network';
-import { ViewRequestsPage } from '../pages/view-requests/view-requests';
-//import { FCM } from '@ionic-native/fcm';
+import { ViewRequestsPage } from '../pages/view-requests/view-requests'; 
 
-/*constructor(private fcm: FCM) {
-    fcm.getToken().then(token => {
-        console.log(token);
-    })
-    fcm.onTokenRefresh().subscribe(token => {
-        console.log(token);
-    })
-    fcm.onNotification().subscribe(data => {
-        if (data.wasTapped) {
-            console.log("Received in background");
-        } else {
-            console.log("Received in foreground");
-        };
-    })
-}*/
+// to check if we have permission
+this.push.hasPermission()
+  .then((res: any) => {
 
+    if (res.isEnabled) {
+      console.log('We have permission to send push notifications');
+    } else {
+      console.log('We do not have permission to send push notifications');
+    }
+
+  });
 
 @Component({
   templateUrl: 'app.html'
 })
+
 export class MyApp {
   @ViewChild('mycontent') nav: Nav;
 
@@ -399,4 +394,5 @@ export class MyApp {
 
 
 }
+
 
