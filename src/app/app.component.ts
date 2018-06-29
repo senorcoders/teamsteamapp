@@ -25,17 +25,6 @@ import { INotificationProvider } from '../providers/i-notification/i-notificatio
 import { Network } from '@ionic-native/network';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests'; 
 
-// to check if we have permission
-this.push.hasPermission()
-  .then((res: any) => {
-
-    if (res.isEnabled) {
-      console.log('We have permission to send push notifications');
-    } else {
-      console.log('We do not have permission to send push notifications');
-    }
-
-  });
 
 @Component({
   templateUrl: 'app.html'
@@ -317,7 +306,7 @@ export class MyApp {
     //console.log(team);
     const options: any = {
       android: {
-        senderID: "414026305021",
+        senderID: "318853826702",
         topics: [team],
         sound: true,
         vibrate: true,
