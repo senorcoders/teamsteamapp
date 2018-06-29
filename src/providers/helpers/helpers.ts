@@ -322,7 +322,9 @@ export class HelpersProvider {
       spinner: 'hide', content: `
     <img src="./assets/imgs/loading.gif">
     ` });
-    present = present || true;
+    if(present === undefined )
+      present = true;
+    console.log(present);
     if (present === true) {
       load.present({ disableApp: true });
     }
