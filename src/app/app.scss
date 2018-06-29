@@ -205,3 +205,13 @@ ion-title .toolbar-title,
 ion-title .toolbar-title-md {
     font-weight: bold;
 }
+
+.btn-red{
+    background-color: #fe324d !important;
+    color: white !important;
+}
+
+button[ion-fab]{
+    background-color: #fe324d !important;
+    color: white !important;
+}

@@ -264,7 +264,7 @@ export class HelpersProvider {
   public async locationToPlaces(value) {
     let response: NativeGeocoderReverseResult;
     try {
-      let obj: NativeGeocoderReverseResult = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      let obj: any = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
       console.log(obj);
       response = obj;
     } catch (e) {
@@ -320,7 +320,7 @@ export class HelpersProvider {
   public getLoadingStandar(present?: boolean): Loading {
     let load = this.loading.create({
       spinner: 'hide', content: `
-    <img src="./assets/imgs/loading.gif">
+    <img src="./assets/imgs/balls.gif">
     ` });
     present = present || true;
     if (present === true) {
