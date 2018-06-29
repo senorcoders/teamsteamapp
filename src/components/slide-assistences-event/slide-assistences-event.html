@@ -1,0 +1,75 @@
+<ion-header>
+    <ion-navbar color="base">
+        <ion-buttons left>
+            <button ion-button icon-only (click)="viewCtrl.dismiss()">
+                <ion-icon name="arrow-back"></ion-icon>
+            </button>
+        </ion-buttons>
+        <ion-title>{{"ASSISTENCEEVENT.TITLES" | translate}}</ion-title>
+    </ion-navbar>
+</ion-header>
+
+<ion-content>
+  
+  <div class="not-ready" [hidden]="assistences.length!==0">
+    {{'ASSISTENCEEVENT.NOTSTARTED' | translate}}
+  </div>
+
+  <ion-slides [hidden]="assistences.length===0" pager #slides>
+
+    <ion-slide *ngFor="let assistence of assitences;">
+      <div class="for-assistence">
+        {{'ASSISTENCEEVENT.TITLE' | translate}} - {{now | date:'dd/mm/yyyy'}}
+      </div>
+      
+      <ion-searchbar [(ngModel)]="search" [showCancelButton]="true" (ionInput)="byPass()">
+      </ion-searchbar>
+
+      <ion-grid>
+          <ion-row>
+              <ion-col col-6>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-item class="text-small">
+                    {{'ASSISTENCEEVENT.ARRIVED' | translate}}
+                  </ion-item>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-item class="text-small">
+                      {{'ASSISTENCEEVENT.MISSED' | translate}}
+                  </ion-item>
+              </ion-col>
+              <ion-col col-2>
+                  <ion-item class="text-small">
+                      {{'ASSISTENCEEVENT.WASLATE' | translate}}
+                  </ion-item>
+              </ion-col>
+          </ion-row>
+        <ion-row *ngFor="let player of players;" [hidden]="isHidden(player)">
+            <ion-col col-6>
+                <ion-item>
+                    {{player.user.username}}
+                </ion-item>
+            </ion-col>
+            <ion-col col-2>
+                <ion-item>
+                    <ion-icon (click)="asingStatus(assistence, player, 'yes')" [ngClass]="player.status==='yes' ? 'select' :'' " name="ios-thumbs-up"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <ion-col col-2>
+                <ion-item>
+                    <ion-icon (click)="asingStatus(assistence, player, 'not')" [ngClass]="player.status==='not' ? 'select' :'' " name="ios-thumbs-down"></ion-icon>
+                </ion-item>
+            </ion-col>
+            <ion-col col-2>
+                <ion-item>
+                    <ion-icon (click)="asingLate(assistence, player);" [ngClass]="player.late===true ? 'select-danger' :'' " name="alert"></ion-icon>
+                </ion-item>
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

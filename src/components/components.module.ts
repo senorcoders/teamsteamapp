@@ -17,6 +17,7 @@ import { AssistenceComponent } from './assistence/assistence';
 import { AssistencesComponent } from './assistences/assistences';
 import { EventCreatedComponent } from './event-created/event-created';
 import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
+import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-assistences-event';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -32,7 +33,8 @@ import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    EmojiPickerComponent
+    EmojiPickerComponent,
+    SlideAssistencesEventComponent
     ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
@@ -54,7 +56,8 @@ import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    EmojiPickerComponent
+    EmojiPickerComponent,
+    SlideAssistencesEventComponent
     ]
 })
 export class ComponentsModule {}

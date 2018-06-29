@@ -13,15 +13,19 @@
 
 <ion-content padding>
 
-  <ion-list>
+ 
 
-    <ion-item *ngFor="let task of tasks; trackBy:by " (click)='viewTask(task)' [ngClass]="task.past===true ? 'past-task' : ''" >
-      <h2>{{task.name}}</h2>
-      <h3>{{task.text}}</h3>
-      <p>{{task.dateParsed}}</p>
-    </ion-item>
-
-  </ion-list>
+  <ion-card class="game" *ngFor="let task of tasks; trackBy:by " (click)='viewTask(task)' [ngClass]="task.past===true ? 'past-task' : ''">
+      <div class="color-right"></div>
+      <div class="dateTime" >
+          <h3 class="date-event">{{task.month}}</h3>
+          <h4 class="date-event">{{task.day}}</h4>
+                </div>
+        <div class="details" >
+            <h2 text-wrap class="text-event">{{task.name}}</h2>
+            <p text-wrap class="text-event" >{{task.text}}</p>
+          </div>
+  </ion-card>
 
   <ion-fab bottom right [hidden]="role !== 'Manager'" >
     <button color="base" ion-fab icon-only (click)="newTask()" >

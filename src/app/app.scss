@@ -1,6 +1,4 @@
 // http://ionicframework.com/docs/theming/
-
-
 // App Global Sass
 // --------------------------------------------------
 // Put style rules here that you want to apply globally. These
@@ -14,146 +12,206 @@
 // To declare rules for a specific mode, create a child rule
 // for the .md, .ios, or .wp mode classes. The mode class is
 // automatically applied to the <body> element in the app.
-
-
 /*
 *para importar las nueveas fuentes de los eventos
 */
-@font-face {
-	font-family: "Text_Event";
-	src: url(../assets/fonts/arial.ttf) format("truetype");
-	font-weight: 200
-}
 
 @font-face {
-	font-family: "Date_Event";
-	src: url(../assets/fonts/OratorStd.ttf) format("truetype");
-	font-weight: 200
+    font-family: "Text_Event";
+    src: url(../assets/fonts/arial.ttf) format("truetype");
+    font-weight: 200
 }
 
+@font-face {
+    font-family: "Date_Event";
+    src: url(../assets/fonts/OratorStd.ttf) format("truetype");
+    font-weight: 200
+}
 
-/*menu style*/
-.toolbar-background-md, .toolbar-background{
-	background: rgba(0,102,235,.7)
-}
-.toolbar-title{
-	color:white;
-	font-weight: lighter;
-}
-.toolbar-content-ios{
-	.header-menu{
-		padding-left:20px !important;
-		text-align: left !important;
-		padding-top: 10px !important;
-		padding-bottom: 10px !important;
-	}
-}
-.toolbar-title{
-	display: flex;
-    align-items: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    img{
-    	margin-right: 10px;
+ion-menu {
+    /*menu style*/
+    .toolbar-background-md,
+    .toolbar-background {
+        background: #202a33;
     }
-}
-.user-info{
-	background: #0066eb;
-	padding-top: 30px;
-}
-.username{
-	color: white;
-    text-align: center;
-    font-size: 1.8rem;
-    margin: 0;
-    padding: 10px 0 40px;
-    text-transform: capitalize;
-}
-.userimg{
-	border-radius: 100%;
-    border: 1px solid #979797;
-    width: 90px;
-    display: block;
-    margin: 0 auto;
-}
-.list-ios > .item-block:last-child, .list-ios > .item-wrapper:last-child .item-block{
-	border: 0
-}
-.list-ios > .item-block:first-child{
-	border: 0
-}
-.menu-inner{
-	.content{
-	background: url(./assets/imgs/sidebar-bg.jpg);
+    /*.toolbar-title {
+        color: white;
+        font-weight: lighter;
+    }
+    .toolbar-content-ios {
+        .header-menu {
+            padding-left: 20px !important;
+            text-align: left !important;
+            padding-top: 10px !important;
+            padding-bottom: 10px !important;
+        }
+    }
+    .toolbar-title {
+        display: flex;
+        align-items: center;
+        padding-top: 10px;
+        padding-bottom: 10px;
+        img {
+            margin-right: 10px;
+        }
+	}*/
+	ion-navbar{
+		height: 25px !important;
+		min-height: 25px !important;
 	}
-	.scroll-content{
-		background: rgba(0,0,0,0.9);
-		.list{
-			padding-top: 40px;
+	.header-menu{
+		display: none !important;
+	}
+
+    .user-info {
+        background: #283540;
+		display: flex;
+		height: 150px;
+	}
+	.avatar{
+		flex-basis: 120px;
+		width: 120px;
+		height: 100%;
+		.userimg {
+			border-radius: 100%;
+			width: 75px;
+			height: 75px;
+			margin-top: 32.33px;
+			margin-left: 32.33px;
+		}
+		.icon-gear {
+			position: relative;
+			left: 90px;
+			top: auto;
+			bottom: 23px;
+			width: 18px !important;
+			height: 18px !important;
 		}
 	}
-	.item{
-		background: transparent;
-		color:white;
-		.item-inner{
-			border-bottom: 0 !important
+    .info{
+		flex-basis: calc(100% - 150px);
+		width: calc(100% - 150px);
+		height: 100%;
+		display: flex;
+		flex-wrap: wrap;
+		justify-content: left;
+		align-content: center;
+		.username, .email{
+			margin: 0;
+			padding: 0;
+			color: white;
+		}
+		.username {
+			text-align: center;
+			font-size: 1.8rem;
+			text-transform: capitalize;
+		}
+		.email{
+			font-size: 1rem !important;
 		}
 	}
-	.icon-menu{
-		margin-right: 10px;
-	}
-}
-
-
-.date-time{
-	padding: 10px 0 !important;
-}
-
-/**
+    
+    .list-ios>.item-block:last-child,
+    .list-ios>.item-wrapper:last-child .item-block {
+        border: 0
+    }
+    .list-ios>.item-block:first-child {
+        border: 0
+    }
+    .menu-inner {
+        .content {
+            background: url(./assets/imgs/sidebar-bg.jpg);
+        }
+        .scroll-content {
+			background: #3c4a56;
+			padding-left: 40px;
+            .list {
+				padding-top: 10px;
+				ion-item{
+					margin: 5px 0;
+				}
+            }
+        }
+        .item {
+            background: transparent;
+            color: white;
+            .item-inner {
+                border-bottom: 0 !important
+            }
+		}
+		.divider{
+			width: 100%;
+			margin-left: -20px;
+			margin-right: -40px;
+			margin-top: 25px;
+			margin-bottom: 25px;
+			padding: 0 !important;
+			height: 1px !important;
+			font-size: 0 !important;
+			background-color: #35424d;
+			div, .item-inner{
+				display: none !important;
+			}
+		}
+		.logout{
+			color: #bbbfc4 !important;
+		}
+        .icon-menu {
+            margin-right: 10px;
+        }
+    }
+    .date-time {
+        padding: 10px 0 !important;
+    }
+    /**
 add icon config
 */
-
-.icon-gear{
-	position: relative;
-    right: calc(-50% + -21px);
-    top: -19px;
-}
-
-.new-menu{
-	background-color: red;
-	width: 15px;
-	height: 15px;
-	border-radius: 50%;
-	position: relative;
-    right: calc(-50% + -21px);
-    top: -105px;
-}
-
-.point-new-menu-toggle{
-	width: 8px;
-	height: 8px;
-	background-color: red;
-	position:absolute;
-	border-radius: 50%;
-	left: 27px;
-	top: 4px;
-}
-
-.new-action{
-	background-color: red;
-	display: inline-block;
-	color: white;
-	font-size: 1.2rem;
-	padding: 2px;
-	border-radius: 5px;
+    
+    .new-menu {
+        background-color: red;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        position: relative;
+        right: calc(-50% + -21px);
+        top: -105px;
+    }
+    .point-new-menu-toggle {
+        width: 8px;
+        height: 8px;
+        background-color: red;
+        position: absolute;
+        border-radius: 50%;
+        left: 27px;
+        top: 4px;
+    }
+    .new-action {
+        background-color: red;
+        display: inline-block;
+        color: white;
+        font-size: 1.2rem;
+        padding: 2px;
+        border-radius: 5px;
+    }
 }
 
 //Para el spinner loading
-.loading-wrapper{
-	background-color: transparent !important;
-	box-shadow: 0 0 0 !important;
+.loading-wrapper {
+    background-color: transparent !important;
+    box-shadow: 0 0 0 !important;
 }
 
-ion-title .toolbar-title, ion-title .toolbar-title-md{
-	font-weight: bold;
+ion-title .toolbar-title,
+ion-title .toolbar-title-md {
+    font-weight: bold;
+}
+
+.btn-red{
+    background-color: #fe324d !important;
+    color: white !important;
+}
+
+button[ion-fab]{
+    background-color: #fe324d !important;
+    color: white !important;
 }

@@ -11,7 +11,7 @@
         "EVENTS" : "Events",
         "MYTASK": "My Task",
         "ROSTER": "Roster",
-        "MESSAGES": "Messages",
+        "MESSAGES": "Recent Chats",
         "PROFILE": "Profile",
         "LOGOUT": "Logout"
     },
@@ -232,9 +232,14 @@
     "RELATIONSHIP": "Relationship",
     "OF": "of",
     "ASSISTENCEEVENT":{
-        "TITLE": "Event Attendance",
+        "TITLE": "Attendece for ",
         "TITLES": "Assists of the Event",
-        "SINGULAR": "Attendance for this event"
+        "SINGULAR": "Attendance for this event",
+        "ARRIVED": "Arrived",
+        "MISSED": "Missed",
+        "WASLATE": "Was Late",
+        "NOTREADY": "Not Ready",
+        "NOTSTARTED": "Event Has Not Started"
     },
     "CLEARDEVICES": "Logout from other devices"
 }

@@ -11,7 +11,7 @@
         "EVENTS" : "Eventos",
         "MYTASK": "Mis Tareas",
         "ROSTER": "Jugadores",
-        "MESSAGES": "Mensajes",
+        "MESSAGES": "Mensajes Recientes",
         "PROFILE": "Perfil",
         "LOGOUT": "Cerrar Sesión"
     },
@@ -232,9 +232,14 @@
     "RELATIONSHIP": "Parentesco",
     "OF": "de",
     "ASSISTENCEEVENT":{
-        "TITLE": "Asistencia del Evento",
+        "TITLE": "Asistencia para ",
         "TITLES": "Asistencias del Evento",
-        "SINGULAR": "Asistencia para este evento"
+        "SINGULAR": "Asistencia para este evento",
+        "ARRIVED": "Vino",
+        "MISSED": "Ausente",
+        "WASLATE": "Tarde",
+        "NOTREADY": "No Listo",
+        "NOTSTARTED": "Evento No Ha Empezado"
     },
     "CLEARDEVICES": "Salir de otros dispositivos",
     "ASSISTENCE": {
