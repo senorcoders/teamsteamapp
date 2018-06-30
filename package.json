@@ -130,8 +130,8 @@
       "cordova-plugin-globalization": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

@@ -42,6 +42,7 @@
         <splash density="port-xxxhdpi" src="resources/android/splash/drawable-port-xxxhdpi-screen.png" />
     </platform>
     <platform name="ios">
+        <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
         <allow-intent href="itms:*" />
         <allow-intent href="itms-apps:*" />
         <icon height="57" src="resources/ios/icon/icon.png" width="57" />
@@ -137,7 +138,6 @@
         <variable name="senderID" value="414026305021" />
         <variable name="SENDER_ID" value="1:414026305021:android:764d2cb7da3280eb" />
     </plugin>
-    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.1.0" />
-		<resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist"/>
+    <engine name="ios" spec="~4.5.4" />
 </widget>
