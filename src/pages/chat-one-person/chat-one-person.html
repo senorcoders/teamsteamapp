@@ -13,7 +13,7 @@
 
         <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from !== from.id "
             [class.right]=" msg.from === from.id ">
-            <!--img class="user-img" [src]="msg.photo" alt="" src=""-->
+            <img class="user-img" [src]="msg.photo">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">

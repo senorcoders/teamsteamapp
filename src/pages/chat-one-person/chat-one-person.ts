@@ -180,11 +180,15 @@ export class ChatOnePersonPage {
   */
   private async getMsg() {
     try {
+      let ramdon = new Date().getTime();
       let mgs: any = await this.http.get("/chat/" + this.to.id + "/" + this.from.id).toPromise();
-      //console.log(mgs);
+      console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        let ramdon = new Date().getTime();
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+        if( item.from === MyApp.User.id )
+          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + MyApp.User.id);
+        else
+          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+
         return item;
       }));
 
