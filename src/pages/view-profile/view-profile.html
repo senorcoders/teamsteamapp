@@ -124,9 +124,9 @@
 
   </ion-list>
 
-  <ion-select [(ngModel)]="lang" (ionChange)='changeLang()' #mySelect>
+  <ion-select [(ngModel)]="lang" hidden (ionChange)='changeLang()' #mySelect>
       <ion-option value="en">English</ion-option>
-      <ion-option value="es">Spanish </ion-option>
+      <ion-option value="es">Español </ion-option>
     </ion-select>
 
 </ion-content>

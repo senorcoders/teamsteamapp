@@ -28,64 +28,72 @@ export class SlideAssistencesEventComponent {
   ) {
 
     this.event = this.navParams.get("event");
+    this.players = this.navParams.get("players");
+    this.assistences = this.navParams.get("assistences");
     console.log(this.event);
 
   }
 
-  async ngAfterViewInit() {
-    try {
-      this.players = await this.http.get('/players?where={"team":"' + MyApp.User.team + '"}').toPromise() as any;
-      this.players = this.players.filter(function (it) {
-        return it.hasOwnProperty("user") && Object.prototype.toString.call(it.user) === '[object Object]';
-      });
-
-      await this.checkRepeatsEventsGETAttendence();
-
-    }
-    catch (e) {
-      console.error(e);
-    }
+  public render(){
+    return `hola que tal`;
   }
 
-  public async checkRepeatsEventsGETAttendence() {
-    try {
-      //Para los eventos que no se repiten
-      if (this.event.repeats === false) {
+  // async ngAfterViewInit() {
+  //   try {
+  //     this.players = await this.http.get('/players?where={"team":"' + MyApp.User.team + '"}').toPromise() as any;
+  //     this.players = this.players.filter(function (it) {
+  //       return it.hasOwnProperty("user") && Object.prototype.toString.call(it.user) === '[object Object]';
+  //     });
 
-        let assistence: any;
-        let isDespues = moment().isAfter(moment(this.event.dateTime, "MM/DD/YYYY hh:mm a"));
-        if (isDespues === true) {
-          assistence = await this.http.get("/assistenceevents?where={'event':'" + this.event.id + "'}").toPromise() as any;
+  //     await this.checkRepeatsEventsGETAttendence();
 
-          if (assistence.length === 0) {
-            assistence = {
-              dateTime: moment().toISOString(),
-              event: this.event.id,
-              players: this.players.map(function (it) { return { id: it.id, status: "", late: false } })
-            };
-            assistence = await this.http.post("/assistenceevents", assistence).toPromise() as any;
-            this.assistences.push(assistence);
-          } else {
-            this.assistences = this.assistences.concat(assistence);
-            this.assistences = this.assistences.concat(assistence);
-          }
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
-        } else {
+  // public async checkRepeatsEventsGETAttendence() {
+  //   try {
+  //     //Para los eventos que no se repiten
+  //     if (this.event.repeats === false) {
 
-        }
+  //       let assistence: any;
+  //       let isDespues = moment().isAfter(moment(this.event.dateTime, "MM/DD/YYYY hh:mm a"));
+  //       if (isDespues === true) {
+  //         assistence = await this.http.get("/assistenceevents?where={'event':'" + this.event.id + "'}").toPromise() as any;
 
-      }
+  //         if (assistence.length === 0) {
+  //           assistence = {
+  //             dateTime: moment().toISOString(),
+  //             event: this.event.id,
+  //             players: this.players.map(function (it) { return { id: it.id, status: "", late: false } })
+  //           };
+  //           assistence = await this.http.post("/assistenceevents", assistence).toPromise() as any;
+  //           this.assistences.push(assistence);
+  //         } else {
+  //           this.assistences = this.assistences.concat(assistence);
+  //           this.assistences = this.assistences.concat(assistence);
+  //         }
 
-      // this.slides.freeMode = true;
-      // this.slides.update();
-      console.log(this.assistences);
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  //       } else {
+
+  //       }
+
+  //     }
+
+  //     // this.slides.freeMode = true;
+  //     // this.slides.update();
+  //     console.log("Cargado data");
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   ionViewDidLoad(){
+    console.log(this.assistences);
+    this.slides.freeMode = true;
     this.slides.update();
     console.log(this.slides, this);
   }

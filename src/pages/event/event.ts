@@ -54,6 +54,10 @@ export class EventPage {
     change: false
   };
 
+  //Para las assistences
+  public players=[];
+  public assistences=[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
@@ -470,11 +474,10 @@ export class EventPage {
     }
   }
 
-
-  public toAssistence(){
+  public async toAssistence(){
     // this.modalCtrl.create(AssistencesComponent, {event: this.event})
     // .present();
-    this.modalCtrl.create(SlideAssistencesEventComponent, {event: this.event})
+    this.modalCtrl.create(AssistencesComponent, {event: this.event})
     .present();
     
   }

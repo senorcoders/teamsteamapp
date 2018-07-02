@@ -1,19 +1,44 @@
 assistence {
-    ion-item{
-        .item-inner{
-            border: none !important;
+    .for-assistence {
+        font-size: 1.6rem;
+        padding: 10px;
+        text-align: left;
+        margin: 1px;
+        border: 1px solid #8a8a8a;
+        color: #8a8a8a;
+    }
+    ion-col {
+        padding: 0 !important;
+        ion-item {
+            padding: 0 !important;
+            text-align: center !important;
         }
     }
-
-    ion-content{
-        ion-icon{
+    ion-row {
+        ion-col:first-child {
+            ion-item {
+                text-align: left !important;
+                padding-left: 5px !important;
+            }
+        }
+    }
+    ion-item.text-small ion-label {
+        font-size: 1rem !important;
+    }
+    ion-item {
+        color: #8a8a8a !important;
+        .item-inner {
+            border-width: 0 !important;
+        }
+        ion-icon {
             color: gray;
         }
-        .select{
+        .select {
             color: #00bfa5 !important;
         }
-        .select-danger{
+        .select-danger {
             color: red !important;
         }
     }
+
 }

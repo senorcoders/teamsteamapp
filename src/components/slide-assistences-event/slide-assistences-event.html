@@ -17,7 +17,7 @@
 
   <ion-slides [hidden]="assistences.length===0" pager #slides>
 
-    <ion-slide *ngFor="let assistence of assitences;">
+    <ion-slide [innerHTML]="render()">
       <div class="for-assistence">
         {{'ASSISTENCEEVENT.TITLE' | translate}} - {{now | date:'dd/mm/yyyy'}}
       </div>
