@@ -7,4 +7,44 @@ page-list-chats {
         border-radius: 50%;
         
     }
+
+    .list-md .item-block .item-inner{
+        border: none !important;
+    }
+    ion-content .scroll-content{
+        background: #eae6e6;
+    }
+
+    ion-item{
+        margin-bottom: 10px !important;
+        border-radius: 5px;
+    }
+    .chat{
+        background-color: transparent !important;
+        box-shadow: 0 0 0 transparent !important;
+        color: #fe324d !important;
+        font-size: 2rem;
+        height: 30px !important;
+        .chat-0{
+            width: 3rem;
+            height: 3rem;
+            display: block;
+            float: left;
+            margin-left: 5px;
+        }
+        .chat-more{
+            width: 3.7rem;
+            height: 3.7rem;
+            display: block;
+            float: left;
+            margin-left: 5px;
+        }
+    }
+
+    button[ion-fab]{
+        background-color: #fe324d !important;
+        color: white !important;
+    }
+
 }
+ 

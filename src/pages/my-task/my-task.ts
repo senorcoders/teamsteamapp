@@ -44,6 +44,8 @@ export class MyTaskPage {
     this.tasks = await Promise.all((tasks.map(async (item)=>{
       item.past = moment(item.dateTime).isBefore(now);
       item.dateParsed = moment(item.dateTime).format('ddd DD MMM YYYY HH:mm');
+      item.month = moment(item.dateTime).format('MMM').toUpperCase();
+      item.day = moment(item.dateTime).format('DD');
       return item;
     })));
 
@@ -76,5 +78,7 @@ export class MyTaskPage {
   public by(i:number){
     return i;
   }
+
+
 
 }

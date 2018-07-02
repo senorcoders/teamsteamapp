@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController, Platform } from 'ionic-angular';
 import * as moment from 'moment';
 
 import {
@@ -19,6 +19,7 @@ import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
 import { AssistencesComponent } from '../../components/assistences/assistences';
+import { SlideAssistencesEventComponent } from '../../components/slide-assistences-event/slide-assistences-event';
 
 declare var google:any;
 
@@ -53,11 +54,15 @@ export class EventPage {
     change: false
   };
 
+  //Para las assistences
+  public players=[];
+  public assistences=[];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper:HelpersProvider,
     public photoViewer: PhotoViewer, public modalCtrl: ModalController, 
-    private zone: NgZone
+    private zone: NgZone, public platform: Platform
   ) {
     //this.init();
     let e = this.navParams.get("event");
@@ -207,7 +212,10 @@ export class EventPage {
   }
 
   loadMap(lat, lot) {
-    this.load = this.helper.getLoadingStandar();
+    if( this.platform.is("cordova") )
+      this.load = this.helper.getLoadingStandar();
+    else
+      this.load = this.helper.getLoadingStandar(false);
 
     let mapOptions: GoogleMapOptions = {
       camera: {
@@ -466,10 +474,12 @@ export class EventPage {
     }
   }
 
-
-  public toAssistence(){
+  public async toAssistence(){
+    // this.modalCtrl.create(AssistencesComponent, {event: this.event})
+    // .present();
     this.modalCtrl.create(AssistencesComponent, {event: this.event})
     .present();
+    
   }
 
 }

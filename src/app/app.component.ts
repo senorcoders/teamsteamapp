@@ -306,7 +306,7 @@ export class MyApp {
     //console.log(team);
     const options: any = {
       android: {
-        senderID: "414026305021",
+        senderID: "318853826702",
         topics: [team],
         sound: true,
         vibrate: true,

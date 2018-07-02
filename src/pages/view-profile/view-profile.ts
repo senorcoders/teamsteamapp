@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController, Select } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HelpersProvider } from '../../providers/helpers/helpers';
@@ -20,6 +20,8 @@ import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-pl
   templateUrl: 'view-profile.html',
 })
 export class ViewProfilePage {
+  @ViewChild('mySelect') selectRef: Select;
+
 
   public user:any={ options : { language: "en" } };
   public lang:string='';
@@ -467,6 +469,17 @@ export class ViewProfilePage {
       console.error(e);
       await this.helper.presentAlertErrorStandar();
     }
+  }
+
+  public async logout(){
+    let load = HelpersProvider.me.getLoadingStandar();
+    await MyApp.me.logout();
+    load.dismissAll();
+  }
+
+  openSelect()
+  {
+      this.selectRef.open();
   }
 
 }

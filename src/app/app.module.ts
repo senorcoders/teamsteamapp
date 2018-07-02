@@ -142,6 +142,7 @@ import { INotificationProvider } from '../providers/i-notification/i-notificatio
 import { AssistenceComponent } from '../components/assistence/assistence';
 import { AssistencesComponent } from '../components/assistences/assistences';
 import { EventCreatedComponent } from '../components/event-created/event-created';
+import { SlideAssistencesEventComponent } from '../components/slide-assistences-event/slide-assistences-event';
 
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -274,7 +275,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PreviewImageChatComponent,
     AssistenceComponent,
     AssistencesComponent,
-    EventCreatedComponent
+    EventCreatedComponent,
+    SlideAssistencesEventComponent
   ],
   providers: [
     StatusBar,

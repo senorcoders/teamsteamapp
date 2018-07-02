@@ -19,69 +19,53 @@
 
   </ion-navbar>
 
-</ion-header>
+</ion-header> 
 
 
 <ion-content>
 
   <div class="cabezera" [hidden]="!image">
     <div class="avatar">
-      <img [src]="user.imageSrc" (load)="loadImage()">
+      <img (click)="changePhoto()" [src]="user.imageSrc" (load)="loadImage()">
+      
     </div>
-    <ion-fab top right class="button-fab-right">
-      <button ion-fab color="base" (click)="changePhoto()">
-        <ion-icon name="md-camera"></ion-icon>
-      </button>
-    </ion-fab>
+    <div class="user-text">
+      <h2 (click)="editNameFull()">{{user.firstName+ " "+ user.lastName}}</h2>
+    </div>
+    <div class="user-text">
+      <h3 (click)="changeEmailAlert()">{{user.email}}</h3>
+    </div>
+    
   </div>
 
   <div class="cabezera" [hidden]="image">
     <div class="avatar">
-      <img src="./assets/imgs/user.png" style="object-fit: cover;">
+      <img (click)="changePhoto()" src="./assets/imgs/user.png" style="object-fit: cover;">
+      <div class="user-text">
+        <h2 (click)="editNameFull()">{{user.firstName+ " "+ user.lastName}}</h2>
+      </div>
+      <div class="user-text">
+        <h3 (click)="changeEmailAlert()">{{user.email}}</h3>
+      </div>
     </div>
-    <ion-fab top right class="button-fab-right">
-      <button ion-fab color="base" (click)="changePhoto()">
-        <ion-icon name="md-camera"></ion-icon>
-      </button>
-    </ion-fab>
+    
   </div>
 
   <!--h4 stlye="padding-left: 10px;"> {{user.username}} </h4-->
 
   <ion-list>
 
-    <ion-item>
-      <ion-icon name="md-code-working" item-start></ion-icon>
-      {{user.username}}
-      <ion-icon name="md-create" [hidden]="!edit" (click)="editUserName()" item-end></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="md-code-working" item-start></ion-icon>
-      {{user.firstName+ " "+ user.lastName}}
-      <ion-icon name="md-create" [hidden]="!edit" (click)="editNameFull()" item-end></ion-icon>
-    </ion-item>
-
-    <ion-item>
-      <ion-icon name="md-mail" item-start></ion-icon>
-      {{user.email}}
-      <!-- <ion-icon [hidden]="user.verified" (click)="mCode();" color="danger" name="md-alert" item-end></ion-icon> -->
-      <ion-icon name="md-create" [hidden]="!edit" (click)="changeEmailAlert()" item-end></ion-icon>
-    </ion-item>
-
+    
     <ion-item (click)="selectTeams()">
       <ion-icon name="ios-people" item-start></ion-icon>
       Team {{team.name}}
       <ion-icon hidden name="md-create" item-end></ion-icon>
     </ion-item>
 
-    <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
-      <ion-icon name="logo-usd" item-start></ion-icon>
-      {{ "PAYMENT" | translate}}
-    </ion-item>
+   
 
     <ion-item (click)="answerDeleteDevices()">
-      <ion-icon name="phone-portrait" item-start></ion-icon>
+      <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
       {{ "CLEARDEVICES" | translate}}
     </ion-item>
 
@@ -95,6 +79,34 @@
       {{ "CHANGEPASS" | translate}}
     </ion-item> -->
 
+    
+
+    <!-- <ion-item>
+      <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
+      
+    </ion-item> -->
+    <ion-item (click)="openSelect()">
+        <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
+      {{'LANGUAGE' | translate}}
+    </ion-item>
+
+    <!-- <ion-item [hidden]="user.role.name != 'Manager' ">
+      <ion-icon name="ios-people" item-start></ion-icon>
+      {{'CONTACTS' | translate}}
+    </ion-item> -->
+    <ion-item (click)="logout()">
+        <ion-icon class="fourth-bg" name="ios-log-out" item-start></ion-icon>
+      {{'NAVMENU.LOGOUT' | translate}}
+    </ion-item>
+
+    <!--  <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
+      <ion-icon name="logo-usd" item-start></ion-icon>
+      {{ "PAYMENT" | translate}}
+    </ion-item>
+    <ion-item (click)="goAbout()">
+      <ion-icon name="md-lock" item-start></ion-icon>
+      {{'PRIVACY&POLICY' | translate}}
+    </ion-item>
     <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
       <ion-icon name="logo-usd" item-start></ion-icon>
       {{ "PAYMENT" | translate}}
@@ -108,26 +120,13 @@
     <ion-item (click)="paymentsMonthly()" [hidden]="user.role.name != 'Manager' ">
       <ion-icon name="md-cash" item-start></ion-icon>
       {{"PAYMENTSUBS" | translate}}
-    </ion-item>
-
-    <ion-item>
-      <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
-      <ion-select [(ngModel)]="lang" (ionChange)='changeLang()'>
-        <ion-option value="en">English</ion-option>
-        <ion-option value="es">Spanish </ion-option>
-      </ion-select>
-    </ion-item>
-
-    <ion-item [hidden]="user.role.name != 'Manager' ">
-      <ion-icon name="ios-people" item-start></ion-icon>
-      {{'CONTACTS' | translate}}
-    </ion-item>
-
-    <ion-item (click)="goAbout()">
-      <ion-icon name="md-lock" item-start></ion-icon>
-      {{'PRIVACY&POLICY' | translate}}
-    </ion-item>
+    </ion-item> -->
 
   </ion-list>
+
+  <ion-select [(ngModel)]="lang" hidden (ionChange)='changeLang()' #mySelect>
+      <ion-option value="en">English</ion-option>
+      <ion-option value="es">Español </ion-option>
+    </ion-select>
 
 </ion-content>

@@ -6,6 +6,7 @@ import { NavParams } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @Component({
@@ -25,11 +26,14 @@ export class AssistencesComponent {
   }
 
   async ionViewWillEnter(){
+    let load = HelpersProvider.me.getLoadingStandar();
     this.assistences = await this.http.get("/assistence/"+ this.event.id).toPromise() as any;
     this.assistences = this.assistences.map(function(it){
       it.dateTime = moment(it.dateTime).toDate();
       return it;
     });
+
+    load.dismissAll();
   }
 
   public toAssitence(assistence){
