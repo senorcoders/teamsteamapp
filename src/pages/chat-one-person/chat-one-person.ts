@@ -184,10 +184,10 @@ export class ChatOnePersonPage {
       let mgs: any = await this.http.get("/chat/" + this.to.id + "/" + this.from.id).toPromise();
       console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        if( item.from === MyApp.User.id )
-          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + MyApp.User.id);
-        else
-          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+        // if( item.from === MyApp.User.id )
+          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.from);
+        // else
+        //   item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
 
         return item;
       }));
@@ -241,7 +241,7 @@ export class ChatOnePersonPage {
     let index = this.getMsgIndexById(msg.dateTime);
     console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/random/users/" + msg.user);
+      msg.photo = interceptor.transformUrl("/images/random/users/" + msg.from);
       this.ngZone.run(() => { this.msgList.push(msg); })
       console.log("add new message", this.msgList);
       this.scrollToBottom();
