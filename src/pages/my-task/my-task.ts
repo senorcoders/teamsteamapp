@@ -32,10 +32,9 @@ export class MyTaskPage {
 
   async getTasks(){
 
-    console.log(MyApp.User);
     let tasks:any;
     if( MyApp.User.role.name === "Manager" ){
-      tasks = await this.http.get('/task/from/'+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise();
+      tasks = await this.http.get('/task?where={"team":"'+ MyApp.User.team+ '"}').toPromise();
     }else{
       tasks = await this.http.get('/task/for/'+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise();
     }
