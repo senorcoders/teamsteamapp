@@ -24,6 +24,21 @@
     <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)"
     />
 
+    <div class="status">
+      <div>
+          <button ion-button [ngClass]="event.status==='ON TIME'?'select':''" (click)="asignStatus('ON TIME')" >{{"EVENTS.STATUS.ONTIME" | translate}}</button>
+      </div>
+      <div>
+          <button ion-button [ngClass]="event.status==='CANCELLED'?'select':''" (click)="asignStatus('CANCELLED')" >{{"EVENTS.STATUS.CANCELLED" | translate}}</button>
+      </div>
+      <div>
+          <button ion-button [ngClass]="event.status==='STARTING LATE'?'select':''" (click)="asignStatus('STARTING LATE')" >{{"EVENTS.STATUS.STARTINGLATE" | translate}}</button>
+      </div>
+      <div>
+          <button ion-button [ngClass]="event.status==='ENDING LATE'?'select':''" (click)="asignStatus('ENDING LATE')" >{{"EVENTS.STATUS.ENDINGLATE" | translate}}</button>
+      </div>
+    </div>
+
     <ion-item>
       <p style="text-align: right;">{{event.parsedTime}}</p>
       <ion-row hidden>

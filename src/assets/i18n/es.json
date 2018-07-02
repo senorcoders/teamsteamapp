@@ -4,7 +4,13 @@
         "PAST": "Anteriores",
         "UPCOMING": "Proximos",
         "NOEVENT": "Bueno, esto es aburrido. Agregar eventos",
-        "AREYOU": "Vienes?"
+        "AREYOU": "Vienes?",
+        "STATUS": {
+            "ONTIME": "A Tiempo",
+            "CANCELLED": "Cancelado",
+            "STARTINGLATE": "Iniciando Tarde",
+            "ENDINGLATE": "Terminando Tarde"
+        }
     },
     "HERE": "Aquí",
     "NAVMENU": {

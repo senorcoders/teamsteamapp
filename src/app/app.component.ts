@@ -49,7 +49,7 @@ export class MyApp {
   };
 
   //public toas: Toast;
-  public team: any;
+  public team: any= {request: []}
 
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
@@ -271,7 +271,15 @@ export class MyApp {
     this.menuCtrl.close();
   }
 
-  public validRolePage(page) {
+  public validRolePage(page, newDatas) {
+
+    //Para verificar si nesesita de newData, para mostrarse
+    newDatas = newDatas || 'not';
+    if( newDatas !== 'not' ){
+      if( this.newData(newDatas) === true ){
+        return false;
+      }
+    }
 
     if (page.role === "*") return true;
 

@@ -4,7 +4,13 @@
         "PAST": "Previous",
         "UPCOMING": "Upcoming",
         "NOEVENT": "Well, this is boring.  Add events",
-        "AREYOU": "Are You Coming?"
+        "AREYOU": "Are You Coming?",
+        "STATUS": {
+            "ONTIME": "ON TIME",
+            "CANCELLED": "CANCELLED",
+            "STARTINGLATE": "STARTING LATE",
+            "ENDINGLATE": "ENDING LATE"
+        }
     },
     "HERE": "here",
     "NAVMENU": {
