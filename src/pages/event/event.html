@@ -74,13 +74,13 @@
       <div class="count">
         <h5 (click)="asingResponse('yes')">
           <ion-icon class="ball mas"></ion-icon>
-          Yes {{event.countYes}} </h5>
+          {{"EVENT.YES" | translate}} {{event.countYes}} </h5>
         <h5 (click)="asingResponse('no')">
           <ion-icon class="ball menos"></ion-icon>
-          No {{event.countNo}} </h5>
+          {{"EVENT.MAYBE" | translate}} {{event.countNo}} </h5>
         <h5 (click)="asingResponse('maybe')">
           <ion-icon class="ball talves"></ion-icon>
-          Maybe {{event.countMaybe}} </h5>
+          {{"EVENT.NO" | translate}} {{event.countMaybe}} </h5>
       </div>
     </div>
 

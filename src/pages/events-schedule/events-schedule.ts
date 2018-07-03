@@ -375,7 +375,7 @@ export class EventsSchedulePage {
 
       //console.log("new event ", event);
 
-      //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
+      //Para obtener los datos de mejor manera es recargar la lista de eventos
       //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
       t.zone.run(function () { t.getEvents(); });
 

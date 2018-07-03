@@ -12,6 +12,11 @@
             "ENDINGLATE": "Terminando Tarde"
         }
     },
+    "EVENT":{
+        "YES": "Si",
+        "NO": "No",
+        "MAYBE":"Talvez"
+    },
     "HERE": "Aquí",
     "NAVMENU": {
         "EVENTS" : "Eventos",

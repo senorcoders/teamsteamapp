@@ -12,6 +12,11 @@
             "ENDINGLATE": "ENDING LATE"
         }
     },
+    "EVENT":{
+        "YES": "Yes",
+        "NO": "No",
+        "MAYBE":"Maybe"
+    },
     "HERE": "here",
     "NAVMENU": {
         "EVENTS" : "Events",
