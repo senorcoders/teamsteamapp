@@ -216,6 +216,7 @@ export class AuthServiceProvider {
 
     await this.storage.set("role", role);
     MyApp.User.role = role;
+    MyApp.User.team = role.team.id;
     this.user.team = role.team.id;
     MyApp.notifcations(MyApp.User.team);
   }

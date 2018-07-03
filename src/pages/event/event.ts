@@ -482,4 +482,17 @@ export class EventPage {
     
   }
 
+  public async asignStatus(status){
+    try{
+      let msg:any = await this.http.put("/event/status", {id: this.event.id, status}).toPromise();
+      console.log(msg);
+      if( msg.hasOwnProperty("msg") === true ){
+        this.event.status = status;
+      }
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
+
 }
