@@ -60,12 +60,12 @@ export class MyApp {
   public toas: Toast;
 
   public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat" },
-    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request" },
-    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "" }
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "", newData: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "", newData: "" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "" , newData: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat" , newData: "" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request" , newData: "request" },
+    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "" , newData: "" }
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 

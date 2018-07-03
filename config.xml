@@ -139,6 +139,6 @@
         <variable name="SENDER_ID" value="1:318853826702:android:76a6eada20537b70" />
     </plugin>
     <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
-    <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="7.1.0" />
+    <engine name="ios" spec="4.5.4" />
 </widget>
