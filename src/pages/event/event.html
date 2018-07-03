@@ -96,7 +96,7 @@
       <p>{{event.location.address}}</p>
     </ion-item>
 
-    <div [hidden]="!location.change" id="map_canvas" style="width: 100%; height: 250px; "></div>
+    <div [hidden]="!location.change" (dblclick)="enableMoveMap()" id="map_canvas" style="width: 100%; height: 250px; "></div>
 
     <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
       <p>{{location.place.subAdministrativeArea}}</p>

@@ -233,9 +233,10 @@ export class EventPage {
       zoom: 8
     };
 
-    this.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    this.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions); console.log(this.map);
 
     this.directionsDisplay.setMap(this.map);
+    this.map.setOptions({draggable: false});
 
     let image = {
       url: './assets/imgs/icon-marker.png',
@@ -277,6 +278,10 @@ export class EventPage {
 
     this.load.dismissAll();
 
+  }
+
+  public enableMoveMap(){
+    this.map.setOptions({draggable: true});
   }
 
   public async remove() {
