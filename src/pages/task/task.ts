@@ -26,7 +26,7 @@ export class TaskPage {
     public auth: AuthServiceProvider, public loading: LoadingController
       ) {
     this.task = this.navParams.get("task");
-    this.task.dateParsed = moment(this.task.dateTime).format('ddd DD MMM YYYY HH:mm');
+    this.task.dateParsed = moment(this.task.dateTime).format('ddd DD MMM YYYY hh:mm a');
     this.manager = MyApp.User.role.name === "Manager";
   }
 

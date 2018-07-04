@@ -64,17 +64,10 @@ export class NewTaskPage {
   }
 
   editTime(){
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'time',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(
-      date =>{
-        console.log(date);
-        this.time = moment(date).format("HH:mm");
-      } ,
-      err => console.log('Error occurred while getting date: ', err)
-    );
+    this.helper.pickerDateTime(true)
+    .then(date=>{
+      this.time = date;
+    });
   }
 
   public async save(){
@@ -99,7 +92,7 @@ export class NewTaskPage {
       let t = {
         name: this.name,
         text: this.description,
-        dateTime: moment(this.date+" "+this.time, "ddd DD MMM YYYY HH:mm").toISOString(),
+        dateTime: moment(this.date+" "+this.time, "ddd DD MMM YYYY hh:mm a").toISOString(),
         team: MyApp.User.team,
         from: MyApp.User.id,
         for: this.assign,
