@@ -19,6 +19,7 @@ export class NewTaskPage {
   public assign="";
   public date:string;
   public time:string;
+  public user=MyApp.User;
 
   public players:Array<any>=[];
 
@@ -32,14 +33,26 @@ export class NewTaskPage {
 
   async ngOnInit(){
 
-    //let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
+    let family:any = await this.http.get("/family?where={'team':'"+ MyApp.User.team+ "'}").toPromise();
     let players:any = await this.http.get("/players/team/"+ MyApp.User.team).toPromise();
-    this.players = players;
-    /*let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
+    let managers:any = await this.http.get("/roles?=where{'team':'"+ MyApp.User.team+ "', name:'Manager'}").toPromise();
+    
+    //Filtramos para los que no tenga el user
+    players = players.concat(managers).concat(family).filter(function(it){
+      return it.user !== null && it.user !== undefined;
+    });
+    //Filtramos para la family que se repite
+    family = [];
+    for(let p of players){
+      let index = family.findIndex(function(it){
+        return p.user.id === it.user.id;
+      });
+      if( index === -1 ){
+        family.push(p);
+      }
+    }
 
-    for(let it of managers){
-      this.players.push(it);
-    }*/
+    this.players = family;
 
   }
 

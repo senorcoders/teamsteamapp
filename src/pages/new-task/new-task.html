@@ -24,7 +24,7 @@
 
       <ion-label floating>{{'ASSIGN' | translate}}</ion-label>
       <ion-select [(ngModel)]="assign" >
-        <ion-option *ngFor="let player of players;" [value]="player.user.id">{{player.user.username}}</ion-option>
+        <ion-option *ngFor="let player of players;" [hidden]="player.user.id===user.id" [value]="player.user.id">{{player.user.username}}</ion-option>
       </ion-select>
 
     </ion-item>
