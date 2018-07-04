@@ -35,6 +35,7 @@ export class EventsSchedulePage {
   public event0 = false;
 
   public by: string = "upcoming";
+  public static by: string = "upcoming";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -336,6 +337,9 @@ export class EventsSchedulePage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(event, response) {
+    
+    if( this.by === "past" ) return;
+
     let guardar = event.tracking.user !== undefined;
     try {
       let newTrack: any;
@@ -456,6 +460,7 @@ export class EventsSchedulePage {
     let t = this;
     this.zone.run(function () {
       t.by = b;
+      EventsSchedulePage.by = b;
       t.getEvents();
     })
   }

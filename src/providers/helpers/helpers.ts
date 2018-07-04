@@ -280,10 +280,10 @@ export class HelpersProvider {
 
     options = options || {
       date: new Date(),
-      mode: 'datetime',
+      mode: 'date',
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
     };
-    options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT;
+    options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK;
 
     return this.datePicker.show(options);
   }
