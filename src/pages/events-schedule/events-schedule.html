@@ -24,7 +24,7 @@
     </button>
   </div>
 
-  <div [hidden]="!event0" class="no-events">
+  <div [hidden]="!event0||user.role.name!=='Manager'" class="no-events">
     <h4>{{"EVENTS.NOEVENT" | translate}}
       <a href="#" (click)="addEvent()">{{'HERE' | translate}}!</a>
     </h4>

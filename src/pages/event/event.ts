@@ -263,6 +263,7 @@ export class EventPage {
      */
     let resp: any;
     resp = await (this.geolocation as any).getCurrentPosition();
+    console.log("location", resp);
     let origin = { lat: resp.coords.latitude, lng: resp.coords.longitude };
 
     //Para la route en uato
@@ -419,21 +420,7 @@ export class EventPage {
   }
 
   public viewTrakingEvent() {
-    if (MyApp.User.role.name === 'Manager') {
-      this.modalCtrl.create(TrackingEventManagerComponent, { e: this.event }).present();
-    }/*else{
-      let te = this.modalCtrl.create(TrackingEventComponent, { e : this.event })
-      te.present();
-      let t = this;
-      te.onDidDismiss(async function(){
-        let counts = await this.getTrackings(this.event);
-
-        t.event.countYes = counts.countYes;
-        t.event.countNo = counts.countNo;
-        t.event.countMaybe = counts.countMaybe;
-      });
-    }*/
-
+    this.modalCtrl.create(TrackingEventManagerComponent, { e: this.event }).present();
   }
 
   //asigna una respuesta al evento si no esta creada se crea

@@ -88,18 +88,12 @@ export class EventsSchedulePage {
     let load = this.helper.getLoadingStandar();
 
     try {
-      this.user = MyApp.User;//await this.auth.User();
-      ////console.log(this.user);
+      this.user = MyApp.User;
       this.team = this.user.team;
-      //let url = "/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team;
-      ////console.log(url);
+
       let events: any = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
-      ////console.log(events);
-      /*events = [events[2]];
-      //console.log(events);*/
+      
       this.events = await this.parserEvents(events);
-      ////console.log(this.events);
-      //let user = this.user;
 
       //this.events = this.events.reverse();
       if (this.events.length === 0 && this.by === "upcoming")
