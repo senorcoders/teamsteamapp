@@ -91,14 +91,8 @@ export class NewEventPage {
     return this.repeats === true && this.repeatsDaily === false;
   }
 
-  async ngOnInit(){
-    /*let places = await this.helper.locationToPlaces(this.location.position);
-    this.location.place = places[0];
-    console.log(this.location);*/
-  }
-
   public setDate(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    this.helper.nativeDatePicker()
     .then(date=>{
       this.date = moment(date).format("DD MMM YYYY");
     })

@@ -132,7 +132,7 @@ export class EditEventPage {
   }
 
   public setDate(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    this.helper.nativeDatePicker()
     .then(date=>{
       this.date = moment(date).format("DD MMM YYYY");
     })

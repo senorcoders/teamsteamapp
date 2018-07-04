@@ -51,7 +51,7 @@ export class CreatePlayerDetailsPage {
   }
 
   public setDate(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    this.helper.nativeDatePicker()
     .then(date=>{
       this.birthDay = moment(date).format("DD MMM YYYY");
     })

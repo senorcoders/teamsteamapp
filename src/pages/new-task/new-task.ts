@@ -57,17 +57,10 @@ export class NewTaskPage {
   }
 
   public editDate(){
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(
-      date =>{
-        console.log(date);
-        this.date = moment(date).format('ddd DD MMM YYYY');
-      } ,
-      err => console.log('Error occurred while getting date: ', err)
-    );
+    this.helper.nativeDatePicker()
+    .then(date=>{
+      this.date = moment(date).format("ddd DD MMM YYYY");
+    });
   }
 
   editTime(){

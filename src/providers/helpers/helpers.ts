@@ -15,6 +15,7 @@ import { DateTimePickerComponent } from '../../components/date-time-picker/date-
 import { Camera } from '@ionic-native/camera';
 import { Page } from 'ionic-angular/navigation/nav-util';
 import { Device } from '@ionic-native/device';
+import { CalendarModal, CalendarResult } from 'ion2-calendar';
 
 
 /**
@@ -56,16 +57,16 @@ export class HelpersProvider {
 
     try {
 
-      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places",{
-       responseType: 'text' 
+      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places", {
+        responseType: 'text'
       }).toPromise();
-      
+
       let fn = new Function(script);
       fn();
 
-      if( window.hasOwnProperty("google") === true ){
+      if (window.hasOwnProperty("google") === true) {
         HelpersProvider.me.enableMapsLocation = true;
-      }else{
+      } else {
         await this.reloadGoogleplaces(true);
       }
 
@@ -276,16 +277,38 @@ export class HelpersProvider {
 
   //Para mostrar un picker native de date time y que se mas rapdio al seleccionar
 
-  public nativeDatePicker(options?: DatePickerOptions): Promise<Date> {
+  // public nativeDatePicker(options?: DatePickerOptions): Promise<Date> {
 
-    options = options || {
-      date: new Date(),
-      mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  //   options = options || {
+  //     date: new Date(),
+  //     mode: 'date',
+  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  //   };
+  //   options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK;
+
+  //   return this.datePicker.show(options);
+  // }
+  public nativeDatePicker(): Promise<CalendarResult> {
+
+    let options = {
     };
-    options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK;
 
-    return this.datePicker.show(options);
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    return new Promise(function(resolve, reject){
+
+      myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
+        if(date === null){
+          return;
+        }
+        resolve(date);
+      })
+
+    })
   }
 
   //Para validar email
@@ -322,7 +345,7 @@ export class HelpersProvider {
       spinner: 'hide', content: `
     <img src="./assets/imgs/balls.gif">
     ` });
-    if(present === undefined )
+    if (present === undefined)
       present = true;
     console.log(present);
     if (present === true) {
@@ -356,17 +379,17 @@ export class HelpersProvider {
     }
   }
 
-  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?:string) {
+  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?: string) {
 
     cancel = cancel || new Function();
     concatMessage = concatMessage || "";
-    if(concatMessage !== "" ){
+    if (concatMessage !== "") {
       concatMessage += ", ";
     }
     let si = await this.getWords("YES"), no = await this.getWords("NO"),
       msg = await this.getWords("MESSAGEALERT");
     let alert = this.alertCtrl.create({
-      title: concatMessage+ msg,
+      title: concatMessage + msg,
       buttons: [
         {
           text: no,
@@ -391,8 +414,8 @@ export class HelpersProvider {
     }).present();
   }
 
-  public getDeviceInfo():{
-    uuid:string,
+  public getDeviceInfo(): {
+    uuid: string,
     model: string,
     platform: string,
     versionOS: string
