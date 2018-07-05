@@ -1,6 +1,5 @@
 import { Component, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavParams, ModalController } from 'ionic-angular';
-import { Events, Content, TextInput } from 'ionic-angular';
+import { IonicPage, NavParams, ModalController, Events, Content, TextInput } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';

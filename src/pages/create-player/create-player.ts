@@ -6,6 +6,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { RosterPage } from '../roster/roster';
+import { DatePicker } from '@ionic-native/date-picker';
 
 @IonicPage()
 @Component({
@@ -45,8 +46,8 @@ export class CreatePlayerPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
-    public loading: LoadingController,
-    public helper: HelpersProvider
+    public loading: LoadingController, public helper: HelpersProvider,
+    public datePicker: DatePicker
   ) {
   }
 
@@ -58,10 +59,13 @@ export class CreatePlayerPage {
   }
 
   public setDate() {
-    this.helper.nativeDatePicker()
-      .then(date => {
-        this.birthDay = moment(date).format("DD MMM YYYY");
-      })
+    this.datePicker.show({
+      date: new Date(),
+      mode: "date",
+      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+    }).then(function(date){
+      this.birthDay = moment(date).format("DD MMM YYYY");
+    }.bind(this))
   }
 
   public addContact() {

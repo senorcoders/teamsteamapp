@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController, App} from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
-import { App } from "ionic-angular";
 import {
   NativeGeocoder,
   NativeGeocoderReverseResult
@@ -13,7 +12,6 @@ import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';
-import { Page } from 'ionic-angular/navigation/nav-util';
 import { Device } from '@ionic-native/device';
 import { CalendarModal, CalendarResult } from 'ion2-calendar';
 
@@ -370,7 +368,7 @@ export class HelpersProvider {
 
   }
 
-  public async toPages(root: Page, pages: Array<{ page: Page, data: any }>, data?) {
+  public async toPages(root: any, pages: Array<{ page: any, data: any }>, data?) {
     data = data || {};
     let nav = this.app.getActiveNavs()[0];
     await nav.setRoot(root, data);

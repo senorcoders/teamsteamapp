@@ -20,14 +20,14 @@
     "HERE": "Aquí",
     "NAVMENU": {
         "EVENTS" : "Eventos",
-        "MYTASK": "Mis Tareas",
+        "MYTASK": "Tareas",
         "ROSTER": "Jugadores",
         "MESSAGES": "Mensajes Recientes",
         "PROFILE": "Perfil",
         "LOGOUT": "Cerrar Sesión"
     },
     "MYTASK": {
-        "TITLE": "Mis Tareas",
+        "TITLE": "Tareas",
         "NEWTASK" : "Nueva Tarea"
     },
     "NEWEVENT": {

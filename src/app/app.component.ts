@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, Nav, Events, ToastController, Toast } from 'ionic-angular';
+import { Platform, Nav, Events, MenuController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 
 import { Push, PushObject } from '@ionic-native/push';
@@ -7,7 +7,6 @@ import { Push, PushObject } from '@ionic-native/push';
 import { LoginPage } from '../pages/login/login';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
-import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
 
@@ -22,7 +21,6 @@ import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
-import { Network } from '@ionic-native/network';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests'; 
 
 
@@ -57,8 +55,6 @@ export class MyApp {
   public defaultImageUserUrl = "./assets/imgs/user-menu.png";
   public defaultImageUser = true;
 
-  public toas: Toast;
-
   public pages: Array<Object> = [
     { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "", newData: "" },
@@ -71,17 +67,12 @@ export class MyApp {
 
   constructor(public platform: Platform, public statusBar: StatusBar,
     public auth: AuthServiceProvider, public menuCtrl: MenuController,
-    private network: Network, public toast: ToastController,
     public pusherNotification: Push, private http: HttpClient,
     public event: Events, public zone: NgZone,
     public translate: TranslateService, private helper: HelpersProvider,
     public webIntent: WebIntent, public iNotification: INotificationProvider
   ) {
-
-    this.init();
-
     platform.ready().then(this.initPlatform.bind(this));
-
   }
 
   private initPlatform() {
@@ -108,33 +99,18 @@ export class MyApp {
 
       });
 
-    this.toas = this.toast.create({
-      message: " Internet connection is required",
-      showCloseButton: true,
-      position: "bottom"
-    });
+    this.init();
 
-    //se ejecuta cuando se conecta a internet
-    this.network.onConnect().subscribe(data => {
-      this.toas.dismiss();
-      console.log(data);
-    }, error => console.error(error));
-
-    //se ejecuta cuando se desconecta de internet
-    //se muestra al usuario que debe estar conectado
-    this.network.onDisconnect().subscribe(data => {
-      console.log(data)
-      this.toas.present();
-    }, error => console.error(error));
   }
 
   public init() {
     MyApp.me = this;
     this.serviceNewDatas();
     setInterval(this.serviceNewDatas.bind(this), 6000);
+    this.initAuth();
   }
 
-  async ngOnInit() {
+  async initAuth() {
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
@@ -150,7 +126,6 @@ export class MyApp {
       let ramdon = new Date().getTime();
       this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
-      //document.getElementById("nameSlide").innerText = this.user.username;
 
       //ahora asignamos el lenaguaje si es que esta definido
       if (MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language')) {

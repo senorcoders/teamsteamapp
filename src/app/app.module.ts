@@ -28,7 +28,6 @@ import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
-import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
 import { EventPage } from '../pages/event/event';
@@ -277,12 +276,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    SlideAssistencesEventComponent
+    SlideAssistencesEventComponent,
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider,

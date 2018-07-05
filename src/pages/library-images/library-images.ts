@@ -1,8 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Platform } from 'ionic-angular';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { ToastController, ModalController } from 'ionic-angular';
+import { Platform, ToastController, ModalController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { PermissionsPage } from '../permissions/permissions';
 import { ItemDetailsPage } from '../item-details/item-details';

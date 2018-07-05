@@ -20,14 +20,14 @@
     "HERE": "here",
     "NAVMENU": {
         "EVENTS" : "Events",
-        "MYTASK": "My Task",
+        "MYTASK": "Task",
         "ROSTER": "Roster",
         "MESSAGES": "Recent Chats",
         "PROFILE": "Profile",
         "LOGOUT": "Logout"
     },
     "MYTASK": {
-        "TITLE": "My Tasks",
+        "TITLE": "Tasks",
         "NEWTASK" : "Nueva Tarea"
     },
     "NEWEVENT": {
