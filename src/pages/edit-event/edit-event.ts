@@ -59,6 +59,7 @@ export class EditEventPage {
   public repeatsDaily:boolean=false;
   public date:string="";
   public time:string="";
+  public timeEnd="";
   public attendeceTracking:boolean=false;
   public notifyTeam:boolean=false;
   public optionalInfo:string="";
@@ -100,6 +101,10 @@ export class EditEventPage {
     this.description = this.event.description;
     this.team = this.event.team;
     this.imageSrc =  this.event.imageSrc;
+    this.timeEnd = this.event.dateTimeEnd  || "";
+    if( this.timeEnd !== "" ){
+      this.timeEnd = moment(this.timeEnd).format("hh:mm a");
+    }
   }
 
   async ionViewDidLoad(){
@@ -144,6 +149,13 @@ export class EditEventPage {
       console.log(moment(date, "hh:mm a").format("DD/MM/YYYY hh:mm a"));
       this.time = date;
     });
+  }
+
+  public setTimeEnd(){
+    this.helper.pickerDateTime(true)
+    .then(date=>{
+      this.timeEnd = date;
+    })
   }
 
   public getSelectDays(key:string){
@@ -269,6 +281,9 @@ export class EditEventPage {
       repeatsDays: this.repeatsDays.join(","),
       location: locate
     };
+    if( this.timeEnd !== '' ){
+      event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()
+    }
 
     //si es por semana entonces hay que chequear que este seleccionado almenos un dia
     let dayM = await this.helper.getWords("DAY");

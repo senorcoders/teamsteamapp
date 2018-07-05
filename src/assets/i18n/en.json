@@ -71,6 +71,7 @@
     "NAME": "Name",
     "DATE": "Date",
     "TIME": "Time",
+    "TIMEEND": "End Time",
     "DESCRIPTION": "Description",
     "SPORT": "Sport",
     "SPORTS":{

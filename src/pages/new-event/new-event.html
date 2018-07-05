@@ -60,6 +60,10 @@
     </ion-item>
 
     <ion-item>
+      <h4 class="date-time" (click)="setTimeEnd()" >{{'TIMEEND' | translate }}: {{timeEnd}} </h4>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>{{'DESCRIPTION' | translate }}</ion-label>
       <ion-textarea [(ngModel)]="description" > </ion-textarea>
     </ion-item>

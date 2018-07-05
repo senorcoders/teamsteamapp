@@ -82,7 +82,7 @@ export class EventPage {
 
     this.event = e;
     this.index = this.navParams.get("index");
-    console.log(this.index);
+    console.log(this.index, this.event);
 
     //for image user that published events
     let r = new Date().getTime();

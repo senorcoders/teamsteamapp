@@ -44,6 +44,7 @@ export class NewEventPage {
   public repeatsDays:Array<any>=[];
   public date:string="";
   public time:string="";
+  public timeEnd:string="";
   public attendeceTracking:boolean=false;
   public optionalInfo:string="";
   public description:string="";
@@ -102,6 +103,13 @@ export class NewEventPage {
     this.helper.pickerDateTime(true)
     .then(date=>{
       this.time = date;
+    })
+  }
+
+  public setTimeEnd(){
+    this.helper.pickerDateTime(true)
+    .then(date=>{
+      this.timeEnd = date;
     })
   }
 
@@ -230,6 +238,9 @@ export class NewEventPage {
       repeatsDays: this.repeatsDays.join(","),
       location: locate
     };
+    if( this.timeEnd !== '' ){
+      event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()
+    }
     console.log(event);
 
     //si es por semana entonces hay que chequear que este seleccionado almenos un dia
