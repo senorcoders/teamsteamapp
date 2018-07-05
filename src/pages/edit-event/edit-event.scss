@@ -8,6 +8,10 @@ page-edit-event {
         left: calc(100% - 60px) !important;
     }
 
+    ion-item h4{
+        margin-top: 0 !important;
+    }
+
     ion-list-header{
         font-size: 13pt !important;
         text-transform: uppercase !important;
