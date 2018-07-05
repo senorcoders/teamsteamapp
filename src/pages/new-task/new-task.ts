@@ -33,10 +33,13 @@ export class NewTaskPage {
 
   async ngOnInit(){
 
-    let family:any = await this.http.get("/family?where={'team':'"+ MyApp.User.team+ "'}").toPromise();
+    let family:any = await this.http.get('/family?where={"team":"'+ MyApp.User.team+ '"}').toPromise();
+    console.log(family);
     let players:any = await this.http.get("/players/team/"+ MyApp.User.team).toPromise();
-    let managers:any = await this.http.get("/roles?=where{'team':'"+ MyApp.User.team+ "', name:'Manager'}").toPromise();
-    
+    console.log(players);
+    let managers:any = await this.http.get('/roles?where={"team":"'+ MyApp.User.team+ '", "name":"Manager"}').toPromise();
+    console.log(managers);
+
     //Filtramos para los que no tenga el user
     players = players.concat(managers).concat(family).filter(function(it){
       return it.user !== null && it.user !== undefined;
