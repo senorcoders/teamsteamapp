@@ -89,10 +89,16 @@
       <ion-textarea [(ngModel)]="address"></ion-textarea>
     </ion-item>
 
-    <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
+    <!-- <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
     <ion-item [hidden]="location.place.thoroughfare == ''">{{location.place.thoroughfare}}</ion-item>
-    <button ion-button (click)="loadPlace()">{{ 'NEWEVENT.PINMAP' | translate }}</button>
+    <button ion-button (click)="loadPlace()">{{ 'NEWEVENT.PINMAP' | translate }}</button> -->
+    
+  </ion-list>
 
+  <div id="map_canvas" style="width: 100%; height: 250px; "></div>
+
+  <ion-list>
+    
     <ion-item>
       <ion-label floating>{{'NEWEVENT.LOCATIONDETAIL' | translate }}</ion-label>
       <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>

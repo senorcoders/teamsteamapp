@@ -36,4 +36,9 @@ page-edit-event {
             background-color: darkcyan;
         }
     }
+
+    #map_canvas{
+        margin-left: -15px;
+        width: calc(100% + 32px) !important;
+    }
 }
