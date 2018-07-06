@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
 
 import { LibraryItem } from '@ionic-native/photo-library';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * este component es para visualizar una imagen de la libreria de imagenes
@@ -36,11 +37,11 @@ export class ItemDetailsPage {
     var c = document.createElement('canvas');
     var ctx = c.getContext('2d');
     let img = document.getElementById('imageSelect') as HTMLImageElement;
-    c.width = img.naturalWidth;
-    c.height = img.naturalHeight;
-    ctx.drawImage(img, 0,0, img.naturalWidth, img.naturalHeight);
+    c.width = img.width;
+    c.height = img.height;
+    ctx.drawImage(img, 0,0, img.width, img.height);
     var dataURL = c.toDataURL('image/jpg');
-    console.log(img.naturalWidth, img.naturalHeight);
+    console.log(img.width, img.height);
 
     //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
     c=null;ctx=null;
