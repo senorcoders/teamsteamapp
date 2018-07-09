@@ -16,7 +16,6 @@ import { PreviewImageChatComponent } from './preview-image-chat/preview-image-ch
 import { AssistenceComponent } from './assistence/assistence';
 import { AssistencesComponent } from './assistences/assistences';
 import { EventCreatedComponent } from './event-created/event-created';
-import { EmojiPickerComponent } from './emoji-picker/emoji-picker';
 import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-assistences-event';
 @NgModule({
 	declarations: [GoogleMapsComponent,
@@ -33,7 +32,6 @@ import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    EmojiPickerComponent,
     SlideAssistencesEventComponent
     ],
     imports: [ 
@@ -56,7 +54,6 @@ import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    EmojiPickerComponent,
     SlideAssistencesEventComponent
     ]
 })

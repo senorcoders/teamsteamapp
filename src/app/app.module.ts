@@ -143,6 +143,8 @@ import { AssistencesComponent } from '../components/assistences/assistences';
 import { EventCreatedComponent } from '../components/event-created/event-created';
 import { SlideAssistencesEventComponent } from '../components/slide-assistences-event/slide-assistences-event';
 import { CalendarModule } from "ion2-calendar";
+import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
+import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -215,7 +217,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ForgotPasswordPageModule,
     ResetPasswordPageModule,
     PipesModule,
-    CalendarModule
+    CalendarModule,
+    EmojiPickerComponentModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -275,8 +278,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PreviewImageChatComponent,
     AssistenceComponent,
     AssistencesComponent,
-    EventCreatedComponent,
-    SlideAssistencesEventComponent,
+    EventCreatedComponent
   ],
   providers: [
     StatusBar,

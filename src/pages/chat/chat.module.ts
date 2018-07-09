@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ChatPage } from './chat';
 import { PipesModule } from '../../pipes/pipes.module';
+import { EmojiPickerComponentModule } from '../../components/emoji-picker/emoji-picker.module';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { PipesModule } from '../../pipes/pipes.module';
   ],
   imports: [
     IonicPageModule.forChild(ChatPage),
-    PipesModule
+    PipesModule,
+    EmojiPickerComponentModule
   ]
 })
 export class ChatPageModule {}
