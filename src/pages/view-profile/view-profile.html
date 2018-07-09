@@ -24,29 +24,16 @@
 
 <ion-content>
 
-  <div class="cabezera" [hidden]="!image">
+  <div class="cabezera">
     <div class="avatar">
-      <img (click)="changePhoto()" [src]="user.imageSrc" (load)="loadImage()">
-      
+      <img (click)="changePhoto()" [hidden]="!image" [src]="user.imageSrc" (load)="loadImage()">
+      <img (click)="changePhoto()" [hidden]="image" src="./assets/imgs/user.png" style="object-fit: cover;">
     </div>
     <div class="user-text">
       <h2 (click)="editNameFull()">{{user.firstName+ " "+ user.lastName}}</h2>
     </div>
     <div class="user-text">
       <h3 (click)="changeEmailAlert()">{{user.email}}</h3>
-    </div>
-    
-  </div>
-
-  <div class="cabezera" [hidden]="image">
-    <div class="avatar">
-      <img (click)="changePhoto()" src="./assets/imgs/user.png" style="object-fit: cover;">
-      <div class="user-text">
-        <h2 (click)="editNameFull()">{{user.firstName+ " "+ user.lastName}}</h2>
-      </div>
-      <div class="user-text">
-        <h3 (click)="changeEmailAlert()">{{user.email}}</h3>
-      </div>
     </div>
     
   </div>
