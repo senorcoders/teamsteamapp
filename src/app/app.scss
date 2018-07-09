@@ -176,15 +176,7 @@ add icon config
         right: calc(-50% + -21px);
         top: -105px;
     }
-    .point-new-menu-toggle {
-        width: 8px;
-        height: 8px;
-        background-color: red;
-        position: absolute;
-        border-radius: 50%;
-        left: 27px;
-        top: 4px;
-    }
+    
     .new-action {
         background-color: red;
         display: inline-block;
@@ -214,4 +206,14 @@ ion-title .toolbar-title-md {
 button[ion-fab]{
     background-color: #fe324d !important;
     color: white !important;
+}
+
+.point-new-menu-toggle {
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    position: absolute;
+    border-radius: 50%;
+    left: 27px;
+    top: 4px;
 }
