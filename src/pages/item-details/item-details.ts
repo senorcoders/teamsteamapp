@@ -67,7 +67,10 @@ export class ItemDetailsPage {
     c.width = img.width;
     c.height = img.height;
     ctx.drawImage(img, 0, 0, img.width, img.height);
-    this.drawRotated(ctx, c, img, this.degrees);
+
+    if( this.degrees !== 0 )
+      this.drawRotated(ctx, c, img, this.degrees);
+      
     var dataURL = c.toDataURL('image/jpg');
     console.log(img.width, img.height);
 

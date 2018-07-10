@@ -140,4 +140,5 @@
     <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
     <engine name="ios" spec="4.5.4" />
     <engine name="android" spec="~7.1.0" />
+    <plugin name="cordova-plugin-crop" spec="^0.4.0" />
 </widget>

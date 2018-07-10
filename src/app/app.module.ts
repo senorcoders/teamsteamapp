@@ -141,10 +141,11 @@ import { INotificationProvider } from '../providers/i-notification/i-notificatio
 import { AssistenceComponent } from '../components/assistence/assistence';
 import { AssistencesComponent } from '../components/assistences/assistences';
 import { EventCreatedComponent } from '../components/event-created/event-created';
-import { SlideAssistencesEventComponent } from '../components/slide-assistences-event/slide-assistences-event';
 import { CalendarModule } from "ion2-calendar";
-import { EmojiPickerComponent } from '../components/emoji-picker/emoji-picker';
 import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
+import { ImageViewPageModule } from '../pages/image-view/image-view.module';
+import { ImageViewPage } from '../pages/image-view/image-view';
+import { Crop } from '@ionic-native/crop';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -218,7 +219,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ResetPasswordPageModule,
     PipesModule,
     CalendarModule,
-    EmojiPickerComponentModule
+    EmojiPickerComponentModule,
+    ImageViewPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -278,7 +280,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PreviewImageChatComponent,
     AssistenceComponent,
     AssistencesComponent,
-    EventCreatedComponent
+    EventCreatedComponent,
+    ImageViewPage
   ],
   providers: [
     StatusBar,
@@ -308,7 +311,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmojiProvider,
     Device,
     INotificationProvider,
-    Globalization
+    Globalization,
+    Crop
   ]
 })
 export class AppModule {}

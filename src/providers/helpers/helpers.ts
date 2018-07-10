@@ -1,6 +1,6 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController, AlertController, App} from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController, App } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
@@ -14,6 +14,7 @@ import { DateTimePickerComponent } from '../../components/date-time-picker/date-
 import { Camera } from '@ionic-native/camera';
 import { Device } from '@ionic-native/device';
 import { CalendarModal, CalendarResult } from 'ion2-calendar';
+import { ImageViewPage } from '../../pages/image-view/image-view';
 
 
 /**
@@ -194,28 +195,33 @@ export class HelpersProvider {
   }
 
   //Para abrir la camera desde cualquier component
-  public Camera(parameters: { width?, height?, quality?, resolve?, reject?}): Promise<string> {
+  public Camera(parameters: { width?, height?, quality?, resolve?, reject?}, resize?:boolean): Promise<string> {
     var t = this;
-    parameters.width = parameters.width || 300;
-    parameters.height = parameters.height || 300;
-    parameters.quality = parameters.quality || 100;
+    let params: any = {};
+    params.width = parameters.width || 300;
+    params.height = parameters.height || 300;
+    params.quality = parameters.quality || 100;
+    params.resize = resize || null;
 
     return new Promise(async function (resolve, reject) {
 
-      parameters.resolve = resolve;
-      parameters.reject = reject;
+      params.resolve = resolve;
+      params.reject = reject;
 
       if (!t.platform.is("cordova")) {
-        return t.pickFileBrowser(resolve, reject);
+        return t.pickFileBrowser(async function(dataUrl){
+          params.image = dataUrl;
+          await t.app.getActiveNavs()[0].push(ImageViewPage, params);
+        }, reject);
       }
 
       t.diagnostic.isCameraAuthorized().then(async (authorized) => {
         if (authorized) {
-          await t.app.getActiveNavs()[0].push(CameraPage, parameters);
+          await t.app.getActiveNavs()[0].push(CameraPage, params);
         } else {
           t.diagnostic.requestCameraAuthorization().then(async (status) => {
             if (status == t.diagnostic.permissionStatus.GRANTED) {
-              await t.app.getActiveNavs()[0].push(CameraPage, parameters);
+              await t.app.getActiveNavs()[0].push(CameraPage, params);
             } else {
               reject({ message: "permiss denied" });
             }
@@ -297,10 +303,10 @@ export class HelpersProvider {
 
     myCalendar.present();
 
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
 
       myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
-        if(date === null){
+        if (date === null) {
           return;
         }
         resolve(date);

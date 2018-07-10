@@ -110,7 +110,7 @@ export class ViewProfilePage {
 
     try{
 
-      let image = await this.helper.Camera({ width: 600, height: 600, quality : 80 });
+      let image = await this.helper.Camera({ width: 170, height: 170, quality : 80 }, true);
       if( image === undefined )
         return;
         
@@ -130,7 +130,7 @@ export class ViewProfilePage {
       load.dismiss();
     }
     catch(e){
-      //console.log("");
+      console.error(e);
       load.dismiss();
       this.alertCtrl.create({ title: "Error", message: unexpectM }).present();
     }

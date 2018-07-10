@@ -106,7 +106,7 @@ export class ViewTeamPage {
 
           requests.push({ acept: false, idUser : "", user: user, role });
     
-          let request:any = await this.http.put("/teams/"+ this.team.id, { request: requests }).toPromise();
+          let request:any = await this.http.post("/team/request", { id: this.team.id, request: requests, email: user.email, fullName: user.firstName+ " "+ user.lastName }).toPromise();
     
           console.log(request);
           this.request = { acept: false, idUser : "", user: user };
