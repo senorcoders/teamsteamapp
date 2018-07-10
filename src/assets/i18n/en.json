@@ -59,13 +59,13 @@
         "ADD": "Add Team"
     },
     "DAYSWEEKS": {
-        "M": "M",
-        "TU": "T",
-        "W": "W",
-        "TH": "T",
-        "F": "F",
-        "SA": "S",
-        "SU": "S"
+        "M": "MON",
+        "TU": "TUE",
+        "W": "WED",
+        "TH": "THU",
+        "F": "FRI",
+        "SA": "SAT",
+        "SU": "SUN"
     },
     "DAILY": "Daily",
     "NAME": "Name",

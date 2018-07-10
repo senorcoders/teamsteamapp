@@ -75,11 +75,11 @@ export class NewEventPage {
   }
 
   async ionViewDidLoad() {
-    let load = HelpersProvider.me.getLoadingStandar();
+    // let load = HelpersProvider.me.getLoadingStandar();
     //cargamos google maps si a un no ha cargado
     if (HelpersProvider.me.enableMapsLocation === false)
       await HelpersProvider.me.reloadGoogleplaces();
-      
+    
     /***
      * Para mostrar la ubicacion actual
      */
@@ -111,7 +111,7 @@ export class NewEventPage {
       console.log(this.marker.getPosition());
     }.bind(this));
 
-    load.dismissAll();
+    // load.dismissAll();
 
   }
 
