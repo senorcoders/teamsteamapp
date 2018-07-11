@@ -12,17 +12,22 @@
             "ENDINGLATE": "Terminando Tarde"
         }
     },
+    "EVENT":{
+        "YES": "Si",
+        "NO": "No",
+        "MAYBE":"Talvez"
+    },
     "HERE": "Aquí",
     "NAVMENU": {
         "EVENTS" : "Eventos",
-        "MYTASK": "Mis Tareas",
+        "MYTASK": "Tareas",
         "ROSTER": "Jugadores",
         "MESSAGES": "Mensajes Recientes",
         "PROFILE": "Perfil",
         "LOGOUT": "Cerrar Sesión"
     },
     "MYTASK": {
-        "TITLE": "Mis Tareas",
+        "TITLE": "Tareas",
         "NEWTASK" : "Nueva Tarea"
     },
     "NEWEVENT": {
@@ -55,18 +60,19 @@
         "TITLE2": "Actualizar Equipo"
     },
     "DAYSWEEKS": {
-        "M": "L",
-        "TU": "M",
-        "W": "M",
-        "TH": "J",
-        "F": "V",
-        "SA": "S",
-        "SU": "D"
+        "M": "LUN",
+        "TU": "MAR",
+        "W": "MIE",
+        "TH": "JUE",
+        "F": "VIE",
+        "SA": "SAB",
+        "SU": "DOM"
     },
     "DAILY": "Diario",
     "NAME": "Nombre",
     "DATE": "Fecha",
     "TIME": "Hora",
+    "TIMEEND": "Hora de Finalización",
     "DESCRIPTION": "Descripción",
     "SPORT": "Deporte",
     "SPORTS":{

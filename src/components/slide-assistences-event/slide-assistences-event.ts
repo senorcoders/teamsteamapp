@@ -3,7 +3,7 @@ import { ViewController, NavParams, Slides } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
-import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { AlertController } from 'ionic-angular';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
 

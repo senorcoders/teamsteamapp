@@ -106,7 +106,6 @@
     <plugin name="cordova-plugin-ionic-webview" spec="^1.1.16" />
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.0.5" />
     <plugin name="cordova-sqlite-storage" spec="^2.2.1" />
-    <plugin name="cordova-plugin-network-information" spec="^2.0.1" />
     <plugin name="cordova-plugin-geolocation" spec="^4.0.1">
         <variable name="GEOLOCATION_USAGE_DESCRIPTION" value="To locate you" />
     </plugin>
@@ -139,6 +138,7 @@
         <variable name="SENDER_ID" value="1:318853826702:android:76a6eada20537b70" />
     </plugin>
     <resource-file src="GoogleService-Info.plist" target="GoogleService-Info.plist" />
-    <engine name="android" spec="7.1.0" />
     <engine name="ios" spec="4.5.4" />
+    <engine name="android" spec="~7.1.0" />
+    <plugin name="cordova-plugin-crop" spec="^0.4.0" />
 </widget>

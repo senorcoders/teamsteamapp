@@ -72,7 +72,7 @@ export class MemberRosterPage {
   }
 
   public setDate(){
-    this.helper.nativeDatePicker({ date : new Date(), mode: 'date' })
+    this.helper.nativeDatePicker()
     .then(date=>{
       this.player.birthDayParsed = moment(date).format("DD MMM YYYY");
       this.player.birthDay = moment(date).toISOString();

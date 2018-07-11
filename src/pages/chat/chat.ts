@@ -1,6 +1,5 @@
 import { Component, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, NavParams, ModalController } from 'ionic-angular';
-import { Events, Content, TextInput } from 'ionic-angular';
+import { IonicPage, NavParams, ModalController, Events, Content, TextInput } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
@@ -97,7 +96,7 @@ export class ChatPage {
 
     // Subscribe to received  new message events
     this.subscription.subscribeWithPush("message", function (msg) {
-      console.log(msg);
+      // console.log(msg);
       this.pushNewMsg(msg);
     }.bind(this));
 
@@ -247,11 +246,11 @@ export class ChatPage {
   */
   async pushNewMsg(msg) {
     let index = this.getMsgIndexById(msg.dateTime);
-    console.log(msg, index);
+    // console.log(msg, index);
     if (index === -1) {
       msg.photo = interceptor.transformUrl("/images/"+ this.ramdon+ "/users/" + msg.user);
       this.ngZone.run(() => { this.msgList.push(msg); });
-      console.log(ChatPage.enableChat);
+      // console.log(ChatPage.enableChat);
       if( ChatPage.enableChat === true ){
         setTimeout(this.deleteNotificationLocal.bind(this), 1000);
       }

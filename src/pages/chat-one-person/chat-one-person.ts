@@ -146,7 +146,7 @@ export class ChatOnePersonPage {
       };
 
       msg = await this.http.post("/api/chat/image", msg).toPromise() as any;
-      console.log(msg);
+      // console.log(msg);
       this.pushNewMsg(msg);
       let index = this.getMsgIndexById(msg.dateTime);
       if (index !== -1) {
@@ -182,7 +182,7 @@ export class ChatOnePersonPage {
     try {
       let ramdon = new Date().getTime();
       let mgs: any = await this.http.get("/chat/" + this.to.id + "/" + this.from.id).toPromise();
-      console.log(mgs);
+      // console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
         // if( item.from === MyApp.User.id )
           item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.from);
@@ -239,11 +239,11 @@ export class ChatOnePersonPage {
   */
   async pushNewMsg(msg) {
     let index = this.getMsgIndexById(msg.dateTime);
-    console.log(msg, index);
+    //console.log(msg, index);
     if (index === -1) {
       msg.photo = interceptor.transformUrl("/images/random/users/" + msg.from);
       this.ngZone.run(() => { this.msgList.push(msg); })
-      console.log("add new message", this.msgList);
+      //console.log("add new message", this.msgList);
       this.scrollToBottom();
       setTimeout(this.deleteNotificationLocal.bind(this), 1000);
     }

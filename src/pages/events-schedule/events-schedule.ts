@@ -35,6 +35,7 @@ export class EventsSchedulePage {
   public event0 = false;
 
   public by: string = "upcoming";
+  public static by: string = "upcoming";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -88,18 +89,12 @@ export class EventsSchedulePage {
     let load = this.helper.getLoadingStandar();
 
     try {
-      this.user = MyApp.User;//await this.auth.User();
-      ////console.log(this.user);
+      this.user = MyApp.User;
       this.team = this.user.team;
-      //let url = "/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team;
-      ////console.log(url);
+
       let events: any = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
-      ////console.log(events);
-      /*events = [events[2]];
-      //console.log(events);*/
+      
       this.events = await this.parserEvents(events);
-      ////console.log(this.events);
-      //let user = this.user;
 
       //this.events = this.events.reverse();
       if (this.events.length === 0 && this.by === "upcoming")
@@ -342,6 +337,9 @@ export class EventsSchedulePage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(event, response) {
+    
+    if( this.by === "past" ) return;
+
     let guardar = event.tracking.user !== undefined;
     try {
       let newTrack: any;
@@ -375,7 +373,7 @@ export class EventsSchedulePage {
 
       //console.log("new event ", event);
 
-      //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
+      //Para obtener los datos de mejor manera es recargar la lista de eventos
       //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
       t.zone.run(function () { t.getEvents(); });
 
@@ -462,6 +460,7 @@ export class EventsSchedulePage {
     let t = this;
     this.zone.run(function () {
       t.by = b;
+      EventsSchedulePage.by = b;
       t.getEvents();
     })
   }

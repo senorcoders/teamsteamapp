@@ -3,7 +3,7 @@
   <ion-navbar color="base">
     <ion-title>{{'NEWEVENT.TT' | translate}}</ion-title>
   </ion-navbar>
-  
+
 </ion-header>
 
 
@@ -17,61 +17,65 @@
 
     <ion-item>
       <ion-label floating>{{ 'NAME' | translate }}</ion-label>
-      <ion-input type="text" [(ngModel)]="name" > </ion-input>
+      <ion-input type="text" [(ngModel)]="name"> </ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>{{ 'NEWEVENT.TYPE' | translate }}</ion-label>
       <ion-select [(ngModel)]="type">
-        <ion-option value='practice' >{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
-        <ion-option value='game' >{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
-        <ion-option value='event' >{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
+        <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
+        <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
+        <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
       </ion-select>
     </ion-item>
 
     <ion-item>
-      <ion-label >{{ 'NEWEVENT.REPEATS' | translate }}</ion-label>
+      <ion-label>{{ 'NEWEVENT.REPEATS' | translate }}</ion-label>
       <ion-toggle [(ngModel)]="repeats"></ion-toggle>
     </ion-item>
 
-    <ion-item [hidden]="!showDaysRepeats()" >
-        <div id="repeats-days" >
-          <h4 (click)="selectDay('m')" [ngClass]="getSelectDays('m') ? 'select' : '' " >{{ 'DAYSWEEKS.M' | translate }}</h4>
-          <h4 (click)="selectDay('tu')" [ngClass]="getSelectDays('tu') ? 'select' : '' ">{{ 'DAYSWEEKS.TU' | translate }}</h4>
-          <h4 (click)="selectDay('w')" [ngClass]="getSelectDays('w') ? 'select' : '' ">{{ 'DAYSWEEKS.W' | translate }}</h4>
-          <h4 (click)="selectDay('th')" [ngClass]="getSelectDays('th') ? 'select' : '' ">{{ 'DAYSWEEKS.TH' | translate }}</h4>
-          <h4 (click)="selectDay('f')" [ngClass]="getSelectDays('f') ? 'select' : '' ">{{ 'DAYSWEEKS.F' | translate }}</h4>
-          <h4 (click)="selectDay('sa')" [ngClass]="getSelectDays('sa') ? 'select' : '' ">{{ 'DAYSWEEKS.SA' | translate }}</h4>
-          <h4 (click)="selectDay('su')" [ngClass]="getSelectDays('su') ? 'select' : '' ">{{ 'DAYSWEEKS.SU' | translate }}</h4>
-        </div>
-      </ion-item>
-
-      <ion-item [hidden]="!repeats" >
-        <ion-label>{{'DAILY' | translate}}?</ion-label>
-        <ion-toggle [(ngModel)]="repeatsDaily" ></ion-toggle>
-      </ion-item>
-
-    <ion-item [hidden]="repeats">
-      <h4 class="date-time" (click)="setDate()" > {{'DATE' | translate }}: {{date}} </h4>
+    <ion-item [hidden]="!showDaysRepeats()">
+      <div id="repeats-days">
+        <h4 (click)="selectDay('m')" [ngClass]="getSelectDays('m') ? 'select' : '' ">{{ 'DAYSWEEKS.M' | translate }}</h4>
+        <h4 (click)="selectDay('tu')" [ngClass]="getSelectDays('tu') ? 'select' : '' ">{{ 'DAYSWEEKS.TU' | translate }}</h4>
+        <h4 (click)="selectDay('w')" [ngClass]="getSelectDays('w') ? 'select' : '' ">{{ 'DAYSWEEKS.W' | translate }}</h4>
+        <h4 (click)="selectDay('th')" [ngClass]="getSelectDays('th') ? 'select' : '' ">{{ 'DAYSWEEKS.TH' | translate }}</h4>
+        <h4 (click)="selectDay('f')" [ngClass]="getSelectDays('f') ? 'select' : '' ">{{ 'DAYSWEEKS.F' | translate }}</h4>
+        <h4 (click)="selectDay('sa')" [ngClass]="getSelectDays('sa') ? 'select' : '' ">{{ 'DAYSWEEKS.SA' | translate }}</h4>
+        <h4 (click)="selectDay('su')" [ngClass]="getSelectDays('su') ? 'select' : '' ">{{ 'DAYSWEEKS.SU' | translate }}</h4>
+      </div>
     </ion-item>
 
+    <ion-item [hidden]="!repeats">
+      <ion-label>{{'DAILY' | translate}}?</ion-label>
+      <ion-toggle [(ngModel)]="repeatsDaily"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngIf="!repeats">
+        <ion-item>
+          <h4 class="date-time" (click)="setDate()"> {{'DATE' | translate }}: {{date}} </h4>
+        </ion-item>
+      </ion-col>
+      <ion-col >
+        <ion-item>
+          <h4 class="date-time" (click)="setTime()">{{'TIME' | translate }}: {{time}} </h4>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
     <ion-item>
-      <h4 class="date-time" (click)="setTime()" >{{'TIME' | translate }}: {{time}} </h4>
+      <h4 class="date-time" (click)="setTimeEnd()">{{'TIMEEND' | translate }}: {{timeEnd}} </h4>
     </ion-item>
-
-    <!--ion-item>
-      <ion-label>{{'NEWEVENT.ATTENDENCETRACKING' | translate }}</ion-label>
-      <ion-toggle [(ngModel)]="attendeceTracking" > </ion-toggle>
-    </ion-item-->
-
-    <!--ion-item>
-      <ion-label floating>{{'NEWEVENT.OPTIONALINFO' | translate }}</ion-label>
-      <ion-textarea [(ngModel)]="optionalInfo" > </ion-textarea>
-    </ion-item-->
 
     <ion-item>
       <ion-label floating>{{'DESCRIPTION' | translate }}</ion-label>
-      <ion-textarea [(ngModel)]="description" > </ion-textarea>
+      <ion-textarea [(ngModel)]="description"> </ion-textarea>
     </ion-item>
 
   </ion-list>
@@ -84,10 +88,15 @@
       <ion-textarea [(ngModel)]="address"></ion-textarea>
     </ion-item>
 
-    <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
+    <!-- <ion-item [hidden]="location.place.subAdministrativeArea == ''" >{{location.place.subAdministrativeArea}}</ion-item>
     <ion-item [hidden]="location.place.thoroughfare == ''">{{location.place.thoroughfare}}</ion-item>
-    <button ion-button (click)="loadPlace()">{{ 'NEWEVENT.PINMAP' | translate }}</button>
+    <button ion-button (click)="loadPlace()">{{ 'NEWEVENT.PINMAP' | translate }}</button> -->
 
+  </ion-list>
+
+  <div id="map_canvas" style="width: 100%; height: 250px; "></div>
+
+  <ion-list>
     <ion-item>
       <ion-label floating>{{'NEWEVENT.LOCATIONDETAIL' | translate }}</ion-label>
       <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
@@ -97,22 +106,21 @@
       <ion-label floating>{{'WEBSITE' | translate }}</ion-label>
       <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
     </ion-item>
-
   </ion-list>
 
-  <ion-avatar [hidden]="!image" >
-      <img width="100%" (load)="success()" [src]="imageSrc">
-      <ion-fab top right edge class="button-fab-right">
-          <button ion-fab color="base" (click)="changePhoto()" >
-            <ion-icon name="md-camera"></ion-icon>
-          </button>
-      </ion-fab>
+  <ion-avatar [hidden]="!image">
+    <img width="100%" (load)="success()" [src]="imageSrc">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhoto()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
   </ion-avatar>
 
-  <ion-avatar [hidden]="image" >
+  <ion-avatar [hidden]="image">
     <img width="100%" src="./assets/imgs/event.png">
     <ion-fab top right edge class="button-fab-right">
-      <button ion-fab color="base" (click)="changePhoto()" >
+      <button ion-fab color="base" (click)="changePhoto()">
         <ion-icon name="md-camera"></ion-icon>
       </button>
     </ion-fab>

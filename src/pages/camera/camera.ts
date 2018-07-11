@@ -4,6 +4,7 @@ import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions } from
 import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../library-images/library-images';
 import { Camera, CameraOptions } from '@ionic-native/camera';
+import { ImageViewPage } from '../image-view/image-view';
 //declare var cordova: any; // global variable for paths
 
 /**
@@ -21,6 +22,7 @@ export class CameraPage {
 
   private width: number;
   private height: number;
+  private resize:boolean;
   //private quality: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -33,6 +35,7 @@ export class CameraPage {
     this.reject = this.navParams.get("reject");
     this.width = this.navParams.get("width");
     this.height = this.navParams.get("height");
+    this.resize = this.navParams.get("resize");
     //this.quality = this.navParams.get("quality");
 
   }
@@ -60,9 +63,17 @@ export class CameraPage {
 
     this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
       this.picture = 'data:image/jpeg;base64,' + imageData;
-      this.navCtrl.pop();
-      this.resolve(this.picture)
       this.cameraPreview.stopCamera();
+      let parameters:any = {
+        resolve: this.resolve, reject: this.reject,
+        width: this.width, height: this.height
+      };
+      if( this.resize === true ){
+        parameters.resize = true;
+      }
+      parameters.image = this.picture;
+      parameters.pop = 2;
+      this.navCtrl.push(ImageViewPage, parameters);
     }, (err) => {
       console.log(err);
       this.picture = null;
@@ -160,18 +171,30 @@ export class CameraPage {
       this.camera.getPicture(options).then(async function (imageData) {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64:
-        this.resolve('data:image/jpeg;base64,' + imageData);
-        await this.navCtrl.pop();
+        let parameters:any = {
+          resolve: this.resolve, reject: this.reject,
+          width: this.width, height: this.height
+        };
+        if( this.resize === true ){
+          parameters.resize = true;
+        }
+        parameters.image = 'data:image/jpeg;base64,' + imageData
+        this.navCtrl.push(ImageViewPage, parameters);
+
       }.bind(this), function (err) {
         console.error(err);
       }.bind(this));
 
     } else {
       this.cameraPreview.hide();
-      this.navCtrl.push(LibraryImagesPage, {
+      let parameters:any = {
         resolve: this.resolve, reject: this.reject,
         width: this.width, height: this.height
-      });
+      };
+      if( this.resize === true ){
+        parameters.resize = true;
+      }
+      this.navCtrl.push(LibraryImagesPage, parameters);
     }
 
   }

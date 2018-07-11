@@ -24,7 +24,7 @@
     </button>
   </div>
 
-  <div [hidden]="!event0" class="no-events">
+  <div [hidden]="!event0||user.role.name!=='Manager'" class="no-events">
     <h4>{{"EVENTS.NOEVENT" | translate}}
       <a href="#" (click)="addEvent()">{{'HERE' | translate}}!</a>
     </h4>
@@ -37,22 +37,22 @@
     </div>
 
     <!-- este es para events type -->
-    <div class="inner-image" (click)="goEvent(e)" [ngClass]="e.loadImage===true?'is-image':'not-image'" [ngStyle]="{'background-image': 'url(' + e.imageSrc + ')'}" >
+    <div class="inner-image" (click)="goEvent(e)" [ngClass]="e.loadImage===true?'is-image':'not-image'" [ngStyle]="{'background-image': 'url(' + e.imageSrc + ')'}">
       <img (click)="goEvent(e)" [src]="e.imageSrc" hidden (load)="loadImage(e)">
-      
+
       <h2>{{e.name}}</h2>
 
       <div class="dateTimeEvent" (click)="goEvent(e)">
-          <h3 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[0]}}</h3>
-          <h4 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[1]}}</h4>
-          <h4 class="date-event daily" [hidden]="!e.repeatsDaily">{{"DAILY" | translate}}</h4>
-        </div>
+        <h3 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[0]}}</h3>
+        <h4 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[1]}}</h4>
+        <h4 class="date-event daily" [hidden]="!e.repeatsDaily">{{"DAILY" | translate}}</h4>
+      </div>
     </div>
 
     <div class="details-event" [ngClass]="e.loadImage===true?'is-image':'not-image'" (click)="goEvent(e)">
-        <p class="text-event">{{e.description}} </p>
-        <i>{{e.Time}}</i>
-      </div>
+      <p class="text-event">{{e.description}} </p>
+      <i>{{e.Time}}</i>
+    </div>
 
     <!-- este es para events type practice and game -->
     <div class="dateTime" [ngClass]="e.loadImage===true?'is-image':'not-image'" (click)="goEvent(e)">
@@ -83,17 +83,17 @@
         </button>
       </ion-col>
       <ion-col col-2>
-        <button ion-button (click)="asingResponse(e, 'no')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
-          <ion-icon class="ball cero" [hidden]="e.countNo!==0"></ion-icon>
-          <ion-icon class="ball menos" [hidden]="e.countNo===0"></ion-icon>
-          <div class="text-inner-button text-event">{{e.countNo}}</div>
-        </button>
-      </ion-col>
-      <ion-col col-2>
         <button ion-button (click)="asingResponse(e, 'maybe')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
           <ion-icon class="ball cero" [hidden]="e.countMaybe!==0"></ion-icon>
           <ion-icon class="ball talves" [hidden]="e.countMaybe===0"></ion-icon>
           <div class="text-inner-button text-event">{{e.countMaybe}}</div>
+        </button>
+      </ion-col>
+      <ion-col col-2>
+        <button ion-button (click)="asingResponse(e, 'no')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
+          <ion-icon class="ball cero" [hidden]="e.countNo!==0"></ion-icon>
+          <ion-icon class="ball menos" [hidden]="e.countNo===0"></ion-icon>
+          <div class="text-inner-button text-event">{{e.countNo}}</div>
         </button>
       </ion-col>
       <ion-col col-6>

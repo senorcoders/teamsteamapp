@@ -74,13 +74,13 @@
       <div class="count">
         <h5 (click)="asingResponse('yes')">
           <ion-icon class="ball mas"></ion-icon>
-          Yes {{event.countYes}} </h5>
-        <h5 (click)="asingResponse('no')">
-          <ion-icon class="ball menos"></ion-icon>
-          No {{event.countNo}} </h5>
+          {{"EVENT.YES" | translate}} {{event.countYes}} </h5>
         <h5 (click)="asingResponse('maybe')">
+          <ion-icon class="ball menos"></ion-icon>
+          {{"EVENT.MAYBE" | translate}} {{event.countMaybe}} </h5>
+        <h5 (click)="asingResponse('no')">
           <ion-icon class="ball talves"></ion-icon>
-          Maybe {{event.countMaybe}} </h5>
+          {{"EVENT.NO" | translate}} {{event.countNo}} </h5>
       </div>
     </div>
 
@@ -96,7 +96,7 @@
       <p>{{event.location.address}}</p>
     </ion-item>
 
-    <div [hidden]="!location.change" id="map_canvas" style="width: 100%; height: 250px; "></div>
+    <div [hidden]="!location.change" (dblclick)="enableMoveMap()" id="map_canvas" style="width: 100%; height: 250px; "></div>
 
     <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
       <p>{{location.place.subAdministrativeArea}}</p>

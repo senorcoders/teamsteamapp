@@ -3,4 +3,7 @@ page-create-player {
         position: relative;
         left: calc(100% - 60px) !important;
     }
+    ion-item h4{
+        margin-top: 0 !important;
+    }
 }

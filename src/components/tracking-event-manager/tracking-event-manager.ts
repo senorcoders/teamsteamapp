@@ -16,7 +16,7 @@ export class TrackingEventManagerComponent {
   private event:any;
   public trackings:Array<any>=[];
   public trackingsFilter:Array<any>=[];
-  private selectFilter:string='yes';
+  private selectFilter='yes';
   public countYes:number=0;
   public countNo:number=0;
   public countMaybe:number=0;
@@ -36,6 +36,7 @@ export class TrackingEventManagerComponent {
       console.log(trackings);
       this.trackings = await Promise.all( trackings.map( async function(item){
         item.imageSrc = interceptor.transformUrl("/images/random/users&thumbnail/"+ item.user.id);
+        item.loadImage = false;
 
         if( item.info == 'yes' )
           t.countYes += 1;
@@ -51,6 +52,10 @@ export class TrackingEventManagerComponent {
     catch(e){
       console.error(e);
     }
+  }
+
+  public loadImage(user){
+    user.loadImage = true;
   }
 
   filter(){

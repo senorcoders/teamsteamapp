@@ -1,10 +1,7 @@
 tracking-event-manager {
-    ion-toolbar{
-        background-color: #00bfa5 !important;
-    }
 
-    .segment-button{
-        color: #222 !important;
+    .segment-button, .toolbar-title{
+        color: #fff !important;
     } 
     
     .segment-activated{
@@ -13,6 +10,6 @@ tracking-event-manager {
     }
 
     ion-toolbar .toolbar-background-md, .toolbar-background{
-        background-color: #008e76 !important;
+        background-color: #fe324d !important;
     }
 }

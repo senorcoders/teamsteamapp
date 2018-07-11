@@ -1,6 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { AlertController } from 'ionic-angular/components/alert/alert-controller';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HttpClient } from '@angular/common/http';

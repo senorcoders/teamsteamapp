@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
-import { ViewController } from 'ionic-angular';
-import { ModalController } from 'ionic-angular';
+import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { AssistenceComponent } from '../assistence/assistence';
-import { NavParams } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import * as moment from 'moment';

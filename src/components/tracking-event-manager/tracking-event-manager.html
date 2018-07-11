@@ -1,38 +1,39 @@
 <ion-header no-border>
 
-    <ion-navbar color="base">
-        <ion-buttons left>
-                <button ion-button icon-only (click)="viewCtrl.dismiss()">
-                <ion-icon name="arrow-back"></ion-icon>
-            </button>
-        </ion-buttons>
-        <ion-title>{{"ASSISTANCE" | translate}}</ion-title>
-    </ion-navbar>
+  <ion-navbar color="base">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()" style="color: #fff !important;">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"ASSISTANCE" | translate}}</ion-title>
+  </ion-navbar>
 
-    <ion-toolbar>
-        <ion-segment>
-            <ion-segment-button value="yes" (ionSelect)="select('yes')">
-              {{"YES" | translate}} {{countYes}}
-            </ion-segment-button>
-            <ion-segment-button value="no" (ionSelect)="select('no')">
-              {{"NO" | translate}} {{countNo}}
-            </ion-segment-button>
-            <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
-              {{"MAYBE" | translate}} {{countMaybe}}
-            </ion-segment-button>
-          </ion-segment>
-    </ion-toolbar>
-  </ion-header>
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectFilter">
+      <ion-segment-button value="yes" (ionSelect)="select('yes')">
+        {{"YES" | translate}} {{countYes}}
+      </ion-segment-button>
+      <ion-segment-button value="no" (ionSelect)="select('no')">
+        {{"NO" | translate}} {{countNo}}
+      </ion-segment-button>
+      <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
+        {{"MAYBE" | translate}} {{countMaybe}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+</ion-header>
 
-  <ion-content>
+<ion-content>
 
-    <ion-list>
-      <ion-item *ngFor="let tracking of trackingsFilter;" (click)="presentTo(tracking.user)" >
-          <ion-avatar item-start>
-            <img [src]="tracking.imageSrc">
-          </ion-avatar>
-          {{tracking.user.username}}
-      </ion-item>
-    </ion-list>
+  <ion-list>
+    <ion-item *ngFor="let tracking of trackingsFilter;" (click)="presentTo(tracking.user)">
+      <ion-avatar item-start>
+        <img [src]="tracking.imageSrc" [hidden]="!tracking.loadImage" (load)="loadImage(tracking)">
+        <img [hidden]="tracking.loadImage" src="./assets/imgs/logo-login.png">
+      </ion-avatar>
+      {{tracking.user.username}}
+    </ion-item>
+  </ion-list>
 
-  </ion-content>
+</ion-content>

@@ -28,7 +28,6 @@ import { LoginPage } from '../pages/login/login';
 import { HttpClient } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
-import { Network } from '@ionic-native/network';
 import { RosterPage } from '../pages/roster/roster';
 import { MemberRosterPage } from '../pages/member-roster/member-roster';
 import { EventPage } from '../pages/event/event';
@@ -142,8 +141,11 @@ import { INotificationProvider } from '../providers/i-notification/i-notificatio
 import { AssistenceComponent } from '../components/assistence/assistence';
 import { AssistencesComponent } from '../components/assistences/assistences';
 import { EventCreatedComponent } from '../components/event-created/event-created';
-import { SlideAssistencesEventComponent } from '../components/slide-assistences-event/slide-assistences-event';
-
+import { CalendarModule } from "ion2-calendar";
+import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
+import { ImageViewPageModule } from '../pages/image-view/image-view.module';
+import { ImageViewPage } from '../pages/image-view/image-view';
+import { Crop } from '@ionic-native/crop';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -216,6 +218,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ForgotPasswordPageModule,
     ResetPasswordPageModule,
     PipesModule,
+    CalendarModule,
+    EmojiPickerComponentModule,
+    ImageViewPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -276,12 +281,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    SlideAssistencesEventComponent
+    ImageViewPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    Network,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider,
@@ -307,7 +311,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmojiProvider,
     Device,
     INotificationProvider,
-    Globalization
+    Globalization,
+    Crop
   ]
 })
 export class AppModule {}

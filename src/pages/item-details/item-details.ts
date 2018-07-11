@@ -3,6 +3,7 @@ import { NavController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
 
 import { LibraryItem } from '@ionic-native/photo-library';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * este component es para visualizar una imagen de la libreria de imagenes
@@ -14,11 +15,12 @@ import { LibraryItem } from '@ionic-native/photo-library';
 export class ItemDetailsPage {
 
   selectedLibraryItem: LibraryItem;
-  public resolve:Function;
-  public reject:Function;
+  public resolve: Function;
+  public reject: Function;
 
-  public width:number;
-  public height:number;
+  public width: number;
+  public height: number;
+  public degrees = 0;
 
   constructor(public navCtrl: NavController, private navParams: NavParams) {
 
@@ -32,25 +34,55 @@ export class ItemDetailsPage {
 
   }
 
-  public async selectd(){
+  public addDegrees() {
+    this.degrees += 90;
+    console.log(this.degrees);
+  }
+
+  public drawRotated(context, canvas, image, degrees) {
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
+    // save the unrotated context of the canvas so we can restore it later
+    // the alternative is to untranslate & unrotate after drawing
+    context.save();
+
+    // move to the center of the canvas
+    context.translate(canvas.width / 2, canvas.height / 2);
+
+    // rotate the canvas to the specified degrees
+    context.rotate(degrees * Math.PI / 180);
+
+    // draw the image
+    // since the context is rotated, the image will be rotated also
+    context.drawImage(image, -image.width / 2, -image.width / 2);
+
+    // we’re done with the rotating so restore the unrotated context
+    context.restore();
+  }
+
+  public async selectd() {
     var c = document.createElement('canvas');
     var ctx = c.getContext('2d');
     let img = document.getElementById('imageSelect') as HTMLImageElement;
-    c.width = img.naturalWidth;
-    c.height = img.naturalHeight;
-    ctx.drawImage(img, 0,0, img.naturalWidth, img.naturalHeight);
+    c.width = img.width;
+    c.height = img.height;
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+
+    if( this.degrees !== 0 )
+      this.drawRotated(ctx, c, img, this.degrees);
+      
     var dataURL = c.toDataURL('image/jpg');
-    console.log(img.naturalWidth, img.naturalHeight);
+    console.log(img.width, img.height);
 
     //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
-    c=null;ctx=null;
+    c = null; ctx = null;
     this.resolve(dataURL);
     await this.navCtrl.pop();
     await this.navCtrl.pop();
     await this.navCtrl.pop();
   }
 
-  public cancel(){
+  public cancel() {
     this.navCtrl.pop();
   }
 

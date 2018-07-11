@@ -19,6 +19,7 @@ export class NewTaskPage {
   public assign="";
   public date:string;
   public time:string;
+  public user=MyApp.User;
 
   public players:Array<any>=[];
 
@@ -32,43 +33,41 @@ export class NewTaskPage {
 
   async ngOnInit(){
 
-    //let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
+    let family:any = await this.http.get('/family?where={"team":"'+ MyApp.User.team+ '"}').toPromise();
     let players:any = await this.http.get("/players/team/"+ MyApp.User.team).toPromise();
-    this.players = players;
-    /*let managers:any = await this.http.get("/managers/team/"+ MyApp.User.team).toPromise();
+    let managers:any = await this.http.get('/roles?where={"team":"'+ MyApp.User.team+ '", "name":"Manager"}').toPromise();
 
-    for(let it of managers){
-      this.players.push(it);
-    }*/
+    //Filtramos para los que no tenga el user
+    players = players.concat(managers).concat(family).filter(function(it){
+      return it.user !== null && it.user !== undefined;
+    });
+    //Filtramos para la family que se repite
+    family = [];
+    for(let p of players){
+      let index = family.findIndex(function(it){
+        return p.user.id === it.user.id;
+      });
+      if( index === -1 ){
+        family.push(p);
+      }
+    }
+
+    this.players = family;
 
   }
 
   public editDate(){
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'date',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(
-      date =>{
-        console.log(date);
-        this.date = moment(date).format('ddd DD MMM YYYY');
-      } ,
-      err => console.log('Error occurred while getting date: ', err)
-    );
+    this.helper.nativeDatePicker()
+    .then(date=>{
+      this.date = moment(date).format("ddd DD MMM YYYY");
+    });
   }
 
   editTime(){
-    this.datePicker.show({
-      date: new Date(),
-      mode: 'time',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(
-      date =>{
-        console.log(date);
-        this.time = moment(date).format("HH:mm");
-      } ,
-      err => console.log('Error occurred while getting date: ', err)
-    );
+    this.helper.pickerDateTime(true)
+    .then(date=>{
+      this.time = date;
+    });
   }
 
   public async save(){
@@ -93,7 +92,7 @@ export class NewTaskPage {
       let t = {
         name: this.name,
         text: this.description,
-        dateTime: moment(this.date+" "+this.time, "ddd DD MMM YYYY HH:mm").toISOString(),
+        dateTime: moment(this.date+" "+this.time, "ddd DD MMM YYYY hh:mm a").toISOString(),
         team: MyApp.User.team,
         from: MyApp.User.id,
         for: this.assign,

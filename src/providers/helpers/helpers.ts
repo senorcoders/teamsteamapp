@@ -1,10 +1,9 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable, NgZone } from '@angular/core';
-import { Platform, Loading, LoadingController, ModalController, AlertController } from 'ionic-angular';
+import { Platform, Loading, LoadingController, ModalController, AlertController, App } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
-import { App } from "ionic-angular";
 import {
   NativeGeocoder,
   NativeGeocoderReverseResult
@@ -13,8 +12,9 @@ import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';
-import { Page } from 'ionic-angular/navigation/nav-util';
 import { Device } from '@ionic-native/device';
+import { CalendarModal, CalendarResult } from 'ion2-calendar';
+import { ImageViewPage } from '../../pages/image-view/image-view';
 
 
 /**
@@ -56,16 +56,16 @@ export class HelpersProvider {
 
     try {
 
-      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places",{
-       responseType: 'text' 
+      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places", {
+        responseType: 'text'
       }).toPromise();
-      
+
       let fn = new Function(script);
       fn();
 
-      if( window.hasOwnProperty("google") === true ){
+      if (window.hasOwnProperty("google") === true) {
         HelpersProvider.me.enableMapsLocation = true;
-      }else{
+      } else {
         await this.reloadGoogleplaces(true);
       }
 
@@ -195,28 +195,33 @@ export class HelpersProvider {
   }
 
   //Para abrir la camera desde cualquier component
-  public Camera(parameters: { width?, height?, quality?, resolve?, reject?}): Promise<string> {
+  public Camera(parameters: { width?, height?, quality?, resolve?, reject?}, resize?:boolean): Promise<string> {
     var t = this;
-    parameters.width = parameters.width || 300;
-    parameters.height = parameters.height || 300;
-    parameters.quality = parameters.quality || 100;
+    let params: any = {};
+    params.width = parameters.width || 300;
+    params.height = parameters.height || 300;
+    params.quality = parameters.quality || 100;
+    params.resize = resize || null;
 
     return new Promise(async function (resolve, reject) {
 
-      parameters.resolve = resolve;
-      parameters.reject = reject;
+      params.resolve = resolve;
+      params.reject = reject;
 
       if (!t.platform.is("cordova")) {
-        return t.pickFileBrowser(resolve, reject);
+        return t.pickFileBrowser(async function(dataUrl){
+          params.image = dataUrl;
+          await t.app.getActiveNavs()[0].push(ImageViewPage, params);
+        }, reject);
       }
 
       t.diagnostic.isCameraAuthorized().then(async (authorized) => {
         if (authorized) {
-          await t.app.getActiveNavs()[0].push(CameraPage, parameters);
+          await t.app.getActiveNavs()[0].push(CameraPage, params);
         } else {
           t.diagnostic.requestCameraAuthorization().then(async (status) => {
             if (status == t.diagnostic.permissionStatus.GRANTED) {
-              await t.app.getActiveNavs()[0].push(CameraPage, parameters);
+              await t.app.getActiveNavs()[0].push(CameraPage, params);
             } else {
               reject({ message: "permiss denied" });
             }
@@ -276,16 +281,38 @@ export class HelpersProvider {
 
   //Para mostrar un picker native de date time y que se mas rapdio al seleccionar
 
-  public nativeDatePicker(options?: DatePickerOptions): Promise<Date> {
+  // public nativeDatePicker(options?: DatePickerOptions): Promise<Date> {
 
-    options = options || {
-      date: new Date(),
-      mode: 'datetime',
-      androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  //   options = options || {
+  //     date: new Date(),
+  //     mode: 'date',
+  //     androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
+  //   };
+  //   options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK;
+
+  //   return this.datePicker.show(options);
+  // }
+  public nativeDatePicker(): Promise<CalendarResult> {
+
+    let options = {
     };
-    options.androidTheme = options.androidTheme || this.datePicker.ANDROID_THEMES.THEME_HOLO_LIGHT;
 
-    return this.datePicker.show(options);
+    let myCalendar = this.modalCtrl.create(CalendarModal, {
+      options: options
+    });
+
+    myCalendar.present();
+
+    return new Promise(function (resolve, reject) {
+
+      myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
+        if (date === null) {
+          return;
+        }
+        resolve(date);
+      })
+
+    })
   }
 
   //Para validar email
@@ -322,7 +349,7 @@ export class HelpersProvider {
       spinner: 'hide', content: `
     <img src="./assets/imgs/balls.gif">
     ` });
-    if(present === undefined )
+    if (present === undefined)
       present = true;
     console.log(present);
     if (present === true) {
@@ -347,7 +374,7 @@ export class HelpersProvider {
 
   }
 
-  public async toPages(root: Page, pages: Array<{ page: Page, data: any }>, data?) {
+  public async toPages(root: any, pages: Array<{ page: any, data: any }>, data?) {
     data = data || {};
     let nav = this.app.getActiveNavs()[0];
     await nav.setRoot(root, data);
@@ -356,17 +383,17 @@ export class HelpersProvider {
     }
   }
 
-  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?:string) {
+  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?: string) {
 
     cancel = cancel || new Function();
     concatMessage = concatMessage || "";
-    if(concatMessage !== "" ){
+    if (concatMessage !== "") {
       concatMessage += ", ";
     }
     let si = await this.getWords("YES"), no = await this.getWords("NO"),
       msg = await this.getWords("MESSAGEALERT");
     let alert = this.alertCtrl.create({
-      title: concatMessage+ msg,
+      title: concatMessage + msg,
       buttons: [
         {
           text: no,
@@ -391,8 +418,8 @@ export class HelpersProvider {
     }).present();
   }
 
-  public getDeviceInfo():{
-    uuid:string,
+  public getDeviceInfo(): {
+    uuid: string,
     model: string,
     platform: string,
     versionOS: string
