@@ -56,6 +56,7 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
+import { Geofence } from '@ionic-native/geofence';
 
 //for  multilanguage
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -145,7 +146,6 @@ import { CalendarModule } from "ion2-calendar";
 import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 import { ImageViewPageModule } from '../pages/image-view/image-view.module';
 import { ImageViewPage } from '../pages/image-view/image-view';
-import { Crop } from '@ionic-native/crop';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -312,7 +312,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     Device,
     INotificationProvider,
     Globalization,
-    Crop
+    Geofence
   ]
 })
 export class AppModule {}

@@ -11,7 +11,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { CommentsComponent } from '../../components/comments/comments';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
-import { EventCreatedComponent } from '../../components/event-created/event-created';
+import { Geofence } from '@ionic-native/geofence';
+import { Geolocation } from '@ionic-native/geolocation';
 
 @IonicPage()
 @Component({
@@ -42,7 +43,8 @@ export class EventsSchedulePage {
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper: HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone,
-    public locationAccuracy: LocationAccuracy
+    public locationAccuracy: LocationAccuracy, public geofence:Geofence,
+    public geolocation: Geolocation
   ) {
 
     if (this.navParams.get("notification") === undefined)
@@ -62,9 +64,59 @@ export class EventsSchedulePage {
 
     });
 
+    geofence.initialize().then(function(){
+      console.log('Geofence Plugin Ready')
+      this.addGeofence();
+    }.bind(this),
+      (err) => console.log(err)
+    )
+
 
   }
 
+  private async addGeofence() {
+
+    /***
+     * Para obtener mi position
+     */
+    let resp: any;
+    resp = await (this.geolocation as any).getCurrentPosition();
+    let origin = { lat: resp.coords.latitude, lng: resp.coords.longitude };
+
+    //Eliminar los anteriores geofence
+    await this.geofence.removeAll();
+
+    //options describing geofence
+    let id = MyApp.User.id;
+    let fence = {
+      id, //any unique ID
+      latitude:       origin.lat, //center of geofence radius
+      longitude:      origin.lng,
+      radius:         200, //radius to edge of geofence in meters
+      transitionType: 3, //see 'Transition Types' below
+      notification: { //notification settings
+          id:             1, //any unique ID
+          title:          'You crossed a fence', //notification title
+          text:           'You just arrived to Gliwice city center.', //notification body
+          openAppOnClick: true //open app when notification is tapped
+      }
+    }
+  
+    this.geofence.addOrUpdate(fence).then(
+       () => console.log('Geofence added'),
+       (err) => console.log('Geofence failed to add')
+     );
+
+     this.geofence.onNotificationClicked().subscribe(function(data){
+       console.log("notification", data);
+     });
+
+     this.geofence.onTransitionReceived().subscribe(function(data){
+       console.log("transition", data);
+      });
+  }
+
+  //#region not geofence
   async ngOnInit() {
     await this.getEvents();
     ////console.log(this.events, EventsSchedulePage.openEvent);
@@ -557,7 +609,6 @@ export class EventsSchedulePage {
     view.present();
   }
 
-  /*public goEventCreated(event){
-    this.navCtrl.push(EventCreatedComponent, {event});
-  }*/
+  //#endregion
+
 }

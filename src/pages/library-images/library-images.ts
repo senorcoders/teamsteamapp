@@ -6,7 +6,6 @@ import { PermissionsPage } from '../permissions/permissions';
 import { ItemDetailsPage } from '../item-details/item-details';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoLibrary, LibraryItem } from '@ionic-native/photo-library';
-import { Crop } from '@ionic-native/crop';
 import { ImageViewPage } from '../image-view/image-view';
 
 const THUMBNAIL_WIDTH = 250;
@@ -43,7 +42,7 @@ export class LibraryImagesPage {
     private platform: Platform, private cd: ChangeDetectorRef,
     private toastCtrl: ToastController, private modalCtrl: ModalController,
     public navParams: NavParams, public zone: NgZone,
-    public crop: Crop, private sanitizer: DomSanitizer) {
+    private sanitizer: DomSanitizer) {
 
     this.resolve = this.navParams.get('resolve');
     this.reject = this.navParams.get('reject');

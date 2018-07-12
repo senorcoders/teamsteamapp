@@ -24,11 +24,11 @@
     "@ionic-native/camera": "^4.7.0",
     "@ionic-native/camera-preview": "4.5.3",
     "@ionic-native/core": "4.4.0",
-    "@ionic-native/crop": "^4.9.1",
     "@ionic-native/date-picker": "^4.6.0",
     "@ionic-native/device": "^4.7.0",
     "@ionic-native/diagnostic": "^4.5.3",
     "@ionic-native/file": "^4.7.0",
+    "@ionic-native/geofence": "^4.9.1",
     "@ionic-native/geolocation": "^4.5.3",
     "@ionic-native/globalization": "^4.7.0",
     "@ionic-native/google-maps": "^4.5.2",
@@ -50,14 +50,15 @@
     "com-sarriaroman-photoviewer": "^1.1.18",
     "cordova-android": "7.1.0",
     "cordova-ios": "4.5.4",
-    "cordova-plugin-add-swift-support": "^1.7.1",
+    "cordova-plugin-add-swift-support": "^1.7.2",
     "cordova-plugin-camera": "^4.0.3",
     "cordova-plugin-camera-preview": "^0.9.0",
-    "cordova-plugin-crop": "^0.4.0",
+    "cordova-plugin-compat": "^1.2.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^2.0.2",
     "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-fullscreen": "^1.2.0",
+    "cordova-plugin-geofence": "^0.7.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-googlemaps": "^2.3.6",
@@ -73,6 +74,7 @@
     "cordova-support-google-services": "^1.1.0",
     "cordova.plugins.diagnostic": "^4.0.8",
     "date-fns": "^1.29.0",
+    "es6-promise-plugin": "^4.2.2",
     "ion2-calendar": "^2.1.7",
     "ionic-angular": "3.9.2",
     "ionic-long-press": "^1.2.0",
@@ -133,11 +135,12 @@
       "com-darryncampbell-cordova-plugin-intent": {},
       "cordova-plugin-device": {},
       "cordova-plugin-globalization": {},
-      "cordova-plugin-crop": {}
+      "cordova-plugin-geofence": {},
+      "cordova-plugin-add-swift-support": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
