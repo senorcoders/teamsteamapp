@@ -136,8 +136,8 @@
       "cordova-plugin-crop": {}
     },
     "platforms": [
-      "ios",
-      "android"
+      "android",
+      "ios"
     ]
   }
 }

@@ -317,6 +317,15 @@ export class MyApp {
 
         let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
+				console.log(notification.additionalData.dataStringify);
+
+				if (Object.prototype.toString.call(notification.additionalData.dataStringify) == "[object String]") {
+					notification.additionalData.dataStringify = JSON.parse(notification.additionalData.dataStringify);
+				}
+
+				console.log(notification.additionalData.dataStringify);
+
+
         MyApp.me.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());
 
         INotificationProvider.me.processNotificationForeGround(is, verb, notification);
