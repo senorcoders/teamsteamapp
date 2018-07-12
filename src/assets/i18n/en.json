@@ -112,6 +112,7 @@
         "MALE": "Male",
         "FEMALE": "Female",
         "GENDER": "Gender",
+        "YERSERYNUMBERonly": "Jersey Number",
         "YERSERYNUMBER": "Jersey Number (optional)",
         "POSITIONS": "Position",
         "ADDITIONALCONTACTINFORMATION": "Additional Contact Information",

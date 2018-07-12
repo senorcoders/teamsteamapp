@@ -4,7 +4,6 @@
     <img *ngIf="!resize" [ngStyle]="{'-webkit-transform': 'rotate('+degrees+'deg)','transform': 'rotate('+degrees+'deg)' }" id="imageSelect"
       style="height: 100%; width: 100%; object-fit: contain;" [src]="selectedLibraryItem.photoURL | cdvphotolibrary">
 
-		KHARRON ESTUVO AQUI
     <angular-cropper *ngIf="resize" [ngStyle]="{'-webkit-transform': 'rotate('+degrees+'deg)','transform': 'rotate('+degrees+'deg)' }" #angularCropper
       [cropperOptions]="cropperOptions" [imageUrl]="selectedLibraryItem.photoURL | cdvphotolibrary"></angular-cropper>
   </div>

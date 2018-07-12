@@ -113,6 +113,7 @@
         "MALE": "Masculino",
         "FEMALE": "Femenino",
         "GENDER": "Género",
+        "YERSERYNUMBERonly": "Numero de Camisa",
         "YERSERYNUMBER": "Numero de Camisa (Opcional)",
         "POSITIONS": "Posición",
         "ADDITIONALCONTACTINFORMATION": "Información de Contacto Adicional",

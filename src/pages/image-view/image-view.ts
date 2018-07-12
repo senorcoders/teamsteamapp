@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LibraryItem } from '@ionic-native/photo-library';
-import {DomSanitizationService} from '@angular/platform-browser';
+import {DomSanitizer} from '@angular/platform-browser';
 import { AngularCropperjsComponent } from 'angular-cropperjs';
 
 @IonicPage()
@@ -37,7 +37,7 @@ export class ImageViewPage {
 
   pop: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public domSanitizationService: DomSanitizationService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public domSanitizationService: DomSanitizer) {
 
 	console.log("Kharron was here");
     if (navParams.get('libraryItem') !== undefined) {

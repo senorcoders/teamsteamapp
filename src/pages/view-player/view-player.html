@@ -1,12 +1,7 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title>Player</ion-title>
-    <ion-buttons [hidden]="user.role.name != Manager" end>
-      <button ion-button end>
-        <ion-icon name="md-create"></ion-icon>
-      </button>
-    </ion-buttons>
+    <ion-title>{{"PLAYER" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,45 +10,42 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-        {{player.user.firstName+ " "+ player.user.lastName}}
+      {{player.user.firstName+ " "+ player.user.lastName}}
     </ion-card-header>
-    <img (load)="success(event)" [hidden]="!image" [src]="imageSrc"/>
-    <img [hidden]="image" src="./assets/imgs/avatar.gif"/>
+    <img (load)="success(event)" [hidden]="!image" [src]="imageSrc" />
+    <img [hidden]="image" src="./assets/imgs/user.png" />
     <ion-card-content>
       <ion-list>
-        <ion-list-header>
-          Player Details
-        </ion-list-header>
 
         <ion-item>
-          <h2>First Name</h2>
+          <h2>{{"FIRSTNAME" | translate}}</h2>
           <p> {{player.user.firstName}} </p>
         </ion-item>
 
         <ion-item>
-          <h2>Last Name</h2>
+          <h2>{{"LASTNAME" | translate}}</h2>
           <p> {{player.user.lastName}} </p>
         </ion-item>
 
         <ion-item>
-            <h2>BirthDay</h2>
-            <p> {{player.birthDateParsed}} </p>
-          </ion-item>
+          <h2>{{"BIRTHDAY" | translate}}</h2>
+          <p> {{player.birthDateParsed}} </p>
+        </ion-item>
 
-          <ion-item>
-              <h2>Gender</h2>
-              <p> {{player.gender}} </p>
-            </ion-item>
+        <ion-item>
+          <h2>{{"ROSTER.GENDER" | translate}}</h2>
+          <p> {{player.gender}} </p>
+        </ion-item>
 
-            <ion-item>
-                <h2>Jersey Number</h2>
-                <p> {{player.yerseyNumber}} </p>
-              </ion-item>
+        <ion-item>
+          <h2>{{"ROSTER.YERSERYNUMBERonly" | translate}}</h2>
+          <p> {{player.yerseyNumber}} </p>
+        </ion-item>
 
-            <ion-item>
-              <h2>Positions</h2>
-              <p *ngFor="let position of player.positions"> {{position}} </p>
-            </ion-item>
+        <ion-item>
+          <h2>{{"ROSTER.POSITIONS" | translate}}</h2>
+          <p *ngFor="let position of player.positions"> {{position}} </p>
+        </ion-item>
 
       </ion-list>
     </ion-card-content>
