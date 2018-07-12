@@ -251,7 +251,8 @@
         "MISSED": "Missed",
         "WASLATE": "Was Late",
         "NOTREADY": "Not Ready",
-        "NOTSTARTED": "Event Has Not Started"
+        "NOTSTARTED": "Event Has Not Started",
+        "RIGHTNOW": "Right Now"
     },
     "CLEARDEVICES": "Logout from other devices"
 }

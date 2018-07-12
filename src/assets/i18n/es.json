@@ -251,7 +251,8 @@
         "MISSED": "Ausente",
         "WASLATE": "Tarde",
         "NOTREADY": "No Listo",
-        "NOTSTARTED": "Evento No Ha Empezado"
+        "NOTSTARTED": "Evento No Ha Empezado",
+        "RIGHTNOW": "En Este Momento"
     },
     "CLEARDEVICES": "Salir de otros dispositivos",
     "ASSISTENCE": {

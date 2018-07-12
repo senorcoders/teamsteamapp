@@ -19,6 +19,7 @@ import { TrackingEventManagerComponent } from '../../components/tracking-event-m
 import { AssistencesComponent } from '../../components/assistences/assistences';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { Geolocation } from '@ionic-native/geolocation';
+import { AssistenceComponent } from '../../components/assistence/assistence';
 
 declare var google: any;
 
@@ -452,8 +453,14 @@ export class EventPage {
   }
 
   public async toAssistence() {
-    this.modalCtrl.create(AssistencesComponent, { event: this.event })
+    if( this.event.repeats === true ){
+      this.modalCtrl.create(AssistencesComponent, { event: this.event })
       .present();
+    }else{
+      this.modalCtrl.create(AssistenceComponent, { repeats: false, event: this.event })
+      .present();
+    }
+    
 
   }
 
