@@ -9,17 +9,21 @@
 
 
 <ion-content padding>
-  
+  <ion-searchbar
+  [(ngModel)]="filtro"
+  showCancelButton="true"
+  (ionInput)="search($event)" #sear>
+</ion-searchbar>
   <ion-list>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label floating>{{"SEARCHTEAM.ACTION" | translate}}</ion-label>
       <ion-input type="text" [(ngModel)]="filtro" (keyup)="search()" #sear ></ion-input>
-    </ion-item>
+    </ion-item> -->
 
     <ion-item *ngFor="let team of teams;" (click)="goTeam(team)" [ngClass]="team.ready ? 'ready' : '' " >
       <ion-avatar item-start>
-        <img src="./assets/imgs/team.png" [hidden]="team.loadImage" >
+        <img src="./assets/imgs/logo-login.png" [hidden]="team.loadImage" >
         <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)" >
       </ion-avatar> 
       {{team.name}}

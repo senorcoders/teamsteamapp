@@ -97,14 +97,14 @@
         "WRESTLING": "Lucha"
     },
     "SEARCHTEAM": {
-        "TITLE": "para unirse a una búsqueda de equipo aquí",
+        "TITLE": "Unirme a un Equipo",
         "ACTION": "Nombre del Equipo"
     },
     "LOGIN":{
         "TITLE": "Bienvenido a TeamSteam",
         "INIT": "Inicia sesión",
         "NOTACCOUNT": "¿Comenzando un nuevo equipo? Click aquí para ",
-        "REGISTER": "Registro",
+        "REGISTER": "Registrar un nuevo equipo",
         "LOGIN": "Iniciar Sesión"
     },
     "ROSTER": {

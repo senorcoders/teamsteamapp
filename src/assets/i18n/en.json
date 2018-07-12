@@ -96,14 +96,14 @@
         "WRESTLING": "Wrestling"
     },
     "SEARCHTEAM": {
-        "TITLE": "to join a team search here",
+        "TITLE": "Join a Team",
         "ACTION": "Name of the Team"
     },
     "LOGIN":{
         "TITLE": "Welcome To Team Steam",
         "INIT": "Sign into your pages account",
         "NOTACCOUNT": "Starting a new Team? Click Here to ",
-        "REGISTER": "Register",
+        "REGISTER": "Register a new team",
         "LOGIN": "Login"
     },
     "ROSTER": {
