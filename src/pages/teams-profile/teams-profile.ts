@@ -5,6 +5,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import { AddTeamPage } from '../add-team/add-team';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { SearchTeamsPage } from '../search-teams/search-teams';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @IonicPage()
@@ -64,7 +65,11 @@ export class TeamsProfilePage {
     //Para actualizar el nombre del equipo en menu slide
     document.getElementById("nameTeam").innerHTML = role.team.name;
 
+    await this.auth.setTimeZoneTeam();
     this.navCtrl.pop();
+    await HelpersProvider.me.setGeofences();
+    console.log("que pasa");
+    
   }
 
   public editTeam(role){

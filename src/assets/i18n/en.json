@@ -255,5 +255,6 @@
         "NOTSTARTED": "Event Has Not Started",
         "RIGHTNOW": "Right Now"
     },
-    "CLEARDEVICES": "Logout from other devices"
+    "CLEARDEVICES": "Logout from other devices",
+    "NEARTO": "Is Near To"
 }

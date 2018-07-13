@@ -5,6 +5,7 @@ import { MenuController, Platform } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
 import { Globalization } from '@ionic-native/globalization';
+import { Geofence } from '@ionic-native/geofence';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -21,7 +22,7 @@ export class AuthServiceProvider {
   constructor(public http: HttpClient, public storage: Storage,
     public menuCtrl: MenuController, public zone: NgZone,
     public helper: HelpersProvider, public platform: Platform,
-    public globalization: Globalization
+    public globalization: Globalization, public geofence: Geofence
   ) {
 
   }
@@ -32,7 +33,7 @@ export class AuthServiceProvider {
   public async Login(email: String, callback: Function) {
 
     try {
-      let info:any = this.helper.getDeviceInfo();
+      let info: any = this.helper.getDeviceInfo();
       info.email = email;
 
       let data: any = await this.http.post('/login', info).toPromise()
@@ -73,6 +74,16 @@ export class AuthServiceProvider {
 
   }
 
+  public async setTimeZoneTeam() {
+    if (MyApp.User.role.name === "Manager") {
+      let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });
+      if (times.hasOwnProperty("iana_timezone")) {
+        let timeZone = times.iana_timezone;
+        await this.http.put("/teams/" + MyApp.User.team, { timeZone }).toPromise();
+      }
+    }
+  }
+
   //guardar el team del usuario para evitar estar cargando del servidor el equipo
   public async saveRole(callback: Function) {
     let user;
@@ -92,13 +103,7 @@ export class AuthServiceProvider {
        * el time zona es para que la busquedad se haga correctamente, obteniendo el tiempo
        * que debe de ser segun su zona horaria
        */
-      if (MyApp.User.role.name === "Manager") {
-        let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });
-        if (times.hasOwnProperty("iana_timezone")) {
-          let timeZone = times.iana_timezone;
-          await this.http.put("/teams/" + MyApp.User.team, { timeZone }).toPromise();
-        }
-      }
+      await this.setTimeZoneTeam();
 
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
@@ -175,6 +180,9 @@ export class AuthServiceProvider {
     data = await this.storage.remove("role");
     this.user = null;
     delete MyApp.User;
+
+    //Eliminamos los geofence
+    await this.geofence.removeAll();
 
     return data === undefined;
   }
