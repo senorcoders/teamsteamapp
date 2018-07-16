@@ -33,6 +33,9 @@ export class AssistencesComponent {
     } else {
       time = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a");
     }
+    //le quitamos 20 minutos para que se pueda iniciar antes la 
+    //asistencia
+    time.subtract(20, "minutes");
 
     let now = moment(),
       dateTimeEnd = moment();
@@ -61,6 +64,27 @@ export class AssistencesComponent {
       return it;
     });
 
+    let index = this.assistences.findIndex(function (it) {
+      let dateAfter12 = moment(it.dateTime);
+      let dateBefore12 = moment(it.dateTime);
+
+      //hacemos la resta y la suma de hours
+      dateAfter12.subtract(12, "hours");
+      dateBefore12.add(12, "hours");
+
+      it.dateTime = moment(it.dateTime);
+      return it.dateTime.isBetween(dateAfter12, dateBefore12);
+    });
+
+    if (index !== -1) {
+      this.assistenceNow = this.assistences[index];
+      if( this.assistences.length === 1){
+        this.assistences = [];
+      }else{
+        this.assistences.splice(index, 1);
+      }
+    }
+
 
     load.dismissAll();
   }
@@ -76,13 +100,7 @@ export class AssistencesComponent {
       dateTimeEnd.add(12, "hours");
     }
 
-
-    this.assistenceNow = this.assistences.find(function (it) {
-      it.dateTime = moment(it.dateTime);
-      return it.dateTime.isBetween(time, dateTimeEnd);
-    });
-
-    if (this.assistenceNow !== undefined) {
+    if (this.assistenceNow !== undefined && this.assistenceNow !== null) {
       this.modalCtrl.create(AssistenceComponent, { repeats: true, event: this.event, assistence: this.assistenceNow })
         .present();
     } else {

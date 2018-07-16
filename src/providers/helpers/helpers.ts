@@ -22,7 +22,7 @@ declare var google: any;
 
 
 /**
- * este servicio contiene funciones generales que son usadas mas de una por las diferentes componentes
+ * este servicio contiene funciones generales que son usadas mas de una ves por las diferentes componentes
  */
 
 @Injectable()
@@ -450,6 +450,12 @@ export class HelpersProvider {
 
   public async setGeofences(events?: any) {
     try {
+
+      if(MyApp.User.role.name === "Manager"){
+        await this.geofence.removeAll();
+        return;
+      }
+
       events = events || false;
       await this.geofence.initialize();
       let es: any = await this.geofence.getWatched();
