@@ -144,7 +144,7 @@
     <plugin name="com-darryncampbell-cordova-plugin-intent" spec="^1.0.3" />
     <plugin name="cordova-plugin-device" spec="^2.0.2" />
     <plugin name="cordova-plugin-globalization" spec="^1.11.0" />
-    <plugin name="cordova-plugin-geofence" spec="^0.7.0" />
     <plugin name="cordova-plugin-add-swift-support" spec="^1.7.2" />
     <engine name="android" spec="~7.1.0" />
+    <plugin name="cordova-plugin-geofence" spec="^0.7.0" />
 </widget>

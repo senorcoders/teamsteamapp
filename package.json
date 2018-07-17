@@ -135,8 +135,8 @@
       "com-darryncampbell-cordova-plugin-intent": {},
       "cordova-plugin-device": {},
       "cordova-plugin-globalization": {},
-      "cordova-plugin-geofence": {},
-      "cordova-plugin-add-swift-support": {}
+      "cordova-plugin-add-swift-support": {},
+      "cordova-plugin-geofence": {}
     },
     "platforms": [
       "ios",
