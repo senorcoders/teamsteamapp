@@ -454,14 +454,14 @@ export class HelpersProvider {
     try {
 
       if (MyApp.User.role.name === "Manager") {
-        // if (this.platform.is("android")) {
-        //   await this.geofence.removeAll();
-        //   return;
-        // } else if (this.platform.is("ios")) {
+        if (this.platform.is("android")) {
+          await this.geofence.removeAll();
+          return;
+        } else if (this.platform.is("ios")) {
         await this.storage.remove("geofences");
         await this.storage.remove("radius");
         return;
-        // }
+        }
       }
 
       events = events || false;
@@ -499,11 +499,11 @@ export class HelpersProvider {
 
       events = await this.parserEvents(events);
 
-      // if (this.platform.is("android")) {
-      //   await this.setGeofencesForAndroid(events, radius)
-      // } else if (this.platform.is("ios")) {
+      if (this.platform.is("android")) {
+        await this.setGeofencesForAndroid(events, radius)
+      } else if (this.platform.is("ios")) {
       await this.setGeofencesForIOS(events, radius);
-      // }
+      }
 
     }
     catch (e) {
