@@ -19,6 +19,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { WebIntent } from '@ionic-native/web-intent';
 import { Device } from '@ionic-native/device';
 import { Globalization } from '@ionic-native/globalization';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 
 import { MyApp } from './app.component';
@@ -312,7 +313,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     Device,
     INotificationProvider,
     Globalization,
-    Geofence
+    Geofence,
+    BackgroundGeolocation
   ]
 })
 export class AppModule {}

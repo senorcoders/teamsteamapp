@@ -67,7 +67,7 @@ export class TeamsProfilePage {
 
     await this.auth.setTimeZoneTeam();
     this.navCtrl.pop();
-    await HelpersProvider.me.setGeofences();
+    await HelpersProvider.me.setGeofences(200);
     console.log("que pasa");
     
   }

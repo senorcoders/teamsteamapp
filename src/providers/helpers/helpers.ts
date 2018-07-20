@@ -18,6 +18,7 @@ import { ImageViewPage } from '../../pages/image-view/image-view';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { Geofence } from '@ionic-native/geofence';
+import { Storage } from '@ionic/storage';
 declare var google: any;
 
 
@@ -40,7 +41,8 @@ export class HelpersProvider {
     private zone: NgZone, private loading: LoadingController,
     private modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
-    public device: Device, public geofence: Geofence
+    public device: Device, public geofence: Geofence,
+    public storage: Storage
   ) {
     this.init();
   }
@@ -448,17 +450,29 @@ export class HelpersProvider {
     return data;
   }
 
-  public async setGeofences(events?: any) {
+  public async setGeofences(radius: number, events?: any) {
     try {
 
-      if(MyApp.User.role.name === "Manager"){
-        await this.geofence.removeAll();
+      if (MyApp.User.role.name === "Manager") {
+        // if (this.platform.is("android")) {
+        //   await this.geofence.removeAll();
+        //   return;
+        // } else if (this.platform.is("ios")) {
+        await this.storage.remove("geofences");
+        await this.storage.remove("radius");
         return;
+        // }
       }
 
       events = events || false;
       await this.geofence.initialize();
-      let es: any = await this.geofence.getWatched();
+      let es: any;
+       
+      if (this.platform.is("android")) {
+        es = await this.geofence.getWatched();
+      } else if (this.platform.is("ios")) {
+        es = await this.storage.get("geofences");
+      }
       if (Object.prototype.toString.call(es) === "[object String]") {
         es = JSON.parse(es);
         console.log(es);
@@ -478,22 +492,18 @@ export class HelpersProvider {
           break;
         }
       }
-
+      console.log("hay uno nuevo", hayUnoNuevo);
       if (hayUnoNuevo === false)
         return;
 
-      
+
       events = await this.parserEvents(events);
 
-      //Eliminar los anteriores geofence
-      await this.geofence.removeAll();
-
-      let cercaMsg = await this.getWords("NEARTO");
-      let index = 0;
-      for (let event of events) {
-        await this.addGeofence(event, cercaMsg, index);
-        index += 1;
-      }
+      // if (this.platform.is("android")) {
+      //   await this.setGeofencesForAndroid(events, radius)
+      // } else if (this.platform.is("ios")) {
+      await this.setGeofencesForIOS(events, radius);
+      // }
 
     }
     catch (e) {
@@ -501,6 +511,7 @@ export class HelpersProvider {
     }
   }
 
+  //#region Para obtener los eventos de geofences
   private async parserEvents(events) {
 
     let user = MyApp.User, th = this;
@@ -522,7 +533,7 @@ export class HelpersProvider {
         }
 
         //if (it.repeatsDaily === true) {
-          it.Time = moment(it.dateTime).format("hh:mm a");
+        it.Time = moment(it.dateTime).format("hh:mm a");
         //}
 
         it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
@@ -657,8 +668,30 @@ export class HelpersProvider {
     return cercanoMoment;
 
   }
+  //#endregion
 
-  private async addGeofence(event:any, cerca, index:number) {
+  //#region geofences for android
+  public async setGeofencesForAndroid(events: Array<any>, radius: number) {
+    try {
+
+      //Eliminar los anteriores geofence
+      await this.geofence.removeAll();
+
+      let cercaMsg = await this.getWords("NEARTO");
+      let index = 0;
+      for (let event of events) {
+        await this.addGeofenceForAndroid(event, cercaMsg, index, radius);
+        index += 1;
+      }
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+
+  private async addGeofenceForAndroid(event: any, cerca, index: number, radius: number) {
 
     /***
      * Para obtener mi position
@@ -672,7 +705,7 @@ export class HelpersProvider {
       if (HelpersProvider.me.enableMapsLocation === false)
         await HelpersProvider.me.reloadGoogleplaces();
 
-      await new Promise(function () {
+      await new Promise(function (resolve) {
         let geocoder = new google.maps.Geocoder()
         geocoder.geocode({ address: event.location.address }, function (res, status) {
 
@@ -684,34 +717,34 @@ export class HelpersProvider {
             let lng = res.geometry.location.lng();
             origin = { lat, lng };
           }
-
+          resolve();
         }.bind(this));
       }.bind(this));
     }
 
-    let typeMsg = await this.getWords("NEWEVENT.TYPES."+ event.type.toUpperCase());
+    let typeMsg = await this.getWords("NEWEVENT.TYPES." + event.type.toUpperCase());
 
     //Para obtener la fecha que inicia el evento
-    let date:moment.Moment;
-    if( event.repeatsDaily === true ){
+    let date: moment.Moment;
+    if (event.repeatsDaily === true) {
       date = moment(event.Time, "hh:mm a");
-    }else{
-      date = moment(event.parsedDateTime[0]+ "/"+ event.parsedDateTime[1], "MMMM/DD")
+    } else {
+      date = moment(event.parsedDateTime[0] + "/" + event.parsedDateTime[1], "MMMM/DD")
     }
 
     //options describing geofence
     let id = MyApp.User.id;
-    id += "." + event.id + "." + MyApp.User.team+ "."+ date.format("MM-DD-YYYY-hh:mm:ssa");
+    id += "." + event.id + "." + MyApp.User.team + "." + date.format("MM-DD-YYYY-hh:mm:ssa");
     let fence = {
       id, //any unique ID
       latitude: origin.lat, //center of geofence radius
       longitude: origin.lng,
-      radius: 200, //radius to edge of geofence in meters
+      radius, //radius to edge of geofence in meters
       transitionType: 1, //see 'Transition Types' below
       notification: { //notification settings
         id: index, //any unique ID
         title: event.name, //notification title
-        text: cerca+ " "+ typeMsg+ " "+ event.name, //notification body
+        text: cerca + " " + typeMsg + " " + event.name, //notification body
         openAppOnClick: true //open app when notification is tapped
       }
     }
@@ -731,5 +764,126 @@ export class HelpersProvider {
       console.log("transition", data);
     });
   }
+  //#endregion
+
+
+  //#region geofences for android
+  private async setGeofencesForIOS(events: Array<any>, radius: number) {
+    try {
+
+      //Eliminar los anteriores geofence
+      await this.storage.remove("geofences");
+      await this.storage.remove("radius");
+
+      events = await Promise.all(events.map(async function (event) {
+        /***
+     * Para obtener mi position
+     */
+        let origin: any
+        if (event.location.hasOwnProperty("lng") && event.location.hasOwnProperty("lat"))
+          origin = { lat: event.location.lat, lng: event.location.lng };
+        else {
+
+          //cargamos google maps si a un no ha cargado
+          if (HelpersProvider.me.enableMapsLocation === false)
+            await HelpersProvider.me.reloadGoogleplaces();
+
+          await new Promise(function (resolve, reject) {
+            let geocoder = new google.maps.Geocoder()
+            geocoder.geocode({ address: event.location.address }, function (res, status) {
+
+              if (res.length === 0) return;
+
+              res = res[0];
+              if (res.geometry) {
+                let lat = res.geometry.location.lat();
+                let lng = res.geometry.location.lng();
+                origin = { lat, lng };
+              }
+              resolve();
+            }.bind(this));
+          }.bind(this));
+        }
+
+        //Para obtener la fecha que inicia el evento
+        let date: moment.Moment;
+        if (event.repeatsDaily === true) {
+          date = moment(event.Time, "hh:mm a");
+        } else {
+          date = moment(event.parsedDateTime[0] + "/" + event.parsedDateTime[1], "MMMM/DD")
+        }
+
+        //options describing geofence
+        let id = MyApp.User.id;
+        id += "." + event.id + "." + MyApp.User.team + "." + date.format("MM-DD-YYYY-hh:mm:ssa");
+
+        return { id, origin };
+      }));
+      await this.storage.set("geofences", events);
+      events = await this.storage.get("geofences");
+      await this.storage.set("radius", { radius });
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async executeGeofencesIOS(myPosition) {
+    let events: Array<any> = await this.storage.get("geofences");
+    if (Object.prototype.toString.call(events) !== '[object Array]') {
+      return;
+    }
+
+    let rad: { radius: number } = await this.storage.get("radius");
+    for (let event of events) {
+      let distance = this.getDistanceBetweenPoints(event.origin, myPosition);
+      console.log(distance);
+      if (distance <= rad.radius) {
+        let headers = new HttpHeaders();
+        headers = headers.append("dateTime", moment().toISOString());
+        await this.http.post("/geofence", [event], {headers, responseType: "text"}).toPromise();
+      }
+    }
+
+  }
+
+  private getDistanceBetweenPoints(coord1, coord2) {
+
+    let earthRadius = {
+      miles: 3958.8,
+      km: 6371,
+      meters: 6371071.03
+    };
+
+    let R = earthRadius['meters'];
+    let lat1 = coord1.lat;
+    let lon1 = coord1.lng;
+    let lat2 = coord2.lat;
+    let lon2 = coord2.lng;
+
+    let dLat = this.toRad((lat2 - lat1));
+    let dLon = this.toRad((lon2 - lon1));
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
+      Math.sin(dLon / 2) *
+      Math.sin(dLon / 2);
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+    let d = R * c;
+
+    if (isNaN(d)) {
+      return 0
+    } else {
+      return Number(d.toFixed(2));
+
+    }
+
+  }
+
+  private toRad(x) {
+    return x * Math.PI / 180;
+  }
+
+  //#endregion
 
 }

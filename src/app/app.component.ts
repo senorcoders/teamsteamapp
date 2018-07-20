@@ -9,6 +9,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 
 
 import { interceptor } from '../providers/auth-service/interceptor';
@@ -21,7 +22,7 @@ import { HelpersProvider } from '../providers/helpers/helpers';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
-import { ViewRequestsPage } from '../pages/view-requests/view-requests'; 
+import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 
 
 @Component({
@@ -47,7 +48,7 @@ export class MyApp {
   };
 
   //public toas: Toast;
-  public team: any= {request: []}
+  public team: any = { request: [] }
 
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
@@ -58,10 +59,10 @@ export class MyApp {
   public pages: Array<Object> = [
     { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "", newData: "" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "" , newData: "" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat" , newData: "" },
-    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request" , newData: "request" },
-    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "" , newData: "" }
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "", newData: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat", newData: "" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request", newData: "request" },
+    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" }
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
@@ -70,7 +71,8 @@ export class MyApp {
     public pusherNotification: Push, private http: HttpClient,
     public event: Events, public zone: NgZone,
     public translate: TranslateService, private helper: HelpersProvider,
-    public webIntent: WebIntent, public iNotification: INotificationProvider
+    public webIntent: WebIntent, public iNotification: INotificationProvider,
+    public backgroundGeolocation: BackgroundGeolocation
   ) {
     platform.ready().then(this.initPlatform.bind(this));
   }
@@ -98,6 +100,34 @@ export class MyApp {
         }
 
       });
+
+    //para geofences en android usando el plugin background geolocation
+    const config: BackgroundGeolocationConfig = {
+      desiredAccuracy: 10,
+      stationaryRadius: 20,
+      distanceFilter: 30,
+      debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+      stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+    };
+
+    this.backgroundGeolocation.configure(config)
+      .subscribe(function(location: BackgroundGeolocationResponse) {
+
+        console.log("location background", location);
+
+        let myPosition = {lat: location.latitude, lng: location.longitude};
+        this.helper.executeGeofencesIOS(myPosition);
+        
+        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        this.backgroundGeolocation.finish(); // FOR IOS ONLY
+
+      }.bind(this));
+
+    // start recording location
+    this.backgroundGeolocation.start();
+
 
     this.init();
 
@@ -207,7 +237,7 @@ export class MyApp {
       let valid = false;
       for (let i of id) {
         if (MyApp.newDatas.hasOwnProperty(i.id)) {
-          if (MyApp.newDatas[i.id] === true && (i.role === MyApp.User.role.name || i.role === '*') ) {
+          if (MyApp.newDatas[i.id] === true && (i.role === MyApp.User.role.name || i.role === '*')) {
             valid = true;
           }
         }
@@ -250,8 +280,8 @@ export class MyApp {
 
     //Para verificar si nesesita de newData, para mostrarse
     newDatas = newDatas || 'not';
-    if( newDatas !== 'not' ){
-      if( this.newData(newDatas) === true ){
+    if (newDatas !== 'not') {
+      if (this.newData(newDatas) === true) {
         return false;
       }
     }
@@ -317,13 +347,13 @@ export class MyApp {
 
         let verb = notification.additionalData.verb, is = notification.additionalData.is;
 
-				console.log(notification.additionalData.dataStringify);
+        console.log(notification.additionalData.dataStringify);
 
-				if (Object.prototype.toString.call(notification.additionalData.dataStringify) == "[object String]") {
-					notification.additionalData.dataStringify = JSON.parse(notification.additionalData.dataStringify);
-				}
+        if (Object.prototype.toString.call(notification.additionalData.dataStringify) == "[object String]") {
+          notification.additionalData.dataStringify = JSON.parse(notification.additionalData.dataStringify);
+        }
 
-				console.log(notification.additionalData.dataStringify);
+        console.log(notification.additionalData.dataStringify);
 
 
         MyApp.me.event.publish(is + ":" + verb, notification.additionalData.dataStringify, Date.now());

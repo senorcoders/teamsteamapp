@@ -95,7 +95,7 @@ export class EventsSchedulePage {
       this.team = this.user.team;
 
       let events: any = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
-      this.helper.setGeofences(events);
+      this.helper.setGeofences(200, events);
       this.events = await this.parserEvents(events);
 
       //this.events = this.events.reverse();
