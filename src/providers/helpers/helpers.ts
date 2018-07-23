@@ -20,6 +20,7 @@ import * as moment from 'moment';
 import { Geofence } from '@ionic-native/geofence';
 import { Storage } from '@ionic/storage';
 declare var google: any;
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 
 
 /**
@@ -42,7 +43,7 @@ export class HelpersProvider {
     private modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
     public device: Device, public geofence: Geofence,
-    public storage: Storage
+    public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
   ) {
     this.init();
   }
@@ -458,21 +459,20 @@ export class HelpersProvider {
           await this.geofence.removeAll();
           return;
         } else if (this.platform.is("ios")) {
-        await this.storage.remove("geofences");
-        await this.storage.remove("radius");
-        return;
+          await this.backgroundGeolocation.stop();
+          return;
         }
+      }
+
+      if (this.platform.is("ios")) {
+        await this.setGeofencesForIOS();
+        return;
       }
 
       events = events || false;
       await this.geofence.initialize();
-      let es: any;
-       
-      if (this.platform.is("android")) {
-        es = await this.geofence.getWatched();
-      } else if (this.platform.is("ios")) {
-        es = await this.storage.get("geofences");
-      }
+      let es: any = await this.geofence.getWatched();
+
       if (Object.prototype.toString.call(es) === "[object String]") {
         es = JSON.parse(es);
         console.log(es);
@@ -499,11 +499,7 @@ export class HelpersProvider {
 
       events = await this.parserEvents(events);
 
-      if (this.platform.is("android")) {
-        await this.setGeofencesForAndroid(events, radius)
-      } else if (this.platform.is("ios")) {
-      await this.setGeofencesForIOS(events, radius);
-      }
+      await this.setGeofencesForAndroid(events, radius);
 
     }
     catch (e) {
@@ -767,66 +763,47 @@ export class HelpersProvider {
   //#endregion
 
 
-  //#region geofences for android
-  private async setGeofencesForIOS(events: Array<any>, radius: number) {
+  //#region geofences for ios
+  private async setGeofencesForIOS() {
     try {
-
-      //Eliminar los anteriores geofence
-      await this.storage.remove("geofences");
-      await this.storage.remove("radius");
-
-      events = await Promise.all(events.map(async function (event) {
-        /***
-     * Para obtener mi position
-     */
-        let origin: any
-        if (event.location.hasOwnProperty("lng") && event.location.hasOwnProperty("lat"))
-          origin = { lat: event.location.lat, lng: event.location.lng };
-        else {
-
-          //cargamos google maps si a un no ha cargado
-          if (HelpersProvider.me.enableMapsLocation === false)
-            await HelpersProvider.me.reloadGoogleplaces();
-
-          await new Promise(function (resolve, reject) {
-            let geocoder = new google.maps.Geocoder()
-            geocoder.geocode({ address: event.location.address }, function (res, status) {
-
-              if (res.length === 0) return;
-
-              res = res[0];
-              if (res.geometry) {
-                let lat = res.geometry.location.lat();
-                let lng = res.geometry.location.lng();
-                origin = { lat, lng };
-              }
-              resolve();
-            }.bind(this));
-          }.bind(this));
+      const config: BackgroundGeolocationConfig = {
+        desiredAccuracy: 10,
+        stationaryRadius: 20,
+        distanceFilter: 20,
+        stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+        url: interceptor.transformUrl("/geofence"),
+        httpHeaders: {
+          "platform-ios": "true",
+          "id": MyApp.User.id+ "."+ MyApp.User.team
         }
+      };
 
-        //Para obtener la fecha que inicia el evento
-        let date: moment.Moment;
-        if (event.repeatsDaily === true) {
-          date = moment(event.Time, "hh:mm a");
-        } else {
-          date = moment(event.parsedDateTime[0] + "/" + event.parsedDateTime[1], "MMMM/DD")
-        }
-
-        //options describing geofence
-        let id = MyApp.User.id;
-        id += "." + event.id + "." + MyApp.User.team + "." + date.format("MM-DD-YYYY-hh:mm:ssa");
-
-        return { id, origin };
-      }));
-      await this.storage.set("geofences", events);
-      events = await this.storage.get("geofences");
-      await this.storage.set("radius", { radius });
+      this.executeBackgroudGeolocation(config);
 
     }
     catch (e) {
       console.error(e);
     }
+  }
+
+  public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
+    
+    config.debug = false;
+
+    this.backgroundGeolocation.configure(config)
+      .subscribe(function (location: BackgroundGeolocationResponse) {
+
+        console.log("location background", location);
+
+        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        this.backgroundGeolocation.finish(); // FOR IOS ONLY
+
+      }.bind(this));
+
+    // start recording location
+    this.backgroundGeolocation.start();
   }
 
   public async executeGeofencesIOS(myPosition) {
@@ -842,7 +819,7 @@ export class HelpersProvider {
       if (distance <= rad.radius) {
         let headers = new HttpHeaders();
         headers = headers.append("dateTime", moment().toISOString());
-        await this.http.post("/geofence", [event], {headers, responseType: "text"}).toPromise();
+        await this.http.post("/geofence", [event], { headers, responseType: "text" }).toPromise();
       }
     }
 
