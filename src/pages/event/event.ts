@@ -112,10 +112,6 @@ export class EventPage {
     let userPublisher: any = await this.http.get("/user/" + idUser).toPromise();
     this.username = userPublisher.username;
 
-    //cargamos google maps si a un no ha cargado
-    if (HelpersProvider.me.enableMapsLocation === false)
-      await HelpersProvider.me.reloadGoogleplaces();
-
     //for geoconder location, obtener por nombre de location
     this.location.change = false;
     this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");

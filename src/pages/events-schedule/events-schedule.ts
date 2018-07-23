@@ -64,10 +64,15 @@ export class EventsSchedulePage {
 
   }
 
-  
+
 
   //#region not geofence
   async ngOnInit() {
+
+    //cargamos google maps si a un no ha cargado
+    if (HelpersProvider.me.enableMapsLocation === false)
+      await HelpersProvider.me.reloadGoogleplaces();
+
     await this.getEvents();
     ////console.log(this.events, EventsSchedulePage.openEvent);
     if (EventsSchedulePage.openEvent.valid === true) {
@@ -114,7 +119,7 @@ export class EventsSchedulePage {
     load.dismiss();
   }
 
-  public loadImage(e){
+  public loadImage(e) {
     e.loadImage = true;
   }
 
@@ -141,7 +146,7 @@ export class EventsSchedulePage {
         }
 
         //if (it.repeatsDaily === true) {
-          it.Time = moment(it.dateTime).format("hh:mm a");
+        it.Time = moment(it.dateTime).format("hh:mm a");
         //}
 
         it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
@@ -339,8 +344,8 @@ export class EventsSchedulePage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(event, response) {
-    
-    if( this.by === "past" ) return;
+
+    if (this.by === "past") return;
 
     let guardar = event.tracking.user !== undefined;
     try {
