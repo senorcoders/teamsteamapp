@@ -467,6 +467,10 @@ export class HelpersProvider {
       if (this.platform.is("ios")) {
         await this.setGeofencesForIOS();
         return;
+      }else if (this.platform.is("android")) {
+        //Se usa el metodo en ios para los jugadores
+        //cercanos a un evento que puedan jugar
+        await this.setGeofencesForIOS();
       }
 
       events = events || false;
@@ -773,7 +777,7 @@ export class HelpersProvider {
         stopOnTerminate: false, // enable this to clear background location settings when the app terminates
         url: interceptor.transformUrl("/geofence"),
         httpHeaders: {
-          "platform-ios": "true",
+          "platform-ios": "true",  //esto se usa para identificar el tipo de geofence, en android se envia ig
           "id": MyApp.User.id+ "."+ MyApp.User.team
         }
       };
@@ -788,7 +792,7 @@ export class HelpersProvider {
 
   public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
     
-    config.debug = false;
+    config.debug = true;
 
     this.backgroundGeolocation.configure(config)
       .subscribe(function (location: BackgroundGeolocationResponse) {

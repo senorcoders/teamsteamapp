@@ -147,6 +147,8 @@ import { CalendarModule } from "ion2-calendar";
 import { EmojiPickerComponentModule } from '../components/emoji-picker/emoji-picker.module';
 import { ImageViewPageModule } from '../pages/image-view/image-view.module';
 import { ImageViewPage } from '../pages/image-view/image-view';
+import { PlayerCloseEventPage } from '../pages/player-close-event/player-close-event';
+import { PlayerCloseEventPageModule } from '../pages/player-close-event/player-close-event.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -221,7 +223,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PipesModule,
     CalendarModule,
     EmojiPickerComponentModule,
-    ImageViewPageModule
+    ImageViewPageModule,
+    PlayerCloseEventPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -282,7 +285,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    ImageViewPage
+    ImageViewPage,
+    PlayerCloseEventPage
   ],
   providers: [
     StatusBar,

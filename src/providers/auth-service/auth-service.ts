@@ -174,6 +174,7 @@ export class AuthServiceProvider {
       console.log(un);
       let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
       console.log(success);
+      await HelpersProvider.me.backgroundGeolocation.stop();
     }
 
     var data = await this.storage.remove("user");

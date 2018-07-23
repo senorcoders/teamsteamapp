@@ -20,6 +20,7 @@ import { AssistencesComponent } from '../../components/assistences/assistences';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AssistenceComponent } from '../../components/assistence/assistence';
+import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
 
 declare var google: any;
 
@@ -458,6 +459,10 @@ export class EventPage {
     }
     
 
+  }
+
+  public toPlayerClose(){
+    this.navCtrl.push(PlayerCloseEventPage, {eventID: this.event.id});
   }
 
   public async asignStatus(status) {

@@ -9,6 +9,7 @@ import { MyTaskPage } from '../../pages/my-task/my-task';
 import { TaskPage } from '../../pages/task/task';
 import { ChatPage } from '../../pages/chat/chat';
 import { MyApp } from '../../app/app.component';
+import { PlayerCloseEventPage } from '../../pages/player-close-event/player-close-event';
 
 
 @Injectable()
@@ -55,6 +56,9 @@ export class INotificationProvider {
       await HelpersProvider.me.toPages(MyTaskPage, [{ page: TaskPage, data: { task: data } }]);
     } else if (intent.extras.is === "message") {
       await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatPage, data: {} }]);
+    }else if(intent.extras.is.includes("player-near.")){
+      let eventID = intent.extras.is.split(".")[1];
+      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: PlayerCloseEventPage, data: { eventID, player: data } }], { notification: true });
     }
 
   }

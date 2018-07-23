@@ -256,5 +256,6 @@
         "RIGHTNOW": "Now"
     },
     "CLEARDEVICES": "Logout from other devices",
-    "NEARTO": "Is Near To"
+    "NEARTO": "Is Near To",
+    "PLAYERCLOSEEVENT": "Players Close To The Event"
 }
