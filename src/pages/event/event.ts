@@ -63,6 +63,9 @@ export class EventPage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
+  public enablePlayerClose=false;
+  public idEventPlayerClose:number;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper: HelpersProvider,
@@ -84,11 +87,35 @@ export class EventPage {
 
     this.event = e;
     this.index = this.navParams.get("index");
-    console.log(this.index, this.event);
+    console.log(this.event);
+
+    //Para saber si se tiene que motras la opcion para ver jugadores cercanos a un evento
+    this.checkEnablePlayerClose();
+    this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000*60);
 
     //for image user that published events
     let r = new Date().getTime();
     this.imgUser = interceptor.transformUrl("/images/" + r + "/users&thumbnail/" + this.event.user);
+  }
+
+  public checkEnablePlayerClose(){
+    let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1]+ this.event.Time, "MMMM/DDhh:mm a");
+    let date = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1]+ this.event.Time, "MMMM/DDhh:mm a");
+    date.subtract(10, "minutes");
+    let now = moment();
+    console.log(
+      now.format("DD/MM/YYYY hh:mm:ss a"),
+      date.format("DD/MM/YYYY hh:mm:ss a"),
+      dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
+      now.isAfter(date),
+      now.isBefore(dateEvent),
+      this.user.role.name
+    );
+    
+    if(now.isAfter(date) && now.isBefore(dateEvent) && this.user.role.name==='Manager'){
+      this.enablePlayerClose = true;
+    }
+    console.log(this.enablePlayerClose);
   }
 
   async ngOnInit() {
@@ -185,6 +212,7 @@ export class EventPage {
 
   ionViewWillUnload() {
     this.socket.unsubscribeWithPush("eventStatus");
+    clearInterval(this.idEventPlayerClose);
   }
 
   public successLoadImage() {

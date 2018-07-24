@@ -1,17 +1,18 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>{{"PLAYERCLOSEEVENT" | translate}}</ion-title>
+    <ion-title>{{event.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+  <h2>{{"PLAYERCLOSEEVENT" | translate}}</h2>
   <ion-list>
 
     <ion-item *ngFor="let player of players" >
-      {{player.user.firstName+ " "+ player.user.lastName}}
+      {{player.user.firstName+ " "+ player.user.lastName+ " - "+ player.player.positions.join(",")}}
       <ion-icon color="primary" item-end name="ios-send-outline" (click)="toChat(player)" ></ion-icon>
     </ion-item>
 

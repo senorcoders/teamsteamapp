@@ -87,7 +87,7 @@
     <ion-item id="assistence" (click)="toAssistence()" >
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
-    <ion-item style="border-top: 1px solid white;" id="assistence" (click)="toPlayerClose()" >
+    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" id="assistence" (click)="toPlayerClose()" >
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 

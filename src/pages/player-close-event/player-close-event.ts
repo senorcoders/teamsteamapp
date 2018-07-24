@@ -18,7 +18,7 @@ export class PlayerCloseEventPage {
 
   triggerPLayer: any;
   players: Array<any> = [];
-  event: any;
+  event: any={name:""};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public socket: WebSocketsProvider
