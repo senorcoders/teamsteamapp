@@ -299,7 +299,7 @@ export class HelpersProvider {
 
   //   return this.datePicker.show(options);
   // }
-  public nativeDatePicker(): Promise<CalendarResult> {
+  public nativeDatePicker(): Promise<Date> {
 
     let options = {
     };
@@ -315,8 +315,8 @@ export class HelpersProvider {
       myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
         if (date === null) {
           return;
-        }
-        resolve(date);
+        }console.log(date);
+        resolve(date.dateObj);
       })
 
     })
