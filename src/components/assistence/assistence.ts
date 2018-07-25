@@ -3,6 +3,7 @@ import { NavParams, ViewController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @Component({
@@ -64,6 +65,7 @@ export class AssistenceComponent {
   }
 
   async ionViewDidLoad() {
+    let load = HelpersProvider.me.getLoadingStandar();
     try {
       if (this.repeats === false) {
         let assistence: any = await this.http.get("/assistence/" + this.event.id).toPromise()
@@ -82,6 +84,8 @@ export class AssistenceComponent {
     catch (e) {
       console.error(e);
     }
+
+    load.dismissAll();
   }
 
   private factorize() {
