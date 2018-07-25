@@ -792,7 +792,7 @@ export class HelpersProvider {
 
   public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
     
-    config.debug = true;
+    config.debug = false;
 
     this.backgroundGeolocation.configure(config)
       .subscribe(function (location: BackgroundGeolocationResponse) {
