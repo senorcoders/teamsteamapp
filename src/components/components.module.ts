@@ -17,6 +17,7 @@ import { AssistenceComponent } from './assistence/assistence';
 import { AssistencesComponent } from './assistences/assistences';
 import { EventCreatedComponent } from './event-created/event-created';
 import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-assistences-event';
+import { AddLocationUserFreeComponent } from './add-location-user-free/add-location-user-free';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -32,7 +33,8 @@ import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    SlideAssistencesEventComponent
+    SlideAssistencesEventComponent,
+    AddLocationUserFreeComponent
     ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
@@ -54,7 +56,8 @@ import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-
     AssistenceComponent,
     AssistencesComponent,
     EventCreatedComponent,
-    SlideAssistencesEventComponent
+    SlideAssistencesEventComponent,
+    AddLocationUserFreeComponent
     ]
 })
 export class ComponentsModule {}

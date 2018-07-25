@@ -1,0 +1,105 @@
+<ion-header>
+  <ion-navbar color="base">
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"ADDLOCATION.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>
+        {{"SPORT" | translate}}
+      </ion-label>
+      <ion-select [(ngModel)]="sport">
+        <ion-option value="baseball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
+        <ion-option value="football">{{"SPORTS.SOCCER" | translate}}</ion-option>
+        <ion-option value="basketball">{{"SPORTS.BASKETBALL" | translate}}</ion-option>
+        <ion-option value="bowling">{{"SPORTS.BOWLING" | translate}}</ion-option>
+        <ion-option value="cheerleading">{{"SPORTS.CHEERLEADING" | translate}}</ion-option>
+        <ion-option value="crew&rowing">{{"SPORTS.CREW&ROWING" | translate}}</ion-option>
+        <ion-option value="crosscountry">{{"SPORTS.CROSSCOUNTRY" | translate}}</ion-option>
+        <ion-option value="fieldhockey">{{"SPORTS.FIELDHOCKEY" | translate}}</ion-option>
+        <ion-option value="golf">{{"SPORTS.GOLF" | translate}}</ion-option>
+        <ion-option value="hockey">{{"SPORTS.HOCKEY" | translate}}</ion-option>
+        <ion-option value="lacrosse">{{"SPORTS.LACROSSE" | translate}}</ion-option>
+        <ion-option value="rugby">{{"SPORTS.RUGBY" | translate}}</ion-option>
+        <ion-option value="swimming&diving">{{"SPORTS.SWIMMING&DIVING" | translate}}</ion-option>
+        <ion-option value="tennis">{{"SPORTS.TENNIS" | translate}}</ion-option>
+        <ion-option value="track&field">{{"SPORTS.TRACK&FIELD" | translate}}</ion-option>
+        <ion-option value="volleyball">{{"SPORTS.VOLLEYBALL" | translate}}</ion-option>
+        <ion-option value="waterpolo">{{"SPORTS.WATERPOLO" | translate}}</ion-option>
+        <ion-option value="WRESTLING">{{"SPORTS.WRESTLING" | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        {{"LEVEL.TITLE" | translate}}
+      </ion-label>
+      <ion-select [(ngModel)]="level">
+        <ion-option value="UNDER8">{{"LEVEL.UNDER8" | translate}}</ion-option>
+        <ion-option value="UNDER12">{{"LEVEL.UNDER12" | translate}}</ion-option>
+        <ion-option value="UNDER14">{{"LEVEL.UNDER14" | translate}}</ion-option>
+        <ion-option value="UNDER18">{{"LEVEL.UNDER18" | translate}}</ion-option>
+        <ion-option value="NOVICE">{{"LEVEL.NOVICE" | translate}}</ion-option>
+        <ion-option value="AMATEUR">{{"LEVEL.AMATEUR" | translate}}</ion-option>
+        <ion-option value="PRO">{{"LEVEL.PRO" | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-item class="days">
+          <h4 class="date-time" (click)="setTimeStart()"> {{'ADDLOCATION.TIMESTART' | translate }}: {{timeStart.format("hh:mm a")}} </h4>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item class="days">
+          <h4 class="date-time" (click)="setTimeEnd()">{{'ADDLOCATION.TIMEEND' | translate }}: {{timeEnd.format("hh:mm a")}} </h4>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label floating>{{"ROSTER.POSITIONS" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="positions"></ion-input>
+    </ion-item>
+
+    <ion-item class="days">
+      <div id="repeats-days">
+        <h4 (click)="selectDay('m')" [ngClass]="getSelectDays('m') ? 'select' : '' ">{{ 'DAYSWEEKS.M' | translate }}</h4>
+        <h4 (click)="selectDay('tu')" [ngClass]="getSelectDays('tu') ? 'select' : '' ">{{ 'DAYSWEEKS.TU' | translate }}</h4>
+        <h4 (click)="selectDay('w')" [ngClass]="getSelectDays('w') ? 'select' : '' ">{{ 'DAYSWEEKS.W' | translate }}</h4>
+        <h4 (click)="selectDay('th')" [ngClass]="getSelectDays('th') ? 'select' : '' ">{{ 'DAYSWEEKS.TH' | translate }}</h4>
+        <h4 (click)="selectDay('f')" [ngClass]="getSelectDays('f') ? 'select' : '' ">{{ 'DAYSWEEKS.F' | translate }}</h4>
+        <h4 (click)="selectDay('sa')" [ngClass]="getSelectDays('sa') ? 'select' : '' ">{{ 'DAYSWEEKS.SA' | translate }}</h4>
+        <h4 (click)="selectDay('su')" [ngClass]="getSelectDays('su') ? 'select' : '' ">{{ 'DAYSWEEKS.SU' | translate }}</h4>
+      </div>
+    </ion-item>
+  </ion-list>
+
+  <div id="map_canvas" style="width: 100%; height: 300px; "></div>
+
+  <ion-fab left bottom class="no-hide-maps">
+    <button ion-fab color="secondary" (click)="viewCtrl.dismiss()()">
+      <ion-icon name="md-close"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab right bottom class="no-hide-maps">
+    <button ion-fab color="primary" (click)="select()">
+      <ion-icon name="md-checkmark-circle"></ion-icon>
+    </button>
+  </ion-fab>
+</ion-content>

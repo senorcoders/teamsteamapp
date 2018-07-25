@@ -114,7 +114,7 @@
         "GENDER": "Gender",
         "YERSERYNUMBERonly": "Jersey Number",
         "YERSERYNUMBER": "Jersey Number (optional)",
-        "POSITIONS": "Position",
+        "POSITIONS": "Positions (separated by comma)",
         "ADDITIONALCONTACTINFORMATION": "Additional Contact Information",
         "CONTACTNAME": "Contact Name",
         "EMAILPHONE": "Email / Phone",
@@ -257,5 +257,23 @@
     },
     "CLEARDEVICES": "Logout from other devices",
     "NEARTO": "Is Near To",
-    "PLAYERCLOSEEVENT": "Players Close To The Event"
+    "PLAYERCLOSEEVENT": "Players Close To The Event",
+    "FREEAGENT": "Free Agent",
+    "LEVEL": {
+        "TITLE":"Level",
+        "UNDER8": "Under 8",
+        "UNDER12": "Under 12",
+        "UNDER14": "Under 14",
+        "UNDER18": "Under 18",
+        "NOVICE": "Novice",
+        "AMATEUR": "Amateur",
+        "PRO": "Pro"
+    },
+    "ADDLOCATION": {
+        "TITLE": "Places where you can join an event",
+        "ACTION": "Add Location",
+        "SELECTDAYS": "Select the days that this place frequents",
+        "TIMESTART": "Time Start",
+        "TIMEEND": "Time End"
+    }
 }

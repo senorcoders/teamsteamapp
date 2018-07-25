@@ -149,6 +149,7 @@ import { ImageViewPageModule } from '../pages/image-view/image-view.module';
 import { ImageViewPage } from '../pages/image-view/image-view';
 import { PlayerCloseEventPage } from '../pages/player-close-event/player-close-event';
 import { PlayerCloseEventPageModule } from '../pages/player-close-event/player-close-event.module';
+import { AddLocationUserFreeComponent } from '../components/add-location-user-free/add-location-user-free';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -286,7 +287,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssistencesComponent,
     EventCreatedComponent,
     ImageViewPage,
-    PlayerCloseEventPage
+    PlayerCloseEventPage,
+    AddLocationUserFreeComponent
   ],
   providers: [
     StatusBar,

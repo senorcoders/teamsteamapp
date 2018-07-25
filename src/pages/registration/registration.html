@@ -9,123 +9,90 @@
 
 <ion-content padding>
 
-    <ion-list>
-    
-        <ion-item>
-          <ion-label floating>
-            username
-          </ion-label>
-          <ion-input type="text" [(ngModel)]="username" ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-           <ion-label floating>
-            {{"FIRSTNAME" | translate}}
-          </ion-label>
-          <ion-input type="text" [(ngModel)]="firstname" ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label floating>
-           {{"LASTNAME" | translate}}
-         </ion-label>
-         <ion-input type="text" [(ngModel)]="lastname" ></ion-input>
-       </ion-item>
+  <ion-list>
 
-       <ion-item>
-          <ion-label floating>
-           {{"EMAIL" | translate}}
-         </ion-label>
-         <ion-input type="email" [(ngModel)]="email" ></ion-input>
-       </ion-item>
+    <ion-item>
+      <ion-label floating>
+        username
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="username"></ion-input>
+    </ion-item>
 
-       <!--ion-item>
-          <ion-label floating>
-           {{"PASSWORD" | translate}}
-         </ion-label>
-         <ion-input type="password" [(ngModel)]="password" ></ion-input>
-       </ion-item>
+    <ion-item>
+      <ion-label floating>
+        {{"FIRSTNAME" | translate}}
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="firstname"></ion-input>
+    </ion-item>
 
-       <ion-item>
-          <ion-label floating>
-           {{"CHANGEPASSALERT.AGAINNEWPASS" | translate}}
-         </ion-label>
-         <ion-input type="password" [(ngModel)]="againpassword" ></ion-input>
-       </ion-item-->
-    
-      </ion-list>
+    <ion-item>
+      <ion-label floating>
+        {{"LASTNAME" | translate}}
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="lastname"></ion-input>
+    </ion-item>
 
-    <h2 style="margin-top: 20px;">{{"TEAM" | translate}}</h2>
+    <ion-item>
+      <ion-label floating>
+        {{"EMAIL" | translate}}
+      </ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
 
-    <ion-avatar [hidden]="!image" >
-        <img width="100%" (load)="success()" [src]="imageSrc">
-        <ion-fab top right edge class="button-fab-right">
-          <button ion-fab color="base" (click)="changePhoto()" >
-            <ion-icon name="md-camera"></ion-icon>
-          </button>
-        </ion-fab>
-    </ion-avatar>
-    
-    <ion-avatar [hidden]="image" >
-      <img width="100%" src="./assets/imgs/logo-default.png">
-      <ion-fab top right edge class="button-fab-right">
-        <button ion-fab color="base" (click)="changePhoto()" >
-          <ion-icon name="md-camera"></ion-icon>
-        </button>
-      </ion-fab>
-    </ion-avatar>
-    
-      <ion-list>
-    
-        <ion-item>
-          <ion-label floating>
-            {{"NAMEOFTEAM" | translate}}
-          </ion-label>
-          <ion-input type="text" [(ngModel)]="nameteam" ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-           <ion-label floating>
-            {{"DESCRIPTION" | translate}}
-          </ion-label>
-          <ion-textarea [(ngModel)]="description" ></ion-textarea>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label floating>
-           {{"CITY" | translate}}
-         </ion-label>
-         <ion-textarea [(ngModel)]="city" ></ion-textarea>
-       </ion-item>
-    
-        <ion-item>
-            <ion-label floating>
-             {{"SPORT" | translate}}
-           </ion-label>
-           <ion-select [(ngModel)]="sport" >
-            <ion-option value="baseball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
-            <ion-option value="football">{{"SPORTS.SOCCER" | translate}}</ion-option>
-            <ion-option value="basketball">{{"SPORTS.BASKETBALL" | translate}}</ion-option>
-            <ion-option value="bowling">{{"SPORTS.BOWLING" | translate}}</ion-option>
-            <ion-option value="cheerleading">{{"SPORTS.CHEERLEADING" | translate}}</ion-option>
-            <ion-option value="crew&rowing">{{"SPORTS.CREW&ROWING" | translate}}</ion-option>
-            <ion-option value="crosscountry">{{"SPORTS.CROSSCOUNTRY" | translate}}</ion-option>
-            <ion-option value="fieldhockey">{{"SPORTS.FIELDHOCKEY" | translate}}</ion-option>
-            <ion-option value="golf">{{"SPORTS.GOLF" | translate}}</ion-option>
-            <ion-option value="hockey">{{"SPORTS.HOCKEY" | translate}}</ion-option>
-            <ion-option value="lacrosse">{{"SPORTS.LACROSSE" | translate}}</ion-option>
-            <ion-option value="rugby">{{"SPORTS.RUGBY" | translate}}</ion-option>
-            <ion-option value="swimming&diving">{{"SPORTS.SWIMMING&DIVING" | translate}}</ion-option>
-            <ion-option value="tennis">{{"SPORTS.TENNIS" | translate}}</ion-option>
-            <ion-option value="track&field">{{"SPORTS.TRACK&FIELD" | translate}}</ion-option>
-            <ion-option value="volleyball">{{"SPORTS.VOLLEYBALL" | translate}}</ion-option>
-            <ion-option value="waterpolo">{{"SPORTS.WATERPOLO" | translate}}</ion-option>
-            <ion-option value="WRESTLING">{{"SPORTS.WRESTLING" | translate}}</ion-option>
-           </ion-select>
-         </ion-item>
-    
-      </ion-list>
-    
-      <button ion-button block (click)="save()" >{{"SAVE" | translate}}</button>
+    <ion-item>
+      <ion-label>
+        {{"FREEAGENT" | translate}}
+      </ion-label>
+      <ion-toggle [(ngModel)]="free"></ion-toggle>
+    </ion-item>
+
+  </ion-list>
+
+  <h2 style="margin-top: 20px;" [hidden]="free">{{"TEAM" | translate}}</h2>
+
+  <ion-avatar [hidden]="free">
+    <img width="100%" [hidden]="!image" (load)="success()" [src]="imageSrc">
+    <img width="100%" [hidden]="image" src="./assets/imgs/logo-default.png">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhoto()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-avatar>
+
+  <ion-list>
+
+    <ion-item [hidden]="free">
+      <ion-label floating>
+        {{"NAMEOFTEAM" | translate}}
+      </ion-label>
+      <ion-input type="text" [(ngModel)]="nameteam"></ion-input>
+    </ion-item>
+
+    <ion-item [hidden]="free">
+      <ion-label floating>
+        {{"DESCRIPTION" | translate}}
+      </ion-label>
+      <ion-textarea [(ngModel)]="description"></ion-textarea>
+    </ion-item>
+
+    <ion-item [hidden]="free">
+      <ion-label floating>
+        {{"CITY" | translate}}
+      </ion-label>
+      <ion-textarea [(ngModel)]="city"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <h2 style="margin-top: 20px;" [hidden]="!free">{{"ADDLOCATION.TITLE" | translate}}</h2>
+
+  <ion-list>
+
+  </ion-list>
+
+  <button ion-button (click)="addLocation()">{{"ADDLOCATION.ACTION" | translate}}</button>
+
+  <button ion-button block (click)="save()">{{"SAVE" | translate}}</button>
 
 </ion-content>

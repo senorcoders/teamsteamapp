@@ -115,7 +115,7 @@
         "GENDER": "Género",
         "YERSERYNUMBERonly": "Numero de Camisa",
         "YERSERYNUMBER": "Numero de Camisa (Opcional)",
-        "POSITIONS": "Posición",
+        "POSITIONS": "Posiciones (separados por coma)",
         "ADDITIONALCONTACTINFORMATION": "Información de Contacto Adicional",
         "CONTACTNAME": "Nombre de Contacto",
         "EMAILPHONE": "Correo Electrónico / Teléfono",
@@ -259,5 +259,23 @@
     "ASSISTENCE": {
         "TITLE" : "Asistencia"
     },
-    "NEARTO": "Estas Cerca de"
+    "NEARTO": "Estas Cerca de",
+    "FREEAGENT": "Free Agent",
+    "LEVEL": {
+        "TITLE":"Nivel",
+        "UNDER8": "Menor de 8 años",
+        "UNDER12": "Menor de 12 años",
+        "UNDER14": "Menor de 14 años",
+        "UNDER18": "Menor de 18 años",
+        "NOVICE": "Novato",
+        "AMATEUR": "Aficionado",
+        "PRO": "Profesional"
+    },
+    "ADDLOCATION": {
+        "TITLE": "Lugares donde puedes unirte a un evento",
+        "ACTION": "Agregar Ubicación",
+        "SELECTDAYS": "Seleccione los días que este lugar frecuenta",
+        "TIMESTART": "Hora de Inicio",
+        "TIMEEND": "Hora Final"
+    }
 }
