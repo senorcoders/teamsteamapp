@@ -176,6 +176,7 @@
     "ACCEPT": "Aceptar",
     "REQUESTACCEPT": "Solicitud Aceptada",
     "REQUESTDENIED": "Solicitud Denegada",
+    "ERRORCONECTION": "Error en la conexión",
     "DENED": "Denegar",
     "FULLNAME": "Nombre Completo",
     "EMAIL": "Correo Electrónico",
@@ -276,6 +277,8 @@
         "ACTION": "Agregar Ubicación",
         "SELECTDAYS": "Seleccione los días que este lugar frecuenta",
         "TIMESTART": "Hora de Inicio",
-        "TIMEEND": "Hora Final"
+        "TIMEEND": "Hora Final",
+        "SELECTLOCATIONS": "Seleccione las ubicaciones en el mapa",
+        "ADDPLACES": "Add places"
     }
 }

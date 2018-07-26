@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, AlertController } from 'ionic-angular';
+import { ViewController, AlertController, NavParams } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import * as moment from 'moment';
@@ -22,25 +22,23 @@ export class AddLocationUserFreeComponent {
   public positions = "";
   public sport = "";
   public level = "";
+  public markers: Array<any> = [];
 
-  constructor(public viewCtrl: ViewController, public geolocation: Geolocation,
-    public alertCtrl: AlertController
+  public location: any;
+  private origin:any;
+
+  constructor(public viewCtrl: ViewController, public alertCtrl: AlertController, 
+    public navParams: NavParams
   ) {
     this.timeEnd.subtract(1, "hours");
+    this.location = this.navParams.get("loc");
+    this.origin = this.navParams.get("origin");
   }
 
   async ionViewDidLoad() {
 
-    /***
-     * Para mostrar la position actual
-     */
-    let resp: any;
-    resp = await (this.geolocation as any).getCurrentPosition();
-    console.log("location", resp);
-    let origin = { lat: resp.coords.latitude, lng: resp.coords.longitude };
-
     let mapOptions: any = {
-      center: origin,
+      center: this.origin,
       zoom: 12
     };
 
@@ -60,7 +58,7 @@ export class AddLocationUserFreeComponent {
 
     new google.maps.Marker({
       animation: 'DROP',
-      position: origin,
+      position: this.origin,
       map: this.map,
       icon: image
     });
@@ -69,7 +67,7 @@ export class AddLocationUserFreeComponent {
       // 3 seconds after the center of the map has changed, pan back to the
       // marker.
       let image = {
-        url: './assets/imgs/icon-marker.png',
+        url: './assets/imgs/icon-marker2.png',
         // This marker is 20 pixels wide by 32 pixels high.
         size: new google.maps.Size(24, 24),
         // The origin for this image is (0, 0).
@@ -84,10 +82,73 @@ export class AddLocationUserFreeComponent {
         icon: image
       });
 
+      mar.addListener("click", function () {
+        mar.setMap(null);
+        if (this.markers.length === 1) {
+          this.markers = [];
+        } else {
+          let index = this.markers.findIndex(it => it.closure_uid_503952747 === mar.closure_uid_503952747);
+          if (index !== -1) {
+            this.markers.splice(index, 1);
+          }
+        }
+      }.bind(this));
+
       mar.setPosition(event.latLng);
-      
+      this.markers.push(mar);
     }.bind(this));
 
+    //Para cuando es editar una location
+    if (this.location !== undefined) {
+      this.agregarData();
+    }
+
+  }
+
+  private agregarData() {
+    this.repeatsDays = this.location.repeatsDays.split(",");
+    this.timeStart = moment(this.location.timeStart);
+    this.timeEnd = moment(this.location.timeEnd);
+    this.level = this.location.level;
+    this.sport = this.location.sport;
+    this.positions = this.location.positions;
+    for (let mark of this.location.markers) {
+      this.agregarLocationForEdit(mark);
+    }
+  }
+
+  private agregarLocationForEdit(mark) {
+    // 3 seconds after the center of the map has changed, pan back to the
+    // marker.
+    let image = {
+      url: './assets/imgs/icon-marker2.png',
+      // This marker is 20 pixels wide by 32 pixels high.
+      size: new google.maps.Size(24, 24),
+      // The origin for this image is (0, 0).
+      origin: new google.maps.Point(0, 0),
+      // The anchor for this image is the base of the flagpole at (0, 32).
+      anchor: new google.maps.Point(0, 8)
+    };
+
+    let mar = new google.maps.Marker({
+      animation: 'DROP',
+      position: mark,
+      map: this.map,
+      icon: image
+    });
+    this.markers.push(mar);
+
+    mar.addListener("click", function () {
+      mar.setMap(null);
+      if (this.markers.length === 1) {
+        this.markers = [];
+      } else {
+        let index = this.markers.findIndex(it => it.closure_uid_503952747 === mar.closure_uid_503952747);
+        if (index !== -1) {
+          this.markers.splice(index, 1);
+        }
+      }
+    }.bind(this));
   }
 
   public async setTimeStart() {
@@ -134,7 +195,8 @@ export class AddLocationUserFreeComponent {
   public async select() {
     if (
       this.sport === "" ||
-      this.level === ""
+      this.level === "" ||
+      this.positions === ""
     ) {
       let empty = await HelpersProvider.me.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
@@ -149,10 +211,21 @@ export class AddLocationUserFreeComponent {
       return;
     }
 
+    if (this.markers.length === 0) {
+      let msgSelectMarkers = await HelpersProvider.me.getWords("ADDLOCATION.SELECTLOCATIONS");
+      this.alertCtrl.create({ message: msgSelectMarkers, buttons: ["Ok"] })
+        .present();
+      return;
+    }
+
     let location = {
+      repeatsDays: this.repeatsDays.join(","),
       positions: this.positions,
       sport: this.sport,
-      level: this.level
+      level: this.level,
+      markers: this.markers.map(it => { return { lat: it.position.lat(), lng: it.position.lng() } }),
+      timeStart: this.timeStart.toISOString(),
+      timeEnd: this.timeEnd.toISOString()
     };
 
     this.viewCtrl.dismiss(location);

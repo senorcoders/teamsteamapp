@@ -150,6 +150,8 @@ import { ImageViewPage } from '../pages/image-view/image-view';
 import { PlayerCloseEventPage } from '../pages/player-close-event/player-close-event';
 import { PlayerCloseEventPageModule } from '../pages/player-close-event/player-close-event.module';
 import { AddLocationUserFreeComponent } from '../components/add-location-user-free/add-location-user-free';
+import { AgentFreePageModule } from '../pages/agent-free/agent-free.module';
+import { AgentFreePage } from '../pages/agent-free/agent-free';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -190,6 +192,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreatePlayerDetailsPageModule,
     NewEventPageModule,
     EditEventPageModule,
+    AgentFreePageModule,
     ChatPageModule,
     CameraPageModule,
     LibraryImagesPageModule,
@@ -288,7 +291,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EventCreatedComponent,
     ImageViewPage,
     PlayerCloseEventPage,
-    AddLocationUserFreeComponent
+    AddLocationUserFreeComponent,
+    AgentFreePage
   ],
   providers: [
     StatusBar,

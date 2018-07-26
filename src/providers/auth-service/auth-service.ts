@@ -93,7 +93,6 @@ export class AuthServiceProvider {
       user = this.User();
       MyApp.User = user;
       MyApp.User.role = user.roles[0];
-      MyApp.User.team = user.roles[0].team.id;
 
       await this.storage.set("role", MyApp.User.role);
 
@@ -103,10 +102,14 @@ export class AuthServiceProvider {
        * el time zona es para que la busquedad se haga correctamente, obteniendo el tiempo
        * que debe de ser segun su zona horaria
        */
-      await this.setTimeZoneTeam();
+      if (MyApp.User.role.hasOwnProperty("team")) {
+        MyApp.User.team = user.roles[0].team.id;
+        await this.setTimeZoneTeam();
+        //Para actualizar el nombre del equipo en menu slide
+        document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
 
-      //Para actualizar el nombre del equipo en menu slide
-      document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
+      }
+
       let t = this;
       this.zone.run(function () { t.changesUpdate(); });
       callback();
@@ -148,7 +151,9 @@ export class AuthServiceProvider {
     if (user != null) {
       MyApp.User = user;
       MyApp.User.role = role;
-      MyApp.User.team = role.team.id;
+      if (MyApp.User.role.hasOwnProperty("team")) {
+        MyApp.User.team = role.team.id;
+      }
       this.menuCtrl.swipeEnable(true);
       return true;
     }
@@ -168,10 +173,14 @@ export class AuthServiceProvider {
 
     //nos desubscribimos de las notifications push
     if (this.platform.is("cordova")) {
-      let un = await MyApp.me.pushObject.unregister();
-      console.log(un);
-      un = await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
-      console.log(un);
+      if (MyApp.me.pushObject !== undefined) {
+        await MyApp.me.pushObject.unregister();
+        if (MyApp.User.role.hasOwnProperty("team")) {
+
+          await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+        }
+      }
+
       let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
       console.log(success);
       await HelpersProvider.me.backgroundGeolocation.stop();
@@ -201,10 +210,13 @@ export class AuthServiceProvider {
   public async updateUser(user: any) {
 
     let token = MyApp.User.token;
-    let team = MyApp.User.team;
+    if (MyApp.User.role.hasOwnProperty("team")) {
+      let team = MyApp.User.team;
+      user.team = team;
+    }
+
     let role = MyApp.User.role;
     user.token = token;
-    user.team = team;
     user.role = role;
     await this.storage.set("user", user);
     MyApp.User = user;

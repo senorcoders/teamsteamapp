@@ -189,6 +189,7 @@
     "PASSWORD": "Password",
     "EMAILINVALID": "Malformed Email",
     "INVALIDUSERNAMEYPASS": "Incorrect Email",
+    "ERRORCONECTION": "Error in the conection",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",
     "SELECTFAMILY": "Select Your Family Member",
@@ -274,6 +275,8 @@
         "ACTION": "Add Location",
         "SELECTDAYS": "Select the days that this place frequents",
         "TIMESTART": "Time Start",
-        "TIMEEND": "Time End"
+        "TIMEEND": "Time End",
+        "SELECTLOCATIONS": "Select the locations on the map",
+        "ADDPLACES": "Add places"
     }
 }

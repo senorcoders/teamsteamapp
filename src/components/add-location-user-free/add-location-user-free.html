@@ -17,8 +17,8 @@
         {{"SPORT" | translate}}
       </ion-label>
       <ion-select [(ngModel)]="sport">
-        <ion-option value="baseball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
-        <ion-option value="football">{{"SPORTS.SOCCER" | translate}}</ion-option>
+        <ion-option value="baseball&softball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
+        <ion-option value="soccer">{{"SPORTS.SOCCER" | translate}}</ion-option>
         <ion-option value="basketball">{{"SPORTS.BASKETBALL" | translate}}</ion-option>
         <ion-option value="bowling">{{"SPORTS.BOWLING" | translate}}</ion-option>
         <ion-option value="cheerleading">{{"SPORTS.CHEERLEADING" | translate}}</ion-option>
@@ -34,7 +34,7 @@
         <ion-option value="track&field">{{"SPORTS.TRACK&FIELD" | translate}}</ion-option>
         <ion-option value="volleyball">{{"SPORTS.VOLLEYBALL" | translate}}</ion-option>
         <ion-option value="waterpolo">{{"SPORTS.WATERPOLO" | translate}}</ion-option>
-        <ion-option value="WRESTLING">{{"SPORTS.WRESTLING" | translate}}</ion-option>
+        <ion-option value="wrestling">{{"SPORTS.WRESTLING" | translate}}</ion-option>
       </ion-select>
     </ion-item>
 
@@ -92,7 +92,7 @@
   <div id="map_canvas" style="width: 100%; height: 300px; "></div>
 
   <ion-fab left bottom class="no-hide-maps">
-    <button ion-fab color="secondary" (click)="viewCtrl.dismiss()()">
+    <button ion-fab color="secondary" (click)="viewCtrl.dismiss()">
       <ion-icon name="md-close"></ion-icon>
     </button>
   </ion-fab>

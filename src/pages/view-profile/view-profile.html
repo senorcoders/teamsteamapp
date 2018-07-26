@@ -43,7 +43,7 @@
   <ion-list>
 
     
-    <ion-item (click)="selectTeams()">
+    <ion-item (click)="selectTeams()" *ngIf="user.hasOwnProperty('team')">
       <ion-icon name="ios-people" item-start></ion-icon>
       {{"TEAM" | translate}} {{team.name}}
     </ion-item>
@@ -55,31 +55,11 @@
       {{ "CLEARDEVICES" | translate}}
     </ion-item>
 
-    <!--ion-item (click)="goViewRequests()" [hidden]="isManagerRequest()">
-      <ion-icon name="md-git-pull-request" item-start></ion-icon>
-      {{ "REQUESTS" | translate}} {{team.request.length}}
-    </ion-item-->
-
-    <!-- <ion-item (click)="changePassword()">
-      <ion-icon name="md-create" item-start></ion-icon>
-      {{ "CHANGEPASS" | translate}}
-    </ion-item> -->
-
-    
-
-    <!-- <ion-item>
-      <ion-label floating>{{'LANGUAGE' | translate}}</ion-label>
-      
-    </ion-item> -->
     <ion-item (click)="openSelect()">
         <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
       {{'LANGUAGE' | translate}}
     </ion-item>
 
-    <!-- <ion-item [hidden]="user.role.name != 'Manager' ">
-      <ion-icon name="ios-people" item-start></ion-icon>
-      {{'CONTACTS' | translate}}
-    </ion-item> -->
     <ion-item (click)="logout()">
         <ion-icon class="fourth-bg" name="ios-log-out" item-start></ion-icon>
       {{'NAVMENU.LOGOUT' | translate}}

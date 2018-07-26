@@ -10,6 +10,8 @@ import { RegistrationPage } from '../registration/registration';
 //import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
 import { FormPlayerRegistrationPage } from '../form-player-registration/form-player-registration';
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
+import { MyApp } from '../../app/app.component';
+import { AgentFreePage } from '../agent-free/agent-free';
 
 /**
  * para logearse en el app
@@ -78,7 +80,11 @@ export class LoginPage {
         if(user){
           this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByName("white");
-          this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+          if (MyApp.User.hasOwnProperty("team")) {
+            this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+          } else {
+            this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
+          }
         }else if( err ){
 
           if( err.hasOwnProperty("message") ){

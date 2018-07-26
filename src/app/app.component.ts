@@ -23,6 +23,7 @@ import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
+import { AgentFreePage } from '../pages/agent-free/agent-free';
 
 
 @Component({
@@ -57,11 +58,11 @@ export class MyApp {
   public defaultImageUser = true;
 
   public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: "*", watch: "", newData: "" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: "*", watch: "", newData: "" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: "*", watch: "", newData: "" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: "*", watch: "chat", newData: "" },
-    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: "Manager", watch: "request", newData: "request" },
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "chat", newData: "" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" }
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
@@ -116,13 +117,19 @@ export class MyApp {
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
-      this.nav.root = EventsSchedulePage;
+
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
-      //Para actualizar el nombre del equipo en menu slide
-      let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-      document.getElementById("nameTeam").innerHTML = team.name;
+      //Si no es un agente libre
+      if (MyApp.User.hasOwnProperty("team")) {
+        this.nav.root = EventsSchedulePage;
+        //Para actualizar el nombre del equipo en menu slide
+        let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
+        document.getElementById("nameTeam").innerHTML = team.name;
+      } else {
+        this.nav.root = AgentFreePage;
+      }
 
       //console.log(this.user);
       let ramdon = new Date().getTime();
@@ -265,8 +272,19 @@ export class MyApp {
     if (valid === true) {
       return true;
     }
-    //console.log(MyApp.User.role.name, page.role);
-    return MyApp.User.role.name === page.role;
+
+    if (Object.prototype.toString.call(page.role) === "[object String]")
+      return MyApp.User.role.name === page.role;
+
+    if (Object.prototype.toString.call(page.role) === "[object Object]") {
+      if (page.role.not === MyApp.User.role.name)
+        return false;
+      else if (page.role.yes === MyApp.User.role.name)
+        return true;
+      else if(page.role.yes==="*"){
+        return true;
+      }
+    }
   }
 
   public static async initNotifcations() {
