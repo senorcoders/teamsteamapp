@@ -278,5 +278,12 @@
         "TIMEEND": "Time End",
         "SELECTLOCATIONS": "Select the locations on the map",
         "ADDPLACES": "Add places"
+    },
+    "AGENTFREE":{
+        "TITLE": "Nearby Events"
+    },
+    "PLACES":{
+        "TITLE": "Places",
+        "DELETE": "Remove "
     }
 }

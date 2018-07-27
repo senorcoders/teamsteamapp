@@ -218,7 +218,7 @@ export class AddLocationUserFreeComponent {
       return;
     }
 
-    let location = {
+    let location:any = {
       repeatsDays: this.repeatsDays.join(","),
       positions: this.positions,
       sport: this.sport,
@@ -227,6 +227,12 @@ export class AddLocationUserFreeComponent {
       timeStart: this.timeStart.toISOString(),
       timeEnd: this.timeEnd.toISOString()
     };
+    if (this.location !== undefined) {
+      if(this.location.hasOwnProperty("id")){
+        location.id = this.location.id;
+      }
+    }
+    
 
     this.viewCtrl.dismiss(location);
   }

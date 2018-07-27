@@ -24,6 +24,7 @@ import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { AgentFreePage } from '../pages/agent-free/agent-free';
+import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
 
 
 @Component({
@@ -63,7 +64,9 @@ export class MyApp {
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "chat", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent", yes: "Manager" }, watch: "request", newData: "request" },
-    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" }
+    { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
+    { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
+    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" },
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
@@ -167,7 +170,7 @@ export class MyApp {
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
   private async serviceNewDatas() {
     //get new requests
-    if (MyApp.User === null || MyApp.User === undefined)
+    if (MyApp.User === null || MyApp.User === undefined || MyApp.User.role.name==="FreeAgent")
       return;
 
     this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();

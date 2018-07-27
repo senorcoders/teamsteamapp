@@ -280,5 +280,12 @@
         "TIMEEND": "Hora Final",
         "SELECTLOCATIONS": "Seleccione las ubicaciones en el mapa",
         "ADDPLACES": "Add places"
+    },
+    "AGENTFREE":{
+        "TITLE": "Eventos Cercanos"
+    },
+    "PLACES":{
+        "TITLE": "Lugares",
+        "DELETE": "Eliminar "
     }
 }

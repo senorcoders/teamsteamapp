@@ -1,15 +1,15 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { AgentFreePage } from './agent-free';
+import { PlacesPlayerFreePage } from './places-player-free';
 import { TranslateModule } from '@ngx-translate/core';
 
 @NgModule({
   declarations: [
-    AgentFreePage,
+    PlacesPlayerFreePage,
   ],
   imports: [
-    IonicPageModule.forChild(AgentFreePage),
+    IonicPageModule.forChild(PlacesPlayerFreePage),
     TranslateModule.forChild()
   ],
 })
-export class AgentFreePageModule {}
+export class PlacesPlayerFreePageModule {}
