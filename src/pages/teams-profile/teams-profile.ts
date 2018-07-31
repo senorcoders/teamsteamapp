@@ -32,7 +32,9 @@ export class TeamsProfilePage {
   
   async getTeams(){
     try{
-      this.roles = MyApp.User.roles.map(function(it){
+      this.roles = MyApp.User.roles;
+      this.roles = this.roles.filter(it=>{return it.team !== undefined; });
+      this.roles = this.roles.map(function(it){
         let ramdon = new Date().getTime();
         it.team.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
         it.team.loadImage=false; 
@@ -68,7 +70,6 @@ export class TeamsProfilePage {
     await this.auth.setTimeZoneTeam();
     this.navCtrl.pop();
     await HelpersProvider.me.setGeofences(200);
-    console.log("que pasa");
     
   }
 

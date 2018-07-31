@@ -154,6 +154,8 @@ import { AgentFreePageModule } from '../pages/agent-free/agent-free.module';
 import { AgentFreePage } from '../pages/agent-free/agent-free';
 import { PlacesPlayerFreePageModule } from '../pages/places-player-free/places-player-free.module';
 import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
+import { EventTeamJoinPageModule } from '../pages/event-team-join/event-team-join.module';
+import { EventTeamJoinPage } from '../pages/event-team-join/event-team-join';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -231,7 +233,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmojiPickerComponentModule,
     ImageViewPageModule,
     PlayerCloseEventPageModule,
-    PlacesPlayerFreePageModule
+    PlacesPlayerFreePageModule,
+    EventTeamJoinPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -296,7 +299,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PlayerCloseEventPage,
     AddLocationUserFreeComponent,
     AgentFreePage,
-    PlacesPlayerFreePage
+    PlacesPlayerFreePage,
+    EventTeamJoinPage
   ],
   providers: [
     StatusBar,

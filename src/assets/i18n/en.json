@@ -285,5 +285,7 @@
     "PLACES":{
         "TITLE": "Places",
         "DELETE": "Remove "
-    }
+    },
+    "TEAMREADY": "You are already registered in this team",
+    "CHANGEROLE": "Change Role"
 }

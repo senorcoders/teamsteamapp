@@ -237,9 +237,27 @@ export class AuthServiceProvider {
 
     await this.storage.set("role", role);
     MyApp.User.role = role;
-    MyApp.User.team = role.team.id;
-    this.user.team = role.team.id;
-    MyApp.notifcations(MyApp.User.team);
+
+    try {
+      if (role.hasOwnProperty("team")) {
+        MyApp.User.team = role.team.id;
+        this.user.team = role.team.id;
+        MyApp.notifcations(MyApp.User.team);
+      }
+
+
+      if (role.name === "FreeAgent") {
+        await MyApp.me.pushObject.unregister();
+        if (MyApp.User.role.hasOwnProperty("team")) {
+          await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+        }
+        delete MyApp.User.team;
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
   }
 
 }

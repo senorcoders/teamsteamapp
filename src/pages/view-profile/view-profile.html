@@ -60,6 +60,11 @@
       {{'LANGUAGE' | translate}}
     </ion-item>
 
+    <ion-item (click)="changeToTeams()" *ngIf="IsValidToTeam()">
+        <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
+        {{ "CHANGEROLE" | translate}}
+      </ion-item>
+
     <ion-item (click)="logout()">
         <ion-icon class="fourth-bg" name="ios-log-out" item-start></ion-icon>
       {{'NAVMENU.LOGOUT' | translate}}

@@ -130,9 +130,10 @@ export class AddLocationUserFreeComponent {
       anchor: new google.maps.Point(0, 8)
     };
 
+    let latLng = new google.maps.LatLng(mark.lat, mark.lng);
     let mar = new google.maps.Marker({
       animation: 'DROP',
-      position: mark,
+      position: latLng,
       map: this.map,
       icon: image
     });

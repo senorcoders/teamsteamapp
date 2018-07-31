@@ -14,7 +14,7 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item *ngFor="let mar of events">
+    <ion-item *ngFor="let mar of events" (click)="goEventTeam(mar)" >
       {{mar.event.name}} {{mar.event.team.name}}
     </ion-item>
   </ion-list>

@@ -287,5 +287,7 @@
     "PLACES":{
         "TITLE": "Lugares",
         "DELETE": "Eliminar "
-    }
+    },
+    "TEAMREADY": "Ya estás registrado en este equipo",
+    "CHANGEROLE": "Cambiar Rol"
 }

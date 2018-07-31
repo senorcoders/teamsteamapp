@@ -12,6 +12,7 @@ import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 import { PrivacyPolicePage } from '../privacy-police/privacy-police';
 import { ListPlayersPaymentPage } from '../list-players-payment/list-players-payment';
 import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-player';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -23,41 +24,47 @@ export class ViewProfilePage {
   @ViewChild('mySelect') selectRef: Select;
 
 
-  public user:any={ options : { language: "en" } };
-  public lang:string='';
-  public image=false;
-  public team:any={ name : "", request: [] };
-  public edit=false;
+  public user: any = { options: { language: "en" } };
+  public lang: string = '';
+  public image = false;
+  public team: any = { name: "", request: [] };
+  public edit = false;
   public icon = 'ios-create-outline';
-  public request:Array<any>=[];
-  public manager:any={};
+  public request: Array<any> = [];
+  public manager: any = {};
+  public roles: Array<any> = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
     public auth: AuthServiceProvider, private loadingCtrl: LoadingController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController, public storage: Storage
   ) {
 
     this.user = MyApp.User;
-    if( !this.user.hasOwnProperty("options") ){
-      this.user.options = { language : 'en' };
+    if (!this.user.hasOwnProperty("options")) {
+      this.user.options = { language: 'en' };
     }
 
     this.lang = this.user.options.language;
 
     let ramdon = new Date().getTime();
-    this.user.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ this.user.id);
+    this.user.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id);
 
   }
 
-  async ionViewWillEnter(){
-    try{
+  async ionViewWillEnter() {
+    try {
+
+      let user: any = await this.storage.get("user");
+      if (user.roles !== undefined && user.roles !== null) {
+        this.roles = user.roles;
+      }
 
       //console.log(this.manager);
 
-      this.team = await this.http.get("/team/profile/"+ MyApp.User.team).toPromise();
+      this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
       //console.log(this.team);
-      if( !this.team.hasOwnProperty("request") ){
+      if (!this.team.hasOwnProperty("request")) {
         this.team.request = [];
       }
 
@@ -73,63 +80,63 @@ export class ViewProfilePage {
       // }
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }
 
-  public async loadImage(){
+  public async loadImage() {
     this.image = true;
   }
 
-  public async changeLang(){
+  public async changeLang() {
 
-    try{
+    try {
 
       let options = this.user.options;
       options.language = this.lang;
 
-      /*let updatedUser = */await this.http.put("/user/"+ this.user.id, { options }).toPromise();
+      /*let updatedUser = */await this.http.put("/user/" + this.user.id, { options }).toPromise();
       await this.auth.saveOptions(options);
       //console.log(updatedUser);
       this.helper.setLanguage(this.lang);
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
 
     }
   }
 
-  public async changePhoto(){
+  public async changePhoto() {
 
     let unexpectM = await this.helper.getWords("ERORUNEXC"),
-    savingM = await this.helper.getWords("SAVING");
+      savingM = await this.helper.getWords("SAVING");
 
     let load = this.loadingCtrl.create({ content: savingM });
 
-    try{
+    try {
 
-      let image = await this.helper.Camera({ width: 170, height: 170, quality : 80 }, true);
-      if( image === undefined )
+      let image = await this.helper.Camera({ width: 170, height: 170, quality: 80 }, true);
+      if (image === undefined)
         return;
-        
-      load.present({ disableApp : true });
+
+      load.present({ disableApp: true });
 
       await this.http.post("/images/users", {
-        id : MyApp.User.id,
-        image : image
+        id: MyApp.User.id,
+        image: image
       }).toPromise();
 
       let ramdon = new Date().getTime();
-      this.user.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ this.user.id);
+      this.user.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id);
 
       //es nessasario actualizar la image delnav manualmente
       document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);
 
       load.dismiss();
     }
-    catch(e){
+    catch (e) {
       console.error(e);
       load.dismiss();
       this.alertCtrl.create({ title: "Error", message: unexpectM }).present();
@@ -137,78 +144,82 @@ export class ViewProfilePage {
 
   }
 
-  public success(){
+  public success() {
     this.image = true;
   }
 
-  public async mCode(){
+  public async mCode() {
 
     let message = await this.helper.getWords("MCODE"),
-    cancelM = await this.helper.getWords("CANCEL"),
-    resendVer = await this.helper.getWords("RESENDVERIFICATIONCODE");
+      cancelM = await this.helper.getWords("CANCEL"),
+      resendVer = await this.helper.getWords("RESENDVERIFICATIONCODE");
 
-    this.alertCtrl.create({ message: message, buttons: [ 
-      { text:cancelM },
-      { text: resendVer, handler: function(){ this.resendCode() }.bind(this) }
-    ]})
-    .present();
+    this.alertCtrl.create({
+      message: message, buttons: [
+        { text: cancelM },
+        { text: resendVer, handler: function () { this.resendCode() }.bind(this) }
+      ]
+    })
+      .present();
   }
 
 
-  public async editNameFull(){
+  public async editNameFull() {
 
     let entryM = await this.helper.getWords("ENTRYFULLNAME"),
-    nameM = await this.helper.getWords("FIRSTNAME"),
-    lastNameM = await this.helper.getWords("LASTNAME"),
-    cancelM = await this.helper.getWords("CANCEL");
+      nameM = await this.helper.getWords("FIRSTNAME"),
+      lastNameM = await this.helper.getWords("LASTNAME"),
+      cancelM = await this.helper.getWords("CANCEL");
 
-    try{
-      
-      this.alertCtrl.create({ title: entryM, inputs: [
-        {name: "firstName", type: "text", placeholder: nameM},
-        {name: "lastName", type: "text", placeholder: lastNameM}
-      ], buttons: [
-        {text: cancelM },
-        { text: "Ok", handler : function(data){ this.updateFullName(data.firstName, data.lastName) }.bind(this) }
-      ]}).present();
+    try {
+
+      this.alertCtrl.create({
+        title: entryM, inputs: [
+          { name: "firstName", type: "text", placeholder: nameM },
+          { name: "lastName", type: "text", placeholder: lastNameM }
+        ], buttons: [
+          { text: cancelM },
+          { text: "Ok", handler: function (data) { this.updateFullName(data.firstName, data.lastName) }.bind(this) }
+        ]
+      }).present();
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }
 
-  public async updateFullName(name, last){
+  public async updateFullName(name, last) {
 
     name = name || "";
     last = last || "";
 
-    let params:any = {};
-    
-    if( name == "" && last == "" )
+    let params: any = {};
+
+    if (name == "" && last == "")
       return;
 
-    if( name !== "" ){
+    if (name !== "") {
       params.firstName = name;
     }
 
-    if( last !== "" ){
+    if (last !== "") {
       params.lastName = last;
     }
 
     let updatingM = await this.helper.getWords("UPDATING");
     let load = this.loadingCtrl.create({ content: updatingM });
-    load.present({ disableApp : true });
+    load.present({ disableApp: true });
 
-    try{
+    try {
 
-      let newUser = await this.http.put("/user/"+ this.user.id, params).toPromise();
+      let newUser = await this.http.put("/user/" + this.user.id, params).toPromise();
       this.auth.updateUser(newUser);
       this.user = newUser;
 
       load.dismiss();
     }
-    catch(e){
+    catch (e) {
       load.dismiss();
       let unecxM = await this.helper.getWords("ERORUNEXC");
       this.alertCtrl.create({ title: "Error", message: unecxM }).present();
@@ -217,51 +228,53 @@ export class ViewProfilePage {
 
   }
 
-  public async editUserName(){
+  public async editUserName() {
     let entryM = await this.helper.getWords("ENTRYFULLNAME"),
-    cancelM = await this.helper.getWords("CANCEL");
+      cancelM = await this.helper.getWords("CANCEL");
 
-    try{
-      
-      this.alertCtrl.create({ title: entryM,
+    try {
+
+      this.alertCtrl.create({
+        title: entryM,
         inputs: [
-        {name: "username", type: "text", placeholder: "username"},
-      ], buttons: [
-        {text: cancelM },
-        { text: "Ok", handler : function(data){ this.updateUsername(data.username) }.bind(this) }
-      ]}).present();
+          { name: "username", type: "text", placeholder: "username" },
+        ], buttons: [
+          { text: cancelM },
+          { text: "Ok", handler: function (data) { this.updateUsername(data.username) }.bind(this) }
+        ]
+      }).present();
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }
 
-  public async updateUsername(username){
+  public async updateUsername(username) {
 
     username = username || "";
 
-    let params:any = {};
-    
-    if( username === "" )
+    let params: any = {};
+
+    if (username === "")
       return;
 
     params.username = username;
 
     let updatingM = await this.helper.getWords("UPDATING");
     let load = this.loadingCtrl.create({ content: updatingM });
-    load.present({ disableApp : true });
+    load.present({ disableApp: true });
 
-    try{
+    try {
       //console.log(params);
-      let newUser = await this.http.put("/user/"+ this.user.id, params).toPromise();
+      let newUser = await this.http.put("/user/" + this.user.id, params).toPromise();
       //console.log(newUser);
       this.auth.updateUser(newUser);
       this.user = newUser;
 
       load.dismiss();
     }
-    catch(e){
+    catch (e) {
       load.dismiss();
       let unecxM = await this.helper.getWords("ERORUNEXC");
       this.alertCtrl.create({ title: "Error", message: unecxM }).present();
@@ -271,24 +284,24 @@ export class ViewProfilePage {
   }
 
   //este es para comprobar si el usuario desea editar datos
-  public editable(){
+  public editable() {
     return this.user.role.name != 'Manager' && !this.edit;
   }
 
-  public selectTeams(){
+  public selectTeams() {
     this.navCtrl.push(TeamsProfilePage);
   }
 
-  public viewContacts(){
+  public viewContacts() {
     this.navCtrl.push(ContactsProfilePage);
   }
 
-  public goViewRequests(){
-    this.navCtrl.push(ViewRequestsPage, {requests: this.team.request});
+  public goViewRequests() {
+    this.navCtrl.push(ViewRequestsPage, { requests: this.team.request });
   }
 
   // public async changePassword(){
-    
+
   //   let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
   //   newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
   //   newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
@@ -306,7 +319,7 @@ export class ViewProfilePage {
   //     ] });
 
   //   c.present();
-    
+
   // }
 
   // private async changePass(data){
@@ -314,7 +327,7 @@ export class ViewProfilePage {
   //   let current = data.current || "",
   //   newPass = data.newPass || "",
   //   againPass = data.passAgain || "";
-    
+
   //   if( newPass == "" || againPass == "" ){
 
   //     let emptM = await this.helper.getWords("EMPTYFIELDS");
@@ -359,15 +372,15 @@ export class ViewProfilePage {
 
   // }
 
-  public paymentsMonthly(){
+  public paymentsMonthly() {
     this.navCtrl.push(PaymentMonthlyPage);
   }
 
-  private async resendCode(){
-    
-    try{
+  private async resendCode() {
 
-      /*let resend = */await this.http.post("/user/resend-code", { 
+    try {
+
+      /*let resend = */await this.http.post("/user/resend-code", {
         id: MyApp.User.id,
         email: MyApp.User.email,
         verificationCode: MyApp.User.verificationCode
@@ -376,110 +389,167 @@ export class ViewProfilePage {
       //console.log(resend);
 
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
 
   }
 
-  public goAbout(){
+  public goAbout() {
     this.navCtrl.push(PrivacyPolicePage);
   }
 
-  public viewsPlayerPayments(){
+  public viewsPlayerPayments() {
     this.navCtrl.push(ListPlayersPaymentPage)
   }
 
-  public viewsPayments(){
+  public viewsPayments() {
     this.navCtrl.push(ViewPaymentsPlayerPage);
   }
 
-  public async changeEmailAlert(){
+  public async changeEmailAlert() {
 
     let emailM = await this.helper.getWords("EMAIL");
-    this.alertCtrl.create({ 
-      inputs: [ {name: "email", placeholder: emailM, type:"email"} ],
-      buttons: 
-      [
-        "Cancel",
-        {text: "Ok", handler: function(data){ this.changeEmail(data.email) }.bind(this) }
-      ]
+    this.alertCtrl.create({
+      inputs: [{ name: "email", placeholder: emailM, type: "email" }],
+      buttons:
+        [
+          "Cancel",
+          { text: "Ok", handler: function (data) { this.changeEmail(data.email) }.bind(this) }
+        ]
     })
-    .present();
+      .present();
   }
 
-  public async changeEmail(email){
+  public async changeEmail(email) {
 
     let valid = this.helper.validEmail(email);
-    if( valid === false ){
+    if (valid === false) {
       let M = await this.helper.getWords("EMAILINVALID");
       this.alertCtrl.create({ title: "Error", message: M })
-      .present();
+        .present();
       return;
     }
 
-    try{
-      let user:any = await this.http.put("/user/"+ MyApp.User.id, { email, verified: false }).toPromise();
+    try {
+      let user: any = await this.http.put("/user/" + MyApp.User.id, { email, verified: false }).toPromise();
       await this.auth.updateUser(user);
       this.user.email = user.email;
     }
-    catch(e){
+    catch (e) {
       console.error(e);
       let unexpectM = await this.helper.getWords("ERORUNEXC");
       this.alertCtrl.create({ title: "Error", message: unexpectM })
-      .present();
+        .present();
     }
 
   }
 
-  public isManagerRequest(){
-    
-    if( MyApp.User === null || MyApp.User === undefined )
+  public isManagerRequest() {
+
+    if (MyApp.User === null || MyApp.User === undefined)
       return true;
 
-    if( this.team.request.length !== 0 && MyApp.User.role.name === "Manager" ) return false;
+    if (this.team.request.length !== 0 && MyApp.User.role.name === "Manager") return false;
 
     return true;
   }
 
- 
 
-  showEdit(){
+
+  showEdit() {
     this.edit = !this.edit;
-    if(this.edit == false){
+    if (this.edit == false) {
       this.icon = 'ios-create-outline';
-    }else{
+    } else {
       this.icon = 'md-checkmark';
 
     }
   }
 
-  public answerDeleteDevices(){
+  public answerDeleteDevices() {
     this.helper.presentAlertStandar(this.deleteDevices.bind(this));
   }
 
-  public async deleteDevices(){
+  public async deleteDevices() {
     let load = this.helper.getLoadingStandar();
-    try{
-      await this.http.delete("/user/devices/"+ MyApp.User.id+ "/"+ this.helper.getDeviceInfo().uuid).toPromise();
+    try {
+      await this.http.delete("/user/devices/" + MyApp.User.id + "/" + this.helper.getDeviceInfo().uuid).toPromise();
       load.dismissAll();
     }
-    catch(e){
+    catch (e) {
       load.dismissAll();
       console.error(e);
       await this.helper.presentAlertErrorStandar();
     }
   }
 
-  public async logout(){
+  public async logout() {
     let load = HelpersProvider.me.getLoadingStandar();
     await MyApp.me.logout();
     load.dismissAll();
   }
 
-  openSelect()
-  {
-      this.selectRef.open();
+  openSelect() {
+    this.selectRef.open();
+  }
+
+  public IsValidToTeam(): Boolean {
+    let validTeam = false;
+    let validFree = false;
+
+    for (let rol of this.roles) {
+      if (rol.hasOwnProperty("team")) {
+        validTeam = true;
+      }
+      if (rol.name === "FreeAgent") {
+        validFree = true;
+      }
+    }
+
+    return validTeam && validFree;
+  }
+
+  public async changeToTeams() {
+    let role = null;
+    let free = false;
+    if (this.user.role.name === "FreeAgent") {
+      free = true;
+    }
+
+    for (let r of this.roles) {
+      if (free === true) {
+        if (r.hasOwnProperty("team")) {
+          role = r;
+          this.team = r.team;
+          break;
+        }
+      } else {
+        if (r.name === "FreeAgent") {
+          role = r;
+          break;
+        }
+      }
+    }
+
+    if (role === null) {
+      return;
+    }
+
+    if (role.name !== "FreeAgent") {
+      //Para actualizar el nombre del equipo en menu slide
+      document.getElementById("nameTeam").innerHTML = role.team.name;
+
+      await this.auth.setTimeZoneTeam();
+      await HelpersProvider.me.setGeofences(200);
+    } else {
+      delete this.user.team;
+    }
+
+    await this.auth.updateRole(role);
+
+
+
   }
 
 }

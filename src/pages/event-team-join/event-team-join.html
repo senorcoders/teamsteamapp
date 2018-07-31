@@ -1,0 +1,28 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{team.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-card>
+    <ion-item>
+      <ion-avatar *ngIf="loadImage" item-start>
+        <img [src]="event.imgSrc" (load)="loadImageSuccess()">
+      </ion-avatar>
+      <h2>{{event.name}}</h2>
+      <p>{{event.parsedDateTime[0]}} {{event.parsedDateTime[1]}} {{event.Time}}</p>
+    </ion-item>
+    <ion-card-content>
+      <p>
+        {{event.description}}
+      </p>
+    </ion-card-content>
+
+    <button ion-button (click)="joinTeam()">{{"REQUESTTEAM" | translate}}</button>
+  </ion-card>
+</ion-content>
