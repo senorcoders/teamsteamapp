@@ -75,6 +75,8 @@ export class EditEventPage {
   //index of event to update
   public index = 0;
 
+  public percentageNotification=100;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController,
@@ -108,6 +110,7 @@ export class EditEventPage {
     this.team = this.event.team;
     this.imageSrc = this.event.imageSrc;
     this.timeEnd = this.event.dateTimeEnd || "";
+    this.percentageNotification = this.event.percentageNotification || 100;
     if (this.timeEnd !== "") {
       this.timeEnd = moment(this.timeEnd).format("hh:mm a");
     }
@@ -313,6 +316,12 @@ export class EditEventPage {
       return;
     }
 
+    if(this.percentageNotification > 100){
+      this.percentageNotification = 100;
+    }
+    if(this.percentageNotification < 0){
+      this.percentageNotification = 0;
+    }
 
     let event: any = {
       team: this.team,
@@ -324,7 +333,8 @@ export class EditEventPage {
       repeats: this.repeats,
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
-      location: locate
+      location: locate,
+      percentageNotification: this.percentageNotification
     };
     if (this.timeEnd !== '') {
       event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()

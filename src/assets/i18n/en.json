@@ -51,7 +51,8 @@
             "ONE": "Your event",
             "TWO": "has been saved",
             "THREE": " successfully"
-        }
+        },
+        "PORCENTAGENOTIFICATION": "Percentage of Assistance To Receive Notification"
     },
     "NEWTEAM":{
         "TITLE": "New Team",

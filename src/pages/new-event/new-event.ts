@@ -61,6 +61,8 @@ export class NewEventPage {
   //Para mostrar el mapa sin usar el plugin
   directionsDisplay = new google.maps.DirectionsRenderer;
 
+  public percentageNotification=100;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public loading: LoadingController,
     private auth: AuthServiceProvider, private http: HttpClient,
@@ -273,19 +275,25 @@ export class NewEventPage {
         }).present();
         return;
     }*/
+    if(this.percentageNotification > 100){
+      this.percentageNotification = 100;
+    }
+    if(this.percentageNotification < 0){
+      this.percentageNotification = 0;
+    }
 
     let event: any = {
       team: this.team,
       name: this.name,
       type: this.type,
-      // attendeceTracking: this.attendeceTracking,
       optionalInfo: this.optionalInfo,
       description: this.description,
       user: MyApp.User.id,
       repeats: this.repeats,
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
-      location: locate
+      location: locate,
+      percentageNotification: this.percentageNotification
     };
     if (this.timeEnd !== '') {
       event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()

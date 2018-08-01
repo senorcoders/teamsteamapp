@@ -52,7 +52,8 @@
             "ONE": "Su evento",
             "TWO": "se ha guardado",
             "THREE": "con éxito"
-        }
+        },
+        "PORCENTAGENOTIFICATION": "Porcentaje de Asistencia para Recibir Notificación"
     },
     "NEWTEAM":{
         "TITLE": "Nuevo Equipo",
