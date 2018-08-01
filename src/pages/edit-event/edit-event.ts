@@ -76,6 +76,8 @@ export class EditEventPage {
   public index = 0;
 
   public percentageNotification=100;
+  public searchPlayer = false;
+  public searchPlayers = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation,
@@ -111,6 +113,10 @@ export class EditEventPage {
     this.imageSrc = this.event.imageSrc;
     this.timeEnd = this.event.dateTimeEnd || "";
     this.percentageNotification = this.event.percentageNotification || 100;
+    this.searchPlayer = this.event.searchPlayer || false;
+    if(this.searchPlayer===true){
+      this.searchPlayers = this.event.searchPlayers.split(",");
+    }
     if (this.timeEnd !== "") {
       this.timeEnd = moment(this.timeEnd).format("hh:mm a");
     }
@@ -163,6 +169,22 @@ export class EditEventPage {
 
     load.dismissAll();
 
+  }
+
+  public addPlayerSearch() {
+    this.searchPlayers.push("");
+  }
+
+  public removePlayerSearch(index) {
+    if (this.searchPlayers.length === 1) {
+      this.searchPlayers = [];
+    } else {
+      this.searchPlayers.splice(index, 1);
+    }
+  }
+
+  public trackByIndex(index: number) {
+    return index;
   }
 
   public selectDay(key: string) {
@@ -273,6 +295,20 @@ export class EditEventPage {
       return;
     }
 
+    //Para validar el campo de jugadores a buscar
+    if (this.searchPlayer === true) {
+      this.searchPlayers = this.searchPlayers.filter(it => {
+        return it !== "";
+      });
+      if (this.searchPlayers.join("") === "") {
+        let msg = await this.helper.getWords("NEWEVENT.ADDPOSITION");
+        this.alertCtrl.create({ message: msg, buttons: ["Ok"] }).present();
+        this.load.dismiss();
+        return;
+      }
+    }
+    let searchPlayers = this.searchPlayers.join(",");
+
     //create el object fo send to location event
     let locate: any;
     if (this.locationChange === false) {
@@ -334,8 +370,12 @@ export class EditEventPage {
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
       location: locate,
-      percentageNotification: this.percentageNotification
+      percentageNotification: this.percentageNotification,
+      searchPlayer: this.searchPlayer
     };
+    if(event.searchPlayer===true){
+      event.searchPlayers = searchPlayers;
+    }
     if (this.timeEnd !== '') {
       event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()
     }
@@ -359,7 +399,7 @@ export class EditEventPage {
       if (this.date == '') {
         this.load.dismiss();
         this.alertCtrl.create({
-          title: "Required",
+          title: requiredM,
           message: dateM + " " + isRequired,
           buttons: ["Ok"]
         }).present();

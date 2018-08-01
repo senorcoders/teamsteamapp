@@ -52,7 +52,10 @@
             "TWO": "has been saved",
             "THREE": " successfully"
         },
-        "PORCENTAGENOTIFICATION": "Percentage of Assistance To Receive Notification"
+        "PORCENTAGENOTIFICATION": "Percentage of Assistance To Receive Notification",
+        "SEARCHPLAYER": "Search players",
+        "POSITION": "Position",
+        "ADDPOSITION": "Add the positions of the players you want to search"
     },
     "NEWTEAM":{
         "TITLE": "New Team",

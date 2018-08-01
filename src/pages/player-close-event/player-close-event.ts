@@ -18,7 +18,8 @@ export class PlayerCloseEventPage {
 
   triggerPLayer: any;
   players: Array<any> = [];
-  event: any={name:""};
+  event: any = { name: "" };
+  roles = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public socket: WebSocketsProvider
@@ -31,8 +32,8 @@ export class PlayerCloseEventPage {
     this.event = await this.http.get("/event/" + this.navParams.get("eventID")).toPromise() as any;
     let events = await this.parserEvents([this.event]);
     this.event = events[0];
-    let date = moment(this.event.parsedDateTime[0]+ this.event.parsedDateTime[1]+ this.event.Time, "MMMMDDhh:mm a")
-    
+    let date = moment(this.event.parsedDateTime[0] + this.event.parsedDateTime[1] + this.event.Time, "MMMMDDhh:mm a")
+
     //Para obtener la location del evento
     if (this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng")) {
       this.event.origin = { lat: this.event.location.lat, lng: this.event.location.lng };
@@ -54,14 +55,27 @@ export class PlayerCloseEventPage {
       }.bind(this));
     }
 
-    this.players = await this.http.get(`/playerclose/${MyApp.User.team}/${date.toISOString()}/${moment().toISOString()}/${this.event.origin.lat}/${this.event.origin.lng}`).toPromise() as any;
-    if (this.triggerPLayer !== undefined) {
-      let index = this.players.findIndex(it => it.user.id === this.triggerPLayer.user.id);
-      if (index === -1) this.players.push(this.triggerPLayer);
-    }
-    console.log(this.players);
+    //Para buscar el team actual
+    this.roles = MyApp.User.roles;
+    this.roles = this.roles.filter(it => { return it.team !== undefined; });
+    let role = this.roles.find(it => {
+      return it.team.id === MyApp.User.team;
+    })
 
-    this.socket.subscribeWithPush("player-near."+ this.event.id, function (player) {
+    //si se encontro el rol y el evento
+    //Tiene habilitado buscar player
+    if (role !== undefined && this.event.hasOwnProperty("searchPlayer") && 
+      this.event.searchPlayer === true
+    ) {
+      this.players = await this.http.get(`/playerclose/${role.team.sport}/${this.event.searchPlayers}/${this.event.origin.lat}/${this.event.origin.lng}/20`).toPromise() as any;
+      if (this.triggerPLayer !== undefined) {
+        let index = this.players.findIndex(it => it.user.id === this.triggerPLayer.user.id);
+        if (index === -1) this.players.push(this.triggerPLayer);
+      }
+      console.log(this.players);
+    }
+
+    this.socket.subscribeWithPush("player-near." + this.event.id, function (player) {
       let index = this.players.findIndex(it => it.user.id === player.user.id);
       if (index === -1) this.players.push(this.triggerPLayer);
       console.log(this.players);
@@ -230,8 +244,8 @@ export class PlayerCloseEventPage {
 
   }
 
-  public toChat(player){
-    this.navCtrl.push(ChatOnePersonPage, {user: player.user});
+  public toChat(player) {
+    this.navCtrl.push(ChatOnePersonPage, { user: player.user });
   }
 
 }

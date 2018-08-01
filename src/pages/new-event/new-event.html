@@ -83,6 +83,21 @@
       <ion-input type="number" [(ngModel)]="percentageNotification"> </ion-input>
     </ion-item>
 
+    <ion-item>
+      <ion-label>{{'NEWEVENT.SEARCHPLAYER' | translate}}?</ion-label>
+      <ion-toggle [(ngModel)]="searchPlayer"></ion-toggle>
+    </ion-item>
+
+    <ion-item *ngFor="let play of searchPlayers; let i=index; trackBy:trackByIndex" [hidden]="!searchPlayer">
+      <ion-label floating>{{i+1}}. {{'NEWEVENT.POSITION' | translate}}</ion-label>
+      <ion-input [(ngModel)]="searchPlayers[i]"></ion-input>
+      <ion-icon color="primary" item-end name="md-remove-circle" (click)="removePlayerSearch(i)"></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <button ion-button (click)="addPlayerSearch()" [hidden]="!searchPlayer" >{{"ROSTER.CREATEPLAYER" | translate}}</button>
+    </ion-item>
+
   </ion-list>
 
   <ion-list>

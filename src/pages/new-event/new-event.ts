@@ -21,7 +21,7 @@ export class NewEventPage {
 
   private team: any;
   map: any;
-  marker:any;
+  marker: any;
 
   load: Loading;
   public image: boolean = false;
@@ -61,7 +61,9 @@ export class NewEventPage {
   //Para mostrar el mapa sin usar el plugin
   directionsDisplay = new google.maps.DirectionsRenderer;
 
-  public percentageNotification=100;
+  public percentageNotification = 100;
+  public searchPlayer = false;
+  public searchPlayers = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public loading: LoadingController,
@@ -81,7 +83,7 @@ export class NewEventPage {
     //cargamos google maps si a un no ha cargado
     if (HelpersProvider.me.enableMapsLocation === false)
       await HelpersProvider.me.reloadGoogleplaces();
-    
+
     /***
      * Para mostrar la ubicacion actual
      */
@@ -115,6 +117,22 @@ export class NewEventPage {
 
     // load.dismissAll();
 
+  }
+
+  public addPlayerSearch() {
+    this.searchPlayers.push("");
+  }
+
+  public removePlayerSearch(index) {
+    if (this.searchPlayers.length === 1) {
+      this.searchPlayers = [];
+    } else {
+      this.searchPlayers.splice(index, 1);
+    }
+  }
+
+  public trackByIndex(index: number) {
+    return index;
   }
 
   public getSelectDays(key: string) {
@@ -224,13 +242,27 @@ export class NewEventPage {
       return;
     }
 
+    //Para validar el campo de jugadores a buscar
+    if (this.searchPlayer === true) {
+      this.searchPlayers = this.searchPlayers.filter(it => {
+        return it !== "";
+      });
+      if (this.searchPlayers.join("") === "") {
+        let msg = await this.helper.getWords("NEWEVENT.ADDPOSITION");
+        this.alertCtrl.create({ message: msg, buttons: ["Ok"] }).present();
+        this.load.dismiss();
+        return;
+      }
+    }
+    let searchPlayers = this.searchPlayers.join(",");
+
     //create el object fo send to location event
     let locate: any;
     if (this.location.change === false) {
       locate = {};
     } else {
       let l = this.marker.getPosition();
-      locate = { lat : l.lat(), lng: l.lng() };
+      locate = { lat: l.lat(), lng: l.lng() };
     }
 
     locate.address = this.address;
@@ -275,10 +307,10 @@ export class NewEventPage {
         }).present();
         return;
     }*/
-    if(this.percentageNotification > 100){
+    if (this.percentageNotification > 100) {
       this.percentageNotification = 100;
     }
-    if(this.percentageNotification < 0){
+    if (this.percentageNotification < 0) {
       this.percentageNotification = 0;
     }
 
@@ -293,8 +325,12 @@ export class NewEventPage {
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
       location: locate,
-      percentageNotification: this.percentageNotification
+      percentageNotification: this.percentageNotification,
+      searchPlayer: this.searchPlayer
     };
+    if(event.searchPlayer===true){
+      event.searchPlayers = searchPlayers;
+    }
     if (this.timeEnd !== '') {
       event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()
     }
@@ -319,7 +355,7 @@ export class NewEventPage {
       if (this.date == '') {
         this.load.dismiss();
         this.alertCtrl.create({
-          title: "Required",
+          title: requiredM,
           message: dateM + " " + isRequired,
           buttons: ["Ok"]
         }).present();

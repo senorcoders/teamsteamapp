@@ -53,7 +53,10 @@
             "TWO": "se ha guardado",
             "THREE": "con éxito"
         },
-        "PORCENTAGENOTIFICATION": "Porcentaje de Asistencia para Recibir Notificación"
+        "PORCENTAGENOTIFICATION": "Porcentaje de Asistencia para Recibir Notificación",
+        "SEARCHPLAYER": "Buscar Jugadores",
+        "POSITION": "Posición",
+        "ADDPOSITION": "Agregue las posiciones de los jugadores que quiere buscar"
     },
     "NEWTEAM":{
         "TITLE": "Nuevo Equipo",

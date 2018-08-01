@@ -112,7 +112,7 @@ export class EventPage {
     //   this.user.role.name
     // );
     
-    if(now.isAfter(date) && now.isBefore(dateEvent) && this.user.role.name==='Manager'){
+    if( EventsSchedulePage.by !== "past" ){
       this.enablePlayerClose = true;
     }
     console.log(this.enablePlayerClose);
