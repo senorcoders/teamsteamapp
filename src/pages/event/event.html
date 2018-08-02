@@ -100,7 +100,10 @@
     </ion-item>
 
     <div [hidden]="!location.change" (dblclick)="enableMoveMap()" id="map_canvas" style="width: 100%; height: 250px; "></div>
-
+    <div id="map_before" [hidden]="location.change">
+        <ion-spinner></ion-spinner>
+    </div>
+    
     <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
       <p>{{location.place.subAdministrativeArea}}</p>
       <p>{{location.place.thoroughfare}}</p>

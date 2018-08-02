@@ -105,7 +105,7 @@ export class EditEventPage {
     this.repeatsDays = this.event.repeatsDays.split(",") || [];
     this.repeatsDaily = this.event.repeatsDaily;
     this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("DD MMM YYYY");
-    this.time = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("hh:mm a");
+    this.time = this.event.Time;
     this.attendeceTracking = this.event.attendeceTracking;
     this.optionalInfo = this.event.optionalInfo;
     this.description = this.event.description;

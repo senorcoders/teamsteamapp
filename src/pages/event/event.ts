@@ -63,8 +63,8 @@ export class EventPage {
   directionsService = new google.maps.DirectionsService;
   directionsDisplay = new google.maps.DirectionsRenderer;
 
-  public enablePlayerClose=false;
-  public idEventPlayerClose:number;
+  public enablePlayerClose = false;
+  public idEventPlayerClose: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
@@ -87,38 +87,17 @@ export class EventPage {
 
     this.event = e;
     this.index = this.navParams.get("index");
-    console.log(this.event);
 
     //Para saber si se tiene que motras la opcion para ver jugadores cercanos a un evento
     this.checkEnablePlayerClose();
-    this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000*60);
+    this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
 
     //for image user that published events
     let r = new Date().getTime();
     this.imgUser = interceptor.transformUrl("/images/" + r + "/users&thumbnail/" + this.event.user);
   }
 
-  public checkEnablePlayerClose(){
-    let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1]+ this.event.Time, "MMMM/DDhh:mm a");
-    let date = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1]+ this.event.Time, "MMMM/DDhh:mm a");
-    date.subtract(30, "minutes");
-    let now = moment();
-    // console.log(
-    //   now.format("DD/MM/YYYY hh:mm:ss a"),
-    //   date.format("DD/MM/YYYY hh:mm:ss a"),
-    //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
-    //   now.isAfter(date),
-    //   now.isBefore(dateEvent),
-    //   this.user.role.name
-    // );
-    
-    if( EventsSchedulePage.by !== "past" ){
-      this.enablePlayerClose = true;
-    }
-    console.log(this.enablePlayerClose);
-  }
-
-  async ngOnInit() {
+  async ionViewDidLoad() {
 
     //para obtener los trackings del evento
     try {
@@ -141,7 +120,6 @@ export class EventPage {
     this.username = userPublisher.username;
 
     //for geoconder location, obtener por nombre de location
-    this.location.change = false;
     this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
     try {
 
@@ -150,7 +128,6 @@ export class EventPage {
         let places = await this.helper.locationToPlaces(this.location.position);
         if (places === null) return;
         this.location.place = places[0];
-        this.location.change = true;
       } else {
 
         let geocoder = new google.maps.Geocoder()
@@ -162,7 +139,6 @@ export class EventPage {
           if (res.geometry) {
             let lat = res.geometry.location.lat();
             let lot = res.geometry.location.lng();
-            this.zone.run(function () { this.location.change = true; }.bind(this));
             this.loadMap = this.loadMap.bind(this);
             this.loadMap(lat, lot);
           }
@@ -219,6 +195,27 @@ export class EventPage {
     this.loadImage = true;
   }
 
+  public checkEnablePlayerClose() {
+    let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
+    let date = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
+    date.subtract(30, "minutes");
+    let now = moment();
+    // console.log(
+    //   now.format("DD/MM/YYYY hh:mm:ss a"),
+    //   date.format("DD/MM/YYYY hh:mm:ss a"),
+    //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
+    //   now.isAfter(date),
+    //   now.isBefore(dateEvent),
+    //   this.user.role.name
+    // );
+
+    if (EventsSchedulePage.by !== "past") {
+      this.enablePlayerClose = true;
+    }
+    console.log(this.enablePlayerClose);
+  }
+
+
   //Para obtener los tracking de event
   private async getTrackings(event) {
 
@@ -249,7 +246,7 @@ export class EventPage {
 
   async loadMap(lat, lot) {
 
-    this.load = this.helper.getLoadingStandar();
+    //this.load = this.helper.getLoadingStandar();
 
     let mapOptions: any = {
       center: {
@@ -260,6 +257,8 @@ export class EventPage {
     };
 
     this.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
+    this.map.setOptions({ draggable: false });
+
 
     this.directionsDisplay.setMap(this.map);
 
@@ -283,12 +282,15 @@ export class EventPage {
       icon: image
     });
 
+    google.maps.event.addListenerOnce(this.map, 'idle', function () {
+      this.location.change = true;
+    }.bind(this));
+
     /***
      * Para mostrar direcciones del evento, en el mapa
      */
     let resp: any;
     resp = await (this.geolocation as any).getCurrentPosition();
-    console.log("location", resp);
     let origin = { lat: resp.coords.latitude, lng: resp.coords.longitude };
 
     //Para la route en uato
@@ -302,12 +304,12 @@ export class EventPage {
       }
     });
 
-    this.load.dismissAll();
+    //this.load.dismissAll();
 
   }
 
-  public enableMoveMap(){
-    this.map.setOptions({draggable: true});
+  public enableMoveMap() {
+    this.map.setOptions({ draggable: true });
   }
 
   public async remove() {
@@ -451,7 +453,7 @@ export class EventPage {
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(response) {
 
-    if( EventsSchedulePage.by === "past" ) return;
+    if (EventsSchedulePage.by === "past") return;
 
     let guardar = this.tracking.user !== undefined;
     try {
@@ -478,19 +480,19 @@ export class EventPage {
   }
 
   public async toAssistence() {
-    if( this.event.repeats === true ){
+    if (this.event.repeats === true) {
       this.modalCtrl.create(AssistencesComponent, { event: this.event })
-      .present();
-    }else{
+        .present();
+    } else {
       this.modalCtrl.create(AssistenceComponent, { repeats: false, event: this.event })
-      .present();
+        .present();
     }
-    
+
 
   }
 
-  public toPlayerClose(){
-    this.navCtrl.push(PlayerCloseEventPage, {eventID: this.event.id});
+  public toPlayerClose() {
+    this.navCtrl.push(PlayerCloseEventPage, { eventID: this.event.id });
   }
 
   public async asignStatus(status) {

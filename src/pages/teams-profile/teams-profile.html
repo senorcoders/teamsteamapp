@@ -17,7 +17,7 @@
 
     <ion-item *ngFor="let role of roles;" >
       <ion-avatar item-start>
-        <img src="./assets/imgs/team.png" [hidden]="role.team.loadImage" (click)="setTeam(role)" >
+        <img src="./assets/imgs/logo-login.png" [hidden]="role.team.loadImage" (click)="setTeam(role)" >
         <img [src]="role.team.imageSrc" [hidden]="!role.team.loadImage" (load)="loadImage(role)" (click)="setTeam(role)" >
       </ion-avatar> 
       <p (click)="setTeam(role)">{{role.team.name}}</p>
