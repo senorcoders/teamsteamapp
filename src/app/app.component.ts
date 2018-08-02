@@ -25,6 +25,7 @@ import { INotificationProvider } from '../providers/i-notification/i-notificatio
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { AgentFreePage } from '../pages/agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
+import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
 
 
 @Component({
@@ -64,6 +65,7 @@ export class MyApp {
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "chat", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent", yes: "Manager" }, watch: "request", newData: "request" },
+    { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" },
@@ -169,8 +171,22 @@ export class MyApp {
 
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
   private async serviceNewDatas() {
-    //get new requests
-    if (MyApp.User === null || MyApp.User === undefined || MyApp.User.role.name==="FreeAgent")
+    //get new requests for managers
+    if (MyApp.User === null || MyApp.User === undefined)
+      return;
+
+    //Para comprobar si hay nuevos request
+    //Para los players
+    let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
+    if (requestsPlayer.length > 0) {
+      MyApp.newDatas["requestPlayer"] = true;
+    } else {
+      MyApp.newDatas["requestPlayer"] = false;
+    }
+    this.checkNewDatas();
+    this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+
+    if (MyApp.User.role.name === "FreeAgent")
       return;
 
     this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
@@ -284,7 +300,7 @@ export class MyApp {
         return false;
       else if (page.role.yes === MyApp.User.role.name)
         return true;
-      else if(page.role.yes==="*"){
+      else if (page.role.yes === "*") {
         return true;
       }
     }
