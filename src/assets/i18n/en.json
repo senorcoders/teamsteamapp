@@ -176,6 +176,7 @@
     "REQUESTSEND": "Request Join",
     "REQUESTS": "Requests",
     "REQUEST": "Request",
+    "SENDREQUEST": "Send Request",
     "ACCEPT": "Accept",
     "QUANTITY": "Quantity",
     "REQUESTACCEPT": "Request Accepted",

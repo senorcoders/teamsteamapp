@@ -181,6 +181,7 @@
     "REQUESTACCEPT": "Solicitud Aceptada",
     "REQUESTDENIED": "Solicitud Denegada",
     "ERRORCONECTION": "Error en la conexión",
+    "SENDREQUEST": "Enviar Solicitud",
     "DENED": "Denegar",
     "FULLNAME": "Nombre Completo",
     "EMAIL": "Correo Electrónico",

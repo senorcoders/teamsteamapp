@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 declare var google: any;
 
@@ -20,15 +21,18 @@ export class PlayerCloseEventPage {
   players: Array<any> = [];
   event: any = { name: "" };
   roles = [];
+  role: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, public socket: WebSocketsProvider
+    public http: HttpClient, public socket: WebSocketsProvider,
+    public alertCtrl: AlertController
   ) {
     this.triggerPLayer = this.navParams.get("player");
   }
 
   async ionViewDidLoad() {
 
+    let load = HelpersProvider.me.getLoadingStandar();
     this.event = await this.http.get("/event/" + this.navParams.get("eventID")).toPromise() as any;
     let events = await this.parserEvents([this.event]);
     this.event = events[0];
@@ -58,16 +62,16 @@ export class PlayerCloseEventPage {
     //Para buscar el team actual
     this.roles = MyApp.User.roles;
     this.roles = this.roles.filter(it => { return it.team !== undefined; });
-    let role = this.roles.find(it => {
+    this.role = this.roles.find(it => {
       return it.team.id === MyApp.User.team;
     })
 
     //si se encontro el rol y el evento
     //Tiene habilitado buscar player
-    if (role !== undefined && this.event.hasOwnProperty("searchPlayer") && 
+    if (this.role !== undefined && this.event.hasOwnProperty("searchPlayer") &&
       this.event.searchPlayer === true
     ) {
-      this.players = await this.http.get(`/playerclose/${role.team.sport}/${this.event.searchPlayers}/${this.event.origin.lat}/${this.event.origin.lng}/20`).toPromise() as any;
+      this.players = await this.http.get(`/playerclose/${this.role.team.id}/${this.role.team.sport}/${this.event.searchPlayers}/${this.event.origin.lat}/${this.event.origin.lng}/20`).toPromise() as any;
       if (this.triggerPLayer !== undefined) {
         let index = this.players.findIndex(it => it.user.id === this.triggerPLayer.user.id);
         if (index === -1) this.players.push(this.triggerPLayer);
@@ -81,6 +85,7 @@ export class PlayerCloseEventPage {
       console.log(this.players);
     }.bind(this));
 
+    load.dismissAll();
   }
 
   ionViewWillUnload() {
@@ -244,8 +249,55 @@ export class PlayerCloseEventPage {
 
   }
 
-  public toChat(player) {
-    this.navCtrl.push(ChatOnePersonPage, { user: player.user });
+  public async request(player) {
+    // this.navCtrl.push(ChatOnePersonPage, { user: player.user });
+    try {
+      let sendM = await HelpersProvider.me.getWords("SENDREQUEST");
+      HelpersProvider.me.presentAlertStandar(this.sendRequest.bind(this, player), () => { },
+        sendM);
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  public async sendRequest(player) {
+    try {
+      let request: any = {
+        user: player.userlocation.user.id,
+        email: player.userlocation.user.email,
+        team: MyApp.User.team,
+        teamName: this.role.team.name
+      };
+      request = await this.http.post("/playerfree/request", request).toPromise();
+      if (request.hasOwnProperty("msg")) {
+        let msg = await HelpersProvider.me.getWords("TEAMREADY");
+        this.alertCtrl.create({
+          message: msg
+        })
+          .present();
+        return;
+      }
+
+      let load = HelpersProvider.me.getLoadingStandar();
+      //si se encontro el rol y el evento
+      //Tiene habilitado buscar player
+      if (this.role !== undefined && this.event.hasOwnProperty("searchPlayer") &&
+        this.event.searchPlayer === true
+      ) {
+        this.players = await this.http.get(`/playerclose/${this.role.team.sport}/${this.event.searchPlayers}/${this.event.origin.lat}/${this.event.origin.lng}/20`).toPromise() as any;
+        if (this.triggerPLayer !== undefined) {
+          let index = this.players.findIndex(it => it.user.id === this.triggerPLayer.user.id);
+          if (index === -1) this.players.push(this.triggerPLayer);
+        }
+        console.log(this.players);
+      }
+
+      load.dismissAll();
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
 }
