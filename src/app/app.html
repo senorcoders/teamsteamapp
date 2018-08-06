@@ -22,9 +22,8 @@
 	<ion-content>
 		<ion-list>
 			<ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p, p.newData)">
-				<!--ion-icon name="{{p.icon}}" class="icon-menu"></ion-icon-->
 				{{p.title | translate}}
-				<div class="new-action" [hidden]="newData(p.watch)">New <span [hidden]="team.request.length === 0 && p.watch==='request'" > {{team.request.length}} </span> </div>
+				<div class="new-action" [hidden]="newData(p.watch)">New <span> {{getCounts(p.watch)}} </span> </div>
 			</ion-item>
 			<!-- <div class="divider"></div>
 			<ion-item class="logout" (click)="logout()">

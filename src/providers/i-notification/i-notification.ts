@@ -77,6 +77,7 @@ export class INotificationProvider {
             ListChatsPage.newMessages.push(ide);
           }
           MyApp.newDatas["chat"] = true;
+          MyApp.counts["chat"] = ListChatsPage.newMessages.length;
           console.log(ListChatsPage.newMessages, ide);
         });
 
@@ -88,7 +89,7 @@ export class INotificationProvider {
           if (index === -1) {
             ListChatsPage.newMessages.push(ide);
           }
-          MyApp.newDatas["chat"] = true;
+          MyApp.counts["chat"] = ListChatsPage.newMessages.length;
         });
       }
 

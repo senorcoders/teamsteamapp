@@ -42,6 +42,7 @@ export class MyApp {
   public static User: any;
   public pushObject: PushObject;
   public static newDatas: any = {};
+  public static counts:any={};
 
   public nameReady = false;
   public teamName = "";
@@ -180,12 +181,13 @@ export class MyApp {
     let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
     if (requestsPlayer.length > 0) {
       MyApp.newDatas["requestPlayer"] = true;
+      MyApp.counts["requestPlayer"] = requestsPlayer.length;
     } else {
       MyApp.newDatas["requestPlayer"] = false;
+      MyApp.counts["requestPlayer"] = 0;
     }
     this.checkNewDatas();
     this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
-
     if (MyApp.User.role.name === "FreeAgent")
       return;
 
@@ -197,8 +199,10 @@ export class MyApp {
 
     if (this.team.request.length !== 0) {
       MyApp.newDatas["request"] = true;
+      MyApp.counts["request"] = this.team.request.length;
     } else {
       MyApp.newDatas["request"] = false;
+      MyApp.counts["request"] = 0;
     }
 
     this.checkNewDatas();
@@ -247,6 +251,14 @@ export class MyApp {
       return !MyApp.newDatas[id];
 
     return !false;
+  }
+
+  public getCounts(watch){
+    if(MyApp.counts.hasOwnProperty(watch)){
+      return MyApp.counts[watch];
+    }
+
+    return 0;
   }
   //#endregion
 

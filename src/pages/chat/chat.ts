@@ -71,6 +71,7 @@ export class ChatPage {
       }else{
         ListChatsPage.newMessages.splice(index, 1);
       }
+      MyApp.counts["chat"] = ListChatsPage.newMessages.length
     }
 
     if( ListChatsPage.newMessages.length === 0){

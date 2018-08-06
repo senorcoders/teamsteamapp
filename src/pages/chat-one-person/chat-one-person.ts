@@ -65,6 +65,7 @@ export class ChatOnePersonPage {
       }else{
         ListChatsPage.newMessages.splice(index, 1);
       }
+      MyApp.counts["chat"] = ListChatsPage.newMessages.length
     }
 
     if( ListChatsPage.newMessages.length === 0){
@@ -113,6 +114,10 @@ export class ChatOnePersonPage {
 
   public urlImg(id: string) {
     return interceptor.transformUrl(`/api/image/chats/${id}`);
+  }
+
+  photoReady(msg){
+    msg.photoReady= true;
   }
 
   public async sendMgsWitImage() {
