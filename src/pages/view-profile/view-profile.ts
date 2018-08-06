@@ -510,7 +510,7 @@ export class ViewProfilePage {
     return validTeam && validFree;
   }
 
-  public async changeToTeams() {
+  public async changeRol() {
     let role = null;
     let free = false;
     if (this.user.role.name === "FreeAgent") {
@@ -544,6 +544,7 @@ export class ViewProfilePage {
       await HelpersProvider.me.setGeofences(200);
     } else {
       delete this.user.team;
+      await HelpersProvider.me.stopGeofences();
     }
 
     await this.auth.updateRole(role);

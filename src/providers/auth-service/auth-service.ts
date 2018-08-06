@@ -233,6 +233,17 @@ export class AuthServiceProvider {
     this.user = MyApp.User;
   }
 
+  public async fetchAndUpdateRoles(){
+    try{
+      let roles = await this.http.get(`/roles?where={"user":"${MyApp.User.id}"}`).toPromise();
+      MyApp.User.roles = roles;
+      await this.storage.set("user", MyApp.User);
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
+
   public async updateRole(role) {
 
     await this.storage.set("role", role);
@@ -242,14 +253,19 @@ export class AuthServiceProvider {
       if (role.hasOwnProperty("team")) {
         MyApp.User.team = role.team.id;
         this.user.team = role.team.id;
-        MyApp.notifcations(MyApp.User.team);
+        await MyApp.notifcations(MyApp.User.team);
       }
-
 
       if (role.name === "FreeAgent") {
         await MyApp.me.pushObject.unregister();
         if (MyApp.User.role.hasOwnProperty("team")) {
           await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+        }
+
+        //Quitamos el tokenReg
+        if (MyApp.User.tokenReg !== undefined || MyApp.User.tokenReg !== null) {
+          let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
+          console.log(success);
         }
         delete MyApp.User.team;
       }

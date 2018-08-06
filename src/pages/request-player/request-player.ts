@@ -4,6 +4,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
 import { RequestsPlayerPage } from '../requests-player/requests-player';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 
 @IonicPage()
@@ -16,7 +17,7 @@ export class RequestPlayerPage {
   public request: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http:HttpClient
+    public http:HttpClient, public auth:AuthServiceProvider
   ) {
     this.request = this.navParams.get("request");
 
@@ -42,6 +43,7 @@ export class RequestPlayerPage {
         acept: response
       }).toPromise();
       console.log(res);
+      await this.auth.fetchAndUpdateRoles();
       this.navCtrl.setRoot(RequestsPlayerPage);
     }
     catch(e){

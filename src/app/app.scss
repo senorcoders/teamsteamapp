@@ -102,9 +102,10 @@ ion-menu {
 			color: white;
 		}
 		.username {
-			text-align: center;
 			font-size: 1.8rem;
-			text-transform: capitalize;
+            text-transform: capitalize;
+            width:100%;
+            padding-left: 1rem;
 		}
 		.email{
 			font-size: 1rem !important;

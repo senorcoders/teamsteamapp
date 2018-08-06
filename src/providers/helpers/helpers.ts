@@ -315,7 +315,7 @@ export class HelpersProvider {
       myCalendar.onDidDismiss((date: CalendarResult, type: string) => {
         if (date === null) {
           return;
-        }console.log(date);
+        } console.log(date);
         resolve(date.dateObj);
       })
 
@@ -467,7 +467,7 @@ export class HelpersProvider {
       if (this.platform.is("ios")) {
         await this.setGeofencesForIOS();
         return;
-      }else if (this.platform.is("android")) {
+      } else if (this.platform.is("android")) {
         //Se usa el metodo en ios para los jugadores
         //cercanos a un evento que puedan jugar
         await this.setGeofencesForIOS();
@@ -778,7 +778,7 @@ export class HelpersProvider {
         url: interceptor.transformUrl("/geofence"),
         httpHeaders: {
           "platform-ios": "true",  //esto se usa para identificar el tipo de geofence, en android se envia ig
-          "id": MyApp.User.id+ "."+ MyApp.User.team
+          "id": MyApp.User.id + "." + MyApp.User.team
         }
       };
 
@@ -791,7 +791,7 @@ export class HelpersProvider {
   }
 
   public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
-    
+
     config.debug = false;
 
     this.backgroundGeolocation.configure(config)
@@ -865,6 +865,17 @@ export class HelpersProvider {
     return x * Math.PI / 180;
   }
 
+  public async stopGeofences() {
+    if (this.platform.is("cordova")) {
+      if (this.platform.is("android")) {
+        await this.geofence.removeAll();
+        return;
+      } else if (this.platform.is("ios")) {
+        await this.backgroundGeolocation.stop();
+        return;
+      }
+    }
+  }
   //#endregion
 
 }
