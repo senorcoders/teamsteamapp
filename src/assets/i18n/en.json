@@ -293,5 +293,10 @@
         "DELETE": "Remove "
     },
     "TEAMREADY": "You are already registered in this team",
-    "CHANGEROLE": "Change Role"
+    "CHANGEROLE": "Change Role",
+    "LEAGUE": {
+        "CREATE": {
+            "TITLE": "New League"
+        }
+    }
 }

@@ -295,5 +295,10 @@
         "DELETE": "Eliminar "
     },
     "TEAMREADY": "Ya estás registrado en este equipo",
-    "CHANGEROLE": "Cambiar Rol"
+    "CHANGEROLE": "Cambiar Rol",
+    "LEAGUE": {
+        "CREATE": { 
+            "TITLE": "Nueva Liga"
+        }
+    }
 }

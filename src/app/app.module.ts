@@ -160,6 +160,8 @@ import { RequestsPlayerPageModule } from '../pages/requests-player/requests-play
 import { RequestPlayerPageModule } from '../pages/request-player/request-player.module';
 import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
 import { RequestPlayerPage } from '../pages/request-player/request-player';
+import { CreateLeaguePageModule } from '../pages/create-league/create-league.module';
+import { CreateLeaguePage } from '../pages/create-league/create-league';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -240,7 +242,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PlacesPlayerFreePageModule,
     EventTeamJoinPageModule,
     RequestsPlayerPageModule,
-    RequestPlayerPageModule
+    RequestPlayerPageModule,
+    CreateLeaguePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -308,7 +311,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     PlacesPlayerFreePage,
     EventTeamJoinPage,
     RequestsPlayerPage,
-    RequestPlayerPage
+    RequestPlayerPage,
+    CreateLeaguePage
   ],
   providers: [
     StatusBar,
