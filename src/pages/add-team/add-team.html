@@ -5,8 +5,8 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title [hidden]="update" >{{"NEWTEAM.TITLE" | translate}}</ion-title>
-    <ion-title [hidden]="!update" >{{"NEWTEAM.TITLE2" | translate}}</ion-title>
+    <ion-title [hidden]="update">{{"NEWTEAM.TITLE" | translate}}</ion-title>
+    <ion-title [hidden]="!update">{{"NEWTEAM.TITLE2" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -14,23 +14,23 @@
 
 <ion-content padding>
 
-  <ion-avatar [hidden]="!image" >
+  <ion-avatar [hidden]="!image">
     <img width="100%" (load)="success()" [src]="imageSrc">
     <ion-fab top right edge class="button-fab-right">
-        <button ion-fab color="base" (click)="changePhoto()" >
-          <ion-icon name="md-camera"></ion-icon>
-        </button>
+      <button ion-fab color="base" (click)="changePhoto()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
     </ion-fab>
-</ion-avatar>
+  </ion-avatar>
 
-<ion-avatar [hidden]="image" >
-  <img width="100%" src="./assets/imgs/logo-default.png">
-  <ion-fab top right edge class="button-fab-right">
-    <button ion-fab color="base" (click)="changePhoto()" >
-      <ion-icon name="md-camera"></ion-icon>
-    </button>
-  </ion-fab>
-</ion-avatar>
+  <ion-avatar [hidden]="image">
+    <img width="100%" src="./assets/imgs/logo-default.png">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhoto()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-avatar>
 
   <ion-list>
 
@@ -38,28 +38,28 @@
       <ion-label floating>
         {{"NAME" | translate}}
       </ion-label>
-      <ion-input type="text" [(ngModel)]="name" ></ion-input>
-    </ion-item>
-
-    <ion-item>
-       <ion-label floating>
-        {{"DESCRIPTION" | translate}}
-      </ion-label>
-      <ion-textarea [(ngModel)]="description" ></ion-textarea>
+      <ion-input type="text" [(ngModel)]="name"></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label floating>
-       {{"CITY" | translate}}
-     </ion-label>
-     <ion-textarea [(ngModel)]="city" ></ion-textarea>
-   </ion-item>
+        {{"DESCRIPTION" | translate}}
+      </ion-label>
+      <ion-textarea [(ngModel)]="description"></ion-textarea>
+    </ion-item>
 
     <ion-item>
-        <ion-label floating>
-         {{"SPORT" | translate}}
-       </ion-label>
-       <ion-select [(ngModel)]="sport" >
+      <ion-label floating>
+        {{"CITY" | translate}}
+      </ion-label>
+      <ion-textarea [(ngModel)]="city"></ion-textarea>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>
+        {{"SPORT" | translate}}
+      </ion-label>
+      <ion-select [(ngModel)]="sport">
         <ion-option value="baseball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
         <ion-option value="football">{{"SPORTS.SOCCER" | translate}}</ion-option>
         <ion-option value="basketball">{{"SPORTS.BASKETBALL" | translate}}</ion-option>
@@ -78,12 +78,12 @@
         <ion-option value="volleyball">{{"SPORTS.VOLLEYBALL" | translate}}</ion-option>
         <ion-option value="waterpolo">{{"SPORTS.WATERPOLO" | translate}}</ion-option>
         <ion-option value="WRESTLING">{{"SPORTS.WRESTLING" | translate}}</ion-option>
-       </ion-select>
-     </ion-item>
+      </ion-select>
+    </ion-item>
 
   </ion-list>
 
-  <button class="btn-red" ion-button block [hidden]="update" (click)="save()" >{{"SAVE" | translate}}</button>
-  <button class="btn-red" ion-button block [hidden]="!update" (click)="updateAction()" >{{"UPDATE" | translate}}</button>
+  <button class="btn-red" ion-button block [hidden]="update" (click)="save()">{{"SAVE" | translate}}</button>
+  <button class="btn-red" ion-button block [hidden]="!update" (click)="updateAction()">{{"UPDATE" | translate}}</button>
 
 </ion-content>

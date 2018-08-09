@@ -26,6 +26,7 @@ import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { AgentFreePage } from '../pages/agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
 import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
+import { CreateLeaguePage } from '../pages/create-league/create-league';
 
 
 @Component({
@@ -70,6 +71,7 @@ export class MyApp {
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" },
+    { title: "LEAGUE.CREATE.ACTION", component: CreateLeaguePage, icon: "baseball", role: "*", watch: "", newData: "" },
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 

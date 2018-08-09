@@ -18,6 +18,7 @@ import { AssistencesComponent } from './assistences/assistences';
 import { EventCreatedComponent } from './event-created/event-created';
 import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-assistences-event';
 import { AddLocationUserFreeComponent } from './add-location-user-free/add-location-user-free';
+import { AddTeamsLeagueComponent } from './add-teams-league/add-teams-league';
 @NgModule({
 	declarations: [GoogleMapsComponent,
     CommentsComponent,
@@ -34,7 +35,8 @@ import { AddLocationUserFreeComponent } from './add-location-user-free/add-locat
     AssistencesComponent,
     EventCreatedComponent,
     SlideAssistencesEventComponent,
-    AddLocationUserFreeComponent
+    AddLocationUserFreeComponent,
+    AddTeamsLeagueComponent
     ],
     imports: [ 
      IonicModule.forRoot(GoogleMapsComponent),
@@ -57,7 +59,8 @@ import { AddLocationUserFreeComponent } from './add-location-user-free/add-locat
     AssistencesComponent,
     EventCreatedComponent,
     SlideAssistencesEventComponent,
-    AddLocationUserFreeComponent
+    AddLocationUserFreeComponent,
+    AddTeamsLeagueComponent
     ]
 })
 export class ComponentsModule {}

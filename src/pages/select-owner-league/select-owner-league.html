@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"LEAGUE.SELECTOWNER.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-searchbar type="email" [(ngModel)]="search" showCancelButton="true" (ionInput)="searchUser($event)">
+  </ion-searchbar>
+
+  <ion-card *ngIf="userEnable">
+    <ion-item>
+      <ion-avatar item-start>
+        <img src="./assets/imgs/logo-login.png" [hidden]="loadImage">
+        <img [src]="user.imgSrc" (load)="loadImg()" [hidden]="!loadImage" >
+      </ion-avatar>
+      <h2>{{user.username}}</h2>
+      <p>{{user.firstName+ " "+ user.lastName}}</p>
+    </ion-item>
+
+    <button ion-button (click)="add()" >{{"ADD" | translate}}</button>
+  </ion-card>
+
+</ion-content>

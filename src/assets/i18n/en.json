@@ -296,7 +296,15 @@
     "CHANGEROLE": "Change Role",
     "LEAGUE": {
         "CREATE": {
-            "TITLE": "New League"
+            "TITLE": "New League",
+            "ACTION": "Create League",
+            "ADDOWNERS": "Add Owner",
+            "ADDTEAMS": "Add Equipment"
+        },
+        "SELECTOWNER":{
+            "TITLE": "Type the user's email"
         }
-    }
+    },
+    "ADD": "Add",
+    "CREATE": "Create"
 }

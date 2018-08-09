@@ -285,7 +285,7 @@
         "TIMESTART": "Hora de Inicio",
         "TIMEEND": "Hora Final",
         "SELECTLOCATIONS": "Seleccione las ubicaciones en el mapa",
-        "ADDPLACES": "Add places"
+        "ADDPLACES": "Agregar Lugares"
     },
     "AGENTFREE":{
         "TITLE": "Eventos Cercanos"
@@ -298,7 +298,15 @@
     "CHANGEROLE": "Cambiar Rol",
     "LEAGUE": {
         "CREATE": { 
-            "TITLE": "Nueva Liga"
+            "TITLE": "Nueva Liga",
+            "ACTION": "Crear Liga",
+            "ADDOWNERS": "Agregar Administrador",
+            "ADDTEAMS": "Agregar Equipos"
+        },
+        "SELECTOWNER":{
+            "TITLE": "Digite el correo del usuario"
         }
-    }
+    },
+    "ADD": "Agregar",
+    "CREATE": "Crear"
 }
