@@ -301,12 +301,23 @@
             "TITLE": "Nueva Liga",
             "ACTION": "Crear Liga",
             "ADDOWNERS": "Agregar Administrador",
-            "ADDTEAMS": "Agregar Equipos"
+            "ADDTEAMS": "Agregar Equipos",
+            "SELECTSOWNERS": "Agregue Los dueños de la liga",
+            "SELECTSTEAMS": "Agregue Los equipos a la liga",
+            "SUCCESS": "Liga Creada"
         },
         "SELECTOWNER":{
             "TITLE": "Digite el correo del usuario"
+        },
+        "ADDTEAM": {
+            "TITLE": "Buscar Equipo",
+            "SELECTS": "Equipos Seleccionados"
+        },
+        "ERROR": {
+            "USERNOTFOUND": "Usuario no encontrado"
         }
     },
     "ADD": "Agregar",
-    "CREATE": "Crear"
+    "CREATE": "Crear",
+    "NEWUSER": "Nuevo Usuario"
 }

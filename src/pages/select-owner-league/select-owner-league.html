@@ -1,6 +1,11 @@
 <ion-header>
 
   <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
     <ion-title>{{"LEAGUE.SELECTOWNER.TITLE" | translate}}</ion-title>
   </ion-navbar>
 
@@ -15,13 +20,13 @@
     <ion-item>
       <ion-avatar item-start>
         <img src="./assets/imgs/logo-login.png" [hidden]="loadImage">
-        <img [src]="user.imgSrc" (load)="loadImg()" [hidden]="!loadImage" >
+        <img [src]="user.imgSrc" (load)="loadImg()" [hidden]="!loadImage">
       </ion-avatar>
       <h2>{{user.username}}</h2>
       <p>{{user.firstName+ " "+ user.lastName}}</p>
     </ion-item>
 
-    <button ion-button (click)="add()" >{{"ADD" | translate}}</button>
+    <button ion-button (click)="add()">{{"ADD" | translate}}</button>
   </ion-card>
 
 </ion-content>

@@ -299,12 +299,23 @@
             "TITLE": "New League",
             "ACTION": "Create League",
             "ADDOWNERS": "Add Owner",
-            "ADDTEAMS": "Add Equipment"
+            "ADDTEAMS": "Add Equipment",
+            "SELECTSOWNERS": "Add The owners of the league",
+            "SELECTSTEAMS": "Add teams to the league",
+            "SUCCESS": "League Created"
         },
         "SELECTOWNER":{
             "TITLE": "Type the user's email"
+        },
+        "ADDTEAM": {
+            "TITLE": "Search Team",
+            "SELECTS": "Selected Teams"
+        },
+        "ERROR": {
+            "USERNOTFOUND": "User not found"
         }
     },
     "ADD": "Add",
-    "CREATE": "Create"
+    "CREATE": "Create",
+    "NEWUSER": "New User"
 }

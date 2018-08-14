@@ -33,13 +33,13 @@ export class ImageViewPage {
     zoomable: false,
     scalable: false,
     autoCropArea: 0.8,
+    checkCrossOrigin: false
   };
 
   pop: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public domSanitizationService: DomSanitizer) {
 
-	console.log("Kharron was here");
     if (navParams.get('libraryItem') !== undefined) {
       this.selectedLibraryItem = navParams.get('libraryItem');
     } else {
@@ -57,6 +57,18 @@ export class ImageViewPage {
   public addDegrees() {
     this.degrees += 90;
     console.log(this.degrees);
+  }
+
+  async ngAfterViewInit(){
+    console.log("load");
+    if (this.resize === true){
+      await this.angularCropper.ready.subscribe(od=>{
+        console.log(od)
+      }, err=>{
+        console.error(err);
+      })
+      console.log("loaded");
+    }
   }
 
   public drawRotated(context, canvas, image, degrees) {
@@ -87,6 +99,7 @@ export class ImageViewPage {
     let img;
     if (this.resize === true) {
       //get cropped image
+      console.log(this.angularCropper);
       let croppedImgB64String: string = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.8);
       img = new Image();
       img.src = croppedImgB64String;

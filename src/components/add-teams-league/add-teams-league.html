@@ -1,11 +1,11 @@
 <ion-header>
-  <ion-navbar color="base">
+  <ion-navbar>
     <ion-buttons left>
       <button ion-button icon-only (click)="viewCtrl.dismiss()">
         <ion-icon name="arrow-back"></ion-icon>
       </button>
     </ion-buttons>
-    <ion-title>{{"SEARCHTEAM.TITLE" | translate}}</ion-title>
+    <ion-title>{{"LEAGUE.ADDTEAM.TITLE" | translate}}</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -20,18 +20,32 @@
         <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)">
       </ion-avatar>
       {{team.name}}
-      <ion-icon item-end name="md-add-circle" (click)="addTeam(team)"></ion-icon>
+      <ion-icon item-end color="primary" name="md-add-circle" (click)="addTeam(team)"></ion-icon>
     </ion-item>
   </ion-list>
 
+  <h3>{{"LEAGUE.ADDTEAM.SELECTS" | translate}}</h3>
   <ion-list>
-    <ion-item *ngFor="let team of teamsSelect;">
+    <ion-item *ngFor="let team of teamsSelect; let i=index;">
       <ion-avatar item-start>
         <img src="./assets/imgs/logo-login.png" [hidden]="team.loadImage">
         <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)">
       </ion-avatar>
       {{team.name}}
+      <ion-icon item-end color="primary" name="md-close" (click)="removeTeam(i)"></ion-icon>
     </ion-item>
   </ion-list>
+
+  <ion-fab left bottom>
+    <button ion-fab color="primary" (click)="ready()">
+      <ion-icon name="md-checkmark-circle"></ion-icon>
+    </button>
+  </ion-fab>
+
+  <ion-fab right bottom>
+    <button ion-fab color="primary" (click)="createTeam()">
+      <ion-icon name="md-add-circle"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

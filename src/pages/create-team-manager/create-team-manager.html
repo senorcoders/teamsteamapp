@@ -1,12 +1,12 @@
 <ion-header>
 
-  <ion-navbar color="base">
-    <button ion-button icon-only menuToggle start>
-      <ion-icon name="menu"></ion-icon>
-    </button>
-
-    <ion-title [hidden]="update">{{"NEWTEAM.TITLE" | translate}}</ion-title>
-    <ion-title [hidden]="!update">{{"NEWTEAM.TITLE2" | translate}}</ion-title>
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="viewCtrl.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"LEAGUE.ADDTEAM.TITLE" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -14,25 +14,64 @@
 
 <ion-content padding>
 
-  <ion-avatar [hidden]="!image">
-    <img width="100%" (load)="success()" [src]="imageSrc">
-    <ion-fab top right edge class="button-fab-right">
-      <button ion-fab color="base" (click)="changePhoto()">
-        <ion-icon name="md-camera"></ion-icon>
-      </button>
-    </ion-fab>
-  </ion-avatar>
-
-  <ion-avatar [hidden]="image">
-    <img width="100%" src="./assets/imgs/logo-default.png">
-    <ion-fab top right edge class="button-fab-right">
-      <button ion-fab color="base" (click)="changePhoto()">
-        <ion-icon name="md-camera"></ion-icon>
-      </button>
-    </ion-fab>
-  </ion-avatar>
-
   <ion-list>
+    <ion-item>
+      <ion-label>{{"NEWUSER" | translate}}</ion-label>
+      <ion-toggle [(ngModel)]="newUser"></ion-toggle>
+    </ion-item>
+
+    <ion-item [hidden]="newUser">
+        <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+        <ion-input type="email" value="" [(ngModel)]="emailUser"></ion-input>
+      </ion-item>
+  </ion-list>
+
+  <ion-avatar *ngIf="newUser">
+    <img width="100%" [hidden]="!image" (load)="successImageUser()" [src]="imageSrcUser">
+    <img width="100%" [hidden]="image" src="./assets/imgs/user.png">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhotoUser()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-avatar>
+
+  <ion-list *ngIf="newUser">
+
+    <ion-item>
+      <ion-label floating>username</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="username"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="firstName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="lastName"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+      <ion-input type="email" value="" [(ngModel)]="email"></ion-input>
+    </ion-item>
+
+  </ion-list>
+
+  <h3>{{"TEAM" | translate}}</h3>
+  <ion-list>
+
+    <ion-avatar>
+      <img width="100%" [hidden]="!image" (load)="success()" [src]="imageSrcTeam">
+      <img width="100%" [hidden]="image" src="./assets/imgs/logo-default.png">
+      <ion-fab top right edge class="button-fab-right">
+        <button ion-fab color="base" (click)="changePhoto()">
+          <ion-icon name="md-camera"></ion-icon>
+        </button>
+      </ion-fab>
+    </ion-avatar>
 
     <ion-item>
       <ion-label floating>
@@ -83,7 +122,6 @@
 
   </ion-list>
 
-  <button class="btn-red" ion-button block [hidden]="update" (click)="save()">{{"SAVE" | translate}}</button>
-  <button class="btn-red" ion-button block [hidden]="!update" (click)="updateAction()">{{"UPDATE" | translate}}</button>
+  <button color="primary" ion-button block (click)="saveAction()">{{"SAVE" | translate}}</button>
 
 </ion-content>
