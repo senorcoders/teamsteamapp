@@ -22,6 +22,7 @@ import { Storage } from '@ionic/storage';
 })
 export class ViewProfilePage {
   @ViewChild('mySelect') selectRef: Select;
+  @ViewChild('myRoles') myRoles: Select;
 
 
   public user: any = { options: { language: "en" } };
@@ -33,6 +34,8 @@ export class ViewProfilePage {
   public request: Array<any> = [];
   public manager: any = {};
   public roles: Array<any> = [];
+  public rolesTypes = [];
+  public rolType="";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
@@ -68,16 +71,18 @@ export class ViewProfilePage {
         this.team.request = [];
       }
 
-      //console.log(this.team.request);
       this.request = this.team.request;
-      // if( this.user.verified === false ){
-      //   let v:any = await this.http.get("/user/verified-code/"+ this.user.id).toPromise();
-      //   //console.log(v);
-      //   if( v.verified === true ){
-      //     this.user.verified = true;
-      //     await this.auth.updateUser(this.user);
-      //   }
-      // }
+
+      //cargamos los roles types
+      for(let rol of MyApp.User.roles){
+        let index = this.rolesTypes.findIndex(it=>{
+          if(rol.name==="Family"||rol.name==="Player") return true;
+          return rol.name === it.name;
+        });
+        if(index===-1){
+          this.rolesTypes.push(rol);
+        }
+      }
 
     }
     catch (e) {
@@ -494,62 +499,33 @@ export class ViewProfilePage {
     this.selectRef.open();
   }
 
+  public openSelectRolesTypes(){
+    this.myRoles.open();
+  }
+
   public IsValidToTeam(): Boolean {
-    let validTeam = false;
-    let validFree = false;
-
-    for (let rol of this.roles) {
-      if (rol.hasOwnProperty("team")) {
-        validTeam = true;
-      }
-      if (rol.name === "FreeAgent") {
-        validFree = true;
-      }
-    }
-
-    return validTeam && validFree;
+    return this.rolesTypes.length > 1;
   }
 
   public async changeRol() {
-    let role = null;
-    let free = false;
-    if (this.user.role.name === "FreeAgent") {
-      free = true;
-    }
 
-    for (let r of this.roles) {
-      if (free === true) {
-        if (r.hasOwnProperty("team")) {
-          role = r;
-          this.team = r.team;
-          break;
-        }
-      } else {
-        if (r.name === "FreeAgent") {
-          role = r;
-          break;
-        }
-      }
-    }
+    let role = this.roles.find(function(it){
+      return it.id === this.rolType;
+    }.bind(this)) as any;
+    if(role === undefined) return;
 
-    if (role === null) {
-      return;
-    }
-
-    if (role.name !== "FreeAgent") {
+    if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = role.team.name;
 
       await this.auth.setTimeZoneTeam();
       await HelpersProvider.me.setGeofences(200);
-    } else {
+    } else{
       delete this.user.team;
       await HelpersProvider.me.stopGeofences();
     }
 
     await this.auth.updateRole(role);
-
-
 
   }
 

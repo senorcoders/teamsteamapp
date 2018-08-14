@@ -60,7 +60,7 @@
       {{'LANGUAGE' | translate}}
     </ion-item>
 
-    <ion-item (click)="changeRol()" *ngIf="IsValidToTeam()">
+    <ion-item (click)="openSelectRolesTypes()" *ngIf="IsValidToTeam()">
         <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
         {{ "CHANGEROLE" | translate}}
       </ion-item>
@@ -98,6 +98,10 @@
   <ion-select [(ngModel)]="lang" hidden (ionChange)='changeLang()' #mySelect>
       <ion-option value="en">English</ion-option>
       <ion-option value="es">Español </ion-option>
+    </ion-select>
+
+    <ion-select [(ngModel)]="rolType" hidden (ionChange)='changeRol()' #myRoles>
+      <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name}}</ion-option>
     </ion-select>
 
 </ion-content>

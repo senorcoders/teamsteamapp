@@ -1,7 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LibraryItem } from '@ionic-native/photo-library';
-import {DomSanitizer} from '@angular/platform-browser';
+import { DomSanitizer } from '@angular/platform-browser';
 import { AngularCropperjsComponent } from 'angular-cropperjs';
 
 @IonicPage()
@@ -20,6 +20,8 @@ export class ImageViewPage {
   public width: number;
   public height: number;
   public degrees = 0;
+
+  private navigator = false;
 
   image: any = '';
 
@@ -52,6 +54,7 @@ export class ImageViewPage {
     this.width = this.navParams.get("width");
     this.height = this.navParams.get("height");
     this.pop = this.navParams.get("pop");
+    this.navigator = this.navParams.get("navigator");
   }
 
   public addDegrees() {
@@ -59,12 +62,12 @@ export class ImageViewPage {
     console.log(this.degrees);
   }
 
-  async ngAfterViewInit(){
+  async ngAfterViewInit() {
     console.log("load");
-    if (this.resize === true){
-      await this.angularCropper.ready.subscribe(od=>{
-        console.log(od)
-      }, err=>{
+    if (this.resize === true) {
+      await this.angularCropper.ready.subscribe(od => {
+        console.log("ready", od)
+      }, err => {
         console.error(err);
       })
       console.log("loaded");
@@ -99,8 +102,7 @@ export class ImageViewPage {
     let img;
     if (this.resize === true) {
       //get cropped image
-      console.log(this.angularCropper);
-      let croppedImgB64String: string = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.8);
+      let croppedImgB64String: String = this.getCropper();
       img = new Image();
       img.src = croppedImgB64String;
       await new Promise(function (resolve, reject) {
@@ -125,12 +127,17 @@ export class ImageViewPage {
     if (this.degrees !== 0)
       this.drawRotated(ctx, c, img, this.degrees);
 
-    var dataURL = c.toDataURL('image/jpg');
+    var dataURL = c.toDataURL('image/jpeg');
     console.log(this.width, this.height);
 
     //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
     c = null; ctx = null;
     this.resolve(dataURL);
+    if (this.navigator === true) {
+      await this.navCtrl.pop();
+      return;
+    }
+
     if (this.pop === 3) {
       await this.navCtrl.pop();
       await this.navCtrl.pop();
@@ -139,6 +146,51 @@ export class ImageViewPage {
       await this.navCtrl.pop();
       await this.navCtrl.pop();
     }
+  }
+
+  private getCropper(): String {
+    let result: String;
+    try {
+      result = this.angularCropper.cropper.getCroppedCanvas().toDataURL('image/jpeg', 0.8);
+    }
+    catch (e) {
+      console.error(e);
+
+      //Si el plugin no funciona obtenemos las coordenas para
+      //hacer el recortes en un canvas
+      let node = document.querySelector(".cropper-crop-box") as any;
+      let matrix = new WebKitCSSMatrix(window.getComputedStyle(node).webkitTransform);
+      let left = node.offsetLeft + matrix.m41;
+      let top = node.offsetTop + matrix.m42;
+      let clientRect = node.getClientRects();
+      let width = clientRect.item(0).width;
+      let height = clientRect.item(0).height;
+
+      //Creamos el canvas para cargar el image data
+      let image = document.querySelector(".cropper-wrap-box>.cropper-canvas>img") as HTMLImageElement;
+      var canvas1 = document.createElement("canvas");
+      canvas1.width = image.width;
+      canvas1.height = image.height;
+      var ctx1 = canvas1.getContext("2d");
+      ctx1.drawImage(image, 0, 0, image.width, image.height);
+      let imageData = ctx1.getImageData(left, top, width, height);
+
+      // //Y realizamos el recorte en otro canvas
+      var canvas2 = document.createElement("canvas");
+      canvas2.width = width;
+      canvas2.height = height;
+      var ctx2 = canvas2.getContext("2d");
+      ctx2.rect(0, 0, width, height);
+      ctx2.fillStyle = 'white';
+      ctx2.fill();
+      ctx2.putImageData(imageData, 0, 0);
+
+      result = canvas2.toDataURL("image/jpg");
+      canvas1 = null;
+      canvas2 = null;
+    }
+
+    return result;
   }
 
   public cancel() {

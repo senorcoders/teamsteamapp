@@ -27,6 +27,7 @@ import { AgentFreePage } from '../pages/agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
 import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
 import { CreateLeaguePage } from '../pages/create-league/create-league';
+import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
 
 
 @Component({
@@ -62,11 +63,12 @@ export class MyApp {
   public defaultImageUser = true;
 
   public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent", yes: "*" }, watch: "chat", newData: "" },
-    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent", yes: "Manager" }, watch: "request", newData: "request" },
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "basketball", role: "OwnerLeague", watch: "", newData: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
@@ -135,8 +137,10 @@ export class MyApp {
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
         document.getElementById("nameTeam").innerHTML = team.name;
-      } else {
+      } else  if(MyApp.User.role.name==="FreeAgent"){
         this.nav.root = AgentFreePage;
+      }else{
+        this.nav.root = TeamsLeaguePage;
       }
 
       //console.log(this.user);
@@ -310,6 +314,33 @@ export class MyApp {
       return MyApp.User.role.name === page.role;
 
     if (Object.prototype.toString.call(page.role) === "[object Object]") {
+
+      //Para multitples roles en not
+      if(page.role.not.includes("|")){
+        let validFast = true;
+        let nots = page.role.not.split("|");
+        for(let n of nots){
+          if(n===MyApp.User.role.name){
+            validFast = false;
+          }
+        }
+
+        return validFast;
+      }
+
+      //Para multitples roles en yes
+      if(page.role.yes.includes("|")){
+        let validFast = false;
+        let yess = page.role.yes.split("|");
+        for(let s of yess){
+          if(s===MyApp.User.role.name){
+            validFast = true;
+          }
+        }
+
+        return validFast;
+      }
+
       if (page.role.not === MyApp.User.role.name)
         return false;
       else if (page.role.yes === MyApp.User.role.name)

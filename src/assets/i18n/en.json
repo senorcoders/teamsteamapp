@@ -304,6 +304,9 @@
             "SELECTSTEAMS": "Add teams to the league",
             "SUCCESS": "League Created"
         },
+        "TEAMS": {
+            "TITLE": "League teams"
+        },
         "SELECTOWNER":{
             "TITLE": "Type the user's email"
         },

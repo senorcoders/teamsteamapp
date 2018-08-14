@@ -306,6 +306,9 @@
             "SELECTSTEAMS": "Agregue Los equipos a la liga",
             "SUCCESS": "Liga Creada"
         },
+        "TEAMS": {
+            "TITLE": "Equipos de la liga"
+        },
         "SELECTOWNER":{
             "TITLE": "Digite el correo del usuario"
         },

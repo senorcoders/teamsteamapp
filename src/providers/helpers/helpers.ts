@@ -218,6 +218,7 @@ export class HelpersProvider {
       if (!t.platform.is("cordova")) {
         return t.pickFileBrowser(async function (dataUrl) {
           params.image = dataUrl;
+          params.navigator = true;
           await t.app.getActiveNavs()[0].push(ImageViewPage, params);
         }, reject);
       }
