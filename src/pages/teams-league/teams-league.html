@@ -13,7 +13,7 @@
 <ion-content padding>
 
   <ion-list>
-    <ion-item *ngFor="let team of teams;">
+    <ion-item *ngFor="let team of teams;" (click)="toTeam(team)">
       <ion-avatar item-start>
         <img src="./assets/imgs/logo-login.png" [hidden]="team.loadImage">
         <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)">

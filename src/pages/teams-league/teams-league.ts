@@ -4,6 +4,7 @@ import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
+import { RosterLeaguePage } from '../roster-league/roster-league';
 
 
 @IonicPage()
@@ -65,6 +66,10 @@ export class TeamsLeaguePage {
       await this.http.post("/leagues/team", { teams: teams.map(it => { return it.id; }), league: this.league.id }).toPromise() as any;
       this.teams = this.teams.concat(teams);
     }
+  }
+
+  public async toTeam(team){
+    this.navCtrl.push(RosterLeaguePage, {team});
   }
 
 }

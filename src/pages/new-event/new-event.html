@@ -23,7 +23,7 @@
     <ion-item>
       <ion-label floating>{{ 'NEWEVENT.TYPE' | translate }}</ion-label>
       <ion-select [(ngModel)]="type">
-        <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
+        <ion-option value='practice' *ngIf="!league">{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
         <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
         <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
       </ion-select>
@@ -78,7 +78,7 @@
       <ion-textarea [(ngModel)]="description"> </ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="!league">
       <ion-label floating>{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }}</ion-label>
       <ion-input type="number" [(ngModel)]="percentageNotification"> </ion-input>
     </ion-item>
@@ -94,8 +94,8 @@
       <ion-icon color="primary" item-end name="md-remove-circle" (click)="removePlayerSearch(i)"></ion-icon>
     </ion-item>
 
-    <ion-item>
-      <button ion-button (click)="addPlayerSearch()" [hidden]="!searchPlayer" >{{"ROSTER.CREATEPLAYER" | translate}}</button>
+    <ion-item [hidden]="!searchPlayer">
+      <button ion-button (click)="addPlayerSearch()" >{{"ROSTER.CREATEPLAYER" | translate}}</button>
     </ion-item>
 
   </ion-list>

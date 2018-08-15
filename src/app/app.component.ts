@@ -63,7 +63,7 @@ export class MyApp {
   public defaultImageUser = true;
 
   public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "basketball", role: "OwnerLeague", watch: "", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
@@ -140,7 +140,7 @@ export class MyApp {
       } else  if(MyApp.User.role.name==="FreeAgent"){
         this.nav.root = AgentFreePage;
       }else{
-        this.nav.root = TeamsLeaguePage;
+        this.nav.root = EventsSchedulePage;
       }
 
       //console.log(this.user);

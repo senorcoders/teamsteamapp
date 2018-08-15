@@ -1,0 +1,41 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{team.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <div id="list">
+
+    <div class="item" *ngFor="let player of players; let i = index" [hidden]="player.user.id == user.id">
+
+      <div class="inner">
+        <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;">
+          <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
+          <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
+        </ion-avatar>
+
+        <h4>{{player.user.firstName}} {{player.user.lastName}}</h4>
+
+        <!-- <div class="actions">
+          <a href="#" class="chat" (click)="goChat(player.user)">Chat</a>
+          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" | translate}}</a>
+        </div> -->
+      </div>
+
+    </div>
+
+  </div>
+
+
+  <ion-fab bottom right>
+    <button color="base" ion-fab icon-only (click)="addPlayer()">
+      <ion-icon name="md-add"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

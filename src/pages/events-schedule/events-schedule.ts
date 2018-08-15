@@ -36,6 +36,7 @@ export class EventsSchedulePage {
 
   public by: string = "upcoming";
   public static by: string = "upcoming";
+  public league=false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -62,6 +63,8 @@ export class EventsSchedulePage {
 
     });
 
+    //Para saber si el usuario tiene el rol de dueño de liga
+    this.league = MyApp.User.role.name === "OwnerLeague";
   }
 
 
@@ -82,10 +85,7 @@ export class EventsSchedulePage {
   }
 
   public addButtonHidden() {
-    if (this.user.role.name != "Manager")
-      return true;
-
-    if (this.event0 === true)
+    if (this.user.role.name !== "Manager" && this.user.role.name !== "OwnerLeague")
       return true;
 
     return false;
@@ -99,7 +99,15 @@ export class EventsSchedulePage {
       this.user = MyApp.User;
       this.team = this.user.team;
 
-      let events: any = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
+      let events: any;
+      if(this.league===true){
+        if (Object.prototype.toString.call(this.league) === "[object Object]")
+        events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league.id).toPromise();
+      else
+        events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league).toPromise();
+      }else{
+        events  = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
+      }
       this.helper.setGeofences(200, events);
       this.events = await this.parserEvents(events);
 

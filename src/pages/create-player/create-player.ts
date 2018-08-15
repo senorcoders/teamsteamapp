@@ -53,8 +53,12 @@ export class CreatePlayerPage {
 
   ionViewDidLoad() {
     //let user:any = MyApp.User;
-    let res = this.http.get("/teams/" + MyApp.User.team).toPromise();
-    this.team = res;
+    if (this.navParams.get("team") === undefined) {
+      let res = this.http.get("/teams/" + MyApp.User.team).toPromise();
+      this.team = res;
+    }else{
+      this.team = this.navParams.get("team");
+    }
     this.birthDay = moment().format("DD MMM YYYY");
   }
 
@@ -63,7 +67,7 @@ export class CreatePlayerPage {
       date: new Date(),
       mode: "date",
       androidTheme: this.datePicker.ANDROID_THEMES.THEME_HOLO_DARK
-    }).then(function(date){
+    }).then(function (date) {
       this.birthDay = moment(date).format("DD MMM YYYY");
     }.bind(this))
   }
@@ -139,8 +143,8 @@ export class CreatePlayerPage {
     ) {
 
       load.dismiss();
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"), 
-      emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
+      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
       this.alertCtrl.create({
         title: requiredM,
         message: emptyM,
@@ -153,7 +157,7 @@ export class CreatePlayerPage {
     if (
       !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email)
     ) {
-      
+
       load.dismiss();
       let emailERM = await HelpersProvider.me.getWords("EMAILINVALID");
       this.alertCtrl.create({
@@ -185,6 +189,9 @@ export class CreatePlayerPage {
       managerAccess: this.managerAccess,
       positions: positions
     };
+    if (this.navParams.get("team") !== undefined){
+      player.team = this.team.id;
+    }
 
     try {
 
@@ -199,13 +206,16 @@ export class CreatePlayerPage {
         }).toPromise();
       }
 
-      
-      load.dismiss();
 
-      this.navCtrl.setRoot(RosterPage);
+      load.dismiss();
+      if (this.navParams.get("team") !== undefined){
+        this.navCtrl.pop();
+      }else{
+        this.navCtrl.setRoot(RosterPage);
+      }
 
     } catch (e) {
-      
+
       load.dismiss();
       console.error(e);
       this.alertCtrl.create({

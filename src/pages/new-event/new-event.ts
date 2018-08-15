@@ -65,6 +65,8 @@ export class NewEventPage {
   public searchPlayer = false;
   public searchPlayers = [];
 
+  public league = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public loading: LoadingController,
     private auth: AuthServiceProvider, private http: HttpClient,
@@ -72,10 +74,12 @@ export class NewEventPage {
     public geolocation: Geolocation
   ) {
     this.team = this.navParams.get("team");
-    console.log(this.team);
     this.maxDate = moment().add(2, "year", ).format("YYYY");
     this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
-    console.log(this.minDate, this.maxDate);
+
+    //Para saber si el usuario tiene el rol de dueño de liga
+    this.league = MyApp.User.role.name === "OwnerLeague";
+    console.log(this.league);
   }
 
   async ionViewDidLoad() {
@@ -229,9 +233,7 @@ export class NewEventPage {
 
   public async save() {
 
-    let content = await this.helper.getWords("SAVING");
-    this.load = this.loading.create({ content: content });
-    this.load.present({ disableApp: true });
+    this.load = this.helper.getLoadingStandar();
 
     let requiredM = await this.helper.getWords("REQUIRED"),
       AddressOrMap = await this.helper.getWords("ADDRESSORDATE");
@@ -298,15 +300,6 @@ export class NewEventPage {
       return;
     }
 
-    /*if( this.imageSrc == '' && this.type == "event" ){
-      this.load.dismiss();
-        this.alertCtrl.create({
-          title: requiredM,
-          message: "Image "+ isRequired,
-          buttons: ["Ok"]
-        }).present();
-        return;
-    }*/
     if (this.percentageNotification > 100) {
       this.percentageNotification = 100;
     }
@@ -315,7 +308,6 @@ export class NewEventPage {
     }
 
     let event: any = {
-      team: this.team,
       name: this.name,
       type: this.type,
       optionalInfo: this.optionalInfo,
@@ -325,10 +317,18 @@ export class NewEventPage {
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
       location: locate,
-      percentageNotification: this.percentageNotification,
       searchPlayer: this.searchPlayer
     };
-    if(event.searchPlayer===true){
+    if (this.league === true) {
+      if (Object.prototype.toString.call(this.league) === "[object Object]")
+        event.league = MyApp.User.role.league.id;
+      else
+        event.league = MyApp.User.role.league;
+    }else{
+      event.team = this.team;
+      event.percentageNotification = this.percentageNotification;
+    }
+    if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;
     }
     if (this.timeEnd !== '') {
@@ -379,8 +379,6 @@ export class NewEventPage {
       if (this.imageSrc !== '') {
         await this.http.post("/images/events", { id: newEvent.id, image: this.imageSrc }).toPromise();
       }
-
-
     }
     catch (e) {
       console.error(e);
