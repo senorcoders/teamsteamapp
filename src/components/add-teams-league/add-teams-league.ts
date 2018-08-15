@@ -18,6 +18,7 @@ export class AddTeamsLeagueComponent {
   constructor(public viewCtrl: ViewController, public http: HttpClient,
     public modalCtrl: ModalController, public navParams: NavParams
   ) {
+    this.teamsSelect = this.navParams.get("teamsSelect");
   }
 
   public async searchTeams() {

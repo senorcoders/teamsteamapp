@@ -96,7 +96,7 @@
     </ion-select>
 
     <ion-select [(ngModel)]="rolType" hidden (ionChange)='changeRol()' #myRoles>
-      <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name}}</ion-option>
+      <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name.toUpperCase() | translate}}</ion-option>
     </ion-select>
 
 </ion-content>

@@ -191,6 +191,7 @@
     "ROLE": "Role",
     "PLAYER": "Player",
     "MANAGER": "Manager",
+    "OWNERLEAGUE": "Owner League",
     "FAMILY": "Family",
     "PASSWORD": "Password",
     "EMAILINVALID": "Malformed Email",

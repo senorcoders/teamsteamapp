@@ -193,6 +193,7 @@
     "ROLE": "Rol",
     "PLAYER": "Jugador",
     "MANAGER": "Manager",
+    "OWNERLEAGUE": "Dueño de Liga",
     "FAMILY": "Familiar",
     "PASSWORD": "Contraseñas",
     "INVALIDUSERNAMEYPASS": "Correo Electronico",

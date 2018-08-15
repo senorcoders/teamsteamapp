@@ -41,7 +41,7 @@ export class TeamsLeaguePage {
 
   public async addTeam() {
     try {
-      let m = this.modalCtrl.create(AddTeamsLeagueComponent, { teamsSelect: [] });
+      let m = this.modalCtrl.create(AddTeamsLeagueComponent, { teamsSelect: JSON.parse( JSON.stringify(this.teams) ) });
       m.present();
       m.onDidDismiss(this.addTeamPost.bind(this))
     }
@@ -52,6 +52,16 @@ export class TeamsLeaguePage {
 
   private async addTeamPost(teams) {
     if (teams) {
+      let teamsNew = [];
+      for(let team of teams){
+        let index = this.teams.findIndex(it=>{
+          return it.id === team.id;
+        });
+        if(index===-1){
+          teamsNew.push(team);
+        }
+      }
+      teams=teamsNew;
       await this.http.post("/leagues/team", { teams: teams.map(it => { return it.id; }), league: this.league.id }).toPromise() as any;
       this.teams = this.teams.concat(teams);
     }
