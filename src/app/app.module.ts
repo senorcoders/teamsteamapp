@@ -169,6 +169,8 @@ import { CreateTeamManagerPageModule } from '../pages/create-team-manager/create
 import { CreateTeamManagerPage } from '../pages/create-team-manager/create-team-manager';
 import { TeamsLeaguePageModule } from '../pages/teams-league/teams-league.module';
 import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
+import { SelectLeaguesPageModule } from '../pages/select-leagues/select-leagues.module';
+import { SelectLeaguesPage } from '../pages/select-leagues/select-leagues';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -253,7 +255,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateLeaguePageModule,
     SelectOwnerLeaguePageModule,
     CreateTeamManagerPageModule,
-    TeamsLeaguePageModule
+    TeamsLeaguePageModule,
+    SelectLeaguesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -326,7 +329,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectOwnerLeaguePage,
     AddTeamsLeagueComponent,
     CreateTeamManagerPage,
-    TeamsLeaguePage
+    TeamsLeaguePage,
+    SelectLeaguesPage
   ],
   providers: [
     StatusBar,

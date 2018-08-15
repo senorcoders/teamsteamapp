@@ -13,6 +13,7 @@ import { PrivacyPolicePage } from '../privacy-police/privacy-police';
 import { ListPlayersPaymentPage } from '../list-players-payment/list-players-payment';
 import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-player';
 import { Storage } from '@ionic/storage';
+import { SelectLeaguesPage } from '../select-leagues/select-leagues';
 
 
 @IonicPage()
@@ -36,6 +37,7 @@ export class ViewProfilePage {
   public roles: Array<any> = [];
   public rolesTypes = [];
   public rolType="";
+  public league:any={};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
@@ -56,6 +58,7 @@ export class ViewProfilePage {
   }
 
   async ionViewWillEnter() {
+    let load = this.helper.getLoadingStandar();
     try {
 
       let user: any = await this.storage.get("user");
@@ -84,10 +87,21 @@ export class ViewProfilePage {
         }
       }
 
+      //Si el rol es de league cargamos la liga
+      if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+        this.league = await this.http.get("/leagues/"+ MyApp.User.role.league.id).toPromise() as  any;
+      else
+        this.league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as  any;
+
     }
     catch (e) {
       console.error(e);
     }
+    load.dismissAll();
+  }
+
+  public selectLeagues(){
+    this.navCtrl.push(SelectLeaguesPage);
   }
 
   public async loadImage() {
@@ -304,78 +318,6 @@ export class ViewProfilePage {
   public goViewRequests() {
     this.navCtrl.push(ViewRequestsPage, { requests: this.team.request });
   }
-
-  // public async changePassword(){
-
-  //   let currentM = await this.helper.getWords("CHANGEPASSALERT.CURRENT"), 
-  //   newPassM = await this.helper.getWords("CHANGEPASSALERT.NEWPASS"),
-  //   newPassMAgain = await this.helper.getWords("CHANGEPASSALERT.AGAINNEWPASS"),
-  //   cancelM = await this.helper.getWords("CANCEL"),
-  //   passM = await this.helper.getWords("PASSWORD");
-
-
-  //   let c = this.alertCtrl.create({ title: passM, inputs: [
-  //       { type: "password", name: "current", placeholder: currentM  },
-  //       { type: "password", name: "newPass", placeholder: newPassM },
-  //       { type: "password", name: "passAgain", placeholder: newPassMAgain },
-  //     ], buttons: [
-  //       { text: cancelM },
-  //       {text: "Ok", handler: function(data){ this.changePass(data) }.bind(this) }
-  //     ] });
-
-  //   c.present();
-
-  // }
-
-  // private async changePass(data){
-  //   //console.log(data);
-  //   let current = data.current || "",
-  //   newPass = data.newPass || "",
-  //   againPass = data.passAgain || "";
-
-  //   if( newPass == "" || againPass == "" ){
-
-  //     let emptM = await this.helper.getWords("EMPTYFIELDS");
-  //     this.alertCtrl.create({ title: "Error", message: emptM })
-  //     .present();
-  //     return;
-
-  //   }else if( newPass !== againPass ){
-  //     let emptM = await this.helper.getWords("PASSWORDNOT");
-  //     this.alertCtrl.create({ title: "Error", message: emptM })
-  //     .present();
-  //     return;
-
-  //   }
-
-  //   try{
-
-  //     let params = { password: current, 
-  //       passwordHash: MyApp.User.password,
-  //       newPassword : newPass,
-  //       id : MyApp.User.id
-  //     };
-
-  //     let v:any = await this.http.post("/password/change", params).toPromise();
-  //     //console.log(v);
-
-  //     if( v.hasOwnProperty("id") && v.id === true ){
-  //       let changedM = await this.helper.getWords("CHANGED");
-  //       this.alertCtrl.create({ message: changedM, buttons: ["Ok"] })
-  //       .present();
-  //     }else{
-  //       let inconM = await this.helper.getWords("PASSWORDINCORRECTO");
-  //       this.alertCtrl.create({ message: inconM, buttons: ["Ok"] })
-  //       .present();
-  //       return;
-  //     }
-
-  //   }
-  //   catch(e){
-  //     console.error(e);
-  //   }
-
-  // }
 
   public paymentsMonthly() {
     this.navCtrl.push(PaymentMonthlyPage);

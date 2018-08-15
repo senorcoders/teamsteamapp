@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, ModalController } from 'ionic-angular';
+import { ViewController, ModalController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { CreateTeamManagerPage } from '../../pages/create-team-manager/create-team-manager';
@@ -16,9 +16,8 @@ export class AddTeamsLeagueComponent {
   public teamsSelect = [];
 
   constructor(public viewCtrl: ViewController, public http: HttpClient,
-    public modalCtrl: ModalController
+    public modalCtrl: ModalController, public navParams: NavParams
   ) {
-
   }
 
   public async searchTeams() {

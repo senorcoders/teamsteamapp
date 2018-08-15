@@ -297,6 +297,7 @@
     "TEAMREADY": "Ya estás registrado en este equipo",
     "CHANGEROLE": "Cambiar Rol",
     "LEAGUE": {
+        "NAME": "League",
         "CREATE": { 
             "TITLE": "Nueva Liga",
             "ACTION": "Crear Liga",
@@ -316,6 +317,7 @@
             "TITLE": "Buscar Equipo",
             "SELECTS": "Equipos Seleccionados"
         },
+        "SELECT": "Selecciona la liga",
         "ERROR": {
             "USERNOTFOUND": "Usuario no encontrado"
         }

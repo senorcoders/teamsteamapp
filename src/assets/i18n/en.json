@@ -295,6 +295,7 @@
     "TEAMREADY": "You are already registered in this team",
     "CHANGEROLE": "Change Role",
     "LEAGUE": {
+        "NAME": "League",
         "CREATE": {
             "TITLE": "New League",
             "ACTION": "Create League",
@@ -314,6 +315,7 @@
             "TITLE": "Search Team",
             "SELECTS": "Selected Teams"
         },
+        "SELECT": "Select the league",
         "ERROR": {
             "USERNOTFOUND": "User not found"
         }
