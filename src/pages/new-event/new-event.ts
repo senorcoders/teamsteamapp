@@ -79,7 +79,6 @@ export class NewEventPage {
 
     //Para saber si el usuario tiene el rol de dueño de liga
     this.league = MyApp.User.role.name === "OwnerLeague";
-    console.log(this.league);
   }
 
   async ionViewDidLoad() {

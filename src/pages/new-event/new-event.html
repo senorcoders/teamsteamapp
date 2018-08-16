@@ -83,7 +83,7 @@
       <ion-input type="number" [(ngModel)]="percentageNotification"> </ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item *ngIf="!league">
       <ion-label>{{'NEWEVENT.SEARCHPLAYER' | translate}}?</ion-label>
       <ion-toggle [(ngModel)]="searchPlayer"></ion-toggle>
     </ion-item>

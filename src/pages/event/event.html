@@ -84,10 +84,10 @@
       </div>
     </div>
 
-    <ion-item id="assistence" (click)="toAssistence()" >
+    <ion-item id="assistence" (click)="toAssistence()" [hidden]="league" >
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
-    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" id="assistence" (click)="toPlayerClose()" >
+    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" id="assistence" (click)="toPlayerClose()" >
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 
@@ -115,13 +115,13 @@
 
   </ion-card>
 
-  <ion-fab [hidden]="user.role.name != 'Manager'" bottom right class="top-bottom" (click)="editEvent()">
+  <ion-fab [hidden]="hiddenEditRemove()" bottom right class="top-bottom" (click)="editEvent()">
     <button color="base" ion-fab icon-only>
       <ion-icon name="md-create"></ion-icon>
     </button>
   </ion-fab>
 
-  <ion-fab [hidden]="user.role.name != 'Manager'" bottom right (click)="remove()">
+  <ion-fab [hidden]="hiddenEditRemove()" bottom right (click)="remove()">
     <button color="base" ion-fab icon-only>
       <ion-icon name="md-close-circle"></ion-icon>
     </button>

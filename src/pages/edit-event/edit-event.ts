@@ -13,6 +13,7 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
+import { MyApp } from '../../app/app.component';
 
 
 declare var google: any;
@@ -79,6 +80,8 @@ export class EditEventPage {
   public searchPlayer = false;
   public searchPlayers = [];
 
+  public league=false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation,
     public alertCtrl: AlertController, public loading: LoadingController,
@@ -120,6 +123,9 @@ export class EditEventPage {
     if (this.timeEnd !== "") {
       this.timeEnd = moment(this.timeEnd).format("hh:mm a");
     }
+
+    //Para saber si el usuario tiene el rol de dueño de liga
+    this.league = MyApp.User.role.name === "OwnerLeague";
   }
 
   async ionViewDidLoad() {
@@ -360,7 +366,6 @@ export class EditEventPage {
     }
 
     let event: any = {
-      team: this.team,
       name: this.name,
       type: this.type,
       attendeceTracking: this.attendeceTracking,
@@ -370,9 +375,17 @@ export class EditEventPage {
       repeatsDaily: this.repeatsDaily,
       repeatsDays: this.repeatsDays.join(","),
       location: locate,
-      percentageNotification: this.percentageNotification,
       searchPlayer: this.searchPlayer
     };
+    if (this.league === true) {
+      if (Object.prototype.toString.call(this.league) === "[object Object]")
+        event.league = MyApp.User.role.league.id;
+      else
+        event.league = MyApp.User.role.league;
+    }else{
+      event.team = this.team;
+      event.percentageNotification = this.percentageNotification;
+    }
     if(event.searchPlayer===true){
       event.searchPlayers = searchPlayers;
     }

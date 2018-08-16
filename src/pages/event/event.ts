@@ -66,6 +66,8 @@ export class EventPage {
   public enablePlayerClose = false;
   public idEventPlayerClose: number;
 
+  public league = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper: HelpersProvider,
@@ -95,6 +97,9 @@ export class EventPage {
     //for image user that published events
     let r = new Date().getTime();
     this.imgUser = interceptor.transformUrl("/images/" + r + "/users&thumbnail/" + this.event.user);
+
+    //Para saber si el usuario tiene el rol de dueño de liga
+    this.league = MyApp.User.role.name === "OwnerLeague";
   }
 
   async ionViewDidLoad() {
@@ -189,6 +194,13 @@ export class EventPage {
   ionViewWillUnload() {
     this.socket.unsubscribeWithPush("eventStatus");
     clearInterval(this.idEventPlayerClose);
+  }
+
+  public hiddenEditRemove() {
+    if (this.user.role.name !== "Manager" && this.league !== true)
+      return true;
+
+    return false;
   }
 
   public successLoadImage() {
