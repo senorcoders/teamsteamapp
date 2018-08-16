@@ -24,6 +24,8 @@ export class RosterPage {
   public isManager:boolean=false;
 
   public players:Array<any>=[];
+  public playersOrigin=[];
+  public filtro="";
 
   public updateImagePlayer = (index:number, stringBase64:string)=>{
 
@@ -65,6 +67,8 @@ export class RosterPage {
         return item;
       }));
 
+      this.playersOrigin = this.players;
+
     }
     catch(e){
       console.error(e);
@@ -90,6 +94,18 @@ export class RosterPage {
       player : member,
       user : this.user
     });
+  }
+
+  public search(){
+    if(this.filtro===""){
+      this.players = this.playersOrigin;
+      return;
+    }
+
+    this.players = this.playersOrigin.filter(function(it){
+      return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
+      it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
+    }.bind(this))
   }
 
   public addPlayer(){

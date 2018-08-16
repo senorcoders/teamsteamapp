@@ -5,8 +5,19 @@
       <ion-icon name="menu"></ion-icon>
     </button>
 
-    <ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title>
-
+    <!-- 
+    <ion-buttons end>
+      <button ion-button>{{"PRACTICE" | translate}}</button>
+    </ion-buttons> -->
+    <ion-row>
+      <ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title>
+      <ion-select [(ngModel)]="filter" (ionChange)="filterEvents()">
+        <ion-option value='all'>{{ 'ALL' | translate }}</ion-option>
+        <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
+        <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
+        <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
+      </ion-select>
+    </ion-row>
   </ion-navbar>
 
 </ion-header>
@@ -16,11 +27,9 @@
   <div ion-fixed id="select-by">
     <button color="pdark" ion-button [ngClass]="by == 'past' ? 'select' : ''" class="select-by" (click)="byS('past')">
       <pre>{{ 'EVENTS.PAST' | translate }}</pre>
-      <!--ion-icon [hidden]="by == 'upcoming'" name="md-arrow-dropdown"></ion-icon-->
     </button>
     <button ion-button color="pdark" [ngClass]="by == 'upcoming' ? 'select' : ''" class="select-by" (click)="byS('upcoming')">
       <pre>{{ 'EVENTS.UPCOMING' | translate }}</pre>
-      <!--ion-icon [hidden]="by == 'past'" name="md-arrow-dropdown"></ion-icon-->
     </button>
   </div>
 

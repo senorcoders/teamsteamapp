@@ -325,5 +325,8 @@
     },
     "ADD": "Agregar",
     "CREATE": "Crear",
-    "NEWUSER": "Nuevo Usuario"
+    "NEWUSER": "Nuevo Usuario",
+    "SENTREQUESTPLAYER": "Enviar solicitud a jugador",
+    "REQUESTREADY": "Solicitud Enviada",
+    "ALL": "Todo"
 }

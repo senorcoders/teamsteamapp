@@ -259,7 +259,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateTeamManagerPageModule,
     TeamsLeaguePageModule,
     SelectLeaguesPageModule,
-    RosterLeaguePageModule
+    RosterLeaguePageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -334,7 +334,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     CreateTeamManagerPage,
     TeamsLeaguePage,
     SelectLeaguesPage,
-    RosterLeaguePage
+    RosterLeaguePage,
   ],
   providers: [
     StatusBar,

@@ -32,11 +32,15 @@ export class EventsSchedulePage {
   public team: any;
 
   public events: Array<any> = [];
+  public eventsOrigin=[];
   public event0 = false;
 
   public by: string = "upcoming";
   public static by: string = "upcoming";
   public league=false;
+
+  //Para filtrar eventos
+  public filter="all";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -111,6 +115,8 @@ export class EventsSchedulePage {
       this.helper.setGeofences(200, events);
       this.events = await this.parserEvents(events);
 
+      this.eventsOrigin = this.events;
+
       //this.events = this.events.reverse();
       if (this.events.length === 0 && this.by === "upcoming")
         this.event0 = true;
@@ -119,12 +125,27 @@ export class EventsSchedulePage {
       else
         this.event0 = false;
 
+        //Filramos los eventos
+        this.filterEvents();
+
     }
     catch (e) {
       console.error(e);
     }
 
     load.dismiss();
+  }
+
+  public filterEvents(){ console.log(this.filter);
+    if(this.filter==="all"){
+      this.events = this.eventsOrigin;
+      return;
+    }
+
+    this.events = this.eventsOrigin.filter(function(it){
+      return it.type === this.filter;
+    }.bind(this));
+
   }
 
   public loadImage(e) {

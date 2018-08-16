@@ -323,5 +323,8 @@
     },
     "ADD": "Add",
     "CREATE": "Create",
-    "NEWUSER": "New User"
+    "NEWUSER": "New User",
+    "SENTREQUESTPLAYER": "Send request to player",
+    "REQUESTREADY": "Request sent",
+    "ALL": "Todo"
 }
