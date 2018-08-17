@@ -173,6 +173,8 @@ import { SelectLeaguesPageModule } from '../pages/select-leagues/select-leagues.
 import { SelectLeaguesPage } from '../pages/select-leagues/select-leagues';
 import { RosterLeaguePage } from '../pages/roster-league/roster-league';
 import { RosterLeaguePageModule } from '../pages/roster-league/roster-league.module';
+import { SettingPage } from '../pages/setting/setting';
+import { SettingPageModule } from '../pages/setting/setting.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -260,6 +262,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TeamsLeaguePageModule,
     SelectLeaguesPageModule,
     RosterLeaguePageModule,
+    SettingPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -335,6 +338,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TeamsLeaguePage,
     SelectLeaguesPage,
     RosterLeaguePage,
+    SettingPage
   ],
   providers: [
     StatusBar,

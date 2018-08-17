@@ -328,5 +328,8 @@
     "NEWUSER": "Nuevo Usuario",
     "SENTREQUESTPLAYER": "Enviar solicitud a jugador",
     "REQUESTREADY": "Solicitud Enviada",
-    "ALL": "Todo"
+    "ALL": "Todo",
+    "SETTING": {
+        "NAME": "Ajustes"
+    }
 }
