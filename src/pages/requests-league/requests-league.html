@@ -1,0 +1,25 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>{{"REQUESTLEAGUE.NAME" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let request of requests" (click)="toRequest(request)">
+      <ion-avatar item-start>
+        <img src="./assets/imgs/logo-login.png" [hidden]="request.loadImage">
+        <img [src]="request.league.imgSrc" [hidden]="!request.loadImage" (load)="loadImage(team)">
+      </ion-avatar>
+      {{request.league.name}}
+    </ion-item>
+  </ion-list>
+
+</ion-content>

@@ -331,5 +331,13 @@
     "ALL": "Todo",
     "SETTING": {
         "NAME": "Ajustes"
+    },
+    "SELECTROLE": "Selecciona tu rol",
+    "ROLTEAM": "Manager de Equipo",
+    "ROLAGENT": "Agente Libre",
+    "ROLLEAGUE": "Dueño de Liga",
+    "REQUESTLEAGUE": {
+        "NAME":"Solicitudes de Liga",
+        "JOIN?": "quieres unirte a la liga"
     }
 }

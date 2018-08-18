@@ -79,13 +79,12 @@ export class ViewProfilePage {
       //cargamos los roles types
       for(let rol of MyApp.User.roles){
         let index = this.rolesTypes.findIndex(it=>{
-          if(rol.name==="Family"||rol.name==="Player") return true;
           return rol.name === it.name;
         });
         if(index===-1){
           this.rolesTypes.push(rol);
         }
-      }
+      }console.log(this.rolesTypes);
 
       //Si el rol es de league cargamos la liga
       if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")

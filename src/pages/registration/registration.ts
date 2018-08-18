@@ -11,6 +11,8 @@ import { AddLocationUserFreeComponent } from '../../components/add-location-user
 import { Geolocation } from '@ionic-native/geolocation';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
+import { SelectOwnerLeaguePage } from '../select-owner-league/select-owner-league';
+import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
 
 
 @IonicPage()
@@ -40,6 +42,16 @@ export class RegistrationPage {
   public locations = [];
   public myPosition: any;
 
+  public selectNew = "team";
+
+  //Para crear ligas
+  public imageLeague = false;
+  public nameLeague = "";
+  public descriptionLeague = "";
+  public usersOwners = [];
+  public teamsSelect = [];
+  public imageSrcLeague = "";
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider,
@@ -47,7 +59,7 @@ export class RegistrationPage {
     public modalCtrl: ModalController, public geolocation: Geolocation,
     public ngZone: NgZone
   ) {
-
+    this.selectNew = "team";
   }
 
   public async getWord(key) {
@@ -66,6 +78,68 @@ export class RegistrationPage {
       });
 
   }
+
+  //#region for create league
+  public changePhotoLeague() {
+
+    this.helper.Camera({ width: 200, height: 200, quality: 75 }).then((result) => {
+      if (result) {
+        this.imageSrcLeague = result;
+      }
+    })
+      .catch((err) => {
+        console.error(err);
+      });
+
+  }
+
+  public addOwners() {
+    let add = this.modalCtrl.create(SelectOwnerLeaguePage);
+    add.present();
+    add.onDidDismiss(function (user) {
+      if (user) {
+        let index = this.usersOwners.findIndex(it => {
+          return it.id === user.id;
+        });
+        console.log(user, this.usersOwners, index);
+        if (index === -1) {
+          this.usersOwners.push(user);
+        }
+      }
+    }.bind(this))
+  }
+
+  public removeOwner(i: number) {
+    if (this.usersOwners.length === 1) {
+      this.usersOwners = [];
+    } else {
+      this.usersOwners.splice(i, 1);
+    }
+  }
+
+  public addTeams() {
+    let m = this.modalCtrl.create(AddTeamsLeagueComponent, { teamsSelect: this.teamsSelect });
+    m.present();
+    m.onDidDismiss(function (data: Array<any>) {
+      if (data) {
+        this.teamsSelect = data;
+      }
+    }.bind(this))
+  }
+
+  public loadImage(team) {
+    team.loadImage = true;
+  }
+
+  public removeTeam(index) {
+    if (this.teamsSelect.length === 1) {
+      this.teamsSelect = [];
+    } else {
+      this.teamsSelect.splice(index, 1)
+    }
+  }
+
+  //#endregion
 
   public success() {
     this.image = true;
@@ -111,137 +185,217 @@ export class RegistrationPage {
     }
   }
 
-  public async save() {
+  public successLeague() {
+    this.imageLeague = true;
+  }
 
-    if (
-      this.username === "" ||
-      this.firstname === "" ||
-      this.lastname === "" ||
-      this.email === ""
-    ) {
-      let empty = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-        .present();
-      return;
-    }
-
-    if (this.free === false) {
+  public async save(){
+    let load = this.helper.getLoadingStandar();
+    await this.saveAction();
+    load.dismiss();
+  }
+  public async saveAction() {
+    
+    try {
       if (
-        this.nameteam === "" ||
-        this.description === "" ||
-        this.city === "" ||
-        this.sport === ""
+        this.username === "" ||
+        this.firstname === "" ||
+        this.lastname === "" ||
+        this.email === ""
       ) {
         let empty = await this.helper.getWords("EMPTYFIELDS");
         this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
           .present();
         return;
       }
-    } else {
-      if (
-        this.locations.length === 0
-      ) {
-        let empty = await this.helper.getWords("ADDPLACES");
-        this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
+
+      if (this.selectNew === "team") {
+        if (
+          this.nameteam === "" ||
+          this.description === "" ||
+          this.city === "" ||
+          this.sport === ""
+        ) {
+          let empty = await this.helper.getWords("EMPTYFIELDS");
+          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
+            .present();
+          return;
+        }
+      } else if (this.selectNew === "ownerLeague") { console.log(this.nameLeague, this.descriptionLeague, this.teamsSelect);
+        if (
+          this.nameLeague == '' ||
+          this.descriptionLeague == ''
+        ) {
+          let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+            emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
+          this.alertCtrl.create({
+            title: requiredM,
+            message: emptyM,
+            buttons: ["Ok"]
+          }).present();
+
+          return;
+        }
+
+        if (this.teamsSelect.length === 0) {
+          let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+            msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
+          this.alertCtrl.create({
+            title: requiredM,
+            message: msg,
+            buttons: ["Ok"]
+          }).present();
+
+          return;
+        }
+
+      } else {
+        if (
+          this.locations.length === 0
+        ) {
+          let empty = await this.helper.getWords("ADDPLACES");
+          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
+            .present();
+          return;
+        }
+      }
+
+      let email: any = await this.http.get("/user/enable/" + this.email).toPromise();
+      if (email.valid === false) {
+        let emailM = await this.helper.getWords("EMAILREADY");
+        this.alertCtrl.create({ message: emailM, buttons: ["Ok"] })
           .present();
         return;
       }
-    }
-
-    let email: any = await this.http.get("/user/enable/" + this.email).toPromise();
-    if (email.valid === false) {
-      let emailM = await this.helper.getWords("EMAILREADY");
-      this.alertCtrl.create({ message: emailM, buttons: ["Ok"] })
-        .present();
-      return;
-    }
 
 
-    let info = this.helper.getDeviceInfo();
-
-    let user: any;
-    if (this.free === false) {
-      user = {
-        "username": this.username,
-        "password": this.password,
-        "firstName": this.firstname,
-        "lastName": this.lastname,
-        "email": this.email,
-        "newTeam": true,
-        "teamName": this.nameteam,
-        "description": this.description,
-        "sport": this.sport,
-        "city": this.city,
-        "configuration": { "valid": true }
-      };
-    } else {
-      user = {
-        user: {
+      let info = this.helper.getDeviceInfo();
+      let user: any;
+      if (this.selectNew === "team") {
+        user = {
           "username": this.username,
           "password": this.password,
           "firstName": this.firstname,
           "lastName": this.lastname,
           "email": this.email,
-          locations: this.locations,
-          freeAgent: true,
-          "configuration": { "valid": true },
-        }
-      };
-    }
-
-    for (let n of Object.keys(info)) {
-      user[n] = info[n];
-    }
-
-    if (this.free === false)
-      await this.http.post("/user/team", user).toPromise();
-    else
-      await this.http.post("/user/free", user).toPromise()
-
-    let call = async function (err, user) {
-
-      if (user) {
-        this.statusBar.overlaysWebView(false);
-        this.statusBar.backgroundColorByName("white");
-        if (MyApp.User.hasOwnProperty("team")) {
-          this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
-        } else {
-          this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
-        }
-      } else if (err) {
-
-        if (err.hasOwnProperty("message")) {
-
-          let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
-          this.presentAlert(passwordM);
-          return;
-
-        } else if (err.hasOwnProperty("verify")) {
-          let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
-          this.presentAlert(msgVerifiedEmail);
-          return;
-        } else {
-
-          let invalidM = await this.helper.getWords("INVALIDPASS");
-          this.presentAlert(invalidM);
-          return;
-        }
-
+          "newTeam": true,
+          "teamName": this.nameteam,
+          "description": this.description,
+          "sport": this.sport,
+          "city": this.city,
+          "configuration": { "valid": true }
+        };
+      } else if (this.selectNew === "agentFree") {
+        user = {
+          user: {
+            "username": this.username,
+            "password": this.password,
+            "firstName": this.firstname,
+            "lastName": this.lastname,
+            "email": this.email,
+            locations: this.locations,
+            freeAgent: true,
+            "configuration": { "valid": true },
+          }
+        };
       } else {
-        let notConectionMSG = await this.helper.getWords("ERRORCONECTION");
-        this.alertCtrl.create({
-          title: "Error",
-          message: notConectionMSG,
-          buttons: ["Ok"]
-        }).present();
+        user = {
+          "username": this.username,
+          "password": this.password,
+          "firstName": this.firstname,
+          "lastName": this.lastname,
+          "email": this.email,
+        };
       }
 
-    }.bind(this)
+      for (let n of Object.keys(info)) {
+        user[n] = info[n];
+      }
 
-    if (this.free === false)
-      await this.auth.Login(user.email, call);
-    else
-      await this.auth.Login(user.user.email, call);
+      if (this.selectNew === "team")
+        await this.http.post("/user/team", user).toPromise();
+      else if (this.selectNew === "agentFree")
+        await this.http.post("/user/free", user).toPromise();
+      else {
+        user = await this.http.post("/user", user).toPromise();
+        this.usersOwners.push(user);
+        let users: any[] = [];
+        for (let us of this.usersOwners) {
+          let index = users.findIndex(it => {
+            return us.id === it.id;
+          });
+          if (index === -1) {
+            users.push(us);
+          }
+        }
+        let league = {
+          name: this.nameLeague,
+          description: this.descriptionLeague,
+          teams: this.teamsSelect,
+          owners: users
+        };
+        await this.http.post("/league/new", league).toPromise();
+
+        if (this.imageSrcLeague !== "") {
+          await this.http.post("/images/leagues", {
+            id: user.id,
+            image: this.imageSrc
+          }).toPromise();
+        }
+      }
+
+      let call = async function (err, user) {
+
+        if (user) {
+          this.statusBar.overlaysWebView(false);
+          this.statusBar.backgroundColorByName("white");
+          if (MyApp.User.hasOwnProperty("team")) {
+            this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+          } else {
+            this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
+          }
+        } else if (err) {
+  
+          if (err.hasOwnProperty("message")) {
+  
+            let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
+            this.presentAlert(passwordM);
+            return;
+  
+          } else if (err.hasOwnProperty("verify")) {
+            let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
+            this.presentAlert(msgVerifiedEmail);
+            return;
+          } else {
+  
+            let invalidM = await this.helper.getWords("INVALIDPASS");
+            this.presentAlert(invalidM);
+            return;
+          }
+  
+        } else {
+          let notConectionMSG = await this.helper.getWords("ERRORCONECTION");
+          this.alertCtrl.create({
+            title: "Error",
+            message: notConectionMSG,
+            buttons: ["Ok"]
+          }).present();
+        }
+  
+      }.bind(this)
+  
+      if (this.selectNew === "team")
+        await this.auth.Login(user.email, call);
+      else if (this.selectNew === "agentFree")
+        await this.auth.Login(user.user.email, call);
+      else
+        await this.auth.Login(user.email, call);
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+
   }
 
   async presentAlert(message) {

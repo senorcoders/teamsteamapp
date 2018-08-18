@@ -130,6 +130,7 @@ export class CreateLeaguePage {
     let user;
     if(this.userPresent===true){
       user = MyApp.User;
+      this.usersOwners.push(user);
     }
 
     let users:any[]  = [];
@@ -154,7 +155,7 @@ export class CreateLeaguePage {
       return;
     }
 
-    let league = {
+    let league:any = {
       name: this.name,
       description: this.description,
       teams: this.teamsSelect,
@@ -163,14 +164,14 @@ export class CreateLeaguePage {
 
     try{
       let load = HelpersProvider.me.getLoadingStandar();
-      await this.http.post("/league/new", league).toPromise();
+      league = await this.http.post("/league/new", league).toPromise() as any;
       this.name = "";
       this.description = "";
       this.teamsSelect = [];
       this.usersOwners = [];
       if(this.imageSrc!==""){
         await this.http.post("/images/leagues", {
-          id: user.id,
+          id: league.id,
           image: this.imageSrc
         }).toPromise();
       }

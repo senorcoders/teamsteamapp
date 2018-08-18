@@ -40,17 +40,22 @@
     </ion-item>
 
     <ion-item>
-      <ion-label>
-        {{"FREEAGENT" | translate}}
+      <ion-label floating>
+        {{"SELECTROLE" | translate}}
       </ion-label>
-      <ion-toggle [(ngModel)]="free"></ion-toggle>
+      <ion-select [(ngModel)]="selectNew" multi="false">
+        <ion-option value="team">{{"ROLTEAM" | translate}}</ion-option>
+        <ion-option value="agentFree">{{"ROLAGENT" | translate}}</ion-option>
+        <ion-option value="ownerLeague">{{"ROLLEAGUE" | translate}}</ion-option>
+      </ion-select>
     </ion-item>
 
   </ion-list>
 
+  <!--PARA CREAR NEW TEAM-->
   <h2 style="margin-top: 20px;" [hidden]="free">{{"TEAM" | translate}}</h2>
 
-  <ion-avatar [hidden]="free">
+  <ion-avatar [hidden]="selectNew!=='team'">
     <img width="100%" [hidden]="!image" (load)="success()" [src]="imageSrc">
     <img width="100%" [hidden]="image" src="./assets/imgs/logo-default.png">
     <ion-fab top right edge class="button-fab-right">
@@ -60,7 +65,7 @@
     </ion-fab>
   </ion-avatar>
 
-  <ion-list [hidden]="free">
+  <ion-list [hidden]="selectNew!=='team'">
 
     <ion-item >
       <ion-label floating>
@@ -111,9 +116,10 @@
 
   </ion-list>
 
-  <h2 style="margin-top: 20px;" [hidden]="!free">{{"ADDLOCATION.TITLE" | translate}}</h2>
+  <!--PARA CREAR LOCATIONS DE UN AGENT FREE-->
+  <h2 style="margin-top: 20px;" [hidden]="selectNew!=='agentFree'">{{"ADDLOCATION.TITLE" | translate}}</h2>
 
-  <ion-list [hidden]="!free">
+  <ion-list [hidden]="selectNew!=='agentFree'">
     <ion-item *ngFor="let location of locations; let i=index;">
       {{"SPORTS."+location.sport.toUpperCase() | translate}} {{"LEVEL."+location.level.toUpperCase() | translate}}
       <ion-icon color="primary" item-end name="ios-create-outline" (click)="editLocation(location, i)"></ion-icon>
@@ -121,7 +127,55 @@
     </ion-item>
   </ion-list>
 
-  <button ion-button (click)="addLocation()" [hidden]="!free">{{"ADDLOCATION.ACTION" | translate}}</button>
+  <button ion-button (click)="addLocation()" [hidden]="selectNew!=='agentFree'">{{"ADDLOCATION.ACTION" | translate}}</button>
+
+  <!--PARA CREAR LIGAS-->
+  <ion-avatar [hidden]="selectNew!=='ownerLeague'">
+    <img width="100%" [hidden]="!imageLeague" (load)="successLeague()" [src]="imageSrcLeague">
+    <img width="100%" [hidden]="imageLeague" src="./assets/imgs/logo-default.png">
+    <ion-fab top right edge class="button-fab-right">
+      <button ion-fab color="base" (click)="changePhotoLeague()">
+        <ion-icon name="md-camera"></ion-icon>
+      </button>
+    </ion-fab>
+  </ion-avatar>
+
+  <ion-list [hidden]="selectNew!=='ownerLeague'">
+    <ion-item>
+      <ion-label floating>{{"NAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="nameLeague"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"DESCRIPTION" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="descriptionLeague"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <h3 [hidden]="selectNew!=='ownerLeague'">{{"LEAGUE.CREATE.ADDOWNERS" | translate}}</h3>
+  <ion-list [hidden]="selectNew!=='ownerLeague'">
+    <ion-item *ngFor="let user of usersOwners; let i = index;">
+      <ion-avatar item-start>
+        <img src="./assets/imgs/logo-login.png" [hidden]="user.loadImage">
+        <img [src]="user.imageSrc" [hidden]="!user.loadImage" (load)="loadImage(role)">
+      </ion-avatar>
+      <p (click)="setTeam(role)">{{user.username}}</p>
+      <ion-icon color="secondary" name="md-close" (click)="removeOwner(i)" item-end></ion-icon>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="addOwners()" [hidden]="selectNew!=='ownerLeague'">{{"ADD" | translate}}</button>
+
+  <h3 [hidden]="selectNew!=='ownerLeague'">{{"LEAGUE.CREATE.ADDTEAMS" | translate}}</h3>
+  <ion-list [hidden]="selectNew!=='ownerLeague'">
+    <ion-item *ngFor="let team of teamsSelect; let i=index;">
+      <ion-avatar item-start>
+        <img src="./assets/imgs/logo-login.png" [hidden]="team.loadImage">
+        <img [src]="team.imageSrc" [hidden]="!team.loadImage" (load)="loadImage(team)">
+      </ion-avatar>
+      {{team.name}}
+      <ion-icon item-end color="primary" name="md-close" (click)="removeTeam(i)"></ion-icon>
+    </ion-item>
+  </ion-list>
+  <button ion-button (click)="addTeams()" [hidden]="selectNew!=='ownerLeague'" >{{"ADD" | translate}}</button>
 
   <button ion-button block (click)="save()">{{"SAVE" | translate}}</button>
 

@@ -29,6 +29,7 @@ import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
 import { CreateLeaguePage } from '../pages/create-league/create-league';
 import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
 import { SettingPage } from '../pages/setting/setting';
+import { RequestsLeaguePage } from '../pages/requests-league/requests-league';
 
 
 @Component({
@@ -45,7 +46,7 @@ export class MyApp {
   public static User: any;
   public pushObject: PushObject;
   public static newDatas: any = {};
-  public static counts:any={};
+  public static counts: any = {};
 
   public nameReady = false;
   public teamName = "";
@@ -71,6 +72,7 @@ export class MyApp {
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
+    { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" },
@@ -139,9 +141,9 @@ export class MyApp {
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
         document.getElementById("nameTeam").innerHTML = team.name;
-      } else  if(MyApp.User.role.name==="FreeAgent"){
+      } else if (MyApp.User.role.name === "FreeAgent") {
         this.nav.root = AgentFreePage;
-      }else{
+      } else {
         this.nav.root = EventsSchedulePage;
       }
 
@@ -199,6 +201,23 @@ export class MyApp {
     if (MyApp.User.role.name === "FreeAgent")
       return;
 
+    //Para saber si hay request para league
+    if (MyApp.User.role.name === "Manager") {
+
+      let requestsLeague:any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
+      console.log(requestsLeague);
+      if (requestsLeague.length > 0) {
+        MyApp.newDatas["requestLeague"] = true;
+        MyApp.counts["requestLeague"] = requestsLeague.length;
+      } else {
+        MyApp.newDatas["requestLeague"] = false;
+        MyApp.counts["requestLeague"] = 0;
+      }
+      this.checkNewDatas();
+      this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    }
+
+    //Para saber si hay nuevos request para unirse a equipos
     this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
     //console.log(this.team);
     if (!this.team.hasOwnProperty("request")) {
@@ -261,8 +280,8 @@ export class MyApp {
     return !false;
   }
 
-  public getCounts(watch){
-    if(MyApp.counts.hasOwnProperty(watch)){
+  public getCounts(watch) {
+    if (MyApp.counts.hasOwnProperty(watch)) {
       return MyApp.counts[watch];
     }
 
@@ -318,11 +337,11 @@ export class MyApp {
     if (Object.prototype.toString.call(page.role) === "[object Object]") {
 
       //Para multitples roles en not
-      if(page.role.not.includes("|")){
+      if (page.role.not.includes("|")) {
         let validFast = true;
         let nots = page.role.not.split("|");
-        for(let n of nots){
-          if(n===MyApp.User.role.name){
+        for (let n of nots) {
+          if (n === MyApp.User.role.name) {
             validFast = false;
           }
         }
@@ -331,11 +350,11 @@ export class MyApp {
       }
 
       //Para multitples roles en yes
-      if(page.role.yes.includes("|")){
+      if (page.role.yes.includes("|")) {
         let validFast = false;
         let yess = page.role.yes.split("|");
-        for(let s of yess){
-          if(s===MyApp.User.role.name){
+        for (let s of yess) {
+          if (s === MyApp.User.role.name) {
             validFast = true;
           }
         }
