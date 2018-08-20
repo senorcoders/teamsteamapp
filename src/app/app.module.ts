@@ -179,6 +179,8 @@ import { RequestLeaguePageModule } from '../pages/request-league/request-league.
 import { RequestLeaguePage } from '../pages/request-league/request-league';
 import { RequestsLeaguePage } from '../pages/requests-league/requests-league';
 import { RequestsLeaguePageModule } from '../pages/requests-league/requests-league.module';
+import { ChatFamilyPage } from '../pages/chat-family/chat-family';
+import { ChatFamilyPageModule } from '../pages/chat-family/chat-family.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -268,7 +270,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RosterLeaguePageModule,
     SettingPageModule,
     RequestLeaguePageModule,
-    RequestsLeaguePageModule
+    RequestsLeaguePageModule,
+    ChatFamilyPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -346,7 +349,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RosterLeaguePage,
     SettingPage,
     RequestLeaguePage,
-    RequestsLeaguePage
+    RequestsLeaguePage,
+    ChatFamilyPage
   ],
   providers: [
     StatusBar,

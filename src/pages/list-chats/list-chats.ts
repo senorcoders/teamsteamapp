@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { ChatPage } from '../chat/chat';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { ChatFamilyPage } from '../chat-family/chat-family';
 
 /**
  * esta es la lista de players con los que ha chateado
@@ -22,12 +23,14 @@ export class ListChatsPage {
   public team:any={ name : "" };
   public idTeam:string;
   public loadImage=false;
+  public user;
   public static newMessages:Array<string>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public modal: ModalController, private http: HttpClient
   ) {
     this.idTeam = MyApp.User.team;
+    this.user = MyApp.User;
   }
 
   async ionViewWillEnter(){
@@ -67,6 +70,10 @@ export class ListChatsPage {
     this.navCtrl.push(ChatOnePersonPage, {
       user
     });
+  }
+
+  public goChatFamily(){
+    this.navCtrl.push(ChatFamilyPage);
   }
 
   public newMessagePeople(user){

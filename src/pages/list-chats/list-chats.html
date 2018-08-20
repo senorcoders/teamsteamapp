@@ -1,11 +1,9 @@
 <ion-header>
 
   <ion-navbar color="base">
-
     <button ion-button icon-only menuToggle start>
       <ion-icon name="menu"></ion-icon>
     </button>
-
     <ion-title>{{'NAVMENU.MESSAGES' | translate}}</ion-title>
 
   </ion-navbar>
@@ -18,11 +16,9 @@
   <ion-list>
 
     <ion-item>
-      <ion-avatar item-start [hidden]="!loadImage" >
-        <img [src]="team.imageSrc" (load)="successImage()" >
-      </ion-avatar>
-      <ion-avatar item-start [hidden]="loadImage">
-        <img src="./assets/imgs/logo-login.png">
+      <ion-avatar item-start>
+        <img [src]="team.imageSrc" [hidden]="!loadImage" (load)="successImage()" >
+        <img [hidden]="loadImage" src="./assets/imgs/logo-login.png">
       </ion-avatar>
       <h2 (click)="goChatTeam()" >{{team.name}} - {{'TEAMCHAT' | translate}} <div class="new-point-message" [hidden]="newMessagePeople('team')"></div></h2>
       <button (click)="goChatTeam()"  item-end ion-button class="chat">
@@ -30,13 +26,21 @@
       </button>
     </ion-item>
 
-    <ion-item *ngFor='let user of listUsers' (click)="goChat(user)" >
-      <ion-avatar item-start [hidden]="!user.loadImage">
-        <img [src]="user.imgSrc" (load)="success(event, user);">
-      </ion-avatar>
-
-      <ion-avatar item-start [hidden]="user.loadImage">
+    <ion-item *ngIf="user.role.name==='Manager'||user.role.name==='Family'">
+      <ion-avatar item-start>
+        <!-- <img [src]="team.imageSrc" [hidden]="!loadImage" (load)="successImage()" > -->
         <img src="./assets/imgs/logo-login.png">
+      </ion-avatar>
+      <h2 (click)="goChatFamily()" >{{'CHATFORFAMILY' | translate}} <div class="new-point-message" [hidden]="newMessagePeople('family')"></div></h2>
+      <button (click)="goChatFamily()"  item-end ion-button class="chat">
+        <img class="chat-0" src="./assets/imgs/chat-1.png">
+      </button>
+    </ion-item>
+
+    <ion-item *ngFor='let user of listUsers' (click)="goChat(user)" >
+      <ion-avatar item-start >
+        <img [hidden]="!user.loadImage" [src]="user.imgSrc" (load)="success(event, user);">
+        <img [hidden]="user.loadImage" src="./assets/imgs/logo-login.png">
       </ion-avatar>
 
       <h2>{{user.username}} <div class="new-point-message" [hidden]="newMessagePeople(user)"></div></h2>
@@ -45,7 +49,6 @@
       </button>
 
     </ion-item>
-
 
   </ion-list>
 

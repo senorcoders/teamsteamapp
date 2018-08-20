@@ -329,6 +329,8 @@
     "SENTREQUESTPLAYER": "Enviar solicitud a jugador",
     "REQUESTREADY": "Solicitud Enviada",
     "ALL": "Todo",
+    "CHATFORFAMILY": "Miembros de Familia",
+    "MSGTOFAMILY": "Mensajes a Familiares",
     "NOTCHATEACHPLAYER":"El mánager bloqueo los mensajes con otros jugadores",
     "SETTING": {
         "NAME": "Ajustes",
