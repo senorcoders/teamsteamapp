@@ -329,8 +329,10 @@
     "SENTREQUESTPLAYER": "Enviar solicitud a jugador",
     "REQUESTREADY": "Solicitud Enviada",
     "ALL": "Todo",
+    "NOTCHATEACHPLAYER":"El mánager bloqueo los mensajes con otros jugadores",
     "SETTING": {
-        "NAME": "Ajustes"
+        "NAME": "Ajustes",
+        "CHATEACHPLAYER": "Chatear Entre Cada Jugador"
     },
     "SELECTROLE": "Selecciona tu rol",
     "ROLTEAM": "Manager de Equipo",

@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone, ChangeDetectorRef } from '@angular/core';
-import { IonicPage, Content, NavParams, TextInput, ModalController } from 'ionic-angular';
+import { IonicPage, Content, NavParams, TextInput, ModalController, ToastController } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable'
@@ -21,7 +21,7 @@ import { ListChatsPage } from '../list-chats/list-chats';
 export class ChatOnePersonPage {
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: TextInput;
-  msgList: any;
+  msgList: any[];
   msgListObserver: Observable<Array<any>>;
   editorMsg = '';
   showEmojiPicker = false;
@@ -43,7 +43,8 @@ export class ChatOnePersonPage {
   constructor(private http: HttpClient,
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
     public navParams: NavParams, public sockets: WebSocketsProvider,
-    public helper: HelpersProvider, public modal: ModalController
+    public helper: HelpersProvider, public modal: ModalController,
+    public toastCtrl: ToastController
   ) {
     this.to = this.navParams.get("user");
     this.from = MyApp.User;
@@ -55,21 +56,34 @@ export class ChatOnePersonPage {
     this.deleteNotificationLocal();
   }
 
-  deleteNotificationLocal(){
+  deleteNotificationLocal() {
     //Para quitar la notificacion local
     let ide = this.to.id;
-    let index = ListChatsPage.newMessages.findIndex(function(id){ return id === ide; });
-    if( index !== -1 ){
-      if( ListChatsPage.newMessages.length === 1 ){
+    let index = ListChatsPage.newMessages.findIndex(function (id) { return id === ide; });
+    if (index !== -1) {
+      if (ListChatsPage.newMessages.length === 1) {
         ListChatsPage.newMessages = [];
-      }else{
+      } else {
         ListChatsPage.newMessages.splice(index, 1);
       }
       MyApp.counts["chat"] = ListChatsPage.newMessages.length
     }
 
-    if( ListChatsPage.newMessages.length === 0){
+    if (ListChatsPage.newMessages.length === 0) {
       MyApp.newDatas["chat"] = false;
+    }
+  }
+
+  async ionViewDidLoad(){
+    //Para saber si el manager bloqueo los mensajes con los otros jugadores
+    let team = await this.http.get("/teams/" + MyApp.User.team).toPromise() as any;
+    if (team.configuration !== undefined) {
+      let confi = team.configuration;
+      if (confi.hasOwnProperty("chatEachPlayer") === true) {
+        if(confi.chatEachPlayer===false){
+          await this.notEachPlayer();
+        }
+      }
     }
   }
 
@@ -79,7 +93,6 @@ export class ChatOnePersonPage {
     await this.getMsg();
     let t = this;
     this.updateTimeMessage = setInterval(function () {
-      console.log("changes pipe");
       t.changeDectRef.reattach();
     }, 30 * 1000);
 
@@ -92,6 +105,16 @@ export class ChatOnePersonPage {
     this.content.resize();
     this.scrollToBottom();
 
+  }
+
+  private async notEachPlayer() {
+    let message = await HelpersProvider.me.getWords("NOTCHATEACHPLAYER");
+    this.toastCtrl.create({
+      message,
+      showCloseButton: true,
+      dismissOnPageChange: true
+    })
+      .present();
   }
 
   ionViewWillLeave() {
@@ -116,8 +139,8 @@ export class ChatOnePersonPage {
     return interceptor.transformUrl(`/api/image/chats/${id}`);
   }
 
-  photoReady(msg){
-    msg.photoReady= true;
+  photoReady(msg) {
+    msg.photoReady = true;
   }
 
   public async sendMgsWitImage() {
@@ -139,27 +162,28 @@ export class ChatOnePersonPage {
     if (data === undefined || data == null)
       return;
 
+    let msg: any = {
+      "is": "chat",
+      from: this.from.id,
+      to: this.to.id,
+      text: data.comment || "",
+      team: MyApp.User.team,
+      image: data.image,
+      status: 'pending'
+    };
     try {
-      let msg: any = {
-        "is": "chat",
-        from: this.from.id,
-        to: this.to.id,
-        text: data.comment || "",
-        team: MyApp.User.team,
-        image: data.image,
-        status: 'pending'
-      };
-
-      msg = await this.http.post("/api/chat/image", msg).toPromise() as any;
-      // console.log(msg);
-      this.pushNewMsg(msg);
-      let index = this.getMsgIndexById(msg.dateTime);
+      let msgS = await this.http.post("/api/chat/image", msg).toPromise() as any;
+      this.pushNewMsg(msgS);
+      let index = this.getMsgIndexById(msgS.dateTime);
       if (index !== -1) {
         this.msgList[index].status = 'success';
       }
     }
     catch (e) {
       console.error(e);
+      if (e.error === "not chat each player") {
+        await this.notEachPlayer();
+      }
     }
   }
 
@@ -190,7 +214,7 @@ export class ChatOnePersonPage {
       // console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
         // if( item.from === MyApp.User.id )
-          item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.from);
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.from);
         // else
         //   item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
 
@@ -209,7 +233,7 @@ export class ChatOnePersonPage {
   /**
   * @name sendMsg
   */
-  sendMsg() {
+  public async sendMsg() {
     if (!this.editorMsg.trim()) return;
 
     // Mock message
@@ -229,13 +253,26 @@ export class ChatOnePersonPage {
       this.messageInput.setFocus();
     }
 
-    this.http.post("/chat", newMsg).toPromise()
-      .then((msg: any) => {
-        let index = this.getMsgIndexById(msg.dateTime);
+    try {
+      let msg = await this.http.post("/chat", newMsg).toPromise() as any;
+      let index = this.getMsgIndexById(msg.dateTime);
+      if (index !== -1) {
+        this.msgList[index].status = 'success';
+      }
+    }
+    catch (e) {
+      console.error(e);
+      if (e.error.originalError === "not chat each player") {
+        let index = this.getMsgIndexById(newMsg.dateTime);
         if (index !== -1) {
-          this.msgList[index].status = 'success';
+          if (this.msgList.length === 1)
+            this.msgList = [];
+          else
+            this.msgList.splice(index, 1);
         }
-      })
+        await this.notEachPlayer();
+      }
+    }
   }
 
   /**

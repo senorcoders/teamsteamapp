@@ -205,7 +205,6 @@ export class MyApp {
     if (MyApp.User.role.name === "Manager") {
 
       let requestsLeague:any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
-      console.log(requestsLeague);
       if (requestsLeague.length > 0) {
         MyApp.newDatas["requestLeague"] = true;
         MyApp.counts["requestLeague"] = requestsLeague.length;
