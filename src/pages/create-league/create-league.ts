@@ -98,11 +98,6 @@ export class CreateLeaguePage {
     }
   }
 
-  public async uploadExcel(){
-    let files = await HelpersProvider.me.pickFile(".csv,.xlsx");
-    console.log(files);
-  }
-
   public async save() {
     if (
       this.name == ''
