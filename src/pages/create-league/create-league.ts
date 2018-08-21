@@ -107,11 +107,11 @@ export class CreateLeaguePage {
     if (
       this.name == ''
     ) {
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
+      let requiredM = await HelpersProvider.me.getWords("ISREQUIRED"),
+        nameM = await HelpersProvider.me.getWords("NAME");
       this.alertCtrl.create({
         title: requiredM,
-        message: emptyM,
+        message: `${nameM} ${requiredM}`,
         buttons: ["Ok"]
       }).present();
 
@@ -147,17 +147,17 @@ export class CreateLeaguePage {
       }
     }
 
-    if(this.teamsSelect.length===0){
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: msg,
-        buttons: ["Ok"]
-      }).present();
+    // if(this.teamsSelect.length===0){
+    //   let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+    //     msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
+    //   this.alertCtrl.create({
+    //     title: requiredM,
+    //     message: msg,
+    //     buttons: ["Ok"]
+    //   }).present();
 
-      return;
-    }
+    //   return;
+    // }
 
     let league:any = {
       name: this.name,

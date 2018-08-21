@@ -135,20 +135,20 @@ export class HelpersProvider {
   }
 
   //convertir una image a base 64 url
-  public fileToBase64(file): Promise<string> {
-    return new Promise(function (resolve, reject) {
+  // public fileToBase64(file): Promise<string> {
+  //   return new Promise(function (resolve, reject) {
 
-      var reader = new FileReader();
-      reader.readAsDataURL(file);
-      reader.onload = function () {
-        resolve(reader.result);
-      };
-      reader.onerror = function (error) {
-        reject(error);
-      };
+  //     var reader = new FileReader();
+  //     reader.readAsDataURL(file);
+  //     reader.onload = function () {
+  //       resolve(reader.result);
+  //     };
+  //     reader.onerror = function (error) {
+  //       reject(error);
+  //     };
 
-    });
-  }
+  //   });
+  // }
 
   //usa el endpoint del server para volver mas liviana una imagen
   public PerformanceImage(base64: string): Promise<string> {
@@ -170,36 +170,36 @@ export class HelpersProvider {
   }
 
   //Para tomar un url de imagen y convertirlo a base 64
-  public urlTobase64(url): Promise<string> {
-    let t = this;
-    return new Promise(function (resolve, reject) {
+  // public urlTobase64(url): Promise<string> {
+  //   let t = this;
+  //   return new Promise(function (resolve, reject) {
 
-      var reader = new FileReader();
-      let link = url.replace(interceptor.url, "");
+  //     var reader = new FileReader();
+  //     let link = url.replace(interceptor.url, "");
 
-      console.log(link, reader);
+  //     console.log(link, reader);
 
-      let header = new HttpHeaders();
-      header.append('Content-Type', 'image/jpeg');
+  //     let header = new HttpHeaders();
+  //     header.append('Content-Type', 'image/jpeg');
 
-      t.http.get(link, { responseType: 'blob' }).toPromise().then(function (image: any) {
-        console.log(image);
-        reader.readAsDataURL(image);
-        reader.onload = function () {
-          console.log(reader);
-          resolve(reader.result);
-        };
-        reader.onerror = function (error) {
-          reject(error);
-        };
-      })
-        .catch(function (err) {
-          reject(err);
-        });
+  //     t.http.get(link, { responseType: 'blob' }).toPromise().then(function (image: any) {
+  //       console.log(image);
+  //       reader.readAsDataURL(image);
+  //       reader.onload = function () {
+  //         console.log(reader);
+  //         resolve(reader.result);
+  //       };
+  //       reader.onerror = function (error) {
+  //         reject(error);
+  //       };
+  //     })
+  //       .catch(function (err) {
+  //         reject(err);
+  //       });
 
 
-    });
-  }
+  //   });
+  // }
 
   //Para abrir la camera desde cualquier component
   public Camera(parameters: { width?, height?, quality?, resolve?, reject?}, resize?: boolean): Promise<string> {

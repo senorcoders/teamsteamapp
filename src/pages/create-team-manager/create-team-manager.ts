@@ -153,8 +153,7 @@ export class CreateTeamManagerPage {
     }
 
     //Para validar los campos del equipo
-    if (this.name === "" || this.sport === "" || this.description === ""
-      || this.city === "") {
+    if (this.name === "" || this.sport === "" || this.city === "") {
       let requiredM = await this.helper.getWords("REQUIRED"),
         emptyFields = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: emptyFields })

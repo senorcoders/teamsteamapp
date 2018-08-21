@@ -205,9 +205,7 @@ export class MemberRosterPage {
     delete player.image;
 
     let user = this.player.user;
-    let msg = await HelpersProvider.me.getWords("UPDATING");
-    let load = this.loading.create({ content: msg });
-    load.present({ disableApp: true });
+    let load = this.helper.getLoadingStandar();
     try {
       await this.http.put("/players/" + this.player.id, player).toPromise();
       await this.http.put("/user/" + this.player.user.id, user).toPromise();
