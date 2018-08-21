@@ -98,10 +98,14 @@ export class CreateLeaguePage {
     }
   }
 
+  public async uploadExcel(){
+    let files = await HelpersProvider.me.pickFile(".csv,.xlsx");
+    console.log(files);
+  }
+
   public async save() {
     if (
-      this.name == '' ||
-      this.description == ''
+      this.name == ''
     ) {
       let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
         emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
@@ -114,17 +118,17 @@ export class CreateLeaguePage {
       return;
     }
 
-    if (this.usersOwners.length === 0 && this.userPresent === false) {
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSOWNERS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: msg,
-        buttons: ["Ok"]
-      }).present();
+    // if (this.usersOwners.length === 0 && this.userPresent === false) {
+    //   let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+    //     msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSOWNERS");
+    //   this.alertCtrl.create({
+    //     title: requiredM,
+    //     message: msg,
+    //     buttons: ["Ok"]
+    //   }).present();
 
-      return;
-    }
+    //   return;
+    // }
 
     //Agregamos el usuario actual y filtramos
     let user;

@@ -274,6 +274,37 @@ export class HelpersProvider {
 
   }
 
+  public pickFile(types:string):Promise<File[]> {
+
+    return new Promise(function(resolve, reject){
+      this.pickFileInput(resolve,reject,types);
+    }.bind(this));
+
+  }
+
+  private pickFileInput(resolve, reject, types){
+    try {
+
+      let pick = document.createElement("input");
+      pick.setAttribute("type", "file");
+      pick.setAttribute("accept", types);
+      document.body.appendChild(pick);
+
+      let handleFile = function (e: any) {
+        var files = e.target.files;
+        resolve(files);
+        document.body.removeChild(pick);
+      }
+
+      pick.addEventListener('change', handleFile, false);
+
+      pick.click();
+    }
+    catch (e) {
+      reject(e);
+    }
+  }
+
   public async locationToPlaces(value) {
     let response: NativeGeocoderReverseResult;
     try {
