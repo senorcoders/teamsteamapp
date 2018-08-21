@@ -22,13 +22,13 @@
         "EVENTS" : "Events",
         "MYTASK": "Tasks",
         "ROSTER": "Roster",
-        "MESSAGES": "Recent Chats",
+        "MESSAGES": "Chat",
         "PROFILE": "Profile",
         "LOGOUT": "Logout"
     },
     "MYTASK": {
         "TITLE": "Tasks",
-        "NEWTASK" : "Nueva Tarea"
+        "NEWTASK" : "New Task"
     },
     "NEWEVENT": {
         "TT": "New Event",
@@ -42,7 +42,7 @@
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",
-            "EVENT": "Event"
+            "EVENT": "Other Event"
         },
         "ATTENDENCETRACKING": "Attendece Tracking",
         "PINMAP": "OR PIN MAP",
@@ -52,7 +52,7 @@
             "TWO": "has been saved",
             "THREE": " successfully"
         },
-        "PORCENTAGENOTIFICATION": "Percentage of Assistance To Receive Notification",
+        "PORCENTAGENOTIFICATION": "% Attendance to receive notification",
         "SEARCHPLAYER": "Search players",
         "POSITION": "Position",
         "ADDPOSITION": "Add the positions of the players you want to search"
@@ -119,7 +119,7 @@
         "YERSERYNUMBERonly": "Jersey Number",
         "YERSERYNUMBER": "Jersey Number (optional)",
         "POSITIONS": "Positions (separated by comma)",
-        "ADDITIONALCONTACTINFORMATION": "Additional Contact Information",
+        "ADDITIONALCONTACTINFORMATION": "Other People to Contact",
         "CONTACTNAME": "Contact Name",
         "EMAILPHONE": "Email / Phone",
         "VALUE": "Value",
@@ -175,7 +175,7 @@
     "TERMOFUSER": "Terms of Use",
     "REQUESTSEND": "Request Join",
     "REQUESTS": "Requests",
-    "REQUESTSTEAM": "Equipment Requests",
+    "REQUESTSTEAM": "Team Requests",
     "REQUEST": "Request",
     "SENDREQUEST": "Send Request",
     "ACCEPT": "Accept",
@@ -301,7 +301,7 @@
             "TITLE": "New League",
             "ACTION": "Create League",
             "ADDOWNERS": "Add Owner",
-            "ADDTEAMS": "Add Equipment",
+            "ADDTEAMS": "Add Team",
             "SELECTSOWNERS": "Add The owners of the league",
             "SELECTSTEAMS": "Add teams to the league",
             "SUCCESS": "League Created"
