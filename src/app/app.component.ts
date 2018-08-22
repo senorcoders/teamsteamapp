@@ -1,6 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { Platform, Nav, Events, MenuController } from 'ionic-angular';
-import { StatusBar } from '@ionic-native/status-bar';
 
 import { Push, PushObject } from '@ionic-native/push';
 
@@ -9,7 +8,6 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
-import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
 
 
 import { interceptor } from '../providers/auth-service/interceptor';
@@ -60,8 +58,6 @@ export class MyApp {
 
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
-  public logo = "./assets/imgs/logo-login.png";
-  public defaultImageUserUrl = "./assets/imgs/user-menu.png";
   public defaultImageUser = true;
 
   public pages: Array<Object> = [
@@ -81,27 +77,23 @@ export class MyApp {
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
-  constructor(public platform: Platform, public statusBar: StatusBar,
-    public auth: AuthServiceProvider, public menuCtrl: MenuController,
-    public pusherNotification: Push, private http: HttpClient,
-    public event: Events, public zone: NgZone,
-    public translate: TranslateService, private helper: HelpersProvider,
-    public webIntent: WebIntent, public iNotification: INotificationProvider
+  constructor(public platform: Platform, public auth: AuthServiceProvider, 
+    public menuCtrl: MenuController, public pusherNotification: Push, 
+    private http: HttpClient, public event: Events, 
+    public zone: NgZone, public translate: TranslateService, 
+    private helper: HelpersProvider, public webIntent: WebIntent,
+    private INoti: INotificationProvider
   ) {
+    console.log("init platform", new Date().toTimeString());
     platform.ready().then(this.initPlatform.bind(this));
   }
 
-  private initPlatform() {
+  private initPlatform() { console.log("platform ready", new Date().toTimeString());
 
     this.translate.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
     this.translate.use('en');
-
-    // Okay, so the platform is ready and our plugins are available.
-    // Here you can do any higher level native things you might need.
-    this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByName("white");
 
     this.pusherNotification.hasPermission()
       .then((res: any) => {
@@ -120,14 +112,15 @@ export class MyApp {
 
   }
 
-  public init() {
+  public init() { console.log("init services", new Date().toTimeString());
     MyApp.me = this;
     this.serviceNewDatas();
     setInterval(this.serviceNewDatas.bind(this), 6000);
     this.initAuth();
+    console.log("services ready", new Date().toTimeString());
   }
 
-  async initAuth() {
+  async initAuth() { console.log("init Auth", new Date().toTimeString());
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
@@ -178,6 +171,8 @@ export class MyApp {
     }.bind(this));
 
     this.serviceNewDatas();
+
+    console.log("auth ready", new Date().toTimeString());
   }
 
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
