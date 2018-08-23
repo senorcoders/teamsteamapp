@@ -2,18 +2,14 @@ import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController, Platform } from 'ionic-angular';
 import * as moment from 'moment';
 
-import {
-  GoogleMaps,
-  GoogleMap,
-} from '@ionic-native/google-maps';
+
 import { EditEventPage } from '../edit-event/edit-event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { interceptor } from '../../providers/auth-service/interceptor';
-import { MyApp } from '../../app/app.component';;
-import { PhotoViewer } from '@ionic-native/photo-viewer';
+import { MyApp } from '../../app/app.component';
 import { ViewTrakingComponent } from '../../components/view-traking/view-traking';
 import { TrackingEventManagerComponent } from '../../components/tracking-event-manager/tracking-event-manager';
 import { AssistencesComponent } from '../../components/assistences/assistences';
@@ -71,7 +67,7 @@ export class EventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper: HelpersProvider,
-    public photoViewer: PhotoViewer, public modalCtrl: ModalController,
+     public modalCtrl: ModalController,
     private zone: NgZone, public platform: Platform,
     public socket: WebSocketsProvider, public geolocation: Geolocation
   ) {
@@ -359,11 +355,6 @@ export class EventPage {
         index: t.index
       }, { animation: "ios-transition" });
     })
-  }
-
-  public viewPhoto(src: string, name: string) {
-    console.log(src);
-    this.photoViewer.show(src, name, { share: true })
   }
 
   public async like(event, likeUp) {

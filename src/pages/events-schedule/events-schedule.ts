@@ -10,8 +10,8 @@ import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { CommentsComponent } from '../../components/comments/comments';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { Geolocation } from '@ionic-native/geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 @IonicPage()
 @Component({

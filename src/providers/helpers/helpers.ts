@@ -4,10 +4,6 @@ import { Platform, Loading, LoadingController, ModalController, AlertController,
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
-import {
-  NativeGeocoder,
-  NativeGeocoderReverseResult
-} from '@ionic-native/native-geocoder';
 import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
@@ -17,7 +13,6 @@ import { CalendarModal, CalendarResult } from 'ion2-calendar';
 import { ImageViewPage } from '../../pages/image-view/image-view';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
-import { Geofence } from '@ionic-native/geofence';
 import { Storage } from '@ionic/storage';
 declare var google: any;
 import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
@@ -37,13 +32,11 @@ export class HelpersProvider {
   public enableMapsLocation = false;
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
-    public app: App, public nativeGeocoder: NativeGeocoder,
-    public datePicker: DatePicker, private translate: TranslateService,
+    public app: App, public datePicker: DatePicker, private translate: TranslateService,
     private zone: NgZone, private loading: LoadingController,
     private modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
-    public device: Device, public geofence: Geofence,
-    public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
+    public device: Device, public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
   ) {
     this.init();
   }
@@ -274,15 +267,15 @@ export class HelpersProvider {
 
   }
 
-  public pickFile(types:string):Promise<File[]> {
+  public pickFile(types: string): Promise<File[]> {
 
-    return new Promise(function(resolve, reject){
-      this.pickFileInput(resolve,reject,types);
+    return new Promise(function (resolve, reject) {
+      this.pickFileInput(resolve, reject, types);
     }.bind(this));
 
   }
 
-  private pickFileInput(resolve, reject, types){
+  private pickFileInput(resolve, reject, types) {
     try {
 
       let pick = document.createElement("input");
@@ -306,9 +299,24 @@ export class HelpersProvider {
   }
 
   public async locationToPlaces(value) {
-    let response: NativeGeocoderReverseResult;
+    let response: any;
     try {
-      let obj: any = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      if (this.enableMapsLocation === false)
+        await this.reloadGoogleplaces();
+
+      let geocoder = new google.maps.Geocoder();
+
+      let obj: any = await new Promise(function (resolve) {
+        geocoder.geocode({ 'location': { lat: value.lat, lng: value.lng } }, function (results, status) {
+          if (status === 'OK') {
+            if (results[0]) {
+              return resolve(results[0]);
+            }
+          }
+
+          resolve(null);
+        });
+      });
       console.log(obj);
       response = obj;
     } catch (e) {
@@ -487,55 +495,50 @@ export class HelpersProvider {
     try {
 
       if (MyApp.User.role.name === "Manager") {
-        if (this.platform.is("android")) {
-          await this.geofence.removeAll();
-          return;
-        } else if (this.platform.is("ios")) {
-          await this.backgroundGeolocation.stop();
-          return;
-        }
-      }
-
-      if (this.platform.is("ios")) {
-        await this.setGeofencesForIOS();
+        await this.backgroundGeolocation.stop();
         return;
-      } else if (this.platform.is("android")) {
-        //Se usa el metodo en ios para los jugadores
-        //cercanos a un evento que puedan jugar
-        await this.setGeofencesForIOS();
       }
 
-      events = events || false;
-      await this.geofence.initialize();
-      let es: any = await this.geofence.getWatched();
+      // if (this.platform.is("ios")) {
+      await this.setGeofencesForIOS();
+      //   return;
+      // } else if (this.platform.is("android")) {
+      //   //Se usa el metodo en ios para los jugadores
+      //   //cercanos a un evento que puedan jugar
+      //   await this.setGeofencesForIOS();
+      // }
 
-      if (Object.prototype.toString.call(es) === "[object String]") {
-        es = JSON.parse(es);
-        console.log(es);
-      }
+      // events = events || false;
+      // await this.geofence.initialize();
+      // let es: any = await this.geofence.getWatched();
 
-      if (events === false)
-        events = await this.http.get("/event/team/upcoming/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.team).toPromise();
+      // if (Object.prototype.toString.call(es) === "[object String]") {
+      //   es = JSON.parse(es);
+      //   console.log(es);
+      // }
 
-      let hayUnoNuevo = false;
-      for (let event of events) {
-        let index = es.findIndex(function (it) {
-          let idEvent = it.id.split(".")[1];
-          return idEvent === event.id;
-        });
-        if (index === -1) {
-          hayUnoNuevo = true;
-          break;
-        }
-      }
-      console.log("hay uno nuevo", hayUnoNuevo);
-      if (hayUnoNuevo === false)
-        return;
+      // if (events === false)
+      //   events = await this.http.get("/event/team/upcoming/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.team).toPromise();
+
+      // let hayUnoNuevo = false;
+      // for (let event of events) {
+      //   let index = es.findIndex(function (it) {
+      //     let idEvent = it.id.split(".")[1];
+      //     return idEvent === event.id;
+      //   });
+      //   if (index === -1) {
+      //     hayUnoNuevo = true;
+      //     break;
+      //   }
+      // }
+      // console.log("hay uno nuevo", hayUnoNuevo);
+      // if (hayUnoNuevo === false)
+      //   return;
 
 
-      events = await this.parserEvents(events);
+      // events = await this.parserEvents(events);
 
-      await this.setGeofencesForAndroid(events, radius);
+      // await this.setGeofencesForAndroid(events, radius);
 
     }
     catch (e) {
@@ -707,7 +710,7 @@ export class HelpersProvider {
     try {
 
       //Eliminar los anteriores geofence
-      await this.geofence.removeAll();
+      // await this.geofence.removeAll();
 
       let cercaMsg = await this.getWords("NEARTO");
       let index = 0;
@@ -783,18 +786,18 @@ export class HelpersProvider {
 
     console.log(fence);
 
-    this.geofence.addOrUpdate(fence).then(
-      () => console.log('Geofence added'),
-      (err) => console.log('Geofence failed to add')
-    );
+    // this.geofence.addOrUpdate(fence).then(
+    //   () => console.log('Geofence added'),
+    //   (err) => console.log('Geofence failed to add')
+    // );
 
-    this.geofence.onNotificationClicked().subscribe(function (data) {
-      console.log("notification", data);
-    });
+    // this.geofence.onNotificationClicked().subscribe(function (data) {
+    //   console.log("notification", data);
+    // });
 
-    this.geofence.onTransitionReceived().subscribe(function (data) {
-      console.log("transition", data);
-    });
+    // this.geofence.onTransitionReceived().subscribe(function (data) {
+    //   console.log("transition", data);
+    // });
   }
   //#endregion
 
@@ -898,15 +901,7 @@ export class HelpersProvider {
   }
 
   public async stopGeofences() {
-    if (this.platform.is("cordova")) {
-      if (this.platform.is("android")) {
-        await this.geofence.removeAll();
-        return;
-      } else if (this.platform.is("ios")) {
-        await this.backgroundGeolocation.stop();
-        return;
-      }
-    }
+    await this.backgroundGeolocation.stop();
   }
   //#endregion
 
