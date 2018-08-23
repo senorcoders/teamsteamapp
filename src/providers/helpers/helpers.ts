@@ -56,18 +56,24 @@ export class HelpersProvider {
 
     try {
 
-      let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places", {
-        responseType: 'text'
-      }).toPromise();
+      // let script = await this.http.get("https://maps.googleapis.com/maps/api/js?key=AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q&libraries=places", {
+      //   responseType: 'jsonp' as any,
+      // }).toPromise();
 
-      let fn = new Function(script);
-      fn();
+      // let fn = new Function(script);
+      // fn();
+      let script = document.createElement("script");
+      let key = "AIzaSyAFLgCYDZUvB1CeR3IQDjoIfK-yVkSBm7Q";
+      script.setAttribute("src", `https://maps.googleapis.com/maps/api/js?key=${key}&libraries=places`);
+      document.body.appendChild(script);
 
-      if (window.hasOwnProperty("google") === true) {
-        HelpersProvider.me.enableMapsLocation = true;
-      } else {
-        await this.reloadGoogleplaces(true);
-      }
+      setTimeout(async function () {
+        if (window.hasOwnProperty("google") === true) {
+          HelpersProvider.me.enableMapsLocation = true;
+        } else {
+          await this.reloadGoogleplaces(true);
+        }
+      }.bind(this), 500);
 
     }
     catch (e) {
@@ -499,312 +505,32 @@ export class HelpersProvider {
         return;
       }
 
-      // if (this.platform.is("ios")) {
       await this.setGeofencesForIOS();
-      //   return;
-      // } else if (this.platform.is("android")) {
-      //   //Se usa el metodo en ios para los jugadores
-      //   //cercanos a un evento que puedan jugar
-      //   await this.setGeofencesForIOS();
-      // }
-
-      // events = events || false;
-      // await this.geofence.initialize();
-      // let es: any = await this.geofence.getWatched();
-
-      // if (Object.prototype.toString.call(es) === "[object String]") {
-      //   es = JSON.parse(es);
-      //   console.log(es);
-      // }
-
-      // if (events === false)
-      //   events = await this.http.get("/event/team/upcoming/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.team).toPromise();
-
-      // let hayUnoNuevo = false;
-      // for (let event of events) {
-      //   let index = es.findIndex(function (it) {
-      //     let idEvent = it.id.split(".")[1];
-      //     return idEvent === event.id;
-      //   });
-      //   if (index === -1) {
-      //     hayUnoNuevo = true;
-      //     break;
-      //   }
-      // }
-      // console.log("hay uno nuevo", hayUnoNuevo);
-      // if (hayUnoNuevo === false)
-      //   return;
-
-
-      // events = await this.parserEvents(events);
-
-      // await this.setGeofencesForAndroid(events, radius);
 
     }
     catch (e) {
       console.error(e);
     }
   }
-
-  //#region Para obtener los eventos de geofences
-  private async parserEvents(events) {
-
-    let user = MyApp.User, th = this;
-    try {
-
-      //preformarting for events
-      events = await Promise.all(events.map(async function (it, index) {
-
-        //Para saber si el evento es semanal
-        it.weeks = it.repeats === true && it.repeatsDaily === false;
-
-        if (it.weeks === true) {
-          let day = th.getDayCercano(it.repeatsDays);
-          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
-          ////console.log(it.name, it.parsedDateTime);
-        } else {
-          let day = moment(it.dateTime);
-          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
-        }
-
-        //if (it.repeatsDaily === true) {
-        it.Time = moment(it.dateTime).format("hh:mm a");
-        //}
-
-        it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
-
-
-        return it;
-      }));
-
-      //for sort events
-      events = events.sort(function (a, b) {
-        if (a.repeatsDaily == true) {
-          return -1;
-
-        } else if (b.repeatsDaily == true) {
-          return 1;
-
-        }
-
-        //obtenemos la fecha de los eventos
-        let a1, b1;
-        if (a.repeats === true) {
-          a1 = th.getDayCercano(a.repeatsDays)
-        } else {
-          a1 = moment(a.dateTime, "MM/DD/YYYY hh:mm");
-        }
-
-        if (b.repeats === true) {
-          b1 = th.getDayCercano(b.repeatsDays)
-        } else {
-          b1 = moment(b.dateTime, "MM/DD/YYYY hh:mm")
-        }
-        //console.log(a1.format("DD/MM/YYYY"), b1.format("DD/MM/YYYY"));
-        if (a1.isBefore(b1)) {            // a comes first
-          return -1
-        } else if (a1.isAfter(b1)) {     // b comes first
-          return 1
-        } else {                // equal, so order is irrelevant
-          return 0            // note: sort is not necessarily stable in JS
-        }
-
-      });
-
-    }
-    catch (e) {
-      console.error(e);
-    }
-
-    return events;
-
-  }
-
-  //Para cuando los eventos son por semana
-  //pueden haber varios dias en la semana que el evento ocurre
-  //hay que buscar el evento mas cercano al fecha actual
-  private getDayCercano(days: any): any {
-
-    let daysNumber = {
-      "m": 1,
-      "tu": 2,
-      "w": 3,
-      "th": 4,
-      "f": 5,
-      "sa": 6,
-      "su": 7
-    };
-    ////console.log(days);
-    let daysMoment = [];
-    let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
-
-
-    for (let day of Days) {
-      let newmoment = moment();
-      newmoment.day(daysNumber[day]);
-      daysMoment.push(newmoment);
-    }
-
-
-    //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
-    let ind = 0, day = 0;
-    for (let i = 0; i < daysMoment.length; i++) {
-      if (daysMoment[i].day() > day) {
-        day = daysMoment[i].day();
-        ind = i;
-      }
-    }
-    if (moment().day() > daysMoment[ind].day()) {
-      let d = daysMoment[0];
-      d.add(7, "days");
-      return d;
-    }
-
-
-    if (Days.length === 1) {
-      let newmoment = moment();
-      newmoment.day(daysNumber[Days[0]]);
-      return newmoment;
-    }
-
-    let cercanoMoment, diasNumber = [], diaNumber = 0;
-    for (let i = 0; i < daysMoment.length; i++) {
-      diasNumber.push({ diff: daysMoment[i].diff(moment(), "hours"), i: i });
-    }
-
-    let diasNumberTemp = [];
-    for (let i = 0; i < diasNumber.length; i++) {
-      if (diasNumber[i].diff < 0) { } else {
-        diasNumberTemp.push(diasNumber[i]);
-      }
-    }
-    diasNumber = diasNumberTemp;
-
-    if (diasNumber.length === 0) {
-      let d = daysMoment[0];
-      d.add(7, "days");
-      return d;
-    }
-
-    for (let i = 0; i < diasNumber.length; i++) {
-      //console.log(diasNumber[i]);
-      if (i === 0) {
-        cercanoMoment = daysMoment[diasNumber[i].i];
-        diaNumber = diasNumber[i].diff;
-      }
-
-      if (diaNumber > diasNumber[i].diff) {
-        cercanoMoment = daysMoment[diasNumber[i].i];
-        diaNumber = diasNumber[i].diff;
-      }
-
-    }
-
-    return cercanoMoment;
-
-  }
-  //#endregion
-
-  //#region geofences for android
-  public async setGeofencesForAndroid(events: Array<any>, radius: number) {
-    try {
-
-      //Eliminar los anteriores geofence
-      // await this.geofence.removeAll();
-
-      let cercaMsg = await this.getWords("NEARTO");
-      let index = 0;
-      for (let event of events) {
-        await this.addGeofenceForAndroid(event, cercaMsg, index, radius);
-        index += 1;
-      }
-
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
-
-
-  private async addGeofenceForAndroid(event: any, cerca, index: number, radius: number) {
-
-    /***
-     * Para obtener mi position
-     */
-    let origin: any
-    if (event.location.hasOwnProperty("lng") && event.location.hasOwnProperty("lat"))
-      origin = { lat: event.location.lat, lng: event.location.lng };
-    else {
-
-      //cargamos google maps si a un no ha cargado
-      if (HelpersProvider.me.enableMapsLocation === false)
-        await HelpersProvider.me.reloadGoogleplaces();
-
-      await new Promise(function (resolve) {
-        let geocoder = new google.maps.Geocoder()
-        geocoder.geocode({ address: event.location.address }, function (res, status) {
-
-          if (res.length === 0) return;
-
-          res = res[0];
-          if (res.geometry) {
-            let lat = res.geometry.location.lat();
-            let lng = res.geometry.location.lng();
-            origin = { lat, lng };
-          }
-          resolve();
-        }.bind(this));
-      }.bind(this));
-    }
-
-    let typeMsg = await this.getWords("NEWEVENT.TYPES." + event.type.toUpperCase());
-
-    //Para obtener la fecha que inicia el evento
-    let date: moment.Moment;
-    if (event.repeatsDaily === true) {
-      date = moment(event.Time, "hh:mm a");
-    } else {
-      date = moment(event.parsedDateTime[0] + "/" + event.parsedDateTime[1], "MMMM/DD")
-    }
-
-    //options describing geofence
-    let id = MyApp.User.id;
-    id += "." + event.id + "." + MyApp.User.team + "." + date.format("MM-DD-YYYY-hh:mm:ssa");
-    let fence = {
-      id, //any unique ID
-      latitude: origin.lat, //center of geofence radius
-      longitude: origin.lng,
-      radius, //radius to edge of geofence in meters
-      transitionType: 1, //see 'Transition Types' below
-      notification: { //notification settings
-        id: index, //any unique ID
-        title: event.name, //notification title
-        text: cerca + " " + typeMsg + " " + event.name, //notification body
-        openAppOnClick: true //open app when notification is tapped
-      }
-    }
-
-    console.log(fence);
-
-    // this.geofence.addOrUpdate(fence).then(
-    //   () => console.log('Geofence added'),
-    //   (err) => console.log('Geofence failed to add')
-    // );
-
-    // this.geofence.onNotificationClicked().subscribe(function (data) {
-    //   console.log("notification", data);
-    // });
-
-    // this.geofence.onTransitionReceived().subscribe(function (data) {
-    //   console.log("transition", data);
-    // });
-  }
-  //#endregion
 
 
   //#region geofences for ios
   private async setGeofencesForIOS() {
     try {
+      if (await this.backgroundGeolocation.isLocationEnabled() === 0) {
+        let required = await this.getWords("REQUIRED"),
+          enableSetting = await this.getWords("ENABLEGEOLOCATION");
+        this.alertCtrl.create({
+          title: required, message: enableSetting,
+          buttons: [{
+            text: "Ok", handler: function () {
+              setTimeout(this.setGeofencesForIOS.bind(this), (30 * 1000));
+              this.backgroundGeolocation.showLocationSettings();
+            }.bind(this)
+          }]
+        })
+          .present();
+      }
       const config: BackgroundGeolocationConfig = {
         desiredAccuracy: 10,
         stationaryRadius: 20,
@@ -812,7 +538,6 @@ export class HelpersProvider {
         stopOnTerminate: false, // enable this to clear background location settings when the app terminates
         url: interceptor.transformUrl("/geofence"),
         httpHeaders: {
-          "platform-ios": "true",  //esto se usa para identificar el tipo de geofence, en android se envia ig
           "id": MyApp.User.id + "." + MyApp.User.team
         }
       };

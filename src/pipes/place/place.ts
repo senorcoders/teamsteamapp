@@ -1,6 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { NativeGeocoder, 
-  NativeGeocoderReverseResult } from '@ionic-native/native-geocoder';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 @Pipe({
   name: 'place',
@@ -8,11 +7,14 @@ import { NativeGeocoder,
 export class PlacePipe implements PipeTransform {
 
   //Para obtener el geolocation name apartir de ILatLng
-  constructor(public nativeGeocoder:NativeGeocoder){}
+  constructor(){
+
+  }
+
   async transform(value: any, ...args) {
     let response:string;
     try{
-      let obj:any = await this.nativeGeocoder.reverseGeocode(value.lat, value.lng);
+      let obj:any = await HelpersProvider.me.locationToPlaces(value);
       console.log(obj);
       response = obj.locality;
     }catch(e){

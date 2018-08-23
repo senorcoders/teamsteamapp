@@ -44,10 +44,7 @@ export class EventPage {
 
   public location: any = {
     position: { lat: 51.5033640, lng: -0.12762500 },
-    place: {
-      placesubAdministrativeArea: "",
-      thoroughfare: ""
-    },
+    place: {},
     change: false
   };
 
@@ -128,7 +125,7 @@ export class EventPage {
         this.location.position = { lat: this.event.location.lat, lng: this.event.location.lng };
         let places = await this.helper.locationToPlaces(this.location.position);
         if (places === null) return;
-        this.location.place = places[0];
+        this.location.place = places;
       } else {
 
         let geocoder = new google.maps.Geocoder()

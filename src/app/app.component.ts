@@ -8,7 +8,7 @@ import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../pages/events-schedule/events-schedule';
 import { RosterPage } from '../pages/roster/roster';
 import { HttpClient } from '@angular/common/http';
-
+import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { interceptor } from '../providers/auth-service/interceptor';
 import { MyTaskPage } from '../pages/my-task/my-task';
@@ -77,18 +77,19 @@ export class MyApp {
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
-  constructor(public platform: Platform, public auth: AuthServiceProvider, 
-    public menuCtrl: MenuController, public pusherNotification: Push, 
-    private http: HttpClient, public event: Events, 
-    public zone: NgZone, public translate: TranslateService, 
+  constructor(public platform: Platform, public auth: AuthServiceProvider,
+    public menuCtrl: MenuController, public pusherNotification: Push,
+    private http: HttpClient, public event: Events,
+    public zone: NgZone, public translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent,
-    private INoti: INotificationProvider
+    private INoti: INotificationProvider, public splash: SplashScreen
   ) {
     console.log("init platform", new Date().toTimeString());
     platform.ready().then(this.initPlatform.bind(this));
   }
 
-  private initPlatform() { console.log("platform ready", new Date().toTimeString());
+  private initPlatform() {
+    console.log("platform ready", new Date().toTimeString());
 
     this.translate.setDefaultLang('en');
 
@@ -112,15 +113,23 @@ export class MyApp {
 
   }
 
-  public init() { console.log("init services", new Date().toTimeString());
-    MyApp.me = this;
-    this.serviceNewDatas();
-    setInterval(this.serviceNewDatas.bind(this), 6000);
-    this.initAuth();
+  public async init() {
+    console.log("init services", new Date().toTimeString());
+    try {
+      MyApp.me = this;
+      this.serviceNewDatas();
+      setInterval(this.serviceNewDatas.bind(this), 6000);
+      await this.initAuth();
+    }
+    catch (e) {
+      console.error(e);
+    }
     console.log("services ready", new Date().toTimeString());
+    this.splash.hide();
   }
 
-  async initAuth() { console.log("init Auth", new Date().toTimeString());
+  async initAuth() {
+    console.log("init Auth", new Date().toTimeString());
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
@@ -199,7 +208,7 @@ export class MyApp {
     //Para saber si hay request para league
     if (MyApp.User.role.name === "Manager") {
 
-      let requestsLeague:any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
+      let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
       if (requestsLeague.length > 0) {
         MyApp.newDatas["requestLeague"] = true;
         MyApp.counts["requestLeague"] = requestsLeague.length;

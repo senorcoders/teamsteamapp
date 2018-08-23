@@ -111,8 +111,7 @@
     </div>
 
     <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
-      <p>{{location.place.subAdministrativeArea}}</p>
-      <p>{{location.place.thoroughfare}}</p>
+      <p>{{location.place.formatted_address}}</p>
       <p [hidden]="!event.location.link">Link:
         <a [href]="event.link" target="_black"> {{event.location.link}} </a>
       </p>

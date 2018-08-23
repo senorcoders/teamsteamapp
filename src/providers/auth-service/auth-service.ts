@@ -5,7 +5,6 @@ import { MenuController, Platform } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
 import { Globalization } from '@ionic-native/globalization';
-import { Geofence } from '@ionic-native/geofence';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -22,7 +21,7 @@ export class AuthServiceProvider {
   constructor(public http: HttpClient, public storage: Storage,
     public menuCtrl: MenuController, public zone: NgZone,
     public helper: HelpersProvider, public platform: Platform,
-    public globalization: Globalization, public geofence: Geofence
+    public globalization: Globalization
   ) {
 
   }
@@ -190,9 +189,6 @@ export class AuthServiceProvider {
     data = await this.storage.remove("role");
     this.user = null;
     delete MyApp.User;
-
-    //Eliminamos los geofence
-    await this.geofence.removeAll();
 
     return data === undefined;
   }
