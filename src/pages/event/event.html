@@ -21,21 +21,24 @@
       <p [hidden]="!event.description" style="font-size: 12pt !important;">{{event.description}}</p>
     </ion-card-content>
 
-    <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" (click)="viewPhoto(event.imageSrc, event.name)"
-    />
+    <img [src]="event.imageSrc" [hidden]="!loadImage" (load)="successLoadImage()" />
 
     <div class="status">
       <div>
-          <button ion-button [ngClass]="event.status==='ON TIME'?'select':''" (click)="asignStatus('ON TIME')" >{{"EVENTS.STATUS.ONTIME" | translate}}</button>
+        <button ion-button [ngClass]="event.status==='ON TIME'?'select':''" (click)="asignStatus('ON TIME')">{{"EVENTS.STATUS.ONTIME"
+          | translate}}</button>
       </div>
       <div>
-          <button ion-button [ngClass]="event.status==='CANCELLED'?'select':''" (click)="asignStatus('CANCELLED')" >{{"EVENTS.STATUS.CANCELLED" | translate}}</button>
+        <button ion-button [ngClass]="event.status==='CANCELLED'?'select':''" (click)="asignStatus('CANCELLED')">{{"EVENTS.STATUS.CANCELLED"
+          | translate}}</button>
       </div>
       <div>
-          <button ion-button [ngClass]="event.status==='STARTING LATE'?'select':''" (click)="asignStatus('STARTING LATE')" >{{"EVENTS.STATUS.STARTINGLATE" | translate}}</button>
+        <button ion-button [ngClass]="event.status==='STARTING LATE'?'select':''" (click)="asignStatus('STARTING LATE')">{{"EVENTS.STATUS.STARTINGLATE"
+          | translate}}</button>
       </div>
       <div>
-          <button ion-button [ngClass]="event.status==='ENDING LATE'?'select':''" (click)="asignStatus('ENDING LATE')" >{{"EVENTS.STATUS.ENDINGLATE" | translate}}</button>
+        <button ion-button [ngClass]="event.status==='ENDING LATE'?'select':''" (click)="asignStatus('ENDING LATE')">{{"EVENTS.STATUS.ENDINGLATE"
+          | translate}}</button>
       </div>
     </div>
 
@@ -74,20 +77,23 @@
       <div class="count">
         <h5 (click)="asingResponse('yes')">
           <ion-icon class="ball mas"></ion-icon>
-          {{"EVENT.YES" | translate}} {{event.countYes}} </h5>
+          {{"EVENT.YES" | translate}} {{event.countYes}}
+        </h5>
         <h5 (click)="asingResponse('maybe')">
           <ion-icon class="ball menos"></ion-icon>
-          {{"EVENT.MAYBE" | translate}} {{event.countMaybe}} </h5>
+          {{"EVENT.MAYBE" | translate}} {{event.countMaybe}}
+        </h5>
         <h5 (click)="asingResponse('no')">
           <ion-icon class="ball talves"></ion-icon>
-          {{"EVENT.NO" | translate}} {{event.countNo}} </h5>
+          {{"EVENT.NO" | translate}} {{event.countNo}}
+        </h5>
       </div>
     </div>
 
-    <ion-item id="assistence" (click)="toAssistence()" [hidden]="league" >
+    <ion-item id="assistence" (click)="toAssistence()" [hidden]="league">
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
-    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" id="assistence" (click)="toPlayerClose()" >
+    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" id="assistence" (click)="toPlayerClose()">
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 
@@ -101,12 +107,11 @@
 
     <div [hidden]="!location.change" (dblclick)="enableMoveMap()" id="map_canvas" style="width: 100%; height: 250px; "></div>
     <div id="map_before" [hidden]="location.change">
-        <ion-spinner></ion-spinner>
+      <ion-spinner></ion-spinner>
     </div>
-    
+
     <ion-item [hidden]="!location.change" class="location-event" style="padding-top: 10xp; padding-bottom: 10px;">
-      <p>{{location.place.subAdministrativeArea}}</p>
-      <p>{{location.place.thoroughfare}}</p>
+      <p>{{location.place.formatted_address}}</p>
       <p [hidden]="!event.location.link">Link:
         <a [href]="event.link" target="_black"> {{event.location.link}} </a>
       </p>

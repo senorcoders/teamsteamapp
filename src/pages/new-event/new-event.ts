@@ -5,7 +5,6 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { HttpClient } from '@angular/common/http';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
-import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 import { MyApp } from '../../app/app.component';
 import { EventCreatedComponent } from '../../components/event-created/event-created';
 import { Geolocation } from '@ionic-native/geolocation';
@@ -190,17 +189,17 @@ export class NewEventPage {
   }
 
   public loadPlace() {
-    let modal = this.modalCtrl.create(GoogleMapsComponent);
-    let t = this;
-    modal.onDidDismiss(async function (data: any) {
-      if (data) {
-        t.location.position = data;
-        let places = await t.helper.locationToPlaces(t.location.position);
-        t.location.place = places[0];
-        t.location.change = true;
-      }
-    });
-    modal.present();
+    // let modal = this.modalCtrl.create(GoogleMapsComponent);
+    // let t = this;
+    // modal.onDidDismiss(async function (data: any) {
+    //   if (data) {
+    //     t.location.position = data;
+    //     let places = await t.helper.locationToPlaces(t.location.position);
+    //     t.location.place = places[0];
+    //     t.location.change = true;
+    //   }
+    // });
+    // modal.present();
   }
 
   public async changePhoto() {

@@ -212,7 +212,6 @@ export class RegistrationPage {
       if (this.selectNew === "team") {
         if (
           this.nameteam === "" ||
-          this.description === "" ||
           this.city === "" ||
           this.sport === ""
         ) {
@@ -221,28 +220,15 @@ export class RegistrationPage {
             .present();
           return;
         }
-      } else if (this.selectNew === "ownerLeague") { console.log(this.nameLeague, this.descriptionLeague, this.teamsSelect);
+      } else if (this.selectNew === "ownerLeague") {
         if (
-          this.nameLeague == '' ||
-          this.descriptionLeague == ''
+          this.nameLeague == ''
         ) {
           let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
             emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
           this.alertCtrl.create({
             title: requiredM,
             message: emptyM,
-            buttons: ["Ok"]
-          }).present();
-
-          return;
-        }
-
-        if (this.teamsSelect.length === 0) {
-          let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-            msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
-          this.alertCtrl.create({
-            title: requiredM,
-            message: msg,
             buttons: ["Ok"]
           }).present();
 

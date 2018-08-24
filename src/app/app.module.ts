@@ -7,19 +7,14 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 //Tools
 import { IonicStorageModule } from '@ionic/storage';
-import { GoogleMaps, Geocoder } from '@ionic-native/google-maps';
 import { Geolocation } from '@ionic-native/geolocation';
-import { LocationAccuracy } from '@ionic-native/location-accuracy';
-import { AndroidFullScreen } from '@ionic-native/android-full-screen';
-import { NativeGeocoder } from '@ionic-native/native-geocoder';
-import { PhotoViewer } from '@ionic-native/photo-viewer';
 import { DatePicker } from '@ionic-native/date-picker';
-import { LongPressModule } from 'ionic-long-press';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { WebIntent } from '@ionic-native/web-intent';
 import { Device } from '@ionic-native/device';
 import { Globalization } from '@ionic-native/globalization';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
+import { LocationAccuracy } from '@ionic-native/location-accuracy';
 
 
 import { MyApp } from './app.component';
@@ -57,7 +52,6 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
-import { Geofence } from '@ionic-native/geofence';
 
 //for  multilanguage
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -84,7 +78,6 @@ import { ResetPasswordPage } from '../pages/reset-password/reset-password';
 import { Camera } from '@ionic-native/camera';
 import { ComponentsModule } from '../components/components.module';
 import { DateTimePickerComponent } from '../components/date-time-picker/date-time-picker';
-import { GoogleMapsComponent } from '../components/google-maps/google-maps';
 import { CommentsComponent } from '../components/comments/comments';
 import { ViewLikesComponent } from '../components/view-likes/view-likes';
 import { ViewTrakingComponent } from '../components/view-traking/view-traking';
@@ -206,7 +199,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     }),
     HttpModule,
     HttpClientModule,
-    LongPressModule,
     ComponentsModule,
     AddTeamPageModule,
     PipesModule,
@@ -292,7 +284,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LibraryImagesPage,
     ItemDetailsPage,
     PermissionsPage,
-    GoogleMapsComponent,
     CommentsComponent,
     ViewLikesComponent,
     ViewTrakingComponent,
@@ -359,30 +350,24 @@ export function HttpLoaderFactory(http: HttpClient) {
     { provide: HTTP_INTERCEPTORS, useClass: interceptor, multi: true },
     AuthServiceProvider,
     interceptor,
-    GoogleMaps,
     Geolocation,
-    LocationAccuracy,
     HelpersProvider,
     Push,
     EmojiProvider,
     CameraPreview,
     Diagnostic,
     PhotoLibrary,
-    AndroidFullScreen,
-    NativeGeocoder,
-    PhotoViewer,
     DatePicker,
     WebSocketsProvider,
     InAppBrowser,
-    Geocoder,
     Camera,
     WebIntent,
     EmojiProvider,
     Device,
     INotificationProvider,
     Globalization,
-    Geofence,
-    BackgroundGeolocation
+    BackgroundGeolocation,
+    LocationAccuracy
   ]
 })
 export class AppModule {}

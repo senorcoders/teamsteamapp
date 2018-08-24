@@ -341,5 +341,6 @@
     "REQUESTLEAGUE": {
         "NAME":"League Requests",
         "JOIN?": "You want to join the league"
-    }
+    },
+    "ENABLEGEOLOCATION": "Please turn on your location services"
 }

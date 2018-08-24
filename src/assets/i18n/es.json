@@ -343,5 +343,6 @@
     "REQUESTLEAGUE": {
         "NAME":"Solicitudes de Liga",
         "JOIN?": "quieres unirte a la liga"
-    }
+    },
+    "ENABLEGEOLOCATION": "Encienda sus servicios de ubicación"
 }

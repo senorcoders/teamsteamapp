@@ -100,31 +100,30 @@ export class CreateLeaguePage {
 
   public async save() {
     if (
-      this.name == '' ||
-      this.description == ''
+      this.name == ''
     ) {
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
+      let requiredM = await HelpersProvider.me.getWords("ISREQUIRED"),
+        nameM = await HelpersProvider.me.getWords("NAME");
       this.alertCtrl.create({
         title: requiredM,
-        message: emptyM,
+        message: `${nameM} ${requiredM}`,
         buttons: ["Ok"]
       }).present();
 
       return;
     }
 
-    if (this.usersOwners.length === 0 && this.userPresent === false) {
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSOWNERS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: msg,
-        buttons: ["Ok"]
-      }).present();
+    // if (this.usersOwners.length === 0 && this.userPresent === false) {
+    //   let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+    //     msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSOWNERS");
+    //   this.alertCtrl.create({
+    //     title: requiredM,
+    //     message: msg,
+    //     buttons: ["Ok"]
+    //   }).present();
 
-      return;
-    }
+    //   return;
+    // }
 
     //Agregamos el usuario actual y filtramos
     let user;
@@ -143,17 +142,17 @@ export class CreateLeaguePage {
       }
     }
 
-    if(this.teamsSelect.length===0){
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: msg,
-        buttons: ["Ok"]
-      }).present();
+    // if(this.teamsSelect.length===0){
+    //   let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+    //     msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSTEAMS");
+    //   this.alertCtrl.create({
+    //     title: requiredM,
+    //     message: msg,
+    //     buttons: ["Ok"]
+    //   }).present();
 
-      return;
-    }
+    //   return;
+    // }
 
     let league:any = {
       name: this.name,

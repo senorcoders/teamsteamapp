@@ -67,8 +67,7 @@ export class AddTeamPage {
 
   public async save() {
 
-    if (this.name === "" || this.sport === "" || this.description === ""
-      || this.city === "") {
+    if (this.name === "" || this.sport === "" || this.city === "") {
       let requiredM = await this.helper.getWords("REQUIRED"),
         emptyFields = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: emptyFields })
@@ -114,8 +113,7 @@ export class AddTeamPage {
 
   public async updateAction() {
 
-    if (this.name === "" || this.sport === "" || this.description === ""
-      || this.city === "") {
+    if (this.name === "" || this.sport === "" || this.city === "") {
       let requiredM = await this.helper.getWords("REQUIRED"),
         emptyFields = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: emptyFields })

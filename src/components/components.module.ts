@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { IonicModule } from 'ionic-angular';
-import { GoogleMapsComponent } from './google-maps/google-maps';
 import { CommentsComponent } from './comments/comments';
 import { ViewTrakingComponent } from './view-traking/view-traking';
 import { ViewLikesComponent } from './view-likes/view-likes';
@@ -20,7 +19,7 @@ import { SlideAssistencesEventComponent } from './slide-assistences-event/slide-
 import { AddLocationUserFreeComponent } from './add-location-user-free/add-location-user-free';
 import { AddTeamsLeagueComponent } from './add-teams-league/add-teams-league';
 @NgModule({
-	declarations: [GoogleMapsComponent,
+	declarations: [
     CommentsComponent,
     ViewTrakingComponent,
     ViewLikesComponent,
@@ -39,11 +38,11 @@ import { AddTeamsLeagueComponent } from './add-teams-league/add-teams-league';
     AddTeamsLeagueComponent
     ],
     imports: [ 
-     IonicModule.forRoot(GoogleMapsComponent),
+     IonicModule.forRoot(CommentsComponent),
      TranslateModule.forChild(),
       PipesModule
     ],
-	exports: [GoogleMapsComponent,
+	exports: [
     CommentsComponent,
     ViewTrakingComponent,
     ViewLikesComponent,

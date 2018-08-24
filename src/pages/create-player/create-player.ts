@@ -137,9 +137,7 @@ export class CreatePlayerPage {
       this.lastName == '' ||
       this.email == '' ||
       this.password == '' ||
-      this.passwordCheck == '' ||
-      this.birthDay == '' ||
-      this.gender == ''
+      this.passwordCheck == ''
     ) {
 
       load.dismiss();

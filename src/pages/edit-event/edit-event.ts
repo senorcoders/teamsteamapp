@@ -1,10 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
-import {
-  GoogleMap,
-  Marker
-} from '@ionic-native/google-maps';
 
 import moment from 'moment';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -12,7 +8,6 @@ import { HttpClient } from '@angular/common/http';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { GoogleMapsComponent } from '../../components/google-maps/google-maps';
 import { MyApp } from '../../app/app.component';
 
 
@@ -38,18 +33,13 @@ export class EditEventPage {
 
   public location: any = {
     position: {},
-    place: {
-      placesubAdministrativeArea: "",
-      thoroughfare: ""
-    },
+    place: {},
     change: false
   };
 
   public locationChange = false;
 
   load: Loading;
-  markerEvent: Marker;
-  markerEventOld: Marker;
   public image: boolean = false;
   private imageUpdate = false;
   public imageSrc: string = "";
@@ -138,7 +128,7 @@ export class EditEventPage {
       this.locationChange = true;
       let places = await this.helper.locationToPlaces(this.location.position);
       if (places !== null)
-        this.location.place = places[0];
+        this.location.place = places;
     } else {
       /***
      * Para mostrar la ubicacion actual
@@ -241,17 +231,17 @@ export class EditEventPage {
   }
 
   public loadPlace() {
-    let modal = this.modalCtrl.create(GoogleMapsComponent);
-    let t = this;
-    modal.onDidDismiss(async function (data: any) {
-      if (data) {
-        t.location.position = data;
-        let places = await t.helper.locationToPlaces(t.location.position);
-        t.location.place = places[0];
-        t.location.change = true;
-      }
-    });
-    modal.present();
+    // let modal = this.modalCtrl.create(GoogleMapsComponent);
+    // let t = this;
+    // modal.onDidDismiss(async function (data: any) {
+    //   if (data) {
+    //     t.location.position = data;
+    //     let places = await t.helper.locationToPlaces(t.location.position);
+    //     t.location.place = places[0];
+    //     t.location.change = true;
+    //   }
+    // });
+    // modal.present();
   }
 
   //#region for change photo

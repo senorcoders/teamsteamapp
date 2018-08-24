@@ -77,7 +77,6 @@ export class NewTaskPage {
 
     if(
       this.name === '' || 
-      this.description === '' ||
       this.assign === ''
     ){
       this.alertCtrl.create({
