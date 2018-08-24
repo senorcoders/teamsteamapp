@@ -28,6 +28,7 @@ import { CreateLeaguePage } from '../pages/create-league/create-league';
 import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
 import { SettingPage } from '../pages/setting/setting';
 import { RequestsLeaguePage } from '../pages/requests-league/requests-league';
+import { StatusBar } from '@ionic-native/status-bar';
 
 
 @Component({
@@ -82,7 +83,8 @@ export class MyApp {
     private http: HttpClient, public event: Events,
     public zone: NgZone, public translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent,
-    private INoti: INotificationProvider, public splash: SplashScreen
+    private INoti: INotificationProvider, public splash: SplashScreen,
+    private statusBar: StatusBar
   ) {
     console.log("init platform", new Date().toTimeString());
     platform.ready().then(this.initPlatform.bind(this));
@@ -133,6 +135,9 @@ export class MyApp {
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
+
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByName("white");
 
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
