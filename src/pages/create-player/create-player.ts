@@ -153,7 +153,7 @@ export class CreatePlayerPage {
     }
 
     if (
-      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email)
+      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email.toLowerCase())
     ) {
 
       load.dismiss();
@@ -172,7 +172,7 @@ export class CreatePlayerPage {
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
-      email: this.email,
+      email: this.email.toLowerCase(),
       image: this.imageSrc
     };
 
