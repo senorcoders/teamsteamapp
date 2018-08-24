@@ -32,7 +32,7 @@
     },
     "NEWEVENT": {
         "TT": "New Event",
-        "TITLE": "General Data",
+        "TITLE": "Event Data",
         "REPEATS": "Repeats",
         "DAYSREPEATS": "Repeats Days",
         "NOTIFY": "NOTIFY",
@@ -44,7 +44,7 @@
             "PRACTICE": "Practice",
             "EVENT": "Other Event"
         },
-        "ATTENDENCETRACKING": "Attendece Tracking",
+        "ATTENDENCETRACKING": "Attendence Tracking",
         "PINMAP": "OR PIN MAP",
         "ENTERADDRES": "Enter Address",
         "SUCCESS-TEXT": {
@@ -53,9 +53,9 @@
             "THREE": " successfully"
         },
         "PORCENTAGENOTIFICATION": "% Attendance to receive notification",
-        "SEARCHPLAYER": "Search players",
+        "SEARCHPLAYER": "Looking for players?",
         "POSITION": "Position",
-        "ADDPOSITION": "Add the positions of the players you want to search"
+        "ADDPOSITION": "Add position of players you are looking for"
     },
     "NEWTEAM":{
         "TITLE": "New Team",
