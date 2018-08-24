@@ -1,6 +1,6 @@
 {
     "EVENTS": {
-        "TITLE" : "Eventos",
+        "TITLE": "Eventos",
         "PAST": "Anteriores",
         "UPCOMING": "Proximos",
         "NOEVENT": "Bueno, esto es aburrido. Agregar eventos",
@@ -12,14 +12,14 @@
             "ENDINGLATE": "Terminando Tarde"
         }
     },
-    "EVENT":{
+    "EVENT": {
         "YES": "Si",
         "NO": "No",
-        "MAYBE":"Talvez"
+        "MAYBE": "Talvez"
     },
     "HERE": "Aquí",
     "NAVMENU": {
-        "EVENTS" : "Eventos",
+        "EVENTS": "Eventos",
         "MYTASK": "Tareas",
         "ROSTER": "Jugadores",
         "MESSAGES": "Mensajes Recientes",
@@ -28,7 +28,7 @@
     },
     "MYTASK": {
         "TITLE": "Tareas",
-        "NEWTASK" : "Nueva Tarea"
+        "NEWTASK": "Nueva Tarea"
     },
     "NEWEVENT": {
         "TT": "Nuevo Evento",
@@ -58,7 +58,7 @@
         "POSITION": "Posición",
         "ADDPOSITION": "Agregue las posiciones de los jugadores que quiere buscar"
     },
-    "NEWTEAM":{
+    "NEWTEAM": {
         "TITLE": "Nuevo Equipo",
         "ADD": "Agregar Equipo",
         "TITLE2": "Actualizar Equipo"
@@ -79,7 +79,7 @@
     "TIMEEND": "Hora de Finalización",
     "DESCRIPTION": "Descripción",
     "SPORT": "Deporte",
-    "SPORTS":{
+    "SPORTS": {
         "BASEBALL&SOFTBALL": "Béisbol y Softbol",
         "SOCCER": "Fútbol",
         "FOOTBALL": "Fútbol Americano",
@@ -104,7 +104,7 @@
         "TITLE": "Unirme a un Equipo",
         "ACTION": "Nombre del Equipo"
     },
-    "LOGIN":{
+    "LOGIN": {
         "TITLE": "Bienvenido a TeamSteam",
         "INIT": "Inicia sesión",
         "NOTACCOUNT": "¿Comenzando un nuevo equipo? Click aquí para ",
@@ -242,17 +242,17 @@
     "SEND": "Enviar",
     "EMAILNOT": "Correo No Encontrado",
     "RESETPASS": {
-        "TITLE" : "Cambiar Contraseñar",
-        "CODE" : "Codigo",
-        "NEWPASSWORD" : "Nueva Contraseña",
+        "TITLE": "Cambiar Contraseñar",
+        "CODE": "Codigo",
+        "NEWPASSWORD": "Nueva Contraseña",
         "CODEINVALID": "Codigo Invalido",
         "SENDCODE": "Enviar Código a Correo"
     },
-    "ERRORUNEX" : "Error Inesperado",
+    "ERRORUNEX": "Error Inesperado",
     "VERFIEDDEVICE": "Vaya a su correo y verifique su dispositivo y vuelve e inicia sesión",
     "RELATIONSHIP": "Parentesco",
     "OF": "de",
-    "ASSISTENCEEVENT":{
+    "ASSISTENCEEVENT": {
         "TITLE": "Asistencia para ",
         "TITLES": "Asistencias del Evento",
         "SINGULAR": "Asistencia para este evento",
@@ -265,12 +265,12 @@
     },
     "CLEARDEVICES": "Salir de otros dispositivos",
     "ASSISTENCE": {
-        "TITLE" : "Asistencia"
+        "TITLE": "Asistencia"
     },
     "NEARTO": "Estas Cerca de",
     "FREEAGENT": "Free Agent",
     "LEVEL": {
-        "TITLE":"Nivel",
+        "TITLE": "Nivel",
         "UNDER8": "Menor de 8 años",
         "UNDER12": "Menor de 12 años",
         "UNDER14": "Menor de 14 años",
@@ -288,10 +288,10 @@
         "SELECTLOCATIONS": "Seleccione las ubicaciones en el mapa",
         "ADDPLACES": "Agregar Lugares"
     },
-    "AGENTFREE":{
+    "AGENTFREE": {
         "TITLE": "Eventos Cercanos"
     },
-    "PLACES":{
+    "PLACES": {
         "TITLE": "Lugares",
         "DELETE": "Eliminar "
     },
@@ -299,7 +299,7 @@
     "CHANGEROLE": "Cambiar Rol",
     "LEAGUE": {
         "NAME": "League",
-        "CREATE": { 
+        "CREATE": {
             "TITLE": "Nueva Liga",
             "ACTION": "Crear Liga",
             "ADDOWNERS": "Agregar Administrador",
@@ -311,7 +311,7 @@
         "TEAMS": {
             "TITLE": "Equipos de la liga"
         },
-        "SELECTOWNER":{
+        "SELECTOWNER": {
             "TITLE": "Digite el correo del usuario"
         },
         "ADDTEAM": {
@@ -331,7 +331,7 @@
     "ALL": "Todo",
     "CHATFORFAMILY": "Miembros de Familia",
     "MSGTOFAMILY": "Mensajes a Familiares",
-    "NOTCHATEACHPLAYER":"El mánager bloqueo los mensajes con otros jugadores",
+    "NOTCHATEACHPLAYER": "El mánager bloqueo los mensajes con otros jugadores",
     "SETTING": {
         "NAME": "Ajustes",
         "CHATEACHPLAYER": "Chatear Entre Cada Jugador"
@@ -341,8 +341,20 @@
     "ROLAGENT": "Agente Libre",
     "ROLLEAGUE": "Dueño de Liga",
     "REQUESTLEAGUE": {
-        "NAME":"Solicitudes de Liga",
+        "NAME": "Solicitudes de Liga",
         "JOIN?": "quieres unirte a la liga"
     },
-    "ENABLEGEOLOCATION": "Encienda sus servicios de ubicación"
+    "ENABLEGEOLOCATION": "Encienda sus servicios de ubicación",
+    "JAN": "ENE",
+    "FEB": "FEB",
+    "MAR": "MAR",
+    "APR": "ABR",
+    "MAY": "MAY",
+    "JUN": "JUN",
+    "JUL": "JUL",
+    "AUG": "AGO",
+    "SEP": "SEP",
+    "OCT": "OCT",
+    "NOV": "NOV",
+    "DEC": "DEC"
 }

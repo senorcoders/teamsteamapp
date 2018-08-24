@@ -167,11 +167,13 @@ export class EventsSchedulePage {
 
         if (it.weeks === true) {
           let day = th.getDayCercano(it.repeatsDays);
-          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
+          let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+          it.parsedDateTime = [moth, day.format("DD")];
           ////console.log(it.name, it.parsedDateTime);
         } else {
           let day = moment(it.dateTime);
-          it.parsedDateTime = [day.format("MMMM"), day.format("DD")];
+          let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+          it.parsedDateTime = [moth, day.format("DD")];
         }
 
         //if (it.repeatsDaily === true) {
