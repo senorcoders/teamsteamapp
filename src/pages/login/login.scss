@@ -46,11 +46,21 @@ page-login {
 		font-weight: 100 !important;
 	}
 
+	ion-list{
+		display: flex;
+		justify-content: center;
+	}
+
+	ion-item{
+		max-width: 270px !important;
+	}
+
 	button{
 		background-color: #83cd22 !important;
 		height: 4.6rem !important;
 		display: block !important;
 		width: 100% !important;
+		max-width: 270px !important;
 
 		font-family:  "Date_Event";
 		font-weight: 100 !important;
@@ -58,6 +68,14 @@ page-login {
 		color: white !important;
 		text-transform: uppercase;
 		line-height: 5rem !important;
+	}
+
+	.small-btn{
+		white-space: normal;
+		width: 100% !important;
+		max-width: 270px !important;
+		margin: auto !important;
+		text-align: center !important
 	}
 
 	.btn-register, a{
