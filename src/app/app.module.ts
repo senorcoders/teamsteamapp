@@ -52,6 +52,7 @@ import { ChatOnePersonPage } from '../pages/chat-one-person/chat-one-person';
 import { ListChatsPage } from '../pages/list-chats/list-chats';
 import { ViewProfilePage } from '../pages/view-profile/view-profile';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
+import { File } from '@ionic-native/file';
 
 //for  multilanguage
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
@@ -367,7 +368,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     INotificationProvider,
     Globalization,
     BackgroundGeolocation,
-    LocationAccuracy
+    LocationAccuracy,
+    File
   ]
 })
 export class AppModule {}

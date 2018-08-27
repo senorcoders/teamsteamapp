@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LibraryItem } from '@ionic-native/photo-library';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AngularCropperjsComponent } from 'angular-cropperjs';
+import { File, IWriteOptions } from '@ionic-native/file';
 
 @IonicPage()
 @Component({
@@ -40,7 +41,8 @@ export class ImageViewPage {
 
   pop: number;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public domSanitizationService: DomSanitizer) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    public domSanitizationService: DomSanitizer, public file: File) {
 
     if (navParams.get('libraryItem') !== undefined) {
       this.selectedLibraryItem = navParams.get('libraryItem');
@@ -96,55 +98,67 @@ export class ImageViewPage {
   }
 
   public async selectd() {
-    var c = document.createElement('canvas');
-    var ctx = c.getContext('2d');
+    try {
+      var c = document.createElement('canvas');
+      var ctx = c.getContext('2d');
 
-    let img;
-    if (this.resize === true) {
-      //get cropped image
-      let croppedImgB64String: String = this.getCropper();
-      img = new Image();
-      img.src = croppedImgB64String;
-      await new Promise(function (resolve, reject) {
-        let trigger = false;
+      let img;
+      if (this.resize === true) {
+        //get cropped image
+        let croppedImgB64String: String = this.getCropper();
+        img = new Image();
+        img.src = croppedImgB64String;
+        await new Promise(function (resolve, reject) {
+          let trigger = false;
 
-        img.onload = function () { resolve(); trigger = true; };
-        setTimeout(function () {
-          if (trigger === false)
-            reject();
-          this.reject("not load image cropped!");
-        }.bind(this), 5000);
-      }.bind(this));
+          img.onload = function () { resolve(); trigger = true; };
+          setTimeout(function () {
+            if (trigger === false)
+              reject();
+            this.reject("not load image cropped!");
+          }.bind(this), 5000);
+        }.bind(this));
 
-    } else {
-      img = document.getElementById("imageSelect") as HTMLImageElement;
+      } else {
+        img = document.getElementById("imageSelect") as HTMLImageElement;
+      }
+
+      c.width = this.width;
+      c.height = this.height;
+      ctx.drawImage(img, 0, 0, this.width, this.height);
+
+      if (this.degrees !== 0)
+        this.drawRotated(ctx, c, img, this.degrees);
+
+      //Guardamos localmente la foto si es una que se tomo con la camara
+      if(this.image!==""){
+        await new Promise(async function (resolve, reject) {
+          await this.saveCanvasImage(c, resolve, reject);
+        }.bind(this));
+      }
+      
+      var dataURL = c.toDataURL('image/jpeg');
+      console.log(this.width, this.height);
+
+      //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
+      c = null; ctx = null;
+      this.resolve(dataURL);
+      if (this.navigator === true) {
+        await this.navCtrl.pop();
+        return;
+      }
+
+      if (this.pop === 3) {
+        await this.navCtrl.pop();
+        await this.navCtrl.pop();
+        await this.navCtrl.pop();
+      } else {
+        await this.navCtrl.pop();
+        await this.navCtrl.pop();
+      }
     }
-
-    c.width = this.width;
-    c.height = this.height;
-    ctx.drawImage(img, 0, 0, this.width, this.height);
-
-    if (this.degrees !== 0)
-      this.drawRotated(ctx, c, img, this.degrees);
-
-    var dataURL = c.toDataURL('image/jpeg');
-    console.log(this.width, this.height);
-
-    //console.log(this.selectedLibraryItem, dataURL, this.width, this.height);
-    c = null; ctx = null;
-    this.resolve(dataURL);
-    if (this.navigator === true) {
-      await this.navCtrl.pop();
-      return;
-    }
-
-    if (this.pop === 3) {
-      await this.navCtrl.pop();
-      await this.navCtrl.pop();
-      await this.navCtrl.pop();
-    } else {
-      await this.navCtrl.pop();
-      await this.navCtrl.pop();
+    catch (e) {
+      console.error(e);
     }
   }
 
@@ -195,6 +209,56 @@ export class ImageViewPage {
 
   public cancel() {
     this.navCtrl.pop();
+  }
+
+  private async saveCanvasImage(canvasElement: HTMLCanvasElement, resolve, reject) {
+    var dataUrl = canvasElement.toDataURL();
+
+    let name = new Date().getTime() + '.png';
+    let path = this.file.externalRootDirectory + "/LockerRoom";
+    try {
+      await this.file.createDir(this.file.externalRootDirectory, "LockerRoom", false);
+    }
+    catch (e) {
+      console.error(e);
+    }
+    
+    let options: IWriteOptions = { replace: true };
+
+    var data = dataUrl.split(',')[1];
+    let blob = this.b64toBlob(data, 'image/png');
+
+    this.file.writeFile(path, name, blob, options).then(res => {
+      console.log("save image", res);
+      resolve();
+    }, err => {
+      console.log('error in save image', err);
+      reject(err);
+    });
+  }
+
+  // https://forum.ionicframework.com/t/save-base64-encoded-image-to-specific-filepath/96180/3
+  b64toBlob(b64Data, contentType) {
+    contentType = contentType || '';
+    var sliceSize = 512;
+    var byteCharacters = atob(b64Data);
+    var byteArrays = [];
+
+    for (var offset = 0; offset < byteCharacters.length; offset += sliceSize) {
+      var slice = byteCharacters.slice(offset, offset + sliceSize);
+
+      var byteNumbers = new Array(slice.length);
+      for (var i = 0; i < slice.length; i++) {
+        byteNumbers[i] = slice.charCodeAt(i);
+      }
+
+      var byteArray = new Uint8Array(byteNumbers);
+
+      byteArrays.push(byteArray);
+    }
+
+    var blob = new Blob(byteArrays, { type: contentType });
+    return blob;
   }
 
 
