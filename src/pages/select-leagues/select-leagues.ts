@@ -21,6 +21,9 @@ export class SelectLeaguesPage {
 
   async ionViewDidLoad() {
     this.leagues = await this.http.get(`/roles?where={"name":"OwnerLeague","user":"${MyApp.User.id}"}`).toPromise() as any;
+    this.leagues = this.leagues.filter(it=>{
+      return it.league !== undefined;
+    });
     this.leagues = this.leagues.map(function (it) {
       it.imageSrc = interceptor.transformUrl("/images/ramdon/teams&thumbnail/" + it.league.id);
       it.loadImage = false;

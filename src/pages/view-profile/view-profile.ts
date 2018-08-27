@@ -36,8 +36,8 @@ export class ViewProfilePage {
   public manager: any = {};
   public roles: Array<any> = [];
   public rolesTypes = [];
-  public rolType="";
-  public league:any={};
+  public rolType = "";
+  public league: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
@@ -77,20 +77,20 @@ export class ViewProfilePage {
       this.request = this.team.request;
 
       //cargamos los roles types
-      for(let rol of MyApp.User.roles){
-        let index = this.rolesTypes.findIndex(it=>{
+      for (let rol of MyApp.User.roles) {
+        let index = this.rolesTypes.findIndex(it => {
           return rol.name === it.name;
         });
-        if(index===-1){
+        if (index === -1) {
           this.rolesTypes.push(rol);
         }
-      }console.log(this.rolesTypes);
+      } console.log(this.rolesTypes);
 
       //Si el rol es de league cargamos la liga
-      if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-        this.league = await this.http.get("/leagues/"+ MyApp.User.role.league.id).toPromise() as  any;
+      if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+        this.league = await this.http.get("/leagues/" + MyApp.User.role.league.id).toPromise() as any;
       else
-        this.league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as  any;
+        this.league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
 
     }
     catch (e) {
@@ -99,7 +99,7 @@ export class ViewProfilePage {
     load.dismissAll();
   }
 
-  public selectLeagues(){
+  public selectLeagues() {
     this.navCtrl.push(SelectLeaguesPage);
   }
 
@@ -440,7 +440,7 @@ export class ViewProfilePage {
     this.selectRef.open();
   }
 
-  public openSelectRolesTypes(){
+  public openSelectRolesTypes() {
     this.myRoles.open();
   }
 
@@ -450,20 +450,30 @@ export class ViewProfilePage {
 
   public async changeRol() {
 
-    let role = this.roles.find(function(it){
+    let role = this.roles.find(function (it) {
       return it.id === this.rolType;
     }.bind(this)) as any;
-    if(role === undefined) return;
+    if (role === undefined) return;
 
     if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
       //Para actualizar el nombre del equipo en menu slide
       document.getElementById("nameTeam").innerHTML = role.team.name;
 
-      await this.auth.setTimeZoneTeam();
-      await HelpersProvider.me.setGeofences(200);
-    } else{
+      try {
+        await this.auth.setTimeZoneTeam();
+        await HelpersProvider.me.setGeofences(200);
+      }
+      catch (e) {
+        console.error(e);
+      }
+    } else {
       delete this.user.team;
-      await HelpersProvider.me.stopGeofences();
+      try{
+        await HelpersProvider.me.stopGeofences();
+      }
+      catch(e){
+        console.error(e);
+      }
     }
 
     await this.auth.updateRole(role);

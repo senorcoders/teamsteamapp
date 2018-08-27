@@ -105,7 +105,7 @@ export class EventsSchedulePage {
 
       let events: any;
       if(this.league===true){
-        if (Object.prototype.toString.call(this.league) === "[object Object]")
+        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
         events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league.id).toPromise();
       else
         events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league).toPromise();

@@ -400,7 +400,7 @@ export class HelpersProvider {
   public getLoadingStandar(present?: boolean): Loading {
     let load = this.loading.create({
       spinner: 'hide', content: `
-    <img src="./assets/imgs/balls.gif">
+    <img src="./assets/imgs/loader_sports.gif">
     ` });
     if (present === undefined)
       present = true;

@@ -64,7 +64,6 @@ export class TeamsLeaguePage {
       }
       teams=teamsNew;
       await this.http.post("/leagues/team", { teams: teams.map(it => { return it.id; }), league: this.league.id }).toPromise() as any;
-      this.teams = this.teams.concat(teams);
     }
   }
 

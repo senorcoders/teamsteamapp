@@ -318,7 +318,7 @@ export class NewEventPage {
       searchPlayer: this.searchPlayer
     };
     if (this.league === true) {
-      if (Object.prototype.toString.call(this.league) === "[object Object]")
+      if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
         event.league = MyApp.User.role.league.id;
       else
         event.league = MyApp.User.role.league;
