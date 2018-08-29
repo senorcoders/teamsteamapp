@@ -15,9 +15,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class TeamsProfilePage {
 
-  public menu=false;
-  public roles:Array<any>=[];
-  public user:any={ role: {} };
+  public menu = false;
+  public roles: Array<any> = [];
+  public user: any = { role: {} };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private auth: AuthServiceProvider
@@ -26,58 +26,55 @@ export class TeamsProfilePage {
     this.menu = this.navParams.get("menu") || false;
   }
 
-  async ionViewDidEnter(){
+  async ionViewDidEnter() {
     await this.getTeams();
   }
-  
-  async getTeams(){
-    try{
+
+  async getTeams() {
+    try {
       this.roles = MyApp.User.roles;
-      this.roles = this.roles.filter(it=>{return it.team !== undefined; });
-      this.roles = this.roles.map(function(it){
+      this.roles = this.roles.filter(it => { return it.team !== undefined; });
+      this.roles = this.roles.map(function (it) {
         let ramdon = new Date().getTime();
-        it.team.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.team.id);
-        it.team.loadImage=false; 
+        it.team.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/teams&thumbnail/" + it.team.id);
+        it.team.loadImage = false;
         return it;
       });
-      
+
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }
 
-  public loadImage(role:any){
+  public loadImage(role: any) {
     role.team.loadImage = true;
   }
 
-  async addTeam(){
+  async addTeam() {
 
     this.navCtrl.push(AddTeamPage)
 
   }
 
-  public isSelect(role){
+  public isSelect(role) {
     return role.team.id === MyApp.User.team;
   }
 
-  public async setTeam(role){
+  public async setTeam(role) {
     await this.auth.updateRole(role);
-    
-    //Para actualizar el nombre del equipo en menu slide
-    document.getElementById("nameTeam").innerHTML = role.team.name;
 
     await this.auth.setTimeZoneTeam();
     this.navCtrl.pop();
     await HelpersProvider.me.setGeofences(200);
-    
+
   }
 
-  public editTeam(role){
+  public editTeam(role) {
     this.navCtrl.push(AddTeamPage, { role });
   }
 
-  public searchTeams(){
+  public searchTeams() {
     this.navCtrl.push(SearchTeamsPage);
   }
 

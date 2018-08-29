@@ -48,7 +48,8 @@ export class MyApp {
   public static counts: any = {};
 
   public nameReady = false;
-  public teamName = "";
+  public rolIdentity = "yop";
+  public identity = "tup";
 
   public user: any = {
     username: ""
@@ -92,7 +93,6 @@ export class MyApp {
 
   private initPlatform() {
     console.log("platform ready", new Date().toTimeString());
-
     this.translate.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -137,21 +137,35 @@ export class MyApp {
     if (authenticated === true) {
 
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByName("white");
+      this.statusBar.backgroundColorByHexString("#fe324d");
 
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
-      //Si no es un agente libre
-      if (MyApp.User.hasOwnProperty("team")) {
-        this.nav.root = EventsSchedulePage;
-        //Para actualizar el nombre del equipo en menu slide
-        let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        document.getElementById("nameTeam").innerHTML = team.name;
-      } else if (MyApp.User.role.name === "FreeAgent") {
+      //Si es un agente libre
+     if (MyApp.User.role.name === "FreeAgent") {
+        this.rolIdentity = "";
+        this.identity = "";
         this.nav.root = AgentFreePage;
       } else {
         this.nav.root = EventsSchedulePage;
+        if (MyApp.User.hasOwnProperty("team")) {
+
+          //Para actualizar el nombre del equipo en menu slide
+          let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
+          this.rolIdentity = "TEAM";
+          this.identity = team.name;
+        }else{
+          let league;
+          if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]"){
+            league = MyApp.User.role.league;
+          }else{
+            league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
+          }
+          this.rolIdentity = "LEAGUE.NAME";
+          this.identity = league.name;
+        }
+
       }
 
       //console.log(this.user);
@@ -171,7 +185,7 @@ export class MyApp {
     }
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
-    this.auth.changeUser(function () {
+    this.auth.changeUser(async function () {
 
       this.defaultImageUser = true;
       this.user = this.auth.User();
@@ -180,8 +194,26 @@ export class MyApp {
       let ramdon = new Date().getTime();
       this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
-      //document.getElementById("nameSlide").innerText = t.user.username;
+
       this.user = MyApp.User;
+
+      if (MyApp.User.hasOwnProperty("team")) {
+
+        //Para actualizar el nombre del equipo en menu slide
+        let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
+        this.rolIdentity = "TEAM";
+        this.identity = team.name;
+      }else{
+        let league;
+        if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]"){
+          league = MyApp.User.role.league;
+        }else{
+          league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
+        }
+        this.rolIdentity = "LEAGUE.NAME";
+        this.identity = league.name;
+      }
+
     }.bind(this));
 
     this.serviceNewDatas();

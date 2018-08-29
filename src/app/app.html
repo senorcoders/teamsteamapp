@@ -1,11 +1,13 @@
 <ion-menu [content]="mycontent">
 	<ion-header>
-		<ion-navbar>
-			<ion-title class="header-menu">
+		<ion-navbar class="identity">
+			<!-- <ion-title class="header-menu">
 				<img src="./assets/imgs/logo-login.png" style="width: 30px;">
-				<h2 id="nameTeam">{{teamName}}</h2>
-			</ion-title>
+			</ion-title> -->
+			{{rolIdentity | translate}}
 		</ion-navbar>
+		<span class="identity" style="display: block; background: #283540;">{{identity}}</span>
+
 		<div class="user-info">
 			<div class="avatar">
 				<img (click)="goProfile()" [hidden]="!defaultImageUser" src="./assets/imgs/user-menu.png" class="userimg">
@@ -23,7 +25,7 @@
 		<ion-list>
 			<ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p, p.newData)">
 				{{p.title | translate}}
-				<div class="new-action" [hidden]="newData(p.watch)">New <span> {{getCounts(p.watch)}} </span> </div>
+				<div class="new-action" [hidden]="newData(p.watch)">{{"NEW" | translate}} <span> {{getCounts(p.watch)}} </span> </div>
 			</ion-item>
 			<!-- <div class="divider"></div>
 			<ion-item class="logout" (click)="logout()">

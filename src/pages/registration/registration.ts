@@ -334,7 +334,7 @@ export class RegistrationPage {
 
         if (user) {
           this.statusBar.overlaysWebView(false);
-          this.statusBar.backgroundColorByName("white");
+          this.statusBar.backgroundColorByHexString("#fe324d");
           if (MyApp.User.hasOwnProperty("team")) {
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
           } else {

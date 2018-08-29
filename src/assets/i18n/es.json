@@ -98,7 +98,9 @@
         "TRACK&FIELD": "Atletismo",
         "VOLLEYBALL": "Volleyball",
         "WATERPOLO": "Water Polo",
-        "WRESTLING": "Lucha"
+        "WRESTLING": "Lucha",
+        "MMA":"Artes Marciales Mixtas",
+        "YOGA": "Yoga"
     },
     "SEARCHTEAM": {
         "TITLE": "Unirme a un Equipo",
@@ -299,7 +301,7 @@
     "TEAMREADY": "Ya estás registrado en este equipo",
     "CHANGEROLE": "Cambiar Rol",
     "LEAGUE": {
-        "NAME": "League",
+        "NAME": "Liga",
         "CREATE": {
             "TITLE": "Nueva Liga",
             "ACTION": "Crear Liga",
@@ -357,5 +359,6 @@
     "SEP": "SEP",
     "OCT": "OCT",
     "NOV": "NOV",
-    "DEC": "DEC"
+    "DEC": "DEC",
+    "NEW": "Nuevo"
 }

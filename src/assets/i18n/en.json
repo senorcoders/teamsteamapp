@@ -97,7 +97,9 @@
         "TRACK&FIELD": "Track & Field",
         "VOLLEYBALL": "Volleyball",
         "WATERPOLO": "Water Polo",
-        "WRESTLING": "Wrestling"
+        "WRESTLING": "Wrestling",
+        "MMA":"MMA",
+        "YOGA": "Yoga"
     },
     "SEARCHTEAM": {
         "TITLE": "Join a Team",
@@ -355,5 +357,6 @@
     "SEP": "SEP",
     "OCT": "OCT",
     "NOV": "NOV",
-    "DEC": "DEC"
+    "DEC": "DEC",
+    "NEW": "New"
 }

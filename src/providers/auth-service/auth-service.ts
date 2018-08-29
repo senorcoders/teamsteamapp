@@ -265,6 +265,8 @@ export class AuthServiceProvider {
         }
         delete MyApp.User.team;
       }
+
+      this.changesUpdate();
     }
     catch (e) {
       console.error(e);

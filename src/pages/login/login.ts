@@ -41,7 +41,7 @@ export class LoginPage {
     public http : HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider
   ) {
-    //this.statusBar.backgroundColorByName("white");
+    
   }
 
   ionViewDidEnter(){
@@ -61,7 +61,7 @@ export class LoginPage {
 
   public Register(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByName("white");
+    this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(RegistrationPage);
     //this.navCtrl.push(PaymentSubscripcionPage);
   }
@@ -79,8 +79,8 @@ export class LoginPage {
 
         if(user){
           this.statusBar.overlaysWebView(false);
-          this.statusBar.backgroundColorByName("white");
-          if (MyApp.User.hasOwnProperty("team")) {
+          this.statusBar.backgroundColorByHexString("#fe324d");
+          if (MyApp.User.hasOwnProperty("team")||MyApp.User.role.name==="OwnerLeague") {
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
@@ -146,20 +146,19 @@ export class LoginPage {
 
   public goSearchTeam(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByName("white");
+    this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(SearchTeamsPage)
   }
 
   public goInvitation(){
     this.statusBar.overlaysWebView(false);
-    this.statusBar.backgroundColorByName("white");
+    this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(FormPlayerRegistrationPage);
   }
 
   public goForgotPassword(){
     this.statusBar.overlaysWebView(false);
-    //this.statusBar.backgroundColorByHexString("#008e76");
-    this.statusBar.backgroundColorByName("white");
+    this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(ForgotPasswordPage);
   }
 

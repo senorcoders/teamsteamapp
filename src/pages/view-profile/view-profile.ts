@@ -456,9 +456,6 @@ export class ViewProfilePage {
     if (role === undefined) return;
 
     if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
-      //Para actualizar el nombre del equipo en menu slide
-      document.getElementById("nameTeam").innerHTML = role.team.name;
-
       try {
         await this.auth.setTimeZoneTeam();
         await HelpersProvider.me.setGeofences(200);

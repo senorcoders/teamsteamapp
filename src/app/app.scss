@@ -34,27 +34,15 @@ ion-menu {
     .toolbar-background {
         background: #202a33;
     }
-    /*.toolbar-title {
-        color: white;
-        font-weight: lighter;
+    
+    .identity{
+        color: #87847f !important;
+        padding-left: 10px;
+        padding-top: 5px;
+        padding-bottom: 5px;
+        font-size: 1.4rem;
     }
-    .toolbar-content-ios {
-        .header-menu {
-            padding-left: 20px !important;
-            text-align: left !important;
-            padding-top: 10px !important;
-            padding-bottom: 10px !important;
-        }
-    }
-    .toolbar-title {
-        display: flex;
-        align-items: center;
-        padding-top: 10px;
-        padding-bottom: 10px;
-        img {
-            margin-right: 10px;
-        }
-	}*/
+
 	ion-navbar{
 		height: 25px !important;
 		min-height: 25px !important;
