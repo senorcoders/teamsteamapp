@@ -11,32 +11,30 @@
 
   <ion-list>
 
-    <ion-item>
-      <ion-label floating>
-        username
-      </ion-label>
-      <ion-input type="text" [(ngModel)]="username"></ion-input>
+    <ion-item [ngClass]="userValid===true?'color-label':''">
+      <ion-label  floating> username </ion-label>
+      <ion-input type="text" [ngClass]="userValid==true&&username===''?'not-valid':''" [(ngModel)]="username"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
         {{"FIRSTNAME" | translate}}
       </ion-label>
-      <ion-input type="text" [(ngModel)]="firstname"></ion-input>
+      <ion-input type="text" [ngClass]="userValid==true&&firstname===''?'not-valid':''" [(ngModel)]="firstname"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
         {{"LASTNAME" | translate}}
       </ion-label>
-      <ion-input type="text" [(ngModel)]="lastname"></ion-input>
+      <ion-input type="text" [ngClass]="userValid==true&&lastname===''?'not-valid':''" [(ngModel)]="lastname"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
         {{"EMAIL" | translate}}
       </ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
+      <ion-input type="email" [ngClass]="userValid==true&&validEmail(email)===true?'not-valid':''" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -67,11 +65,11 @@
 
   <ion-list [hidden]="selectNew!=='team'">
 
-    <ion-item >
+    <ion-item [ngClass]="teamValid===true?'color-label':''" >
       <ion-label floating>
         {{"NAMEOFTEAM" | translate}}
       </ion-label>
-      <ion-input type="text" [(ngModel)]="nameteam"></ion-input>
+      <ion-input [ngClass]="teamValid==true&&nameteam===''?'not-valid':''" type="text" [(ngModel)]="nameteam"></ion-input>
     </ion-item>
 
     <ion-item>
@@ -81,18 +79,18 @@
       <ion-textarea [(ngModel)]="description"></ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="teamValid===true?'color-label':''">
       <ion-label floating>
         {{"CITY" | translate}}
       </ion-label>
-      <ion-textarea [(ngModel)]="city"></ion-textarea>
+      <ion-input [ngClass]="teamValid==true&&city===''?'not-valid':''" [(ngModel)]="city"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <ion-item [ngClass]="teamValid===true?'color-label':''">
       <ion-label floating>
         {{"SPORT" | translate}}
       </ion-label>
-      <ion-select [(ngModel)]="sport">
+      <ion-select [ngClass]="teamValid==true&&sport===''?'not-valid':''" [(ngModel)]="sport">
         <ion-option value="baseball&softball">{{"SPORTS.BASEBALL&SOFTBALL" | translate}}</ion-option>
         <ion-option value="soccer">{{"SPORTS.SOCCER" | translate}}</ion-option>
         <ion-option value="basketball">{{"SPORTS.BASKETBALL" | translate}}</ion-option>
@@ -143,9 +141,9 @@
   </ion-avatar>
 
   <ion-list [hidden]="selectNew!=='ownerLeague'">
-    <ion-item>
+    <ion-item [ngClass]="teamValid===true?'color-label':''">
       <ion-label floating>{{"NAME" | translate}}</ion-label>
-      <ion-input type="text" [(ngModel)]="nameLeague"></ion-input>
+      <ion-input type="text" [ngClass]="leagueValid==true&&nameLeague===''?'not-valid':''" [(ngModel)]="nameLeague"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label floating>{{"DESCRIPTION" | translate}}</ion-label>

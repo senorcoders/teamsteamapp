@@ -52,6 +52,10 @@ export class RegistrationPage {
   public teamsSelect = [];
   public imageSrcLeague = "";
 
+  public userValid=false;
+  public teamValid=false;
+  public leagueValid=false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider,
@@ -189,6 +193,10 @@ export class RegistrationPage {
     this.imageLeague = true;
   }
 
+  validEmail(){
+    return !this.helper.validEmail(this.email);
+  }
+
   public async save(){
     let load = this.helper.getLoadingStandar();
     await this.saveAction();
@@ -197,6 +205,9 @@ export class RegistrationPage {
   public async saveAction() {
     
     try {
+
+      this.userValid = true;
+
       if (
         this.username === "" ||
         this.firstname === "" ||
@@ -210,6 +221,7 @@ export class RegistrationPage {
       }
 
       if (this.selectNew === "team") {
+        this.teamValid = true;
         if (
           this.nameteam === "" ||
           this.city === "" ||
@@ -221,6 +233,7 @@ export class RegistrationPage {
           return;
         }
       } else if (this.selectNew === "ownerLeague") {
+        this.leagueValid=true;
         if (
           this.nameLeague == ''
         ) {

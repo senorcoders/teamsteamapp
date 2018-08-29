@@ -1,6 +1,29 @@
+@mixin input-placeholder {
+    &.placeholder { @content; }
+    &:-moz-placeholder { @content; }
+    &::-moz-placeholder { @content; }
+    &:-ms-input-placeholder { @content; }
+    &::-webkit-input-placeholder { @content; } 
+}
+
 page-registration {
-    .button-fab-right{
+    .button-fab-right {
         position: relative;
         left: calc(100% - 60px) !important;
+    }
+    .not-valid {
+        background-color: #fe324d !important;
+        color: white;
+    }
+    .color-label:not(.item-input-has-value, .input-has-focus) {
+        ion-label {
+            color: white !important;
+            padding-left: 10px;
+        }
+        input{
+            @include input-placeholder {
+                color: white;
+              }
+        }
     }
 }
