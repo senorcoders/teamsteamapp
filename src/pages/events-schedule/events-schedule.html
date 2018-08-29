@@ -86,22 +86,22 @@
     <ion-row class="asistencia">
       <ion-col col-2>
         <button ion-button (click)="asingResponse(e, 'yes')" [ngClass]="{'select': e.likeUp }" icon-left clear small>
-          <ion-icon class="ball cero" [hidden]="e.countYes!==0"></ion-icon>
-          <ion-icon class="ball mas" [hidden]="e.countYes===0"></ion-icon>
+          <!-- <ion-icon class="ball cero" [hidden]="e.countYes!==0"></ion-icon> -->
+          <ion-icon class="ball mas"></ion-icon>
           <div class="text-inner-button text-event">{{e.countYes}}</div>
         </button>
       </ion-col>
       <ion-col col-2>
         <button ion-button (click)="asingResponse(e, 'maybe')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
-          <ion-icon class="ball cero" [hidden]="e.countMaybe!==0"></ion-icon>
-          <ion-icon class="ball talves" [hidden]="e.countMaybe===0"></ion-icon>
+          <!-- <ion-icon class="ball cero" [hidden]="e.countMaybe!==0"></ion-icon> -->
+          <ion-icon class="ball talves"></ion-icon>
           <div class="text-inner-button text-event">{{e.countMaybe}}</div>
         </button>
       </ion-col>
       <ion-col col-2>
         <button ion-button (click)="asingResponse(e, 'no')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
-          <ion-icon class="ball cero" [hidden]="e.countNo!==0"></ion-icon>
-          <ion-icon class="ball menos" [hidden]="e.countNo===0"></ion-icon>
+          <!-- <ion-icon class="ball cero" [hidden]="e.countNo!==0"></ion-icon> -->
+          <ion-icon class="ball menos"></ion-icon>
           <div class="text-inner-button text-event">{{e.countNo}}</div>
         </button>
       </ion-col>
