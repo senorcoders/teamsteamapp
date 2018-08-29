@@ -1,5 +1,5 @@
 import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HttpClient } from '@angular/common/http';
@@ -12,6 +12,7 @@ import { FormPlayerRegistrationPage } from '../form-player-registration/form-pla
 import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { MyApp } from '../../app/app.component';
 import { AgentFreePage } from '../agent-free/agent-free';
+import { Diagnostic } from '@ionic-native/diagnostic';
 
 /**
  * para logearse en el app
@@ -39,7 +40,9 @@ export class LoginPage {
     public authService: AuthServiceProvider,
     private ngZone: NgZone,
     public http : HttpClient, public statusBar: StatusBar,
-    private helper: HelpersProvider
+    private helper: HelpersProvider,
+    private diagnostic: Diagnostic,
+    public plt: Platform
   ) {
     
   }
@@ -66,6 +69,36 @@ export class LoginPage {
     //this.navCtrl.push(PaymentSubscripcionPage);
   }
 
+  showGPSalert(){
+    this.diagnostic.isLocationEnabled().then(
+      (isAvailable) => {
+      console.log('Is available? ' + isAvailable);
+      if(isAvailable == false){
+        const confirm = this.alertCtrl.create({
+          title: 'Turn on GPS Location Services',
+          message: 'Please turn on your GPS location services',
+          buttons: [
+            {
+              text: 'Cancel',
+              handler: () => {
+                console.log('Disagree clicked');
+              }
+            },
+            {
+              text: 'Go to Settings',
+              handler: () => {
+               this.diagnostic.switchToLocationSettings();
+              }
+            }
+          ]
+        });
+        confirm.present();
+      }
+      }).catch( (e) => {
+      console.log(e);
+      });
+  }
+
   public async Login(){
     
     if( this.email == '' ){
@@ -82,8 +115,14 @@ export class LoginPage {
           this.statusBar.backgroundColorByHexString("#fe324d");
           if (MyApp.User.hasOwnProperty("team")||MyApp.User.role.name==="OwnerLeague") {
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+            if(this.plt.is('ios')){
+                this.showGPSalert();
+            }
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
+            if(this.plt.is('ios')){
+              this.showGPSalert();
+          }
           }
         }else if( err ){
 
