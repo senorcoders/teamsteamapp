@@ -17,6 +17,7 @@ import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { Geolocation } from '@ionic-native/geolocation';
 import { AssistenceComponent } from '../../components/assistence/assistence';
 import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
+import { ImagesEventPage } from '../images-event/images-event';
 
 declare var google: any;
 
@@ -64,7 +65,7 @@ export class EventPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper: HelpersProvider,
-     public modalCtrl: ModalController,
+    public modalCtrl: ModalController,
     private zone: NgZone, public platform: Platform,
     public socket: WebSocketsProvider, public geolocation: Geolocation
   ) {
@@ -517,6 +518,10 @@ export class EventPage {
     catch (e) {
       console.error(e);
     }
+  }
+
+  public toImages() {
+    this.navCtrl.push(ImagesEventPage, { event: this.event });
   }
 
 }

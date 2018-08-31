@@ -358,5 +358,9 @@
     "OCT": "OCT",
     "NOV": "NOV",
     "DEC": "DEC",
-    "NEW": "New"
+    "NEW": "New",
+    "UPLOADIMAGES": "Upload Images",
+    "GALLERY": "Image gallery",
+    "ADDIMAGES": "Add Images",
+    "CAMERA": "Camera"
 }

@@ -99,7 +99,7 @@
         "VOLLEYBALL": "Volleyball",
         "WATERPOLO": "Water Polo",
         "WRESTLING": "Lucha",
-        "MMA":"Artes Marciales Mixtas",
+        "MMA": "Artes Marciales Mixtas",
         "YOGA": "Yoga"
     },
     "SEARCHTEAM": {
@@ -360,5 +360,9 @@
     "OCT": "OCT",
     "NOV": "NOV",
     "DEC": "DEC",
-    "NEW": "Nuevo"
+    "NEW": "Nuevo",
+    "UPLOADIMAGES": "Subir Imágenes",
+    "GALLERY": "Galería de Imágenes",
+    "ADDIMAGES": "Agregar Imágenes",
+    "CAMERA": "Cámara"
 }

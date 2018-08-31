@@ -1,0 +1,26 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"UPLOADIMAGES" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <button col-6 *ngFor="let libraryItem of images;trackBy:trackById" style="background: white;">
+        <img [src]="libraryItem.thumbnailURL | cdvphotolibrary" style="width: 100%; height: 100%; object-fit: cover;" />
+      </button>
+    </ion-row>
+  </ion-grid>
+
+  <ion-fab bottom right (click)="upload()">
+    <button color="base" ion-fab icon-only>
+      <ion-icon name="ios-cloud-upload-outline"></ion-icon>
+    </button>
+  </ion-fab>
+
+</ion-content>

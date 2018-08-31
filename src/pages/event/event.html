@@ -90,10 +90,13 @@
       </div>
     </div>
 
-    <ion-item id="assistence" (click)="toAssistence()" [hidden]="league">
+    <ion-item class="assistence" (click)="toImages()" >
+      {{'GALLERY' | translate}}
+    </ion-item>
+    <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toAssistence()" [hidden]="league">
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
-    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" id="assistence" (click)="toPlayerClose()">
+    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" class="assistence" (click)="toPlayerClose()">
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 

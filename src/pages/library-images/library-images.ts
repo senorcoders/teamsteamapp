@@ -3,10 +3,10 @@ import { ChangeDetectorRef } from '@angular/core';
 import { Platform, ToastController, ModalController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { PermissionsPage } from '../permissions/permissions';
-import { ItemDetailsPage } from '../item-details/item-details';
 import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoLibrary, LibraryItem } from '@ionic-native/photo-library';
 import { ImageViewPage } from '../image-view/image-view';
+import { UploadMultiplesImagesPage } from '../upload-multiples-images/upload-multiples-images';
 
 const THUMBNAIL_WIDTH = 250;
 const THUMBNAIL_HEIGHT = 150;
@@ -38,11 +38,21 @@ export class LibraryImagesPage {
 
   private resize = false;
 
+  private multiples = false;
+  private id = "";
+  public selects: LibraryItem[] = [];
+  public pressEvent = 0;
+
   constructor(public navCtrl: NavController, private photoLibrary: PhotoLibrary,
     private platform: Platform, private cd: ChangeDetectorRef,
     private toastCtrl: ToastController, private modalCtrl: ModalController,
     public navParams: NavParams, public zone: NgZone,
     private sanitizer: DomSanitizer) {
+
+    if (this.navParams.get("multi") !== undefined) {
+      this.multiples = true;
+      this.id = this.navParams.get("id");
+    }
 
     this.resolve = this.navParams.get('resolve');
     this.reject = this.navParams.get('reject');
@@ -99,7 +109,9 @@ export class LibraryImagesPage {
   }
 
   itemTapped(event, libraryItem) {
-
+    if (this.multiples === true) {
+      return this.existRemove(libraryItem);
+    }
     this.navCtrl.push(ImageViewPage, {
       libraryItem: libraryItem,
       resolve: this.resolve,
@@ -111,29 +123,67 @@ export class LibraryImagesPage {
     });
   }
 
-  trackById(index: number, libraryItem: LibraryItem): string { return libraryItem.id; }
+  public trackById(index: number, libraryItem: LibraryItem): string { return libraryItem.id; }
 
   public doInfinite(infiniteScroll) {
     //console.log(infiniteScroll, this.start, this.listMaster.length);
     if (this.start > this.listMaster.length) { infiniteScroll.complete(); return; }
 
     let news = this.listMaster.slice(this.start, this.end); // To take top 10 images
-    //console.log(news);
     this.zone.run(() => {
       for (let t of news) {
         this.library.push(t);
       }
-      //console.log(this.library);
       setTimeout(function () {
         infiniteScroll.complete();
       }, 1500);
     });
-    /*for(let t of news){
-      this.library.push(t);
-    }
-    this.cd.detectChanges();*/
 
     this.start = this.end;
     this.end += this.end;
   }
+
+  //#region para la selecion multiple
+  public initPress(libraryItem: LibraryItem) {
+    if (this.multiples === false) return;
+    this.pressEvent = setTimeout(function () {
+      this.zone.run(function () {
+        this.selects.push(libraryItem);
+      }.bind(this));
+    }.bind(this), 1300);
+  }
+
+  public finishPress() {
+    clearTimeout(this.pressEvent);
+  }
+
+  public select(libraryItem: LibraryItem) {
+    let index = this.selects.findIndex(it => {
+      return it.id === libraryItem.id;
+    });
+    return index !== -1;
+  }
+
+  public existRemove(libraryItem: LibraryItem) {
+    let index = this.selects.findIndex(it => {
+      return it.id === libraryItem.id;
+    });
+    if (index !== -1) {
+      if (this.selects.length === 1) {
+        this.selects = [];
+      } else {
+        this.selects.splice(index, 1);
+      }
+    } else {
+      this.selects.push(libraryItem);
+    }
+    this.zone.run(function () {
+      console.log("task");
+    })
+  }
+
+  public toUpload() {
+    this.navCtrl.push(UploadMultiplesImagesPage, { images: this.selects, id: this.id });
+  }
+  //#endregion
 }

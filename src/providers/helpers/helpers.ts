@@ -110,17 +110,6 @@ export class HelpersProvider {
     return t.is("android") || t.is("ios");
   }
 
-  //para convertir url base 64 a blob
-  public dataURItoBlob(dataURI) {
-    var binary = atob(dataURI.split(',')[1]);
-    var array = [];
-    for (var i = 0; i < binary.length; i++) {
-      array.push(binary.charCodeAt(i));
-    }
-    return new Blob([new Uint8Array(array)], {
-      type: 'image/jpg'
-    });
-  }
 
   //convertir un blob un tipo de archivo para escritura
   public blobToFile = (theBlob: Blob, fileName: string): File => {
@@ -133,21 +122,15 @@ export class HelpersProvider {
     return <File>theBlob;
   }
 
-  //convertir una image a base 64 url
-  // public fileToBase64(file): Promise<string> {
-  //   return new Promise(function (resolve, reject) {
-
-  //     var reader = new FileReader();
-  //     reader.readAsDataURL(file);
-  //     reader.onload = function () {
-  //       resolve(reader.result);
-  //     };
-  //     reader.onerror = function (error) {
-  //       reject(error);
-  //     };
-
-  //   });
-  // }
+  public base64ToArrayBuffer(base64) {
+    var binary_string =  window.atob(base64);
+    var len = binary_string.length;
+    var bytes = new Uint8Array( len );
+    for (var i = 0; i < len; i++)        {
+        bytes[i] = binary_string.charCodeAt(i);
+    }
+    return bytes.buffer;
+}
 
   //usa el endpoint del server para volver mas liviana una imagen
   public PerformanceImage(base64: string): Promise<string> {
@@ -168,37 +151,6 @@ export class HelpersProvider {
     });
   }
 
-  //Para tomar un url de imagen y convertirlo a base 64
-  // public urlTobase64(url): Promise<string> {
-  //   let t = this;
-  //   return new Promise(function (resolve, reject) {
-
-  //     var reader = new FileReader();
-  //     let link = url.replace(interceptor.url, "");
-
-  //     console.log(link, reader);
-
-  //     let header = new HttpHeaders();
-  //     header.append('Content-Type', 'image/jpeg');
-
-  //     t.http.get(link, { responseType: 'blob' }).toPromise().then(function (image: any) {
-  //       console.log(image);
-  //       reader.readAsDataURL(image);
-  //       reader.onload = function () {
-  //         console.log(reader);
-  //         resolve(reader.result);
-  //       };
-  //       reader.onerror = function (error) {
-  //         reject(error);
-  //       };
-  //     })
-  //       .catch(function (err) {
-  //         reject(err);
-  //       });
-
-
-  //   });
-  // }
 
   //Para abrir la camera desde cualquier component
   public Camera(parameters: { width?, height?, quality?, resolve?, reject?}, resize?: boolean): Promise<string> {
@@ -250,6 +202,7 @@ export class HelpersProvider {
       let handleFile = function (e: any) {
 
         var files = e.target.files, f = files[0];
+        console.log(files);
         var reader = new FileReader();
 
         reader.onload = function (e) {
