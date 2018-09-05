@@ -362,5 +362,7 @@
     "UPLOADIMAGES": "Upload Images",
     "GALLERY": "Image gallery",
     "ADDIMAGES": "Add Images",
-    "CAMERA": "Camera"
+    "CAMERA": "Camera",
+    "IMAGESBYEVENT": "Images by Event",
+    "IMAGESALL": "All Images"
 }

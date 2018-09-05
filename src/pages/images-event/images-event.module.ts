@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
 import { ImagesEventPage } from './images-event';
 import { TranslateModule } from '@ngx-translate/core';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -9,7 +10,8 @@ import { TranslateModule } from '@ngx-translate/core';
   ],
   imports: [
     IonicPageModule.forChild(ImagesEventPage),
-    TranslateModule.forChild()
+    TranslateModule.forChild(),
+    IonicImageViewerModule
   ],
 })
 export class ImagesEventPageModule {}

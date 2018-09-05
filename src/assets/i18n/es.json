@@ -364,5 +364,7 @@
     "UPLOADIMAGES": "Subir Imágenes",
     "GALLERY": "Galería de Imágenes",
     "ADDIMAGES": "Agregar Imágenes",
-    "CAMERA": "Cámara"
+    "CAMERA": "Cámara",
+    "IMAGESBYEVENT": "Imágenes por Evento",
+    "IMAGESALL": "Todas las Imágenes"
 }

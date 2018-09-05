@@ -179,7 +179,6 @@ import { ImagesEventPageModule } from '../pages/images-event/images-event.module
 import { ImagesEventPage } from '../pages/images-event/images-event';
 import { UploadMultiplesImagesPageModule } from '../pages/upload-multiples-images/upload-multiples-images.module';
 import { UploadMultiplesImagesPage } from '../pages/upload-multiples-images/upload-multiples-images';
-import { ImageViewEventComponent } from '../components/image-view-event/image-view-event';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -352,7 +351,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChatFamilyPage,
     ImagesEventPage,
     UploadMultiplesImagesPage,
-    ImageViewEventComponent
   ],
   providers: [
     StatusBar,

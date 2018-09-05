@@ -12,6 +12,8 @@ import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { CommentsComponent } from '../../components/comments/comments';
 import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
+import { ImagesEventPage } from '../images-event/images-event';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 @IonicPage()
 @Component({
@@ -32,22 +34,26 @@ export class EventsSchedulePage {
   public team: any;
 
   public events: Array<any> = [];
-  public eventsOrigin=[];
+  public eventsOrigin = [];
   public event0 = false;
 
   public by: string = "upcoming";
   public static by: string = "upcoming";
-  public league=false;
+  public league = false;
 
   //Para filtrar eventos
-  public filter="all";
+  public filter = "all";
+  public url = interceptor.url;
+
+  public allImages = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
     public http: HttpClient, public modalCtrl: ModalController,
     public alertCtrl: AlertController, public helper: HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone,
-    public locationAccuracy: LocationAccuracy, public geolocation: Geolocation
+    public locationAccuracy: LocationAccuracy, public geolocation: Geolocation,
+    private imageViewerCtrl: ImageViewerController
   ) {
 
     if (this.navParams.get("notification") === undefined)
@@ -71,7 +77,14 @@ export class EventsSchedulePage {
     this.league = MyApp.User.role.name === "OwnerLeague";
   }
 
-
+  public presentImage(myImage) {
+    let img = new Image();
+    let src = myImage.target.src;
+    src = src.split("?").shift()+ "?middle=true";
+    img.setAttribute("src", src);
+    const imageViewer = this.imageViewerCtrl.create(img);
+    imageViewer.present();
+  }
 
   //#region not geofence
   async ngOnInit() {
@@ -104,13 +117,13 @@ export class EventsSchedulePage {
       this.team = this.user.team;
 
       let events: any;
-      if(this.league===true){
+      if (this.league === true) {
         if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-        events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league.id).toPromise();
-      else
-        events  = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league).toPromise();
-      }else{
-        events  = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
+          events = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league.id).toPromise();
+        else
+          events = await this.http.get("/event/league/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league).toPromise();
+      } else {
+        events = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
       }
       this.helper.setGeofences(200, events);
       this.events = await this.parserEvents(events);
@@ -125,8 +138,16 @@ export class EventsSchedulePage {
       else
         this.event0 = false;
 
-        //Filramos los eventos
-        this.filterEvents();
+      //Filramos los eventos
+      this.filterEvents();
+
+      //Obtenemos todas las imagenes
+      let imgs = [];
+      for (let e of this.eventsOrigin) {
+        let is = e.images || [];
+        imgs = imgs.concat(is);
+      }
+      this.allImages = imgs;
 
     }
     catch (e) {
@@ -136,13 +157,13 @@ export class EventsSchedulePage {
     load.dismiss();
   }
 
-  public filterEvents(){ console.log(this.filter);
-    if(this.filter==="all"){
+  public filterEvents() {
+    if (this.filter === "all") {
       this.events = this.eventsOrigin;
       return;
     }
 
-    this.events = this.eventsOrigin.filter(function(it){
+    this.events = this.eventsOrigin.filter(function (it) {
       return it.type === this.filter;
     }.bind(this));
 
@@ -596,5 +617,9 @@ export class EventsSchedulePage {
   }
 
   //#endregion
+
+  public toImages(event) {
+    this.navCtrl.push(ImagesEventPage, { event: event });
+  }
 
 }

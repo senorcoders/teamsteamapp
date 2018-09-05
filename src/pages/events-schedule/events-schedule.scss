@@ -1,5 +1,4 @@
 page-events-schedule {
-
     /**
     ** DISEÑO PARA EL MENU FIJO, DE PREVIUS Y UPCOMING
     ***/
@@ -29,7 +28,7 @@ page-events-schedule {
         height: 70px;
         display: flex;
         flex-direction: row;
-        background-color:#f2f5f8  !important;
+        background-color: #f2f5f8 !important;
         justify-content: space-around;
         padding: 20px 0 20px 0;
         /*box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14),
@@ -70,7 +69,6 @@ page-events-schedule {
             }
         }
     }
-    
     ion-content {
         background-color: #e8eaf6 !important;
         .select {
@@ -83,7 +81,6 @@ page-events-schedule {
         padding-left: 15px;
         padding-right: 15px;
     }
-
     /***
     ** DISEÑO PARA LOS EVENTOS
     **/
@@ -124,7 +121,6 @@ page-events-schedule {
         flex-wrap: wrap;
         padding: 15px;
         border-radius: 10px !important;
-
         .dateTime {
             width: 20%;
             flex-basis: 20%;
@@ -168,32 +164,27 @@ page-events-schedule {
                 font-size: 1.4rem !important;
             }
         }
-
-        .details-location{
+        .details-location {
             display: flex;
             flex-wrap: nowrap;
             justify-content: space-between;
             flex-basis: 100%;
             width: 100%;
-            p{
+            p {
                 flex-basis: calc(100% - 90px);
-                width: calc(100% - 90px);
-                // color: #5d6d81 !important;
+                width: calc(100% - 90px); // color: #5d6d81 !important;
                 font-size: 1.6rem;
                 margin: 0 !important;
             }
-            i{
+            i {
                 flex-basis: 80px;
-                width: 80px;
-                // color: #5d6d81 !important;
+                width: 80px; // color: #5d6d81 !important;
                 font-size: 1.3rem !important;
                 margin-top: 5px;
             }
         }
-    }    
-
-    //LINEA QUE DIVIDE LOS DATOS GENERALES DE LOS EVENTO Y LA ASSISTENCIA
-    .dividir{
+    } //LINEA QUE DIVIDE LOS DATOS GENERALES DE LOS EVENTO Y LA ASSISTENCIA
+    .dividir {
         margin-top: 10px;
         margin-bottom: 10px;
         margin-left: -15px;
@@ -201,23 +192,20 @@ page-events-schedule {
         width: calc(100% + 30px);
         flex-basis: calc(100% + 30px);
         height: 1px;
-        background-color: #dedede !important; 
-    }
-
-    //LA ASSISTENCIA PARA LOS EVENTOS Y JUEGOS
-    .asistencia, .assistence {
+        background-color: #dedede !important;
+    } //LA ASSISTENCIA PARA LOS EVENTOS Y JUEGOS
+    .asistencia,
+    .assistence {
         padding-left: 0 !important;
         font-size: 1.4rem;
         line-height: 1.5;
-        ion-col{
+        ion-col {
             padding: 0 !important;
         }
-        ion-col[col-6]{
+        ion-col[col-6] {
             justify-content: flex-end;
             display: flex;
-        }
-
-        //PARA LOS CIRCULOS DE COLORES QUE SE MUESTRAN EN LAS ASISTENCIAS
+        } //PARA LOS CIRCULOS DE COLORES QUE SE MUESTRAN EN LAS ASISTENCIAS
         .ball {
             width: 1em;
             height: 1em;
@@ -228,7 +216,7 @@ page-events-schedule {
             font-size: 1.4em !important;
             color: #c7cbcf !important;
         }
-        .cero{
+        .cero {
             background-color: #c7cbcf !important;
         }
         .mas {
@@ -240,20 +228,19 @@ page-events-schedule {
         .talves {
             background-color: #ffe430 !important;
         }
-
-        .chat{
+        .chat {
             background-color: transparent !important;
             box-shadow: 0 0 0 transparent !important;
             color: #c7cbcf !important;
             font-size: 2rem;
-            .chat-0{
+            .chat-0 {
                 width: 4rem;
                 height: 4rem;
                 display: block;
                 float: left;
                 margin-left: 5px;
             }
-            .chat-more{
+            .chat-more {
                 width: 3.7rem;
                 height: 3.7rem;
                 display: block;
@@ -261,8 +248,8 @@ page-events-schedule {
                 margin-left: 5px;
             }
         }
-        .chat.mas{
-            color: #fe324d !important; 
+        .chat.mas {
+            color: #fe324d !important;
         }
     }
     ion-card.event {
@@ -271,10 +258,8 @@ page-events-schedule {
         .assistence {
             display: none !important;
         }
-
         .inner-image {
             display: flex;
-
             .dateTimeEvent {
                 height: 80px;
                 width: 80px;
@@ -292,15 +277,14 @@ page-events-schedule {
                     color: #5d6d81 !important;
                     font-size: 2.8rem !important;
                 }
-                h4.daily{
+                h4.daily {
                     font-size: 2rem !important;
                     color: #fe324d !important;
                     line-height: 80px;
                 }
             }
         }
-
-        .inner-image.is-image{
+        .inner-image.is-image {
             width: calc(100% + 30px);
             height: 250px;
             margin-top: -15px;
@@ -310,12 +294,12 @@ page-events-schedule {
             background-size: cover;
             justify-content: space-between;
             align-items: flex-end;
-            h2{
+            h2 {
                 padding-left: 15px;
                 margin-bottom: 20px;
                 font-size: 3rem;
                 color: white;
-                text-shadow: 2px 2px 1px rgba(31,30,31,0.32), -2px -2px 1px rgba(31,30,31,0.32);
+                text-shadow: 2px 2px 1px rgba(31, 30, 31, 0.32), -2px -2px 1px rgba(31, 30, 31, 0.32);
             }
             .dateTimeEvent {
                 background-color: rgba(255, 255, 255, 0.5);
@@ -325,36 +309,32 @@ page-events-schedule {
                 font-weight: bold;
             }
         }
-        .inner-image.not-image{
+        .inner-image.not-image {
             display: none !important;
         }
-        
-        .details-event.is-image{
+        .details-event.is-image {
             flex-basis: 100%;
             width: 100%;
             padding: 5px;
-            p{
+            p {
                 font-size: 2rem !important;
                 margin: 0 !important;
             }
-            i{
+            i {
                 display: block;
                 text-align: right;
             }
         }
-
-        .details-event.not-image{
+        .details-event.not-image {
             display: none !important;
         }
     }
-    
     ion-card.practice,
-    ion-card.game{
+    ion-card.game {
         //Para ocultar lo que es solo para eventos
         .inner-image {
             display: none !important;
-        }
-        //Para el color que se muestra en la parte derecha
+        } //Para el color que se muestra en la parte derecha
         .color-right {
             position: absolute;
             left: auto;
@@ -364,9 +344,8 @@ page-events-schedule {
             margin-top: -15px;
         }
     }
-
     ion-card.game {
-        .details-event{
+        .details-event {
             display: none !important;
         }
         .color-right {
@@ -388,11 +367,10 @@ page-events-schedule {
                 color: #5d6d81 !important;
             }
         }
-        
-        
     }
     ion-card.practice {
-        .details-event, .dividir{
+        .details-event,
+        .dividir {
             display: none !important;
         }
         .color-right {
@@ -419,7 +397,31 @@ page-events-schedule {
         }
     }
 
-    button[ion-fab]{
+    .images-all {
+        height: 150px;
+        object-fit: cover;
+    }
+    
+    div.images-event {
+        h3 {
+            color: #ea2e47;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        ion-slides {
+            .swiper-wrapper {
+                width: 170px !important;
+            }
+            ion-slide {
+                img {
+                    object-fit: cover;
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+        }
+    }
+    button[ion-fab] {
         background-color: #fe324d !important;
         color: white !important;
     }

@@ -3,12 +3,11 @@ import { IonicPage, NavController, NavParams, ModalController, ActionSheetContro
 import { LibraryImagesPage } from '../library-images/library-images';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
-import { ImageViewEventComponent } from '../../components/image-view-event/image-view-event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
+import { ImageViewerController } from 'ionic-img-viewer';
 
-
-declare var NFile:any;
+declare var NFile: any;
 @IonicPage()
 @Component({
   selector: 'page-images-event',
@@ -22,7 +21,7 @@ export class ImagesEventPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private http: HttpClient, private modalCtrl: ModalController,
-    private action: ActionSheetController
+    private action: ActionSheetController, private imageViewerCtrl: ImageViewerController
   ) {
     this.event = this.navParams.get("event");
   }
@@ -64,7 +63,7 @@ export class ImagesEventPage {
     let arrBufer = HelpersProvider.me.base64ToArrayBuffer(string);
     console.log(arrBufer);
 
-    let file = new NFile([arrBufer], new Date().getTime().toString()+".jpg", {type:"image/jpeg"});
+    let file = new NFile([arrBufer], new Date().getTime().toString() + ".jpg", { type: "image/jpeg" });
     let load = HelpersProvider.me.getLoadingStandar();
     let form = new FormData();
     for (let f of [file]) {
@@ -81,9 +80,18 @@ export class ImagesEventPage {
     this.navCtrl.push(LibraryImagesPage, { multi: true, id: this.event.id });
   }
 
-  public viewImage(img) {
-    this.modalCtrl.create(ImageViewEventComponent, { image: img })
-      .present();
+  public presentImage(myImage, _new) {
+    _new = _new || false;
+    if (_new === true) {
+      let img = new Image();
+      let src = myImage.target.src;
+      src = src.split("?").shift() + "?middle=true";
+      img.setAttribute("src", src);
+      const imageViewer = this.imageViewerCtrl.create(img);
+      imageViewer.present();
+      return;
+    }
+    const imageViewer = this.imageViewerCtrl.create(myImage.target);
+    imageViewer.present();
   }
-
 }

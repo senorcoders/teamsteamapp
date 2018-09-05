@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Platform } from 'ionic-angular';
 import { LibraryItem } from '@ionic-native/photo-library';
 import { DomSanitizer } from '@angular/platform-browser';
 import { AngularCropperjsComponent } from 'angular-cropperjs';
@@ -42,7 +42,9 @@ export class ImageViewPage {
   pop: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public domSanitizationService: DomSanitizer, public file: File) {
+    public domSanitizationService: DomSanitizer, public file: File,
+    private platform: Platform
+  ) {
 
     if (navParams.get('libraryItem') !== undefined) {
       this.selectedLibraryItem = navParams.get('libraryItem');
@@ -212,6 +214,10 @@ export class ImageViewPage {
   }
 
   private async saveCanvasImage(canvasElement: HTMLCanvasElement, resolve, reject) {
+    if(!this.platform.is("cordova")){
+      return resolve();
+    }
+
     var dataUrl = canvasElement.toDataURL();
 
     let name = new Date().getTime() + '.png';

@@ -16,6 +16,8 @@
         <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
         <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
         <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
+        <ion-option value='imagesEvent'>{{ 'IMAGESBYEVENT' | translate }}</ion-option>
+        <ion-option value='imagesAll'>{{ 'IMAGESALL' | translate }}</ion-option>
       </ion-select>
     </ion-row>
   </ion-navbar>
@@ -39,11 +41,24 @@
     </h4>
   </div>
 
+  <!-- para mostrar todas las images -->
+  <ion-grid *ngIf="filter==='imagesAll'">
+    <ion-row>
+      <img class="images-all" (click)="presentImage($event)" [src]="url+i.src+'?small=true'" *ngFor="let i of allImages" col-6>
+    </ion-row>
+  </ion-grid>
+
+  <!-- para mostrar las imagenes por evento -->
+  <div class="images-event" (click)="toImages(e)" *ngFor="let e of eventsOrigin" [hidden]="filter!=='imagesEvent'">
+    <h3 class="title">{{e.name}}</h3>
+    <ion-slides>
+      <ion-slide *ngFor="let i of e.images">
+        <img [src]="url+i.src+'?small=true'">
+      </ion-slide>
+    </ion-slides>
+  </div>
+
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
-
-    <div class="color-right">
-
-    </div>
 
     <!-- este es para events type -->
     <div class="inner-image" (click)="goEvent(e)" [ngClass]="e.loadImage===true?'is-image':'not-image'" [ngStyle]="{'background-image': 'url(' + e.imageSrc + ')'}">
