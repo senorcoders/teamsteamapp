@@ -311,7 +311,7 @@ export class RegistrationPage {
       else if (this.selectNew === "agentFree")
         await this.http.post("/user/free", user).toPromise();
       else {
-        user = await this.http.post("/user", user).toPromise();
+        user = await this.http.post("/user-registration", user).toPromise();
         this.usersOwners.push(user);
         let users: any[] = [];
         for (let us of this.usersOwners) {

@@ -145,11 +145,13 @@ export class ChatFamilyPage {
   private async getMsg() {
     try {
       let ramdon = this.ramdon;
-      let mgs: any = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}`).toPromise();
+      let mgs: any = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&limit=3000`).toPromise();
+      mgs = mgs.filter(it=>{
+        return it.hasOwnProperty("user");
+      }); console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
         item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
         item.loadImage = false;
-        item.user = item.user.id;
         return item;
       }));
     }

@@ -20,7 +20,6 @@ export class CreatePlayerPage {
   public lastName: string = "";
   public email: string = "";
   public password: string = "standard";
-  public passwordCheck: string = "standard";
 
   public imageSrc: string;
   public image: boolean = false;
@@ -135,9 +134,7 @@ export class CreatePlayerPage {
     if (
       this.firstName == '' ||
       this.lastName == '' ||
-      this.email == '' ||
-      this.password == '' ||
-      this.passwordCheck == ''
+      this.email == ''
     ) {
 
       load.dismiss();
