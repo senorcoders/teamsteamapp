@@ -87,12 +87,10 @@ export class MyApp {
     private INoti: INotificationProvider, public splash: SplashScreen,
     private statusBar: StatusBar
   ) {
-    console.log("init platform", new Date().toTimeString());
     platform.ready().then(this.initPlatform.bind(this));
   }
 
   private initPlatform() {
-    console.log("platform ready", new Date().toTimeString());
     this.translate.setDefaultLang('en');
 
     // the lang to use, if the lang isn't available, it will use the current loader to get them
@@ -116,7 +114,6 @@ export class MyApp {
   }
 
   public async init() {
-    console.log("init services", new Date().toTimeString());
     try {
       MyApp.me = this;
       this.serviceNewDatas();
@@ -126,12 +123,10 @@ export class MyApp {
     catch (e) {
       console.error(e);
     }
-    console.log("services ready", new Date().toTimeString());
     this.splash.hide();
   }
 
   async initAuth() {
-    console.log("init Auth", new Date().toTimeString());
 
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
@@ -218,7 +213,6 @@ export class MyApp {
 
     this.serviceNewDatas();
 
-    console.log("auth ready", new Date().toTimeString());
   }
 
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo

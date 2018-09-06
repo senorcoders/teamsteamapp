@@ -13,14 +13,14 @@
 
     <div class="message-wrap">
 
-        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.user !== user.id "
-            [class.right]=" msg.user === user.id ">
+        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.user.id !== user.id "
+            [class.right]=" msg.user.id === user.id ">
             <img class="user-img" [src]="msg.photo" [hidden]="!msg.loadImage" (load)="loadImage(msg)">
             <img class="user-img" src="./assets/imgs/logo-login.png" [hidden]="msg.loadImage">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">
-                    <p>{{msg.username}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
+                    <p>{{msg.user.firstName+ " "+ msg.user.lastName}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
                 <!--div class="msg-content" [hidden]="msg.type === 'image' ">
                     <span class="triangle"></span>

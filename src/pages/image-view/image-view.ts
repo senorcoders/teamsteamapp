@@ -133,12 +133,17 @@ export class ImageViewPage {
         this.drawRotated(ctx, c, img, this.degrees);
 
       //Guardamos localmente la foto si es una que se tomo con la camara
-      if(this.image!==""){
-        await new Promise(async function (resolve, reject) {
-          await this.saveCanvasImage(c, resolve, reject);
-        }.bind(this));
+      try {
+        if (this.image !== "") {
+          await new Promise(async function (resolve, reject) {
+            await this.saveCanvasImage(c, resolve, reject);
+          }.bind(this));
+        }
       }
-      
+      catch (e) {
+        console.error(e);
+      }
+
       var dataURL = c.toDataURL('image/jpeg');
       console.log(this.width, this.height);
 
@@ -214,7 +219,7 @@ export class ImageViewPage {
   }
 
   private async saveCanvasImage(canvasElement: HTMLCanvasElement, resolve, reject) {
-    if(!this.platform.is("cordova")){
+    if (!this.platform.is("cordova")) {
       return resolve();
     }
 
@@ -228,7 +233,7 @@ export class ImageViewPage {
     catch (e) {
       console.error(e);
     }
-    
+
     let options: IWriteOptions = { replace: true };
 
     var data = dataUrl.split(',')[1];

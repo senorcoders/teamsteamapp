@@ -32,7 +32,7 @@
         <img [src]="tracking.imageSrc" [hidden]="!tracking.loadImage" (load)="loadImage(tracking)">
         <img [hidden]="tracking.loadImage" src="./assets/imgs/logo-login.png">
       </ion-avatar>
-      {{tracking.user.username}}
+      {{tracking.user.firstName+ " "+ tracking.user.firstName}}
     </ion-item>
   </ion-list>
 

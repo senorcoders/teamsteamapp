@@ -39,7 +39,7 @@
         <img src="./assets/imgs/logo-login.png" [hidden]="user.loadImage">
         <img [src]="user.imageSrc" [hidden]="!user.loadImage" (load)="loadImage(role)">
       </ion-avatar>
-      <p (click)="setTeam(role)">{{user.username}}</p>
+      <p (click)="setTeam(role)">{{user.firstName+ " "+ user.lastName}}</p>
       <ion-icon color="secondary" name="md-close" (click)="removeOwner(i)" item-end></ion-icon>
     </ion-item>
   </ion-list>

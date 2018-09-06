@@ -18,7 +18,7 @@
         <img class="user-img" [src]="comment.photo" alt="" src="">
         <div class="msg-detail">
             <div class="msg-info">
-                <span class="username">{{comment.username}}</span> <span class="date">{{comment.dateTime | relativeTime}}</span>
+                <span class="name">{{comment.user.firstName+ " "+ comment.user.lastName}}</span> <span class="date">{{comment.dateTime | relativeTime}}</span>
             </div>
             <div class="msg-content">
                 <p class="line-breaker ">{{comment.content}}</p>

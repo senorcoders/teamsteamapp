@@ -15,7 +15,7 @@ export class CreateTeamManagerPage {
 
   //for user
   public newUser = true;
-  public username: string = "";
+  // public username: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -162,7 +162,7 @@ export class CreateTeamManagerPage {
     }
 
     let user: any = {
-      username: this.username,
+      // username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,

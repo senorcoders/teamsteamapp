@@ -43,7 +43,7 @@
         <img [hidden]="user.loadImage" src="./assets/imgs/logo-login.png">
       </ion-avatar>
 
-      <h2>{{user.username}} <div class="new-point-message" [hidden]="newMessagePeople(user)"></div></h2>
+      <h2>{{user.firstName+ " "+ user.lastName}} <div class="new-point-message" [hidden]="newMessagePeople(user)"></div></h2>
       <button item-end ion-button class="chat">
         <img class="chat-0" src="./assets/imgs/chat-1.png">
       </button>

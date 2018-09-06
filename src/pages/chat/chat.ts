@@ -151,15 +151,15 @@ export class ChatPage {
   private async getMsg() {
     try {
       let ramdon = this.ramdon;
-      let mgs: any = await this.http.get("/messages/team/" + MyApp.User.team).toPromise();
+      let mgs: any = await this.http.get(`/messages?where={"team":"${MyApp.User.team}"}&limit=1000`).toPromise();
+      mgs = mgs.filter(it=>{
+        return it.hasOwnProperty("user") && it.hasOwnProperty("team");
+      });
       this.msgList = await Promise.all(mgs.map(async function (item) {
         item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
         item.loadImage = false;
         return item;
       }));
-      //console.log(this.msgList);
-      /*this.msgListObserver = Rx.Observable.from(this.msgList).toArray();
-      this.msgListObserver.subscribe(x => {console.log("new: ", x)});*/
     }
     catch (e) {
       console.error(e);
@@ -174,8 +174,18 @@ export class ChatPage {
     if (!this.editorMsg.trim()) return;
 
     // Mock message
-    let newMsg = {
+    let newMsgPost = {
       user: MyApp.User.id,
+      text: this.editorMsg,
+      team: MyApp.User.team,
+      dateTime: moment().toISOString(),
+      role: MyApp.User.role.name,
+      username: MyApp.User.username,
+      status: 'pending'
+    };
+
+    let newMsg= {
+      user: MyApp.User,
       text: this.editorMsg,
       team: MyApp.User.team,
       dateTime: moment().toISOString(),
@@ -191,7 +201,7 @@ export class ChatPage {
       this.messageInput.setFocus();
     }
 
-    this.http.post("/messages", newMsg).toPromise()
+    this.http.post("/messages", newMsgPost).toPromise()
       .then((msg: any) => {
         let index = this.getMsgIndexById(msg.dateTime);
         if (index !== -1) {

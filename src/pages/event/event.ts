@@ -41,7 +41,7 @@ export class EventPage {
   public event: any;
 
   public imgUser: string = "";
-  public username: string = "";
+  public name: string = "";
 
   public location: any = {
     position: { lat: 51.5033640, lng: -0.12762500 },
@@ -116,7 +116,7 @@ export class EventPage {
     }
 
     let userPublisher: any = await this.http.get("/user/" + idUser).toPromise();
-    this.username = userPublisher.username;
+    this.name = userPublisher.firstName+ " "+ userPublisher.lastName;
 
     //for geoconder location, obtener por nombre de location
     this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");

@@ -64,23 +64,22 @@ export class AssistencesComponent {
       return it;
     });
 
+    let date = moment();
+    let dateAfter12 = moment();
+    //hacemos la resta y la suma de hours
+    dateAfter12.subtract(12, "hours");
+
     let index = this.assistences.findIndex(function (it) {
-      let dateAfter12 = moment(it.dateTime);
-      let dateBefore12 = moment(it.dateTime);
-
-      //hacemos la resta y la suma de hours
-      dateAfter12.subtract(12, "hours");
-      dateBefore12.add(12, "hours");
-
-      it.dateTime = moment(it.dateTime);
-      return it.dateTime.isBetween(dateAfter12, dateBefore12);
+      let t = "DD/MM/YYYY hh:mm a";
+      it.dateTime = moment(it.dateTime); console.log(it.dateTime.format(t), dateAfter12.format(t), date.format(t));
+      return it.dateTime.isBetween(dateAfter12, date);
     });
 
     if (index !== -1) {
       this.assistenceNow = this.assistences[index];
-      if( this.assistences.length === 1){
+      if (this.assistences.length === 1) {
         this.assistences = [];
-      }else{
+      } else {
         this.assistences.splice(index, 1);
       }
     }

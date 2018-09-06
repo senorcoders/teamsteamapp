@@ -22,7 +22,6 @@ import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-t
 })
 export class RegistrationPage {
 
-  public username = "";
   public firstname = "";
   public lastname = "";
   public email = "";
@@ -209,7 +208,6 @@ export class RegistrationPage {
       this.userValid = true;
 
       if (
-        this.username === "" ||
         this.firstname === "" ||
         this.lastname === "" ||
         this.email === ""
@@ -272,7 +270,6 @@ export class RegistrationPage {
       let user: any;
       if (this.selectNew === "team") {
         user = {
-          "username": this.username,
           "password": this.password,
           "firstName": this.firstname,
           "lastName": this.lastname,
@@ -287,7 +284,6 @@ export class RegistrationPage {
       } else if (this.selectNew === "agentFree") {
         user = {
           user: {
-            "username": this.username,
             "password": this.password,
             "firstName": this.firstname,
             "lastName": this.lastname,
@@ -299,7 +295,6 @@ export class RegistrationPage {
         };
       } else {
         user = {
-          "username": this.username,
           "password": this.password,
           "firstName": this.firstname,
           "lastName": this.lastname,

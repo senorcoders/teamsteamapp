@@ -23,7 +23,7 @@
   <ion-list>
     <ion-item *ngFor='let people of peoples;' (click)='newChat(people)' [hidden]='!people.show || user.id == people.id' >
       <h2>
-        {{people.username}}
+        {{people.firstName+ " "+ people.lastName}}
         <i>{{people.role}}</i>
         <i [hidden]="!people.relationship">{{people.relationship}}</i>
       </h2>

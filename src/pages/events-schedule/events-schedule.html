@@ -59,7 +59,7 @@
   </div>
 
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
-
+    <div class="color-right"></div>
     <!-- este es para events type -->
     <div class="inner-image" (click)="goEvent(e)" [ngClass]="e.loadImage===true?'is-image':'not-image'" [ngStyle]="{'background-image': 'url(' + e.imageSrc + ')'}">
       <img (click)="goEvent(e)" [src]="e.imageSrc" hidden (load)="loadImage(e)">

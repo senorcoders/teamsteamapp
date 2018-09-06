@@ -169,6 +169,8 @@ export class AssistenceComponent {
         await this.http.put("/assistenceevents/" + this.assistence.id, this.assistence).toPromise();
       }
 
+      console.log(this.assistence);
+
     }
     catch (e) {
       console.error(e);
@@ -217,6 +219,7 @@ export class AssistenceComponent {
         await this.http.put("/assistenceevents/" + this.assistence.id, this.assistence).toPromise();
       }
 
+      console.log(this.assistence);
     }
     catch (e) {
       console.error(e);

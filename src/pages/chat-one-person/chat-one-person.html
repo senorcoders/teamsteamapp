@@ -1,7 +1,7 @@
 <ion-header>
 
     <ion-navbar color="base">
-        <ion-title>{{to.username}}</ion-title>
+        <ion-title>{{to.firstName+ " "+ to.lastName}}</ion-title>
     </ion-navbar>
 
 </ion-header>
@@ -18,8 +18,7 @@
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">
-                    <p>
-                        <!--pre>{{msg.username}}</pre-->&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
+                    <p>&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
                 <!--div class="msg-content" [hidden]="msg.type === 'image' ">
                     <span class="triangle"></span>

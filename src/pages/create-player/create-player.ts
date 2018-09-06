@@ -15,7 +15,7 @@ import { DatePicker } from '@ionic-native/date-picker';
 })
 export class CreatePlayerPage {
 
-  public username: string = "";
+  // public username: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -168,7 +168,7 @@ export class CreatePlayerPage {
 
 
     this.user = {
-      username: this.username,
+      // username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,

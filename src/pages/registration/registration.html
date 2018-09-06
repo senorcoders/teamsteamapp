@@ -12,11 +12,6 @@
   <ion-list>
 
     <ion-item [ngClass]="userValid===true?'color-label':''">
-      <ion-label  floating> username </ion-label>
-      <ion-input type="text" [ngClass]="userValid==true&&username===''?'not-valid':''" [(ngModel)]="username"></ion-input>
-    </ion-item>
-
-    <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
         {{"FIRSTNAME" | translate}}
       </ion-label>
@@ -158,7 +153,7 @@
         <img src="./assets/imgs/logo-login.png" [hidden]="user.loadImage">
         <img [src]="user.imageSrc" [hidden]="!user.loadImage" (load)="loadImage(role)">
       </ion-avatar>
-      <p (click)="setTeam(role)">{{user.username}}</p>
+      <p (click)="setTeam(role)">{{user.firstName+ " "+ user.lastName}}</p>
       <ion-icon color="secondary" name="md-close" (click)="removeOwner(i)" item-end></ion-icon>
     </ion-item>
   </ion-list>

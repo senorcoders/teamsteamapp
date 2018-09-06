@@ -166,8 +166,18 @@ export class ChatFamilyPage {
     if (!this.editorMsg.trim()) return;
 
     // Mock message
-    let newMsg = {
+    let newMsgPost = {
       user: MyApp.User.id,
+      text: this.editorMsg,
+      team: MyApp.User.team,
+      dateTime: moment().toISOString(),
+      role: MyApp.User.role.name,
+      username: MyApp.User.username,
+      status: 'pending'
+    };
+
+    let newMsg = {
+      user: MyApp.User,
       text: this.editorMsg,
       team: MyApp.User.team,
       dateTime: moment().toISOString(),
@@ -183,7 +193,7 @@ export class ChatFamilyPage {
       this.messageInput.setFocus();
     }
 
-    this.http.post("/chatfamily", newMsg).toPromise()
+    this.http.post("/chatfamily", newMsgPost).toPromise()
       .then((msg: any) => {
         let index = this.getMsgIndexById(msg.dateTime);
         if (index !== -1) {

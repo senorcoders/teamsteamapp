@@ -22,12 +22,12 @@ export class CameraPage {
 
   private width: number;
   private height: number;
-  private resize:boolean;
+  private resize: boolean;
   //private quality: number;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public toastCtrl: ToastController, public cameraPreview: CameraPreview,
-    public photoLibrary: PhotoLibrary, public loadCtrl: LoadingController, 
+    public photoLibrary: PhotoLibrary, public loadCtrl: LoadingController,
     public camera: Camera, public platform: Platform
   ) {
 
@@ -64,11 +64,11 @@ export class CameraPage {
     this.cameraPreview.takePicture(pictureOpts).then((imageData) => {
       this.picture = 'data:image/jpeg;base64,' + imageData;
       this.cameraPreview.stopCamera();
-      let parameters:any = {
+      let parameters: any = {
         resolve: this.resolve, reject: this.reject,
         width: this.width, height: this.height
       };
-      if( this.resize === true ){
+      if (this.resize === true) {
         parameters.resize = true;
       }
       parameters.image = this.picture;
@@ -89,55 +89,58 @@ export class CameraPage {
   }
 
   //Para iniciar la camera cada ves que se entra a la page
-  async ionViewDidLoad() {
-    console.log("ionViewDidLoad " + Math.random());
+  // async ionViewDidLoad() {
+  //   console.log("ionViewDidLoad " + Math.random());
 
-    let previewOtions: CameraPreviewOptions = {
-      x: 0,
-      y: 56,
-      width: window.screen.width,
-      height: window.screen.height - 156,
-      camera: 'rear',
-      tapPhoto: false,
-      previewDrag: false,
-      toBack: false,
-      alpha: 1,
-      tapToFocus: true
-    };
+  // let previewOtions: CameraPreviewOptions = {
+  //   x: 0,
+  //   y: 56,
+  //   width: window.screen.width,
+  //   height: window.screen.height - 156,
+  //   camera: 'rear',
+  //   tapPhoto: false,
+  //   previewDrag: false,
+  //   toBack: false,
+  //   alpha: 1,
+  //   tapToFocus: true
+  // };
 
-    try {
-      await this.cameraPreview.startCamera(previewOtions);
-    } catch (e) {
-      console.error(e);
-      await this.cameraPreview.show();
-    }
+  //   try {
+  //     await this.cameraPreview.startCamera(previewOtions);
+  //   } catch (e) {
+  //     console.error(e);
+  //     await this.cameraPreview.show();
+  //   }
 
-    await this.cameraPreview.setFlashMode(this.cameraPreview.FLASH_MODE.AUTO);
-
-  }
+  // }
 
   //Para iniciar la camera cada ves que se entra a la page sin haberla cerrado
   async ionViewWillEnter() {
-    console.log("ionViewWillEnter " + Math.random());
-    let previewOtions: CameraPreviewOptions = {
-      x: 0,
-      y: 0,
-      width: window.innerWidth,
-      height: window.innerHeight - 80,
-      camera: 'rear',
-      tapPhoto: true,
-      previewDrag: false,
-      toBack: true,
-      alpha: 1,
-      tapToFocus: true
-    };
+
 
     try {
+      
+      console.log("ionViewWillEnter " + Math.random());
+      let previewOtions: CameraPreviewOptions = {
+        x: 0,
+        y: 56,
+        width: window.screen.width,
+        height: window.screen.height - 156,
+        camera: 'rear',
+        tapPhoto: false,
+        previewDrag: false,
+        toBack: false,
+        alpha: 1,
+        tapToFocus: true
+      };
+
       await this.cameraPreview.startCamera(previewOtions);
+      await this.cameraPreview.show();
     } catch (e) {
       console.error(e);
       await this.cameraPreview.show();
     }
+    await this.cameraPreview.setFlashMode(this.cameraPreview.FLASH_MODE.AUTO);
   }
 
   //para detener la camera cuando se cierra la pagina pop
@@ -160,7 +163,7 @@ export class CameraPage {
   //mostrar la libraria de fotos
   public async toLibrary() {
 
-    if ( this.platform.is("ios") ) {
+    if (this.platform.is("ios")) {
       let options: CameraOptions = {
         quality: 100,
         destinationType: this.camera.DestinationType.DATA_URL,
@@ -171,11 +174,11 @@ export class CameraPage {
       this.camera.getPicture(options).then(async function (imageData) {
         // imageData is either a base64 encoded string or a file URI
         // If it's base64:
-        let parameters:any = {
+        let parameters: any = {
           resolve: this.resolve, reject: this.reject,
           width: this.width, height: this.height
         };
-        if( this.resize === true ){
+        if (this.resize === true) {
           parameters.resize = true;
         }
         parameters.image = 'data:image/jpeg;base64,' + imageData
@@ -187,11 +190,11 @@ export class CameraPage {
 
     } else {
       this.cameraPreview.hide();
-      let parameters:any = {
+      let parameters: any = {
         resolve: this.resolve, reject: this.reject,
         width: this.width, height: this.height
       };
-      if( this.resize === true ){
+      if (this.resize === true) {
         parameters.resize = true;
       }
       this.navCtrl.push(LibraryImagesPage, parameters);
