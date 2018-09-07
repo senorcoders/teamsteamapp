@@ -52,7 +52,7 @@ export class TaskPage {
       this.load.dismiss();
     }
 
-    if( valid ) this.navCtrl.setRoot(MyTaskPage);
+    if( valid ) this.navCtrl.pop();
   }
   
   //Para cambiar de completada a no completada y viceversa

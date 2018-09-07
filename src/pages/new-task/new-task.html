@@ -21,12 +21,22 @@
     </ion-item>
 
     <ion-item>
-
       <ion-label floating>{{'ASSIGN' | translate}}</ion-label>
-      <ion-select [(ngModel)]="assign" >
-        <ion-option *ngFor="let player of players;" [hidden]="player.user.id===user.id" [value]="player.user.id">{{player.user.firstName+ " "+ player.user.lastName}}</ion-option>
+      <ion-select [(ngModel)]="assign">
+        <ion-option *ngFor="let player of players;" [hidden]="player.user.id===user.id" [value]="player.user.id">{{player.user.firstName+
+          " "+ player.user.lastName}}</ion-option>
       </ion-select>
+    </ion-item>
 
+    <ion-item>
+      <ion-item [hidden]="!existsEvent()" class="not-spacing">
+        <ion-avatar item-start>
+          <img [src]="event.imgSrc" [hidden]="!event.loadImage">
+        </ion-avatar>
+        <p>{{event.name}}</p>
+        <ion-icon color="danger" (click)="removeEvent(role)" name="md-close" item-end></ion-icon>
+      </ion-item>
+      <button ion-button (click)="assingEvent()">{{"SELECTEVENT.ASSIGNEVENT" | translate}}</button>
     </ion-item>
 
     <ion-item>

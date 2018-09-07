@@ -100,6 +100,8 @@
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 
+    <ion-item class="tasks" [hidden]="numTasks===0" (click)="toTasks()">{{"TASKS" | translate}} <span item-end>{{numTasks}}</span></ion-item>
+
     <ion-item class="location-event">
       <h2 style="text-transform: uppercase;" class="titles-event">Location</h2>
     </ion-item>

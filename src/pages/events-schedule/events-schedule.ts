@@ -94,7 +94,8 @@ export class EventsSchedulePage {
       await HelpersProvider.me.reloadGoogleplaces();
 
     await this.getEvents();
-    ////console.log(this.events, EventsSchedulePage.openEvent);
+    console.log(this.events);
+
     if (EventsSchedulePage.openEvent.valid === true) {
       this.goEvent(this.events[EventsSchedulePage.openEvent.index]);
       EventsSchedulePage.openEvent = { valid: false, index: 0 };

@@ -179,6 +179,8 @@ import { ImagesEventPageModule } from '../pages/images-event/images-event.module
 import { ImagesEventPage } from '../pages/images-event/images-event';
 import { UploadMultiplesImagesPageModule } from '../pages/upload-multiples-images/upload-multiples-images.module';
 import { UploadMultiplesImagesPage } from '../pages/upload-multiples-images/upload-multiples-images';
+import { SelectEventPageModule } from '../pages/select-event/select-event.module';
+import { SelectEventPage } from '../pages/select-event/select-event';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -270,7 +272,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RequestsLeaguePageModule,
     ChatFamilyPageModule,
     ImagesEventPageModule,
-    UploadMultiplesImagesPageModule
+    UploadMultiplesImagesPageModule,
+    SelectEventPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -351,6 +354,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChatFamilyPage,
     ImagesEventPage,
     UploadMultiplesImagesPage,
+    SelectEventPage
   ],
   providers: [
     StatusBar,

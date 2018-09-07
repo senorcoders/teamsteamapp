@@ -26,7 +26,7 @@ export class MyTaskPage {
     this.role = MyApp.User.role.name;
   }
 
-  async ngOnInit(){
+  async ionViewWillEnter(){
     await this.getTasks();
   }
 

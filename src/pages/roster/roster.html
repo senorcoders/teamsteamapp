@@ -21,10 +21,8 @@
     <h4 [hidden]="user.role.name != 'Manager' "><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
   </div>
 
-    <ion-searchbar [hidden]="players.length===0"
-    [(ngModel)]="filtro"
-    showCancelButton="true"
-    (ionInput)="search($event)" #sear>
+  <ion-searchbar [hidden]="players.length===0" [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)"
+    #sear>
   </ion-searchbar>
 
   <div id="list" [hidden]="players.length===0">
@@ -41,7 +39,8 @@
 
         <div class="actions">
           <a href="#" class="chat" (click)="goChat(player.user)">Chat</a>
-          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" | translate}}</a>
+          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" |
+            translate}}</a>
         </div>
       </div>
 

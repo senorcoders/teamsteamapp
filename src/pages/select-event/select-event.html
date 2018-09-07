@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-buttons left>
+      <button ion-button icon-only (click)="view.dismiss()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </button>
+    </ion-buttons>
+    <ion-title>{{"SELECTEVENT.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-searchbar [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)">
+  </ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let e of events">
+      <ion-avatar item-start>
+        <img [src]="e.imgSrc" [hidden]="!e.loadImage" (load)="loadImage(e)" (click)="selectEvent(e)">
+      </ion-avatar>
+      <p (click)="selectEvent(e)">{{e.name}}</p>
+    </ion-item>
+  </ion-list>
+
+</ion-content>

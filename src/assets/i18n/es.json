@@ -372,6 +372,10 @@
     "CAMERA": "Cámara",
     "IMAGESBYEVENT": "Imágenes por Evento",
     "IMAGESALL": "Todas las Imágenes",
-    "PLAYEREXISTS": "Ya hay un usuario con este correo, quiero agregarlo al equipo?",
-    "VERSION": "Numero de Versión"
+    "PLAYEREXISTS": "Ya hay un usuario con este correo, quiere agregarlo al equipo?",
+    "VERSION": "Numero de Versión",
+    "SELECTEVENT": {
+        "TITLE": "Seleccione un Evento",
+        "ASSIGNEVENT": "Asignar Evento"
+    }
 }

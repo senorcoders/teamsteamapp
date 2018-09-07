@@ -18,6 +18,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { AssistenceComponent } from '../../components/assistence/assistence';
 import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
 import { ImagesEventPage } from '../images-event/images-event';
+import { MyTaskPage } from '../my-task/my-task';
 
 declare var google: any;
 
@@ -52,6 +53,8 @@ export class EventPage {
   //Para las assistences
   public players = [];
   public assistences = [];
+
+  public numTasks=0;
 
   //Para mostrar el mapa sin usar el plugin
   directionsService = new google.maps.DirectionsService;
@@ -94,6 +97,14 @@ export class EventPage {
 
     //Para saber si el usuario tiene el rol de dueño de liga
     this.league = MyApp.User.role.name === "OwnerLeague";
+
+    //Para ver si tiene tareas pendientes el usuario
+    this.event.tasks = this.event.tasks || [];
+    if(this.league===false){
+      this.numTasks = this.event.tasks.filter(it=>{
+        return it.for === MyApp.User.id && it.completad === false;
+      }).length;
+    }
   }
 
   async ionViewDidLoad() {
@@ -199,6 +210,10 @@ export class EventPage {
 
   public successLoadImage() {
     this.loadImage = true;
+  }
+
+  public toTasks(){
+    this.navCtrl.push(MyTaskPage);
   }
 
   public checkEnablePlayerClose() {
