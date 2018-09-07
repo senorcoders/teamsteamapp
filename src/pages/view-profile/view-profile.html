@@ -55,7 +55,7 @@
 
     <ion-item (click)="openSelectRolesTypes()" *ngIf="IsValidToTeam()">
         <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
-        {{ "CHANGEROLE" | translate}}
+        {{ "CHANGEROLE" | translate}} ({{user.role.name}})
       </ion-item>
 
     <ion-item (click)="logout()">
