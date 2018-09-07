@@ -51,11 +51,16 @@
   <!-- para mostrar las imagenes por evento -->
   <div class="images-event" (click)="toImages(e)" *ngFor="let e of eventsOrigin" [hidden]="filter!=='imagesEvent'">
     <h3 class="title">{{e.name}}</h3>
-    <ion-slides>
+    <!-- <ion-slides>
       <ion-slide *ngFor="let i of e.images">
         <img [src]="url+i.src+'?small=true'">
       </ion-slide>
-    </ion-slides>
+    </ion-slides> -->
+    <ion-grid>
+        <ion-row>
+          <img col-4 [src]="url+i.src+'?middle=true'" (click)="presentImage($event, true)" class="gallery-grid-img" *ngFor="let i of e.images">
+        </ion-row>
+      </ion-grid>
   </div>
 
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
