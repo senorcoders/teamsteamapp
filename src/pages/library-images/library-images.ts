@@ -79,13 +79,15 @@ export class LibraryImagesPage {
         },
         error: (err: string) => {
           if (err.startsWith('Permission')) {
-
-            let permissionsModal = this.modalCtrl.create(PermissionsPage);
-            permissionsModal.onDidDismiss(() => {
-              // retry
-              this.fetchPhotos();
-            });
-            permissionsModal.present();
+            this.photoLibrary.requestAuthorization({ read: true })
+              .then(this.fetchPhotos.bind(this))
+              .catch(function (err) {
+                let toast = this.toastCtrl.create({
+                  message: `requestAuthorization error: ${err}`,
+                  duration: 6000,
+                });
+                toast.present();
+              }.bind(this));
 
           } else { // Real error
             let toast = this.toastCtrl.create({

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, LoadingController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 //import { CreatePlayerDetailsPage } from '../create-player-details/create-player-details';
 import { HelpersProvider } from '../../providers/helpers/helpers';
@@ -55,7 +55,7 @@ export class CreatePlayerPage {
     if (this.navParams.get("team") === undefined) {
       let res = this.http.get("/teams/" + MyApp.User.team).toPromise();
       this.team = res;
-    }else{
+    } else {
       this.team = this.navParams.get("team");
     }
     this.birthDay = moment().format("DD MMM YYYY");
@@ -128,6 +128,11 @@ export class CreatePlayerPage {
     this.typeContact = "email";
   }
 
+  public async checkendEmail() {
+    let res = await this.http.get("/user/enable/" + this.email).toPromise() as any;
+    return !res.valid;
+  }
+
   public async saveAction() {
 
     let load = HelpersProvider.me.getLoadingStandar();
@@ -163,6 +168,24 @@ export class CreatePlayerPage {
       return;
     }
 
+    //Comprobamos si ya existe el correo
+    //si ya existe le avisamos al usuario
+    if (await this.checkendEmail() === true) {
+      return this.alertCtrl.create({
+        message: await this.helper.getWords("PLAYEREXISTS"),
+        buttons:[{text: "No", handler: function(){ load.dismiss() } }, {
+          text: "Ok",
+          handler: function(){ this.saveFinish.bind(this)(load) }.bind(this)
+        }]
+      })
+      .present();
+    }
+
+    this.saveFinish(load);
+
+  }
+
+  public async saveFinish(load:Loading) {
 
     this.user = {
       // username: this.username,
@@ -184,7 +207,7 @@ export class CreatePlayerPage {
       managerAccess: this.managerAccess,
       positions: positions
     };
-    if (this.navParams.get("team") !== undefined){
+    if (this.navParams.get("team") !== undefined) {
       player.team = this.team.id;
     }
 
@@ -203,9 +226,9 @@ export class CreatePlayerPage {
 
 
       load.dismiss();
-      if (this.navParams.get("team") !== undefined){
+      if (this.navParams.get("team") !== undefined) {
         this.navCtrl.pop();
-      }else{
+      } else {
         this.navCtrl.setRoot(RosterPage);
       }
 
@@ -218,7 +241,6 @@ export class CreatePlayerPage {
         buttons: ["Ok"]
       }).present();
     }
-
   }
 
   public success() {

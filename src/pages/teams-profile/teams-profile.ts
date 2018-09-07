@@ -62,11 +62,17 @@ export class TeamsProfilePage {
   }
 
   public async setTeam(role) {
-    await this.auth.updateRole(role);
-
-    await this.auth.setTimeZoneTeam();
+    let load = HelpersProvider.me.getLoadingStandar();
+    try {
+      await this.auth.updateRole(role);
+      await this.auth.setTimeZoneTeam();
+      await HelpersProvider.me.setGeofences(200);
+    }
+    catch(e){
+      console.error(e);
+    }
+    load.dismiss();
     this.navCtrl.pop();
-    await HelpersProvider.me.setGeofences(200);
 
   }
 

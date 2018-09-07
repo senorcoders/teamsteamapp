@@ -8,6 +8,7 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 import { CreatePlayerPage } from '../create-player/create-player';
 import { MyApp } from '../../app/app.component';
 import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * para mostrar la lista de jugadores del equipo
@@ -44,8 +45,7 @@ export class RosterPage {
 
   async ngOnInit(){
 
-    let load = this.loading.create({ content: "Loading Roster..."});
-    load.present({ disableApp : true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     this.user = MyApp.User;
     try{

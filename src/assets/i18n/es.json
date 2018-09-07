@@ -366,5 +366,6 @@
     "ADDIMAGES": "Agregar Imágenes",
     "CAMERA": "Cámara",
     "IMAGESBYEVENT": "Imágenes por Evento",
-    "IMAGESALL": "Todas las Imágenes"
+    "IMAGESALL": "Todas las Imágenes",
+    "PLAYEREXISTS": "Ya hay un usuario con este correo, quiero agregarlo al equipo?"
 }

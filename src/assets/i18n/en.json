@@ -364,5 +364,6 @@
     "ADDIMAGES": "Add Images",
     "CAMERA": "Camera",
     "IMAGESBYEVENT": "Images by Event",
-    "IMAGESALL": "All Images"
+    "IMAGESALL": "All Images",
+    "PLAYEREXISTS": "There is already a user with this email, I want to add it to the team?"
 }
