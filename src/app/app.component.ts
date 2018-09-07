@@ -132,7 +132,6 @@ export class MyApp {
     if (authenticated === true) {
 
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString("#fe324d");
 
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
@@ -140,6 +139,12 @@ export class MyApp {
       console.log("User", this.user);
 
       //Si es un agente libre
+      if(MyApp.User.role.name === 'OwnerLeague'){
+        this.statusBar.backgroundColorByHexString("#32a0fe");
+
+      }else{
+        this.statusBar.backgroundColorByHexString("#fe324d");
+      }
      if (MyApp.User.role.name === "FreeAgent") {
         this.rolIdentity = "";
         this.identity = "";
