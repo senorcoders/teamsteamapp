@@ -137,6 +137,8 @@ export class MyApp {
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
+      console.log("User", this.user);
+
       //Si es un agente libre
      if (MyApp.User.role.name === "FreeAgent") {
         this.rolIdentity = "";
@@ -156,7 +158,7 @@ export class MyApp {
             league = MyApp.User.role.league;
           }else{
             league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
-          }
+          } 
           this.rolIdentity = "LEAGUE.NAME";
           this.identity = league.name;
         }

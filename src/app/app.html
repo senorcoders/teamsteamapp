@@ -1,12 +1,10 @@
 <ion-menu [content]="mycontent">
 	<ion-header>
-		<ion-navbar class="identity">
-			<!-- <ion-title class="header-menu">
+		<!-- <ion-navbar class="identity">
+			<ion-title class="header-menu">
 				<img src="./assets/imgs/logo-login.png" style="width: 30px;">
-			</ion-title> -->
-			{{rolIdentity | translate}}
-		</ion-navbar>
-		<span class="identity" style="display: block; background: #283540;">{{identity}}</span>
+			</ion-title> 
+		</ion-navbar> -->
 
 		<div class="user-info">
 			<div class="avatar">
@@ -14,7 +12,10 @@
 				<img (click)="goProfile()" [hidden]="defaultImageUser" id="imageSlide" (load)="loadImageMenu()" class="userimg">
 				<img src="./assets/imgs/gear-icon.png" class="icon-gear">
 				<!--div class="new-menu" [hidden]="newData([{id:'request', role: 'Manager'}])"></div-->
+				<span class="identity"> {{rolIdentity | translate}}	{{identity}}</span>
 			</div>
+			
+
 			<div class="info">
 				<h4 id="nameSlide" class="email">{{user.email}}</h4>
 			</div>
