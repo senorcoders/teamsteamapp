@@ -129,7 +129,12 @@
         "DETAILSPLAYER": "Continuar",
         "NONPLAYER": "Familiar",
         "MANAGERACCESS": "Privilegios de Manager",
-        "CREATEPLAYER": "Agregar Jugador"
+        "CREATEPLAYER": "Agregar Jugador",
+        "NOTPLAYERS": {
+            "1": "Agregue jugadores, entrenadores, padres aquí",
+            "2": "Recibirán invitaciones a la aplicación cuando las agregue a su lista.",
+            "3": "Para hacerlo más fácil, intente agregar miembros de su equipo en su computadora "
+        }
     },
     "ADDIMAGE": "Agregar Imagen",
     "COMMENT": "Comentario",
@@ -367,5 +372,6 @@
     "CAMERA": "Cámara",
     "IMAGESBYEVENT": "Imágenes por Evento",
     "IMAGESALL": "Todas las Imágenes",
-    "PLAYEREXISTS": "Ya hay un usuario con este correo, quiero agregarlo al equipo?"
+    "PLAYEREXISTS": "Ya hay un usuario con este correo, quiero agregarlo al equipo?",
+    "VERSION": "Numero de Versión"
 }

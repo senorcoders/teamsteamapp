@@ -14,6 +14,11 @@
 
   <ion-list>
 
+    <ion-item class="not-focus">
+      <ion-label floating>{{"VERSION" | translate}}</ion-label>
+      <ion-input readonly class="not-input" [(ngModel)]="version"></ion-input>
+    </ion-item>
+
     <ion-item *ngIf="userRole === 'Manager'">
       <ion-label>
         {{"SETTING.CHATEACHPLAYER" | translate}}

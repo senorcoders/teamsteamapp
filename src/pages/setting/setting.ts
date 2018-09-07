@@ -28,6 +28,7 @@ export class SettingPage {
 
   public setting: Setting;
   public userRole = "";
+  public version = "0.0.8"
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient

@@ -38,20 +38,16 @@ export class ViewProfilePage {
   public rolesTypes = [];
   public rolType = "";
   public league: any = {};
-  public currentRol:any;
+  public currentRol: any;
 
 
-   constructor(public navCtrl: NavController, public navParams: NavParams,
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
     public auth: AuthServiceProvider, private loadingCtrl: LoadingController,
     public alertCtrl: AlertController, public storage: Storage
   ) {
 
     this.user = MyApp.User;
-    let userT: any =  this.storage.get("rol");
-    console.log("User Prf", userT);
-    this.currentRol = this.user.rol;
-    console.log(this.currentRol);
     if (!this.user.hasOwnProperty("options")) {
       this.user.options = { language: 'en' };
     }
@@ -66,6 +62,11 @@ export class ViewProfilePage {
   async ionViewWillEnter() {
     let load = this.helper.getLoadingStandar();
     try {
+
+      let userT: any = await this.storage.get("rol");
+      console.log("User Prf", userT);
+      this.currentRol = this.user.rol;
+      console.log(this.currentRol);
 
       let user: any = await this.storage.get("user");
       if (user.roles !== undefined && user.roles !== null) {
@@ -471,10 +472,10 @@ export class ViewProfilePage {
       }
     } else {
       delete this.user.team;
-      try{
+      try {
         await HelpersProvider.me.stopGeofences();
       }
-      catch(e){
+      catch (e) {
         console.error(e);
       }
     }

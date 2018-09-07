@@ -48,8 +48,8 @@ export class MyApp {
   public static counts: any = {};
 
   public nameReady = false;
-  public rolIdentity = "yop";
-  public identity = "tup";
+  public rolIdentity = "";
+  public identity = "";
 
   public user: any = {
     username: ""

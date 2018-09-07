@@ -21,10 +21,10 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class RosterPage {
   
-  public user:any;
+  public user=MyApp.User;
   public isManager:boolean=false;
 
-  public players:Array<any>=[];
+  public players=[];
   public playersOrigin=[];
   public filtro="";
 
@@ -43,11 +43,9 @@ export class RosterPage {
   ) {
   }
 
-  async ngOnInit(){
+  async ionViewDidLoad(){
 
     let load = HelpersProvider.me.getLoadingStandar();
-
-    this.user = MyApp.User;
     try{
       
     let players:any = await this.http.get("/players/team/"+ this.user.team).toPromise();

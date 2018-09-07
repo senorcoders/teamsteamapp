@@ -14,13 +14,20 @@
 
 <ion-content>
 
-    <ion-searchbar
+  <div [hidden]="players.length!==0" class="not-players">
+    <h4>{{"ROSTER.NOTPLAYERS.1" | translate}}</h4>
+    <h4>{{"ROSTER.NOTPLAYERS.2" | translate}}</h4>
+    <h4>{{"ROSTER.NOTPLAYERS.3" | translate}}</h4>
+    <h4><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
+  </div>
+
+    <ion-searchbar [hidden]="players.length===0"
     [(ngModel)]="filtro"
     showCancelButton="true"
     (ionInput)="search($event)" #sear>
   </ion-searchbar>
 
-  <div id="list">
+  <div id="list" [hidden]="players.length===0">
 
     <div class="item" *ngFor="let player of players; let i = index" [hidden]="player.user.id == user.id">
 

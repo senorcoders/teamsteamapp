@@ -2,6 +2,20 @@ page-roster {
     .scroll-content{
         background-color: #f2f5f8 !important;
     }
+
+    .not-players{
+        padding: 10px;
+        h4{
+            color: #008e76 !important;
+            font-size: 1.4rem !important;
+            margin-top: 0 !important;
+            margin-bottom: 4px !important;
+        }
+        .bold{
+            color: #1a5d58 !important;
+        }
+    }
+
     #list {
         display: flex;
         flex-wrap: wrap;
