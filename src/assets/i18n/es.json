@@ -2,9 +2,9 @@
     "EVENTS": {
         "TITLE": "Eventos",
         "PAST": "Anteriores",
-        "UPCOMING": "Proximos",
-        "NOEVENT": "Bueno, esto es aburrido. Agregar eventos",
-        "AREYOU": "Vienes?",
+        "UPCOMING": "Próximos",
+        "NOEVENT": "Bueno, esto esta aburrido. Agregar eventos",
+        "AREYOU": "¿Vienes?",
         "STATUS": {
             "ONTIME": "A Tiempo",
             "CANCELLED": "Cancelado",
@@ -15,7 +15,7 @@
     "EVENT": {
         "YES": "Si",
         "NO": "No",
-        "MAYBE": "Talvez"
+        "MAYBE": "Quizá"
     },
     "HERE": "Aquí",
     "NAVMENU": {
@@ -34,7 +34,7 @@
         "TT": "Nuevo Evento",
         "TITLE": "Datos Generales",
         "REPEATS": "Repetir",
-        "DAYSREPEATS": "Dias",
+        "DAYSREPEATS": "Días",
         "NOTIFY": "Notificar",
         "OPTIONALINFO": "Información Opcional",
         "LOCATIONDETAIL": "Detalles",
@@ -42,12 +42,12 @@
         "NEWTEAMACTION": "Crear Nuevo Equipo",
         "TYPES": {
             "GAME": "Juego",
-            "PRACTICE": "Practica",
+            "PRACTICE": "Práctica",
             "EVENT": "Evento"
         },
         "ATTENDENCETRACKING": "Tomar Asistencia",
         "PINMAP": "O MAPA",
-        "ENTERADDRES": "Digita La Direcciòn",
+        "ENTERADDRES": "Digita La Dirección",
         "SUCCESS-TEXT": {
             "ONE": "Su evento",
             "TWO": "se ha guardado",
@@ -107,7 +107,7 @@
         "ACTION": "Nombre del Equipo"
     },
     "LOGIN": {
-        "TITLE": "Bienvenido a TeamSteam",
+        "TITLE": "Bienvenido a Locker Room",
         "INIT": "Inicia sesión",
         "NOTACCOUNT": "¿Comenzando un nuevo equipo? Click aquí para ",
         "REGISTER": "Registrar un nuevo equipo",
@@ -146,33 +146,33 @@
     "UPDATING": "Actualizando...",
     "ERORUNEXC": "Error Inesperado",
     "REQUIRED": "Requerido",
-    "ADDRESSORDATE": "Agregue La Direcciòn o seleccione un lugar en Mapa",
+    "ADDRESSORDATE": "Agregue La Dirección o seleccione un lugar en Mapa",
     "ISREQUIRED": "Es Requerido",
-    "DAY": "Dia",
+    "DAY": "Día",
     "TEST": "Hola estas usando el idioma español",
-    "LANGUAGE": "Languaje",
+    "LANGUAGE": "Idioma",
     "CHAGELANGUAGE": "Cambiar Idioma",
     "SELECTUSER": "Jugadores y Managers",
     "COMPOSEMESSAGE": "Crear Mensaje",
     "SEARCH": "Buscar",
-    "EMPTYFIELDS": "Campos Vacios",
+    "EMPTYFIELDS": "Campos Vacíos",
     "ASSIGN": "Asignar",
     "CONTACTS": "Contactos",
-    "MCODE": "Usted Debe Confirmar El Codigo de Verificación",
+    "MCODE": "Usted debe confirmar el código de verificación",
     "COMMENTS": "Comentarios",
-    "ASSISTANCE": "Quienés Vienen, Detalles",
+    "ASSISTANCE": "¿Quienés Vienen? Detalles",
     "YES": "Si",
     "NO": "No",
-    "MESSAGEALERT": "Esta Seguro?",
-    "MAYBE": "Talvez",
-    "ENTRYFULLNAME": "Digita Tus Nuevos Datos",
+    "MESSAGEALERT": "¿Estás seguro?",
+    "MAYBE": "Quizá",
+    "ENTRYFULLNAME": "Digita tus nuevos datos",
     "FIRSTNAME": "Nombre",
     "LASTNAME": "Apellido",
     "CANCEL": "Cancelar",
     "EDIT": "Editar",
     "TEAMS": "Equipos",
     "TEAM": "Equipo",
-    "CITY": "Cuidad",
+    "CITY": "Ciudad",
     "REQUESTTEAM": "Unirme al equipo",
     "PRIVACY&POLICY": "Política de Privacidad",
     "ABOUT": "Acerca de",
@@ -199,9 +199,9 @@
     "OWNERLEAGUE": "Dueño de Liga",
     "FAMILY": "Familiar",
     "PASSWORD": "Contraseñas",
-    "INVALIDUSERNAMEYPASS": "Correo Electronico",
-    "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
-    "REGISTRATION": "Registración",
+    "INVALIDUSERNAMEYPASS": "Correo Electrónico",
+    "INVALIDPASS": "La contraseña debe ser mayor de 8 y menor de 15 caracteres",
+    "REGISTRATION": "Registro",
     "SELECTFAMILY": "Selecciona tu Familiar",
     "CHANGEPASS": "Cambiar Contraseña",
     "CHANGEPASSALERT": {
@@ -230,12 +230,12 @@
     "INVOICE": {
         "TITLE": "Datos Generales de Pagos",
         "BUSINESSNAME": "Nombre del Negocio",
-        "COUNTRYCODE": "Código de Telefono de tu país",
+        "COUNTRYCODE": "Código de Teléfono de tu país",
         "NUMBERTEL": "Número de Teléfono",
-        "LINE1": "Linea 1",
-        "CITY": "Cuidad",
+        "LINE1": "Línea 1",
+        "CITY": "Ciudad",
         "STATE": "Estado",
-        "COUNTRYCODEADDRESS": "Codigo de Dirección",
+        "COUNTRYCODEADDRESS": "Código de Dirección",
         "INEEDDATA": "Necesita Ingresar Datos Generales de Pagos"
     },
     "FORMREGISTER": "Formulario de Registro",
@@ -245,10 +245,10 @@
     "SEND": "Enviar",
     "EMAILNOT": "Correo No Encontrado",
     "RESETPASS": {
-        "TITLE": "Cambiar Contraseñar",
-        "CODE": "Codigo",
+        "TITLE": "Cambiar Contraseña",
+        "CODE": "Código",
         "NEWPASSWORD": "Nueva Contraseña",
-        "CODEINVALID": "Codigo Invalido",
+        "CODEINVALID": "Código Inválido",
         "SENDCODE": "Enviar Código a Correo"
     },
     "ERRORUNEX": "Error Inesperado",
@@ -271,7 +271,7 @@
         "TITLE": "Asistencia"
     },
     "NEARTO": "Estas Cerca de",
-    "FREEAGENT": "Free Agent",
+    "FREEAGENT": "Agente libre",
     "LEVEL": {
         "TITLE": "Nivel",
         "UNDER8": "Menor de 8 años",
@@ -334,7 +334,7 @@
     "ALL": "Todo",
     "CHATFORFAMILY": "Miembros de Familia",
     "MSGTOFAMILY": "Mensajes a Familiares",
-    "NOTCHATEACHPLAYER": "El mánager bloqueo los mensajes con otros jugadores",
+    "NOTCHATEACHPLAYER": "El manager bloqueo los mensajes con otros jugadores",
     "SETTING": {
         "NAME": "Ajustes",
         "CHATEACHPLAYER": "Chatear Entre Cada Jugador"
@@ -345,9 +345,9 @@
     "ROLLEAGUE": "Dueño de Liga",
     "REQUESTLEAGUE": {
         "NAME": "Solicitudes de Liga",
-        "JOIN?": "quieres unirte a la liga"
+        "JOIN?": "¿Quieres unirte a la liga?"
     },
-    "ENABLEGEOLOCATION": "Encienda sus servicios de ubicación",
+    "ENABLEGEOLOCATION": "Active sus servicios de ubicación",
     "JAN": "ENE",
     "FEB": "FEB",
     "MAR": "MAR",

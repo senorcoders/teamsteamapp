@@ -158,7 +158,7 @@ export class HelpersProvider {
     let params: any = {};
     params.width = parameters.width || 300;
     params.height = parameters.height || 300;
-    params.quality = parameters.quality || 100;
+    params.quality = 100;
     params.resize = resize || null;
 
     return new Promise(async function (resolve, reject) {

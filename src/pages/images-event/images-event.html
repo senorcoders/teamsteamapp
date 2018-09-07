@@ -2,14 +2,14 @@
 
   <ion-navbar>
     <ion-title>{{event.name}}</ion-title>
-    <ion-buttons end>
+    <!-- <ion-buttons end>
       <button ion-button icon-only [hidden]="grid" (click)="setView(true)">
         <ion-icon name="md-grid"></ion-icon>
       </button>
       <button ion-button icon-only [hidden]="!grid" (click)="setView(false)">
         <ion-icon name="md-albums"></ion-icon>
       </button>
-    </ion-buttons>
+    </ion-buttons> -->
   </ion-navbar>
 
 </ion-header>
@@ -17,15 +17,15 @@
 
 <ion-content padding>
 
-  <ion-slides class="image-slider" [hidden]="grid" loop="true" slidesPerView="1">
+  <!-- <ion-slides class="image-slider" [hidden]="grid" loop="true" slidesPerView="1">
     <ion-slide *ngFor="let img of images">
       <img [src]="img.src+'?middle=true'" (click)="presentImage($event)">
     </ion-slide>
-  </ion-slides>
+  </ion-slides> -->
 
-  <ion-grid [hidden]="!grid">
+  <ion-grid>
     <ion-row>
-      <img col-4 [src]="img.src+'?small=true'" (click)="presentImage($event, true)" class="gallery-grid-img" *ngFor="let img of images">
+      <img col-4 [src]="img.src+'?middle=true'" (click)="presentImage($event, true)" class="gallery-grid-img" *ngFor="let img of images">
     </ion-row>
   </ion-grid>
 

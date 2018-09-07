@@ -132,12 +132,19 @@ export class MyApp {
     if (authenticated === true) {
 
       this.statusBar.overlaysWebView(false);
-      this.statusBar.backgroundColorByHexString("#fe324d");
 
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
 
+      console.log("User", this.user);
+
       //Si es un agente libre
+      if(MyApp.User.role.name === 'OwnerLeague'){
+        this.statusBar.backgroundColorByHexString("#32a0fe");
+
+      }else{
+        this.statusBar.backgroundColorByHexString("#fe324d");
+      }
      if (MyApp.User.role.name === "FreeAgent") {
         this.rolIdentity = "";
         this.identity = "";
@@ -156,7 +163,7 @@ export class MyApp {
             league = MyApp.User.role.league;
           }else{
             league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
-          }
+          } 
           this.rolIdentity = "LEAGUE.NAME";
           this.identity = league.name;
         }
