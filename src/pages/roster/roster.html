@@ -15,10 +15,10 @@
 <ion-content>
 
   <div [hidden]="players.length!==0" class="not-players">
-    <h4>{{"ROSTER.NOTPLAYERS.1" | translate}}</h4>
-    <h4>{{"ROSTER.NOTPLAYERS.2" | translate}}</h4>
-    <h4>{{"ROSTER.NOTPLAYERS.3" | translate}}</h4>
-    <h4><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
+    <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.1" | translate}}</h4>
+    <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.2" | translate}}</h4>
+    <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.3" | translate}}</h4>
+    <h4 [hidden]="user.role.name != 'Manager' "><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
   </div>
 
     <ion-searchbar [hidden]="players.length===0"
