@@ -45,6 +45,8 @@
             "PRACTICE": "Práctica",
             "EVENT": "Evento"
         },
+        "NOTIFYSTARTEVENT": "Notificar que el evento inicia",
+        "MINUTESBEFORE": "minutos antes",
         "ATTENDENCETRACKING": "Tomar Asistencia",
         "PINMAP": "O MAPA",
         "ENTERADDRES": "Digita La Dirección",

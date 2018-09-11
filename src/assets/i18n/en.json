@@ -44,6 +44,8 @@
             "PRACTICE": "Practice",
             "EVENT": "Other Event"
         },
+        "NOTIFYSTARTEVENT": "Notify that the event starts",
+        "MINUTESBEFORE": "minutes before",
         "ATTENDENCETRACKING": "Attendence Tracking",
         "PINMAP": "OR PIN MAP",
         "ENTERADDRES": "Enter Address",

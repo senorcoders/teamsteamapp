@@ -60,7 +60,7 @@
           <h4 class="date-time" (click)="setDate()"> {{'DATE' | translate }}: {{date}} </h4>
         </ion-item>
       </ion-col>
-      <ion-col >
+      <ion-col>
         <ion-item>
           <h4 class="date-time" (click)="setTime()">{{'TIME' | translate }}: {{time}} </h4>
         </ion-item>
@@ -69,8 +69,18 @@
   </ion-grid>
 
   <ion-list>
+
     <ion-item>
       <h4 class="date-time" (click)="setTimeEnd()">{{'TIMEEND' | translate }}: {{timeEnd}} </h4>
+    </ion-item>
+
+    <ion-item>
+      <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
+        translate}}</ion-label>
+      <ion-range min="0" max="60" [(ngModel)]="timeNoti" color="primary">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>60</ion-label>
+      </ion-range>
     </ion-item>
 
     <ion-item>
@@ -95,7 +105,7 @@
     </ion-item>
 
     <ion-item [hidden]="!searchPlayer">
-      <button ion-button (click)="addPlayerSearch()" >{{"ROSTER.CREATEPLAYER" | translate}}</button>
+      <button ion-button (click)="addPlayerSearch()">{{"ROSTER.CREATEPLAYER" | translate}}</button>
     </ion-item>
 
   </ion-list>

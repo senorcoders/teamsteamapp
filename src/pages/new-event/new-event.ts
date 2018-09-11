@@ -66,6 +66,9 @@ export class NewEventPage {
 
   public league = false;
 
+  //Para notificar del evento 15 minutos antes
+  public timeNoti = 15;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public loading: LoadingController,
     private auth: AuthServiceProvider, private http: HttpClient,
@@ -73,7 +76,7 @@ export class NewEventPage {
     public geolocation: Geolocation
   ) {
     this.team = this.navParams.get("team");
-    this.maxDate = moment().add(2, "year", ).format("YYYY");
+    this.maxDate = moment().add(2, "year").format("YYYY");
     this.minDate = moment().subtract(1, "day").format("YYYY-MM-DD");
 
     //Para saber si el usuario tiene el rol de dueño de liga
@@ -322,7 +325,7 @@ export class NewEventPage {
         event.league = MyApp.User.role.league.id;
       else
         event.league = MyApp.User.role.league;
-    }else{
+    } else {
       event.team = this.team;
       event.percentageNotification = this.percentageNotification;
     }
@@ -365,6 +368,11 @@ export class NewEventPage {
     } else {
       event.dateTime = moment(this.time, "hh:mm a").toISOString();
     }
+
+    //Para calcular el momento en que se avisa que un evento esta cerca de iniciar
+    let dateTimeNotification = moment(event.dateTime);
+    dateTimeNotification.subtract(Number(this.timeNoti), "minutes");
+    event.dateTimeNotification = dateTimeNotification.toISOString();
 
     let valid = true;
     let newEvent: any;

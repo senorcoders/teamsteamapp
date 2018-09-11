@@ -66,11 +66,14 @@ export class EditEventPage {
   //index of event to update
   public index = 0;
 
-  public percentageNotification=100;
+  public percentageNotification = 100;
   public searchPlayer = false;
   public searchPlayers = [];
 
-  public league=false;
+  public league = false;
+
+  //Para notificar del evento 15 minutos antes
+  public timeNoti = 15;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation,
@@ -97,7 +100,7 @@ export class EditEventPage {
     this.repeats = this.event.repeats;
     this.repeatsDays = this.event.repeatsDays.split(",") || [];
     this.repeatsDaily = this.event.repeatsDaily;
-    this.date = moment(this.event.dateTime, "MM/DD/YYYY HH:mm").format("DD MMM YYYY");
+    this.date = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a").format("DD MMM YYYY");
     this.time = this.event.Time;
     this.attendeceTracking = this.event.attendeceTracking;
     this.optionalInfo = this.event.optionalInfo;
@@ -107,11 +110,19 @@ export class EditEventPage {
     this.timeEnd = this.event.dateTimeEnd || "";
     this.percentageNotification = this.event.percentageNotification || 100;
     this.searchPlayer = this.event.searchPlayer || false;
-    if(this.searchPlayer===true){
+    if (this.searchPlayer === true) {
       this.searchPlayers = this.event.searchPlayers.split(",");
     }
     if (this.timeEnd !== "") {
       this.timeEnd = moment(this.timeEnd).format("hh:mm a");
+    }
+
+    //Calculamos los minutos en que se envia la notification
+    if (this.event.dateTimeNotification !== undefined && this.event.dateTimeNotification !== null) {
+      let dateTime = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a"),
+      dateTimeNotification = moment(this.event.dateTimeNotification);
+      let diff = moment.duration( dateTime.diff(dateTimeNotification) );
+      this.timeNoti = diff.minutes();
     }
 
     //Para saber si el usuario tiene el rol de dueño de liga
@@ -120,7 +131,7 @@ export class EditEventPage {
 
   async ionViewDidLoad() {
 
-    let origin:any, load = this.helper.getLoadingStandar();
+    let origin: any, load = this.helper.getLoadingStandar();
     if (this.event.location.hasOwnProperty('lat') && this.event.location.hasOwnProperty('lng')) {
       this.location.position.lat = this.event.location.lat;
       this.location.position.lng = this.event.location.lng;
@@ -312,7 +323,7 @@ export class EditEventPage {
     } else {
       locate = this.location.position;
       let l = this.marker.getPosition();
-      locate = { lat : l.lat(), lng: l.lng() };
+      locate = { lat: l.lat(), lng: l.lng() };
     }
 
     locate.address = this.address;
@@ -348,10 +359,10 @@ export class EditEventPage {
       return;
     }
 
-    if(this.percentageNotification > 100){
+    if (this.percentageNotification > 100) {
       this.percentageNotification = 100;
     }
-    if(this.percentageNotification < 0){
+    if (this.percentageNotification < 0) {
       this.percentageNotification = 0;
     }
 
@@ -372,11 +383,11 @@ export class EditEventPage {
         event.league = MyApp.User.role.league.id;
       else
         event.league = MyApp.User.role.league;
-    }else{
+    } else {
       event.team = this.team;
       event.percentageNotification = this.percentageNotification;
     }
-    if(event.searchPlayer===true){
+    if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;
     }
     if (this.timeEnd !== '') {
@@ -415,6 +426,10 @@ export class EditEventPage {
       event.dateTime = moment(this.time, "hh:mm a").toISOString()
     }
     console.log(event);
+    //Para calcular el momento en que se avisa que un evento esta cerca de iniciar
+    let dateTimeNotification = moment(event.dateTime);
+    dateTimeNotification.subtract(Number(this.timeNoti), "minutes");
+    event.dateTimeNotification = dateTimeNotification.toISOString();
 
     let valid = true;
 

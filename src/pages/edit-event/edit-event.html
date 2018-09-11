@@ -64,6 +64,15 @@
     </ion-item>
 
     <ion-item>
+        <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
+          translate}}</ion-label>
+        <ion-range min="0" max="60" [(ngModel)]="timeNoti" color="primary">
+          <ion-label range-left>0</ion-label>
+          <ion-label range-right>60</ion-label>
+        </ion-range>
+      </ion-item>
+
+    <ion-item>
       <ion-label floating>{{'DESCRIPTION' | translate }}</ion-label>
       <ion-textarea [(ngModel)]="description"> </ion-textarea>
     </ion-item>
