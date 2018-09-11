@@ -156,7 +156,7 @@ export class ChatPage {
         return it.hasOwnProperty("user") && it.hasOwnProperty("team");
       });
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user+ "-thumbnail");
         item.loadImage = false;
         return item;
       }));

@@ -150,7 +150,7 @@ export class ChatFamilyPage {
         return it.hasOwnProperty("user");
       }); console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user+ "-thumbnail");
         item.loadImage = false;
         return item;
       }));
@@ -253,7 +253,7 @@ export class ChatFamilyPage {
     let index = this.getMsgIndexById(msg.dateTime);
     // console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/" + this.ramdon + "/users/" + msg.user);
+      msg.photo = interceptor.transformUrl("/images/" + this.ramdon + "/users/" + msg.user+ "-thumbnail");
       this.ngZone.run(() => { this.msgList.push(msg); });
       // console.log(ChatPage.enableChat);
       if (ChatFamilyPage.enableChat === true) {

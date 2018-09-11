@@ -177,7 +177,6 @@ export class EventsSchedulePage {
   private async parserEvents(events) {
 
     let user = MyApp.User, th = this;
-    let size = this.helper.getSizeImage().text;
     ////console.log(size);
     try {
 
@@ -205,7 +204,7 @@ export class EventsSchedulePage {
         it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
         it.loadImage = false;
         let ramdon = new Date().getTime();
-        it.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + it.id + size);
+        it.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + it.id+ "-thumbnail");
 
         //Para obtener los likes y comments
         let likesUp = 0, likeUp = false, likesDown = 0, likeDown = false;

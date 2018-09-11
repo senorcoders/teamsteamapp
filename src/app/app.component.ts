@@ -172,7 +172,7 @@ export class MyApp {
 
       //console.log(this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
+      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id+"-thumbnail");
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       //ahora asignamos el lenaguaje si es que esta definido
@@ -194,7 +194,7 @@ export class MyApp {
 
       console.log("cambiooo", this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + this.user.id);
+      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id+"-thumbnail");
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;

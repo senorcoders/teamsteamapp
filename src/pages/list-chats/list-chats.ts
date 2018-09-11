@@ -42,7 +42,7 @@ export class ListChatsPage {
       this.listUsers = users.map(function(item){
         
         item.loadImage = false;
-        item.imgSrc = interceptor.transformUrl(`/images/${ramdon}/users&thumbnail/`+ item._id);
+        item.imgSrc = interceptor.transformUrl(`/images/${ramdon}/users/`+ item._id+ "-thumbnail");
         return item;
 
       });
@@ -50,7 +50,7 @@ export class ListChatsPage {
       let team:any = await this.http.get("/teams/"+ this.idTeam).toPromise();
       this.team = team;
       let random = new Date().getTime();
-      this.team.imageSrc = interceptor.transformUrl("/images/"+ random+ "/teams&thumbnail/"+ this.team.id);
+      this.team.imageSrc = interceptor.transformUrl("/images/"+ random+ "/teams/"+ this.team.id+ "-thumbnail");
     }
     catch(e){
       console.error(e);

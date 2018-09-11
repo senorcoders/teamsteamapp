@@ -104,10 +104,10 @@ export class ImageViewPage {
       var c = document.createElement('canvas');
       var ctx = c.getContext('2d');
 
-      let img;
+      let img:HTMLImageElement;
       if (this.resize === true) {
         //get cropped image
-        let croppedImgB64String: String = this.getCropper();
+        let croppedImgB64String: string = this.getCropper() as string;
         img = new Image();
         img.src = croppedImgB64String;
         await new Promise(function (resolve, reject) {
@@ -125,9 +125,11 @@ export class ImageViewPage {
         img = document.getElementById("imageSelect") as HTMLImageElement;
       }
 
-      c.width = this.width;
-      c.height = this.height;
-      ctx.drawImage(img, 0, 0, this.width, this.height);
+      let width = img.naturalWidth,
+      height = img.naturalHeight;
+      c.width = width;
+      c.height = height;
+      ctx.drawImage(img, 0, 0, width, height);
 
       if (this.degrees !== 0)
         this.drawRotated(ctx, c, img, this.degrees);

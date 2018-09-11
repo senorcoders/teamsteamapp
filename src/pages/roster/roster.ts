@@ -60,7 +60,7 @@ export class RosterPage {
       
         item.loadImage = false;
         let ramdon = new Date().getTime();
-        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ item.user.id);
+        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ item.user.id+ "-thumbnail");
 
         return item;
       }));

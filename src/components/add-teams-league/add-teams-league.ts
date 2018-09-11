@@ -37,7 +37,7 @@ export class AddTeamsLeagueComponent {
         });
         return index === -1;
       }.bind(this)).map(function (it) {
-        it.imageSrc = interceptor.transformUrl("/images/ramdon/teams&thumbnail/" + it.id);
+        it.imageSrc = interceptor.transformUrl("/images/ramdon/teams/" + it.id+ "-thumbnail");
         it.loadImage = false;
         return it;
       }.bind(this));

@@ -52,7 +52,7 @@ export class ListPlayersPaymentPage {
         item.select = false;
         item.loadImage = false;
         let ramdon = new Date().getTime();
-        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users&thumbnail/"+ item.user.id);
+        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ item.user.id+ "-thumbnail");
         item.debe = this.calcDebe(item);
 
         return item;

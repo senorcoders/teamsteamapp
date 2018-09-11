@@ -38,7 +38,7 @@ export class SearchTeamsPage {
     let teams:any = await this.http.get("/teams/?where="+ JSON.stringify(params) ).toPromise();
     this.teams = teams.map(function(it){ 
       let ramdon = new Date().getTime();
-      it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams&thumbnail/"+ it.id);
+      it.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/teams/"+ it.id+ "-thumbnail");
       it.loadImage=false;
 
       if( this.user === true ){

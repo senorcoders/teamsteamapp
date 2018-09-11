@@ -93,7 +93,7 @@ export class EventPage {
 
     //for image user that published events
     let r = new Date().getTime();
-    this.imgUser = interceptor.transformUrl("/images/" + r + "/users&thumbnail/" + this.event.user);
+    this.imgUser = interceptor.transformUrl("/images/" + r + "/users/" + this.event.user+ "-thumbnail");
 
     //Para saber si el usuario tiene el rol de dueño de liga
     this.league = MyApp.User.role.name === "OwnerLeague";

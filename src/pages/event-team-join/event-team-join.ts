@@ -23,9 +23,8 @@ export class EventTeamJoinPage {
     let e = this.navParams.get("event");
     this.event = e.event;
     this.team = e.event.team;
-    let size = HelpersProvider.me.getSizeImage().text;
     let ramdon = new Date().getTime();
-    this.event.imgSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + this.event.id + size);
+    this.event.imgSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + this.event.id+"-thumbnail");
   }
 
   ionViewDidLoad() {

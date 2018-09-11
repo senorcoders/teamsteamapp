@@ -27,7 +27,7 @@ export class ViewLikesComponent {
       let arr = [];
       for(let like of this.likes){
         let user = await this.getUser(like.user);
-        user.imageSrc = interceptor.transformUrl("/images/random/users&thumbnail/"+ user.id);
+        user.imageSrc = interceptor.transformUrl("/images/random/users/"+ user.id+ "-thumbnail");
         arr.push(user);
       }
       this.users = arr;

@@ -30,7 +30,7 @@ export class TeamsLeaguePage {
       this.league = await this.http.get(`/leagues/${this.league}`).toPromise() as any;
 
     this.teams = this.league.teams.map(function (it) {
-      it.imageSrc = interceptor.transformUrl("/images/ramdon/teams&thumbnail/" + it.id);
+      it.imageSrc = interceptor.transformUrl("/images/ramdon/teams/" + it.id+ "-thumbnail");
       it.loadImage = false;
       return it;
     });

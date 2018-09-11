@@ -36,7 +36,7 @@ export class RequestsLeaguePage {
         return it.team !== undefined && it.league !== undefined;
       });
       this.requests = this.requests.map(it => {
-        it.league.imgSrc = interceptor.transformUrl("/images/ramdon/leagues&thumbnail/" + it.league.id);
+        it.league.imgSrc = interceptor.transformUrl("/images/ramdon/leagues/" + it.league.id+ "-thumbnail");
         it.league.loadImage = false;
         return it;
       });

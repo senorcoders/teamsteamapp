@@ -27,7 +27,7 @@ export class SelectEventPage {
     try {
       this.events = await this.http.get(`/event?where={"team":"${MyApp.User.team}","name":{"contains":"${this.filtro}"}}`).toPromise() as any[];
       this.events = this.events.map(it => {
-        it.imgSrc = interceptor.transformUrl('/images/ramdon/events/' + it.id + "@250x200");
+        it.imgSrc = interceptor.transformUrl('/images/ramdon/events/' + it.id + "-thumbnail");
         it.loadImage = false;
         return it;
       });

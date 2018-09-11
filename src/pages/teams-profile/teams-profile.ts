@@ -36,7 +36,7 @@ export class TeamsProfilePage {
       this.roles = this.roles.filter(it => { return it.team !== undefined; });
       this.roles = this.roles.map(function (it) {
         let ramdon = new Date().getTime();
-        it.team.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/teams&thumbnail/" + it.team.id);
+        it.team.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/teams/" + it.team.id+ "-thumbnail");
         it.team.loadImage = false;
         return it;
       });

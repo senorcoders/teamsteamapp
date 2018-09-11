@@ -35,7 +35,7 @@ export class TrackingEventManagerComponent {
 
       console.log(trackings);
       this.trackings = await Promise.all( trackings.map( async function(item){
-        item.imageSrc = interceptor.transformUrl("/images/random/users&thumbnail/"+ item.user.id);
+        item.imageSrc = interceptor.transformUrl("/images/random/users/"+ item.user.id+ "-thumbnail");
         item.loadImage = false;
 
         if( item.info == 'yes' )

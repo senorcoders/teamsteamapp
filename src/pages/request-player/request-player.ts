@@ -20,11 +20,9 @@ export class RequestPlayerPage {
     public http:HttpClient, public auth:AuthServiceProvider
   ) {
     this.request = this.navParams.get("request");
-
-    let size = HelpersProvider.me.getSizeImage().text;
     this.request.loadImage = false;
     let ramdon = new Date().getTime();
-    this.request.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + this.request.team.id + size);
+    this.request.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + this.request.team.id);
   }
 
   ionViewDidLoad() {

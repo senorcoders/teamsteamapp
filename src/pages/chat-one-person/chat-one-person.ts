@@ -213,11 +213,8 @@ export class ChatOnePersonPage {
       let mgs: any = await this.http.get("/chat/" + this.to.id + "/" + this.from.id).toPromise();
       // console.log(mgs);
       this.msgList = await Promise.all(mgs.map(async function (item) {
-        // if( item.from === MyApp.User.id )
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.from);
-        // else
-        //   item.photo = interceptor.transformUrl("/images/" + ramdon + "/users&thumbnail/" + item.user);
-
+        
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from+ "-thumbnail");
         return item;
       }));
 
