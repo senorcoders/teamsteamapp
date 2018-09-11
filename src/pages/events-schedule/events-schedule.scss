@@ -344,6 +344,21 @@ page-events-schedule {
             margin-top: -15px;
         }
     }
+
+    ion-card.event{
+        .color-right {
+            background-image: url("../assets/imgs/game.png");
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: contain;
+            position: absolute;
+            left: auto;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            margin-top: -15px;
+        }
+    }
     ion-card.game {
         .details-event {
             display: none !important;
