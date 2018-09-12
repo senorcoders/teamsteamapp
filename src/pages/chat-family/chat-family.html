@@ -12,7 +12,9 @@
 <ion-content>
 
   <div class="message-wrap">
-
+    <div id="loadtoUp" *ngIf="loadingChats">
+      <ion-spinner></ion-spinner>
+    </div>
     <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.user.id !== user.id "
       [class.right]=" msg.user.id === user.id ">
       <img class="user-img" [src]="msg.photo" [hidden]="!msg.loadImage" (load)="loadImage(msg)">

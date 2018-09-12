@@ -21,6 +21,9 @@ import { ListChatsPage } from '../list-chats/list-chats';
 export class ChatFamilyPage {
 
   @ViewChild(Content) content: Content;
+  public loadingChats = false;
+  private skip = 20;
+
   @ViewChild('chat_input') messageInput: TextInput;
   msgList: any;
   msgListObserver: Observable<Array<any>>;
@@ -74,6 +77,45 @@ export class ChatFamilyPage {
 
     if (ListChatsPage.newMessages.length === 0) {
       MyApp.newDatas["chat"] = false;
+    }
+  }
+
+  ngAfterViewInit() {
+    //
+    this.content.ionScrollEnd.subscribe((data) => {
+      if (data) {
+        if (data.scrollTop === 0 && data.directionY === "up") {
+          this.loadingChats = true;
+          this.loadingChatsUp();
+        }
+        this.ngZone.run(function () { console.log(data); });
+      }
+    })
+  }
+
+  private async loadingChatsUp() {
+    try {
+      let ramdon = this.ramdon;
+      let mgs = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
+      mgs = mgs.filter(it=>{
+        return it.hasOwnProperty("user");
+      });
+      
+      if(mgs.length===0){
+        this.loadingChats = false;
+        return;
+      }
+
+      this.msgList = mgs.map(function (item) {
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user+ "-thumbnail");
+        item.loadImage = false;
+        return item;
+      }).reverse().concat(this.msgList);
+      this.skip += 20;
+      this.loadingChats = false;
+    }
+    catch (e) {
+      console.error(e);
     }
   }
 
@@ -145,15 +187,15 @@ export class ChatFamilyPage {
   private async getMsg() {
     try {
       let ramdon = this.ramdon;
-      let mgs: any = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&limit=3000`).toPromise();
+      let mgs = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20`).toPromise() as any[];
       mgs = mgs.filter(it=>{
         return it.hasOwnProperty("user");
-      }); console.log(mgs);
-      this.msgList = await Promise.all(mgs.map(async function (item) {
+      });
+      this.msgList = mgs.map(function (item) {
         item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user+ "-thumbnail");
         item.loadImage = false;
         return item;
-      }));
+      }).reverse();
     }
     catch (e) {
       console.error(e);
