@@ -169,8 +169,7 @@ export class MemberRosterPage {
 
     this.imageSrc = "./assets/imgs/avatar.gif"
 
-    let load = this.loading.create({ content: "Saving..." });
-    load.present({ disableApp: true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     try {
       await this.http.post("/images/users", {

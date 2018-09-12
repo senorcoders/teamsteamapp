@@ -56,8 +56,6 @@ export class CameraPage {
   //Para tomar la foto
   takePicture() {
     const pictureOpts: CameraPreviewPictureOptions = {
-      width: this.width,
-      height: this.height,
       quality: 100
     }
 

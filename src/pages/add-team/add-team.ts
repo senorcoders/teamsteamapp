@@ -78,8 +78,7 @@ export class AddTeamPage {
     let savingM = await this.helper.getWords("SAVING"),
       undexM = await this.helper.getWords("ERORUNEXC");
 
-    let load = this.loadingCtrl.create({ content: savingM });
-    load.present({ disableApp: true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     try {
       let newTeam: any = await this.http.post("/teams", {
@@ -121,11 +120,9 @@ export class AddTeamPage {
       return;
     }
 
-    let updatingM = await this.helper.getWords("UPDATING"),
-      undexM = await this.helper.getWords("ERORUNEXC");
+    let undexM = await this.helper.getWords("ERORUNEXC");
 
-    let load = this.loadingCtrl.create({ content: updatingM });
-    load.present({ disableApp: true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     try {
       let newTeam: any = await this.http.put("/teams/" + this.team.id, {

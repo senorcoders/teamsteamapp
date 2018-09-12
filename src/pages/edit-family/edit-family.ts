@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, Loading, AlertController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 
 
 @IonicPage()
@@ -46,9 +47,7 @@ export class EditFamilyPage {
 
   async ngOnInit(){
 
-    let load = this.loading.create({
-      content: "Loading..."
-    });
+    let load = HelpersProvider.me.getLoadingStandar();
     load.present({ disableApp : true });
 
     this.player = await this.http.get("/players/"+ this.player.id).toPromise();
@@ -93,8 +92,7 @@ export class EditFamilyPage {
   
   public async save(){
 
-    let load:Loading = this.loading.create({ content: "Updating..."});
-    load.present({ disableApp : true });
+    let load:Loading = HelpersProvider.me.getLoadingStandar();
 
     try{
       let savePerson1:boolean=true, savePerson2:boolean=true;

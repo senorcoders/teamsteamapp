@@ -11,8 +11,10 @@
 
 <ion-content>
 
-    <div class="message-wrap">
-
+    <div #content class="message-wrap">
+        <div id="loadtoUp" *ngIf="loadingChats">
+            <ion-spinner></ion-spinner>
+        </div>
         <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.user.id !== user.id "
             [class.right]=" msg.user.id === user.id ">
             <img class="user-img" [src]="msg.photo" [hidden]="!msg.loadImage" (load)="loadImage(msg)">
@@ -22,12 +24,8 @@
                 <div class="msg-info">
                     <p>{{msg.user.firstName+ " "+ msg.user.lastName}}&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
-                <!--div class="msg-content" [hidden]="msg.type === 'image' ">
-                    <span class="triangle"></span>
-                    <p class="line-breaker ">{{msg.text}}</p>
-                </div-->
                 <div class="msg-content" [innerHTML]="insertMsg(msg)">
-                    
+
                 </div>
             </div>
         </div>
@@ -50,12 +48,13 @@
                 </button>
             </ion-col>
             <ion-col col-8>
-                <ion-textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (ionFocus)="onFocus()">
+                <ion-textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()"
+                    (ionFocus)="onFocus()">
                 </ion-textarea>
             </ion-col>
             <ion-col col-2>
                 <button ion-button clear icon-only item-right (click)="sendMsg()">
-                    <ion-icon name="ios-paper-plane-outline" ></ion-icon>
+                    <ion-icon name="ios-paper-plane-outline"></ion-icon>
                 </button>
             </ion-col>
         </ion-row>

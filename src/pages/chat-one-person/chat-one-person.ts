@@ -20,6 +20,9 @@ import { ListChatsPage } from '../list-chats/list-chats';
 })
 export class ChatOnePersonPage {
   @ViewChild(Content) content: Content;
+  public loadingChats = false;
+  private skip = 20;
+
   @ViewChild('chat_input') messageInput: TextInput;
   msgList: any[];
   msgListObserver: Observable<Array<any>>;
@@ -74,13 +77,51 @@ export class ChatOnePersonPage {
     }
   }
 
-  async ionViewDidLoad(){
+  ngAfterViewInit() {
+    //
+    this.content.ionScrollEnd.subscribe((data) => {
+      if (data) {
+        if (data.scrollTop === 0 && data.directionY === "up") {
+          this.loadingChats = true;
+          this.loadingChatsUp();
+        }
+        this.ngZone.run(function () { console.log(data); });
+      }
+    })
+  }
+
+  private async loadingChatsUp() {
+    try {
+      let ramdon = new Date().getTime();
+      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
+      mgs = mgs.filter(it => {
+        return it.hasOwnProperty("from") && it.hasOwnProperty("to");
+      });
+      
+      if(mgs.length===0){
+        this.loadingChats = false;
+        return;
+      }
+
+      this.msgList = mgs.map(function (item) {
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from + "-thumbnail");
+        return item;
+      }).reverse().concat(this.msgList);
+      this.skip += 20;
+      this.loadingChats = false;
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  async ionViewDidLoad() {
     //Para saber si el manager bloqueo los mensajes con los otros jugadores
     let team = await this.http.get("/teams/" + MyApp.User.team).toPromise() as any;
     if (team.configuration !== undefined) {
       let confi = team.configuration;
       if (confi.hasOwnProperty("chatEachPlayer") === true) {
-        if(confi.chatEachPlayer===false){
+        if (confi.chatEachPlayer === false) {
           await this.notEachPlayer();
         }
       }
@@ -210,16 +251,12 @@ export class ChatOnePersonPage {
   private async getMsg() {
     try {
       let ramdon = new Date().getTime();
-      let mgs: any = await this.http.get("/chat/" + this.to.id + "/" + this.from.id).toPromise();
-      // console.log(mgs);
-      this.msgList = await Promise.all(mgs.map(async function (item) {
-        
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from+ "-thumbnail");
+      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20` ).toPromise() as any[];
+      this.msgList = mgs.map(function (item) {
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from + "-thumbnail");
         return item;
-      }));
+      }).reverse();
 
-      /*this.msgListObserver = Rx.Observable.from(this.msgList).toArray();
-      this.msgListObserver.subscribe(x => {console.log("new: ", x)});*/
     }
     catch (e) {
       console.error(e);

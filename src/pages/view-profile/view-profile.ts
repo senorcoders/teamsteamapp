@@ -135,10 +135,9 @@ export class ViewProfilePage {
 
   public async changePhoto() {
 
-    let unexpectM = await this.helper.getWords("ERORUNEXC"),
-      savingM = await this.helper.getWords("SAVING");
-
-    let load = this.loadingCtrl.create({ content: savingM });
+    let unexpectM = await this.helper.getWords("ERORUNEXC");
+    let load = HelpersProvider.me.getLoadingStandar();
+    load.dismiss();
 
     try {
 
@@ -232,9 +231,7 @@ export class ViewProfilePage {
       params.lastName = last;
     }
 
-    let updatingM = await this.helper.getWords("UPDATING");
-    let load = this.loadingCtrl.create({ content: updatingM });
-    load.present({ disableApp: true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     try {
 
@@ -286,9 +283,7 @@ export class ViewProfilePage {
 
     params.username = username;
 
-    let updatingM = await this.helper.getWords("UPDATING");
-    let load = this.loadingCtrl.create({ content: updatingM });
-    load.present({ disableApp: true });
+    let load = HelpersProvider.me.getLoadingStandar();
 
     try {
       //console.log(params);

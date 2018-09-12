@@ -23,6 +23,9 @@ import { ListChatsPage } from '../list-chats/list-chats';
 export class ChatPage {
 
   @ViewChild(Content) content: Content;
+  public loadingChats = false;
+  private skip = 20;
+
   @ViewChild('chat_input') messageInput: TextInput;
   msgList: any;
   msgListObserver: Observable<Array<any>>;
@@ -30,7 +33,7 @@ export class ChatPage {
   showEmojiPicker = false;
   public nameTeam: string = "";
 
-  ramdon:number;
+  ramdon: number;
 
   private updateTimeMessage: any;
 
@@ -43,6 +46,9 @@ export class ChatPage {
   }
 
   private static changeMessages: Function = function (payload) { console.log(payload) };
+
+  //Para scrolling infinite to up
+  // @ViewChild(Content) content: Content;
 
   constructor(navParams: NavParams, private events: Events,
     private http: HttpClient, private ngZone: NgZone,
@@ -62,27 +68,66 @@ export class ChatPage {
     this.deleteNotificationLocal();
   }
 
-  deleteNotificationLocal(){
+  deleteNotificationLocal() {
     //Para quitar la notificacion local
-    let index = ListChatsPage.newMessages.findIndex(function(id){ return id === "team"; });
-    if( index !== -1 ){
-      if( ListChatsPage.newMessages.length === 1 ){
+    let index = ListChatsPage.newMessages.findIndex(function (id) { return id === "team"; });
+    if (index !== -1) {
+      if (ListChatsPage.newMessages.length === 1) {
         ListChatsPage.newMessages = [];
-      }else{
+      } else {
         ListChatsPage.newMessages.splice(index, 1);
       }
       MyApp.counts["chat"] = ListChatsPage.newMessages.length
     }
 
-    if( ListChatsPage.newMessages.length === 0){
+    if (ListChatsPage.newMessages.length === 0) {
       MyApp.newDatas["chat"] = false;
+    }
+  }
+
+  ngAfterViewInit() {
+    //
+    this.content.ionScrollEnd.subscribe((data) => {
+      if (data) {
+        if (data.scrollTop === 0 && data.directionY === "up") {
+          this.loadingChats = true;
+          this.loadingChatsUp();
+        }
+        this.ngZone.run(function () { console.log(data); });
+      }
+    })
+  }
+
+  private async loadingChatsUp() {
+    try {
+      let ramdon = this.ramdon;
+      let mgs = await this.http.get(`/messages?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
+      mgs = mgs.filter(it => {
+        return it.hasOwnProperty("user") && it.hasOwnProperty("team");
+      });
+      
+      if(mgs.length===0){
+        this.loadingChats = false;
+        return;
+      }
+
+      this.msgList = mgs.map(function (item) {
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user + "-thumbnail");
+        item.loadImage = false;
+        return item;
+      }).reverse().concat(this.msgList);
+      this.skip += 20;
+      this.loadingChats = false;
+    }
+    catch (e) {
+      console.error(e);
     }
   }
 
   async ionViewDidEnter() {
 
     ChatPage.enableChat = true;
-    
+
     //get name of team
     let team: any = await this.http.get("/teams/" + this.user.team).toPromise();
     this.nameTeam = team.name;
@@ -114,13 +159,13 @@ export class ChatPage {
     this.events.unsubscribe('message');
   }
 
-  public loadImage(msg){
+  public loadImage(msg) {
     msg.loadImage = true;
   }
 
-  public insertMsg(msg){
+  public insertMsg(msg) {
     //<span class="triangle"></span>
-    if( msg.hasOwnProperty("type") && msg.type === 'image'){
+    if (msg.hasOwnProperty("type") && msg.type === 'image') {
       return `<img src="${this.urlImg(msg.id)}" alt="">
       <p class="line-breaker ">${msg.text}</p>`
     }
@@ -151,15 +196,15 @@ export class ChatPage {
   private async getMsg() {
     try {
       let ramdon = this.ramdon;
-      let mgs: any = await this.http.get(`/messages?where={"team":"${MyApp.User.team}"}&limit=1000`).toPromise();
-      mgs = mgs.filter(it=>{
+      let mgs = await this.http.get(`/messages?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20`).toPromise() as any[];
+      mgs = mgs.filter(it => {
         return it.hasOwnProperty("user") && it.hasOwnProperty("team");
       });
-      this.msgList = await Promise.all(mgs.map(async function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user+ "-thumbnail");
+      this.msgList = mgs.map(function (item) {
+        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user + "-thumbnail");
         item.loadImage = false;
         return item;
-      }));
+      }).reverse();
     }
     catch (e) {
       console.error(e);
@@ -184,7 +229,7 @@ export class ChatPage {
       status: 'pending'
     };
 
-    let newMsg= {
+    let newMsg = {
       user: MyApp.User,
       text: this.editorMsg,
       team: MyApp.User.team,
@@ -225,7 +270,7 @@ export class ChatPage {
   }
 
   private async sendImage(data) {
-    if(data === undefined || data == null)
+    if (data === undefined || data == null)
       return;
 
     try {
@@ -240,14 +285,14 @@ export class ChatPage {
       };
 
       msg = await this.http.post("/api/chat/image", msg).toPromise() as any;
-      
+
     }
     catch (e) {
       console.error(e);
     }
   }
 
-  public urlImg(id:string){
+  public urlImg(id: string) {
     return interceptor.transformUrl(`/api/image/messages/${id}`);
   }
 
@@ -259,10 +304,10 @@ export class ChatPage {
     let index = this.getMsgIndexById(msg.dateTime);
     // console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/"+ this.ramdon+ "/users/" + msg.user);
+      msg.photo = interceptor.transformUrl("/images/" + this.ramdon + "/users/" + msg.user);
       this.ngZone.run(() => { this.msgList.push(msg); });
       // console.log(ChatPage.enableChat);
-      if( ChatPage.enableChat === true ){
+      if (ChatPage.enableChat === true) {
         setTimeout(this.deleteNotificationLocal.bind(this), 1000);
       }
       this.scrollToBottom();

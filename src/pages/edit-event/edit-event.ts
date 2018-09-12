@@ -289,9 +289,7 @@ export class EditEventPage {
 
   public async update() {
 
-    let content = await this.helper.getWords("UPDATING");
-    this.load = this.loading.create({ content: content });
-    this.load.present({ disableApp: true });
+    this.load = this.helper.getLoadingStandar();
 
     let requiredM = await this.helper.getWords("REQUIRED"),
       AddressOrMap = await this.helper.getWords("ADDRESSORDATE");

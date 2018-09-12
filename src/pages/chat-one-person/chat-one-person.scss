@@ -1,6 +1,11 @@
 page-chat-one-person {
     $userBackgroundColor: #fff;
     $toUserBackgroundColor: #fe324d;
+    #loadtoUp {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+    }
     ion-content .scroll-content {
         background-color: #f2f5f8;
     }

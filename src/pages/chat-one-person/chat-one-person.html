@@ -9,8 +9,10 @@
 
 <ion-content>
 
-    <div class="message-wrap">
-
+    <div #content class="message-wrap">
+        <div id="loadtoUp" *ngIf="loadingChats">
+            <ion-spinner></ion-spinner>
+        </div>
         <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from !== from.id "
             [class.right]=" msg.from === from.id ">
             <img class="user-img" [hidden]="!msg.photoReady" (load)="photoReady(msg)" [src]="msg.photo">
@@ -48,7 +50,8 @@
                 </button>
             </ion-col>
             <ion-col col-8>
-                <ion-textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()" (ionFocus)="onFocus()">
+                <ion-textarea #chat_input placeholder="Text Input" [(ngModel)]="editorMsg" (keyup.enter)="sendMsg()"
+                    (ionFocus)="onFocus()">
                 </ion-textarea>
             </ion-col>
             <ion-col col-2>
