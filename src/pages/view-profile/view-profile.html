@@ -11,7 +11,7 @@
 
   </ion-navbar>
 
-</ion-header> 
+</ion-header>
 
 
 <ion-content>
@@ -27,21 +27,21 @@
     <div class="user-text">
       <h3 (click)="changeEmailAlert()">{{user.email}}</h3>
     </div>
-    
+
   </div>
 
   <ion-list>
 
-    
+
     <ion-item (click)="selectTeams()" *ngIf="user.hasOwnProperty('team')">
       <ion-icon name="ios-people" item-start></ion-icon>
       {{"TEAM" | translate}} {{team.name}}
     </ion-item>
 
     <ion-item (click)="selectLeagues()" *ngIf="user.role.name==='OwnerLeague'">
-        <ion-icon name="ios-people" item-start></ion-icon>
-        {{"LEAGUE.NAME" | translate}} {{league.name}}
-      </ion-item>
+      <ion-icon name="ios-people" item-start></ion-icon>
+      {{"LEAGUE.NAME" | translate}} {{league.name}}
+    </ion-item>
 
     <ion-item (click)="answerDeleteDevices()">
       <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
@@ -49,17 +49,32 @@
     </ion-item>
 
     <ion-item (click)="openSelect()">
-        <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
+      <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
       {{'CHAGELANGUAGE' | translate}}
     </ion-item>
 
+    <ion-item (click)="addTeam()">
+      <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
+      {{'NEWTEAM.ADD' | translate}}
+    </ion-item>
+
+    <ion-item (click)="createLeague()">
+      <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
+      {{'LEAGUE.CREATE.ACTION' | translate}}
+    </ion-item>
+
     <ion-item (click)="openSelectRolesTypes()" *ngIf="IsValidToTeam()">
-        <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
-        {{ "CHANGEROLE" | translate}} ({{user.role.name}})
-      </ion-item>
+      <ion-icon class="second-bg" name="ios-phone-portrait" item-start></ion-icon>
+      {{ "CHANGEROLE" | translate}} ({{user.role.name}})
+    </ion-item>
+
+    <ion-item (click)="setting()">
+      <ion-icon class="third-bg" name="ios-leaf-outline" item-start></ion-icon>
+      {{'SETTING.NAME' | translate}}
+    </ion-item>
 
     <ion-item (click)="logout()">
-        <ion-icon class="fourth-bg" name="ios-log-out" item-start></ion-icon>
+      <ion-icon class="fourth-bg" name="ios-log-out" item-start></ion-icon>
       {{'NAVMENU.LOGOUT' | translate}}
     </ion-item>
 
@@ -89,12 +104,12 @@
   </ion-list>
 
   <ion-select [(ngModel)]="lang" hidden (ionChange)='changeLang()' #mySelect>
-      <ion-option value="en">English</ion-option>
-      <ion-option value="es">Español </ion-option>
-    </ion-select>
+    <ion-option value="en">English</ion-option>
+    <ion-option value="es">Español </ion-option>
+  </ion-select>
 
-    <ion-select [(ngModel)]="rolType" hidden (ionChange)='changeRol()' #myRoles>
-      <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name.toUpperCase() | translate}}</ion-option>
-    </ion-select>
+  <ion-select [(ngModel)]="rolType" hidden (ionChange)='changeRol()' #myRoles>
+    <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name.toUpperCase() | translate}}</ion-option>
+  </ion-select>
 
 </ion-content>

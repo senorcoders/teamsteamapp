@@ -45,8 +45,7 @@ export class CommentsComponent {
     //get message list
     this.commentsList = await this.http.get(`/comments?where={"event":"${this.event.id}"}&limit=3000`).toPromise() as any[];
     this.commentsList = this.commentsList.map(function (item) {
-      let ramdon = new Date().getTime();
-      item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user.id+ "-thumbnail");
+      item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
       return item;
     });
 
@@ -148,7 +147,7 @@ export class CommentsComponent {
     let index = this.getMsgIndexById(comment.dateTime);
     console.log(comment, index);
     if (index === -1) {
-      comment.photo = interceptor.transformUrl("/images/random/users/" + comment.user+ "-thumbnail");
+      comment.photo = interceptor.transformUrl("/userprofile/images/" + comment.user + "/" + MyApp.User.team);
       this.zone.run(() => { this.commentsList.push(comment); })
       console.log("add new comment", this.commentsList);
       this.scrollToBottom();

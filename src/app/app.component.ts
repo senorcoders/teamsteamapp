@@ -29,6 +29,7 @@ import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
 import { SettingPage } from '../pages/setting/setting';
 import { RequestsLeaguePage } from '../pages/requests-league/requests-league';
 import { StatusBar } from '@ionic-native/status-bar';
+import { PhotosPage } from '../pages/photos/photos';
 
 
 @Component({
@@ -64,18 +65,16 @@ export class MyApp {
 
   public pages: Array<Object> = [
     { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
-    { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "basketball", role: "OwnerLeague", watch: "", newData: "" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "PHOTOS.TITLE", component: PhotosPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "basketball", role: "OwnerLeague", watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
-    { title: "NEWTEAM.ADD", component: AddTeamPage, icon: "baseball", role: "*", watch: "", newData: "" },
-    { title: "LEAGUE.CREATE.ACTION", component: CreateLeaguePage, icon: "baseball", role: "*", watch: "", newData: "" },
-    { title: "SETTING.NAME", component: SettingPage, icon: "baseball", role: "*", watch: "", newData: "" },
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
@@ -172,7 +171,7 @@ export class MyApp {
 
       //console.log(this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id+"-thumbnail");
+      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ MyApp.User.team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       //ahora asignamos el lenaguaje si es que esta definido
@@ -194,7 +193,7 @@ export class MyApp {
 
       console.log("cambiooo", this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id+"-thumbnail");
+      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ MyApp.User.team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;

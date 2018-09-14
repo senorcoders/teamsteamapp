@@ -1,0 +1,43 @@
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-row>
+      <ion-title> {{"EVENTS.TITLE" | translate}} </ion-title>
+      <ion-select [(ngModel)]="filter">
+        <ion-option value='imagesEvent'>{{ 'IMAGESBYEVENT' | translate }}</ion-option>
+        <ion-option value='imagesAll'>{{ 'IMAGESALL' | translate }}</ion-option>
+      </ion-select>
+    </ion-row>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <!-- para mostrar todas las images -->
+  <ion-grid *ngIf="filter==='imagesAll'">
+    <ion-row>
+      <img class="images-all" (click)="presentImage($event)" [src]="url+i.src+'?small=true'" *ngFor="let i of allImages"
+        col-6>
+    </ion-row>
+  </ion-grid>
+
+  <!-- para mostrar las imagenes por evento -->
+  <div class="images-event" (click)="toImages(e)" *ngFor="let e of events" [hidden]="filter!=='imagesEvent'">
+    <h3 class="title">{{e.name}}</h3>
+    <!-- <ion-slides>
+      <ion-slide *ngFor="let i of e.images">
+        <img [src]="url+i.src+'?small=true'">
+      </ion-slide>
+    </ion-slides> -->
+    <ion-grid>
+      <ion-row>
+        <img col-4 [src]="url+i.src+'?middle=true'" (click)="presentImage($event, true)" class="gallery-grid-img"
+          *ngFor="let i of e.images">
+      </ion-row>
+    </ion-grid>
+  </div>
+</ion-content>

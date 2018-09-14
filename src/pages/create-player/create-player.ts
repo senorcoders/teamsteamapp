@@ -218,13 +218,13 @@ export class CreatePlayerPage {
 
 
       if (this.user.hasOwnProperty('image') && this.user.image != '') {
-        await this.http.post("/images/users", {
+        await this.http.post("/userprofile/images", {
           id: user.id,
-          image: this.user.image
+          image: this.user.image,
+          team: MyApp.User.team
         }).toPromise();
       }
-
-
+    
       load.dismiss();
       if (this.navParams.get("team") !== undefined) {
         this.navCtrl.pop();

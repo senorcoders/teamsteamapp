@@ -379,5 +379,9 @@
     "SELECTEVENT": {
         "TITLE": "Seleccione un Evento",
         "ASSIGNEVENT": "Asignar Evento"
+    },
+    "PHOTOS":{
+        "TITLE": "Fotos",
+        "TITLEEVENTS": "Imágenes de los eventos"
     }
 }

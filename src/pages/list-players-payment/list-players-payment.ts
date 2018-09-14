@@ -51,8 +51,7 @@ export class ListPlayersPaymentPage {
         item.payments = await this.http.get("/player/payment/"+ item.user.id+ "/"+ item.team).toPromise();
         item.select = false;
         item.loadImage = false;
-        let ramdon = new Date().getTime();
-        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ item.user.id+ "-thumbnail");
+        item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         item.debe = this.calcDebe(item);
 
         return item;

@@ -3,6 +3,7 @@ import { ViewController, NavParams, ModalController } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-chat-to-perfil-player';
+import { MyApp } from '../../app/app.component';
 
 /**
  * este es para el traking o asistencia que se le muestra al manager
@@ -35,7 +36,7 @@ export class TrackingEventManagerComponent {
 
       console.log(trackings);
       this.trackings = await Promise.all( trackings.map( async function(item){
-        item.imageSrc = interceptor.transformUrl("/images/random/users/"+ item.user.id+ "-thumbnail");
+        item.imageSrc = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         item.loadImage = false;
 
         if( item.info == 'yes' )

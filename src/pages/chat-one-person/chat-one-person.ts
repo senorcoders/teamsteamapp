@@ -104,7 +104,7 @@ export class ChatOnePersonPage {
       }
 
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from + "-thumbnail");
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         return item;
       }).reverse().concat(this.msgList);
       this.skip += 20;
@@ -253,7 +253,7 @@ export class ChatOnePersonPage {
       let ramdon = new Date().getTime();
       let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20` ).toPromise() as any[];
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.from + "-thumbnail");
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         return item;
       }).reverse();
 
@@ -317,7 +317,7 @@ export class ChatOnePersonPage {
     let index = this.getMsgIndexById(msg.dateTime);
     //console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/random/users/" + msg.from);
+      msg.photo = interceptor.transformUrl("/userprofile/images/" + msg.from + "/" + MyApp.User.team);
       this.ngZone.run(() => { this.msgList.push(msg); })
       //console.log("add new message", this.msgList);
       this.scrollToBottom();

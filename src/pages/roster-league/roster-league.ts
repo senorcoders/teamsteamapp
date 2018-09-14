@@ -54,8 +54,7 @@ export class RosterLeaguePage {
     this.players = await Promise.all(this.players.map(async function(item){
       
         item.loadImage = false;
-        let ramdon = new Date().getTime();
-        item.image = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ item.user.id+ "-thumbnail");
+        item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
 
         return item;
       }));

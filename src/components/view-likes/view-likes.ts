@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { MyApp } from '../../app/app.component';
 
 /**
  * muestra la cantidad like y los datos de los players 
@@ -27,7 +28,7 @@ export class ViewLikesComponent {
       let arr = [];
       for(let like of this.likes){
         let user = await this.getUser(like.user);
-        user.imageSrc = interceptor.transformUrl("/images/random/users/"+ user.id+ "-thumbnail");
+        user.imageSrc = interceptor.transformUrl("/userprofile/images/" + user.id + "/" + MyApp.User.team);
         arr.push(user);
       }
       this.users = arr;

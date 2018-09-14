@@ -92,8 +92,7 @@ export class EventPage {
     this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
 
     //for image user that published events
-    let r = new Date().getTime();
-    this.imgUser = interceptor.transformUrl("/images/" + r + "/users/" + this.event.user+ "-thumbnail");
+    this.imgUser = interceptor.transformUrl("/userprofile/images/" + this.event.user.id + "/" + MyApp.User.team);
 
     //Para saber si el usuario tiene el rol de dueño de liga
     this.league = MyApp.User.role.name === "OwnerLeague";

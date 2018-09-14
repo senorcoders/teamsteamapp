@@ -185,6 +185,7 @@ export class CreateLeaguePage {
         buttons: ["Ok"]
       }).present();
 
+      this.navCtrl.pop();
     }
     catch(e){
       console.error(e);

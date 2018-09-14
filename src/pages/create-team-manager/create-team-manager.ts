@@ -175,14 +175,6 @@ export class CreateTeamManagerPage {
 
       user = await this.http.post("/user", user).toPromise() as any;
 
-
-      if (this.imageSrcUser !== "") {
-        await this.http.post("/images/users", {
-          id: user.id,
-          image: this.imageSrcUser
-        }).toPromise();
-      }
-
       this.saveTeam(user, load);
 
     } catch (e) {
@@ -212,6 +204,15 @@ export class CreateTeamManagerPage {
         team: newTeam.id
       }).toPromise();
       newRole.team = newTeam;
+
+      //Para guardar la imagen del user para ese equipo
+      if (this.imageSrcUser !== "") {
+        await this.http.post("/userprofile/images", {
+          id: user.id,
+          image: this.imageSrcUser,
+          team: newTeam.id
+        }).toPromise();
+      }
 
       if (this.imageSrcTeam !== "")
         await this.http.post("/images/teams", { id: newTeam.id, image: this.imageSrcTeam }).toPromise();

@@ -112,7 +112,7 @@ export class ChatPage {
       }
 
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user + "-thumbnail");
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         item.loadImage = false;
         return item;
       }).reverse().concat(this.msgList);
@@ -201,7 +201,7 @@ export class ChatPage {
         return it.hasOwnProperty("user") && it.hasOwnProperty("team");
       });
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/images/" + ramdon + "/users/" + item.user + "-thumbnail");
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         item.loadImage = false;
         return item;
       }).reverse();
@@ -304,7 +304,7 @@ export class ChatPage {
     let index = this.getMsgIndexById(msg.dateTime);
     // console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/images/" + this.ramdon + "/users/" + msg.user);
+      msg.photo = interceptor.transformUrl("/userprofile/images/" + msg.user + "/" + MyApp.User.team);
       this.ngZone.run(() => { this.msgList.push(msg); });
       // console.log(ChatPage.enableChat);
       if (ChatPage.enableChat === true) {

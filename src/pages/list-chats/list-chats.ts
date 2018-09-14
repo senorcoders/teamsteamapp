@@ -42,7 +42,7 @@ export class ListChatsPage {
       this.listUsers = users.map(function(item){
         
         item.loadImage = false;
-        item.imgSrc = interceptor.transformUrl(`/images/${ramdon}/users/`+ item._id+ "-thumbnail");
+        item.imgSrc = interceptor.transformUrl("/userprofile/images/" + item._id + "/" + MyApp.User.team);
         return item;
 
       });

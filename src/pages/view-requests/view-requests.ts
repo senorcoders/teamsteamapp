@@ -36,10 +36,9 @@ export class ViewRequestsPage {
 
       if( re.user.hasOwnProperty("firstName") ){
         re.user.fullName = re.user.firstName+ " "+ re.user.lastName;
-        let ramdon = new Date().getTime();
         let user = await this.http.get('/user?where={"email":{"like":"'+ re.user.email+ '"}}').toPromise();
         if( user.length !== 0 ){
-          re.imageSrc = interceptor.transformUrl("/images/"+ ramdon+ "/users/"+ user[0].id);
+          re.imageSrc = interceptor.transformUrl("/userprofile/images/" + user[0].id + "/" + MyApp.User.team);
         }
       }
 

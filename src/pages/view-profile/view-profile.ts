@@ -14,6 +14,9 @@ import { ListPlayersPaymentPage } from '../list-players-payment/list-players-pay
 import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-player';
 import { Storage } from '@ionic/storage';
 import { SelectLeaguesPage } from '../select-leagues/select-leagues';
+import { AddTeamPage } from '../add-team/add-team';
+import { CreateLeaguePage } from '../create-league/create-league';
+import { SettingPage } from '../setting/setting';
 
 
 @IonicPage()
@@ -54,29 +57,22 @@ export class ViewProfilePage {
 
     this.lang = this.user.options.language;
 
-    let ramdon = new Date().getTime();
-    this.user.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id);
-
   }
 
   async ionViewWillEnter() {
     let load = this.helper.getLoadingStandar();
     try {
+      this.image = false;
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
 
-      let userT: any = await this.storage.get("rol");
-      console.log("User Prf", userT);
       this.currentRol = this.user.rol;
-      console.log(this.currentRol);
 
       let user: any = await this.storage.get("user");
       if (user.roles !== undefined && user.roles !== null) {
         this.roles = user.roles;
       }
 
-      //console.log(this.manager);
-
       this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
-      //console.log(this.team);
       if (!this.team.hasOwnProperty("request")) {
         this.team.request = [];
       }
@@ -147,13 +143,14 @@ export class ViewProfilePage {
 
       load.present({ disableApp: true });
 
-      await this.http.post("/images/users", {
+      await this.http.post("/userprofile/images", {
         id: MyApp.User.id,
-        image: image
+        image: image,
+        team: MyApp.User.team
       }).toPromise();
 
       let ramdon = new Date().getTime();
-      this.user.imageSrc = interceptor.transformUrl("/images/" + ramdon + "/users/" + this.user.id);
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
 
       //es nessasario actualizar la image delnav manualmente
       document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);
@@ -448,6 +445,18 @@ export class ViewProfilePage {
 
   public IsValidToTeam(): Boolean {
     return this.rolesTypes.length > 1;
+  }
+
+  public addTeam() {
+    this.navCtrl.push(AddTeamPage);
+  }
+
+  public createLeague() {
+    this.navCtrl.push(CreateLeaguePage);
+  }
+
+  public setting() {
+    this.navCtrl.push(SettingPage);
   }
 
   public async changeRol() {

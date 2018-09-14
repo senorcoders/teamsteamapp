@@ -8,6 +8,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { RosterPage } from '../roster/roster';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { DatePicker } from '@ionic-native/date-picker';
+import { MyApp } from '../../app/app.component';
 
 /**
  * para editar un player
@@ -58,8 +59,7 @@ export class MemberRosterPage {
       this.player.positions = "";
     }
 
-    let random = new Date().getTime();
-    this.imageSrc = interceptor.transformUrl("/images/" + random + "/users/" + this.player.user.id);
+    this.imageSrc = interceptor.transformUrl("/userprofile/images/" + this.player.user.id + "/" + MyApp.User.team);
 
     console.log(this.player);
   }
@@ -172,9 +172,10 @@ export class MemberRosterPage {
     let load = HelpersProvider.me.getLoadingStandar();
 
     try {
-      await this.http.post("/images/users", {
+      await this.http.post("/userprofile/images", {
         id: this.player.user.id,
-        image: base64Image
+        image: base64Image,
+        team: MyApp.User.team
       }).toPromise();
     } catch (e) {
 

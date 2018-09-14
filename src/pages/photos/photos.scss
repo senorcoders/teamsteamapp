@@ -1,0 +1,30 @@
+page-photos {
+    .images-all {
+        height: 150px;
+        object-fit: cover;
+    }
+    
+    div.images-event {
+        h3 {
+            color: #ea2e47;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        ion-slides {
+            .swiper-wrapper {
+                width: 170px !important;
+            }
+            ion-slide {
+                img {
+                    object-fit: cover;
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+        }
+    }
+    
+    .gallery-grid-img{
+        max-height: 100px;
+    }
+}
