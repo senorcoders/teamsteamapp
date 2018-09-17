@@ -467,7 +467,7 @@ export class EventPage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(response) {
-
+    
     if (EventsSchedulePage.by === "past") return;
 
     let guardar = this.tracking.user !== undefined;
@@ -481,6 +481,7 @@ export class EventPage {
         newTrack = await this.http.put("/trackingevent/" + this.tracking.id, { info: response }).toPromise();
         this.tracking = newTrack;
       }
+      console.log(guardar);
 
       let counts = await this.getTrackings(this.event);
 

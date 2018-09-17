@@ -60,10 +60,10 @@ export class ViewProfilePage {
   }
 
   async ionViewWillEnter() {
-    let load = this.helper.getLoadingStandar();
+    let load = this.helper.getLoadingStandar(), ramdon = new Date().getTime();
     try {
       this.image = false;
-      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team+ "/"+ ramdon);
 
       this.currentRol = this.user.rol;
 
@@ -87,13 +87,16 @@ export class ViewProfilePage {
         if (index === -1) {
           this.rolesTypes.push(rol);
         }
-      } console.log(this.rolesTypes);
+      }
+      // console.log(this.rolesTypes);
 
       //Si el rol es de league cargamos la liga
-      if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-        this.league = await this.http.get("/leagues/" + MyApp.User.role.league.id).toPromise() as any;
-      else
-        this.league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+      if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+          this.league = await this.http.get("/leagues/" + MyApp.User.role.league.id).toPromise() as any;
+        else
+          this.league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+      }
 
     }
     catch (e) {
@@ -132,8 +135,7 @@ export class ViewProfilePage {
   public async changePhoto() {
 
     let unexpectM = await this.helper.getWords("ERORUNEXC");
-    let load = HelpersProvider.me.getLoadingStandar();
-    load.dismiss();
+    let load = HelpersProvider.me.getLoadingStandar(false), ramdon = new Date().getTime();
 
     try {
 
@@ -141,18 +143,16 @@ export class ViewProfilePage {
       if (image === undefined)
         return;
 
-      load.present({ disableApp: true });
-
+      let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
       await this.http.post("/userprofile/images", {
         id: MyApp.User.id,
         image: image,
-        team: MyApp.User.team
+        team
       }).toPromise();
 
-      let ramdon = new Date().getTime();
-      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team+ "/"+ ramdon);
 
-      //es nessasario actualizar la image delnav manualmente
+      //es necesario actualizar la image del nav manualmente
       document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);
 
       load.dismiss();

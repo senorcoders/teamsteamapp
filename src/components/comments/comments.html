@@ -14,8 +14,8 @@
   <div class="message-wrap">
 
     <div *ngFor="let comment of commentsList; let i = index; trackBy: customTrackBy"
-         class="message" (click)="presentTo(comment.user)" >
-        <img class="user-img" [src]="comment.photo" alt="" src="">
+         class="message" (click)="presentTo(comment.user.id)" >
+        <img class="user-img" [src]="comment.photo" >
         <div class="msg-detail">
             <div class="msg-info">
                 <span class="name">{{comment.user.firstName+ " "+ comment.user.lastName}}</span> <span class="date">{{comment.dateTime | relativeTime}}</span>

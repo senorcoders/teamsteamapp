@@ -192,8 +192,8 @@ export class MyApp {
       this.user = this.auth.User();
 
       console.log("cambiooo", this.user);
-      let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ MyApp.User.team);
+      let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
+      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;

@@ -1,10 +1,11 @@
 <div id="question">
   <h2> {{user.firstName+ " "+ user.lastName}} </h2>
+  <ion-icon name="md-close-circle" (click)="viewCtrl.dismiss()" color="primary"></ion-icon>
   <div>
-    <button (click)="toChat()" ion-button icon-only >
+    <button (click)="toChat()" ion-button icon-only>
       <ion-icon name="ios-open"></ion-icon>
     </button>
-    <button (click)="toPerfil()" ion-button  icon-only >
+    <button (click)="toPerfil()" ion-button icon-only>
       <ion-icon name="ios-contact"></ion-icon>
     </button>
   </div>

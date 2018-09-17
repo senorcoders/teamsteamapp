@@ -68,7 +68,7 @@
 
     <div class="divider"> </div>
 
-    <div id="tracking-section">
+    <div id="tracking-section" *ngIf="event.type!=='practice'">
       <div class="tracking">
         <h3>{{'EVENTS.AREYOU' | translate}}</h3>
         <!--ion-icon name="ios-arrow-up-outline" (click)="viewTrakingEvent()"></ion-icon-->

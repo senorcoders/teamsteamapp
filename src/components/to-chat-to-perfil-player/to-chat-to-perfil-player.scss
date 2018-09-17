@@ -1,5 +1,6 @@
 to-chat-to-perfil-player {
     background-color: rgba(0, 0, 0, .4);
+    
     #question{
         position: absolute;
         top: auto;
@@ -9,16 +10,26 @@ to-chat-to-perfil-player {
         width: 100%;
         padding: 5px 10px;
         padding-bottom: 50px;
-        background-color: #149781;
+        background-color: white;
+        display: flex;
+        flex-wrap: wrap;
+        h2{
+            flex-basis: calc(100% - 40px);
+            width: calc(100% - 40px);
+        }
+        .ion-md-close-circle{
+            flex-basis: 40px;
+            width: 40px;
+            font-size: 40px !important;
+            text-align: center;
+        }
         div{
+            flex-basis: 100%;
+            width: 100%;
             display: flex;
             justify-content: space-around;
             padding-top: 25px;
-            button{
-                line-height: 50px;
-                flex-basis: 25%;
-                text-align: center
-            }
+
         }
     }
 

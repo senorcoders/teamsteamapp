@@ -147,7 +147,7 @@ export class CommentsComponent {
     let index = this.getMsgIndexById(comment.dateTime);
     console.log(comment, index);
     if (index === -1) {
-      comment.photo = interceptor.transformUrl("/userprofile/images/" + comment.user + "/" + MyApp.User.team);
+      comment.photo = interceptor.transformUrl("/userprofile/images/" + comment.user.id + "/" + MyApp.User.team);
       this.zone.run(() => { this.commentsList.push(comment); })
       console.log("add new comment", this.commentsList);
       this.scrollToBottom();

@@ -1,7 +1,11 @@
 <ion-header>
 
     <ion-navbar color="base">
-        <ion-title>{{to.firstName+ " "+ to.lastName}}</ion-title>
+        <ion-row>
+            <img class="user-img" [hidden]="!_photoReady" (load)="photoReady()" [src]="photo">
+            <img class="user-img" [hidden]="_photoReady" src="./assets/imgs/logo-login.png">
+            <ion-title>{{to.firstName+ " "+ to.lastName}}</ion-title>
+        </ion-row>
     </ion-navbar>
 
 </ion-header>
@@ -13,10 +17,8 @@
         <div id="loadtoUp" *ngIf="loadingChats">
             <ion-spinner></ion-spinner>
         </div>
-        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from !== from.id "
-            [class.right]=" msg.from === from.id ">
-            <img class="user-img" [hidden]="!msg.photoReady" (load)="photoReady(msg)" [src]="msg.photo">
-            <img class="user-img" [hidden]="msg.photoReady" src="./assets/imgs/logo-login.png">
+        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from.id !== from.id "
+            [class.right]=" msg.from.id === from.id ">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">

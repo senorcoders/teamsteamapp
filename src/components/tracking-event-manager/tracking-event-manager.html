@@ -14,11 +14,11 @@
       <ion-segment-button value="yes" (ionSelect)="select('yes')">
         {{"YES" | translate}} {{countYes}}
       </ion-segment-button>
-      <ion-segment-button value="no" (ionSelect)="select('no')">
-        {{"NO" | translate}} {{countNo}}
-      </ion-segment-button>
       <ion-segment-button value="maybe" (ionSelect)="select('maybe')">
         {{"MAYBE" | translate}} {{countMaybe}}
+      </ion-segment-button>
+      <ion-segment-button value="no" (ionSelect)="select('no')">
+        {{"NO" | translate}} {{countNo}}
       </ion-segment-button>
     </ion-segment>
   </ion-toolbar>
@@ -32,7 +32,7 @@
         <img [src]="tracking.imageSrc" [hidden]="!tracking.loadImage" (load)="loadImage(tracking)">
         <img [hidden]="tracking.loadImage" src="./assets/imgs/logo-login.png">
       </ion-avatar>
-      {{tracking.user.firstName+ " "+ tracking.user.firstName}}
+      {{tracking.user.firstName+ " "+ tracking.user.lastName}}
     </ion-item>
   </ion-list>
 

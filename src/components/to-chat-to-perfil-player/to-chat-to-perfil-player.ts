@@ -16,7 +16,7 @@ export class ToChatToPerfilPlayerComponent {
 
   public user:any={};
 
-  constructor(private viewCtrl : ViewController, private navParams: NavParams,
+  constructor(public viewCtrl : ViewController, private navParams: NavParams,
     private navController: NavController, private http: HttpClient
   ) {
     this.user = this.navParams.get("user");

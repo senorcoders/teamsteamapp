@@ -4,14 +4,14 @@ import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/co
 import { MyApp } from '../../app/app.component';
 
 /**
- * intercepta todos lo peticiones que se realizan por http cliente para añadir 
+ * intercepta todas lo peticiones que se realizan por http cliente para añadir 
  * la base url y token de seguridad
  */
 
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url = 'http://192.168.1.11:8187'; // 'https://api.lockerroomapp.com';
+  public static url = 'https://api.lockerroomapp.com'; // 'http://192.168.1.11:8187';
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

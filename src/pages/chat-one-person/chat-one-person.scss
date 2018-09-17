@@ -6,6 +6,16 @@ page-chat-one-person {
         justify-content: center;
         padding: 10px;
     }
+    .user-img {
+        border-radius: 45px;
+        width: 45px;
+        height: 45px;
+        box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
+    }
+    ion-title div{
+        font-size: 1.7rem !important;
+        padding-left: 15% !important;
+    }
     ion-content .scroll-content {
         background-color: #f2f5f8;
     }
@@ -47,13 +57,6 @@ page-chat-one-person {
         .message {
             position: relative;
             padding: 7px 0;
-            .user-img {
-                position: absolute;
-                border-radius: 45px;
-                width: 45px;
-                height: 45px;
-                box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
-            }
             .msg-detail {
                 width: 100%;
                 display: inline-block;
@@ -98,10 +101,7 @@ page-chat-one-person {
                 float: left;
             }
             .msg-detail {
-                padding-left: 60px;
-            }
-            .user-img {
-                left: 0;
+                // padding-left: 60px;
             }
             .msg-content {
                 color: white;
@@ -116,13 +116,10 @@ page-chat-one-person {
         }
         .message.right {
             .msg-detail {
-                padding-right: 60px;
+                // padding-right: 60px;
                 .msg-info {
                     text-align: right;
                 }
-            }
-            .user-img {
-                right: 0;
             }
             ion-spinner {
                 position: absolute;

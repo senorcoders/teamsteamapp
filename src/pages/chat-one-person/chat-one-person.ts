@@ -35,6 +35,9 @@ export class ChatOnePersonPage {
   public to: any;
   public from: any;
 
+  public _photoReady = false;
+  public photo = "";
+
   //private static enableChat: boolean = false;
   public static eventChat: Function = (payload: any) => {
     /*if( ChatPage.enableChat === false ) return;
@@ -92,21 +95,17 @@ export class ChatOnePersonPage {
 
   private async loadingChatsUp() {
     try {
-      let ramdon = new Date().getTime();
       let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
       mgs = mgs.filter(it => {
         return it.hasOwnProperty("from") && it.hasOwnProperty("to");
       });
-      
-      if(mgs.length===0){
+
+      if (mgs.length === 0) {
         this.loadingChats = false;
         return;
       }
 
-      this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
-        return item;
-      }).reverse().concat(this.msgList);
+      this.msgList = mgs.reverse().concat(this.msgList);
       this.skip += 20;
       this.loadingChats = false;
     }
@@ -126,6 +125,8 @@ export class ChatOnePersonPage {
         }
       }
     }
+
+    this.photo = interceptor.transformUrl("/userprofile/images/" + this.to.id + "/" + MyApp.User.team);
   }
 
   async ionViewDidEnter() {
@@ -180,8 +181,8 @@ export class ChatOnePersonPage {
     return interceptor.transformUrl(`/api/image/chats/${id}`);
   }
 
-  photoReady(msg) {
-    msg.photoReady = true;
+  photoReady() {
+    this._photoReady = true;
   }
 
   public async sendMgsWitImage() {
@@ -251,9 +252,9 @@ export class ChatOnePersonPage {
   private async getMsg() {
     try {
       let ramdon = new Date().getTime();
-      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20` ).toPromise() as any[];
+      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20`).toPromise() as any[];
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.to.id + "/" + MyApp.User.team);
         return item;
       }).reverse();
 
