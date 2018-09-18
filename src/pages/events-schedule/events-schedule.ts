@@ -14,6 +14,7 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ImagesEventPage } from '../images-event/images-event';
 import { ImageViewerController } from 'ionic-img-viewer';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -46,6 +47,7 @@ export class EventsSchedulePage {
   public url = interceptor.url;
 
   public allImages = [];
+  firstTime:boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -53,7 +55,8 @@ export class EventsSchedulePage {
     public alertCtrl: AlertController, public helper: HelpersProvider,
     public popoverCtrl: PopoverController, public zone: NgZone,
     public locationAccuracy: LocationAccuracy, public geolocation: Geolocation,
-    private imageViewerCtrl: ImageViewerController
+    private imageViewerCtrl: ImageViewerController,
+    private storage: Storage
   ) {
 
     if (this.navParams.get("notification") === undefined)
@@ -103,6 +106,13 @@ export class EventsSchedulePage {
   }
 
   public addButtonHidden() {
+    if (this.user.role.name !== "Manager" && this.user.role.name !== "OwnerLeague")
+      return true;
+
+    return false;
+  }
+
+  public addOverlayHidden() {
     if (this.user.role.name !== "Manager" && this.user.role.name !== "OwnerLeague")
       return true;
 
@@ -485,6 +495,17 @@ export class EventsSchedulePage {
       })
 
     });
+
+    this.storage.get('firstTime').then((val) => {
+      console.log("Val", val);
+
+      if(val == true && this.user.role.name === "Manager"){
+        this.firstTime = false;
+
+      }
+
+    })
+
   }
 
   ionViewWillUnload() {
@@ -620,6 +641,11 @@ export class EventsSchedulePage {
 
   public toImages(event) {
     this.navCtrl.push(ImagesEventPage, { event: event });
+  }
+
+  hideOverlay(){
+    this.storage.set('firstTime', false);
+    this.firstTime = true;
   }
 
 }

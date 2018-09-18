@@ -9,6 +9,7 @@ import { CreatePlayerPage } from '../create-player/create-player';
 import { MyApp } from '../../app/app.component';
 import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { Storage } from '@ionic/storage';
 
 /**
  * para mostrar la lista de jugadores del equipo
@@ -30,6 +31,7 @@ export class RosterPage {
 
   public managers = [];
   public managersOrigin = [];
+  firstTime:boolean = true;
 
   public updateImagePlayer = (index: number, stringBase64: string) => {
 
@@ -42,8 +44,20 @@ export class RosterPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public auth: AuthServiceProvider,
-    public loading: LoadingController
+    public loading: LoadingController, private storage: Storage
   ) {
+  }
+
+  ionViewWillEnter(){
+    this.storage.get('firstTimeRoster').then((val) => {
+      console.log("Val", val);
+
+      if(val == true && this.user.role.name === "Manager"){
+        this.firstTime = false;
+
+      }
+
+    })
   }
 
   async ionViewDidLoad() {
@@ -146,4 +160,8 @@ export class RosterPage {
     this.navCtrl.push(ChatOnePersonPage, { user });
   }
 
+  hideOverlay(){
+    this.storage.set('firstTimeRoster', false);
+    this.firstTime = true;
+  }
 }

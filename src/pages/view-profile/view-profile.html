@@ -49,7 +49,7 @@
 
     <ion-item (click)="answerDeleteDevices()">
       <div class="icon-box-bg second-bg" item-start>
-          <img src="./assets/imgs/change-language.svg" width="40px">
+          <img src="./assets/imgs/logout-all-devices.svg" width="40px">
         </div>
       {{ "CLEARDEVICES" | translate}}
     </ion-item>
@@ -79,8 +79,8 @@
       <div class="icon-box-bg third-bg" item-start>
           <img src="./assets/imgs/change-role.svg" width="40px">
         </div>
-      {{ "CHANGEROLE" | translate}} ({{user.role.name}})
-    </ion-item>
+        {{ "CHANGEROLE" | translate}} ({{user.role.name.toUpperCase() | translate}})    
+      </ion-item>
 
     <ion-item (click)="setting()">
       <div class="icon-box-bg fourth-bg" item-start>

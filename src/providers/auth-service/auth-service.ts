@@ -184,6 +184,8 @@ export class AuthServiceProvider {
       console.log(success);
       await HelpersProvider.me.backgroundGeolocation.stop();
     }
+    this.storage.remove('firstTime');
+    this.storage.remove('firstTimeRoster');
 
     var data = await this.storage.remove("user");
     data = await this.storage.remove("role");

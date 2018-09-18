@@ -62,6 +62,7 @@ export class MyApp {
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
   public defaultImageUser = true;
+  public fullName:any;
 
   public pages: Array<Object> = [
     { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "events.png", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
@@ -134,6 +135,8 @@ export class MyApp {
 
       this.user = this.auth.User();
       MyApp.User = this.auth.User();
+
+      this.fullName = this.user.firstName + ' ' + this.user.lastName;
 
       console.log("User", this.user);
 

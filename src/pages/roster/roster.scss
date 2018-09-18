@@ -2,6 +2,9 @@ page-roster {
     .scroll-content {
         background-color: #f2f5f8 !important;
     }
+    ion-header, ion-fab{
+        z-index: 99999;
+    }
     .not-players {
         padding: 10px;
         h4 {
@@ -110,6 +113,34 @@ page-roster {
             font-size: 1.7rem;
             padding-right: 5px;
             flex: 0;
+        }
+        &.tutorial-btn{
+            border: 3px solid;
+        }
+    }
+
+    .overlay {
+        display: none;
+            
+        &.shown {
+            position: fixed;
+            display: block;
+            padding: 40px 20px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba( 0, 0, 0, 0.7 );
+            z-index: 9999;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+    .bottom-tutorial{
+        text-align: center;
+
+        h2{
+            color: #fff;
         }
     }
 }
