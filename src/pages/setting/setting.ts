@@ -31,6 +31,7 @@ export class SettingPage {
   public setting: Setting;
   public userRole = "";
   public version = "0.0.9"
+  public user = JSON.parse( JSON.stringify(MyApp.User) );
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private storage: Storage, private auth: AuthServiceProvider
@@ -130,6 +131,11 @@ export class SettingPage {
       await this.storage.remove("role");
 
       await this.changeRol();
+      
+      this.userRole = MyApp.User.role.name;
+      this.user = JSON.parse( JSON.stringify(MyApp.User) );
+
+      this.navCtrl.pop();
     }
     catch (e) {
       console.error(e);
@@ -144,6 +150,7 @@ export class SettingPage {
     if (MyApp.User.roles.length === 0) return;
 
     role = MyApp.User.roles[0];
+    MyApp.User.role = role;
 
     if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
       try {

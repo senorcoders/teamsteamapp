@@ -33,7 +33,7 @@
   <ion-list>
 
 
-    <ion-item (click)="selectTeams()" *ngIf="user.hasOwnProperty('team')">
+    <ion-item (click)="selectTeams()" *ngIf="user.role.hasOwnProperty('team')">
       <div class="icon-box-bg" item-start>
         <img src="./assets/imgs/change-teams.png" width="40px">
       </div>

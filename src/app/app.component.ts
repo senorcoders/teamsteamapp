@@ -70,7 +70,7 @@ export class MyApp {
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "chat.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
-    { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
+    { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
@@ -363,7 +363,7 @@ export class MyApp {
 
     //El usuario puede estar sin ningun rol
     //cuando es asi no se muestra ningun item en el nav
-    if (MyApp.User.role === null && MyApp.User.role === undefined) return false;
+    if (MyApp.User.role === null || MyApp.User.role === undefined) return false;
 
     //Para verificar si nesesita de newData, para mostrarse
     newDatas = newDatas || 'not';

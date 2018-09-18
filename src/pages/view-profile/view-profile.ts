@@ -29,7 +29,7 @@ export class ViewProfilePage {
   @ViewChild('myRoles') myRoles: Select;
 
 
-  public user: any = { options: { language: "en" } };
+  public user: any = { options: { language: "en" }, role: { name: "" } };
   public lang: string = '';
   public image = false;
   public team: any = { name: "", request: [] };
@@ -50,20 +50,20 @@ export class ViewProfilePage {
     public alertCtrl: AlertController, public storage: Storage
   ) {
 
+  }
+
+  async ionViewWillEnter() {
+
     this.user = MyApp.User;
     if (!this.user.hasOwnProperty("options")) {
       this.user.options = { language: 'en' };
     }
-
     this.lang = this.user.options.language;
 
-  }
-
-  async ionViewWillEnter() {
     let load = this.helper.getLoadingStandar(), ramdon = new Date().getTime();
     try {
       this.image = false;
-      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team+ "/"+ ramdon);
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team + "/" + ramdon);
 
       this.currentRol = this.user.rol;
 
@@ -72,12 +72,14 @@ export class ViewProfilePage {
         this.roles = user.roles;
       }
 
-      this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
-      if (!this.team.hasOwnProperty("request")) {
-        this.team.request = [];
-      }
+      if (this.user.role.hasOwnProperty("team")) {
+        this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+        if (!this.team.hasOwnProperty("request")) {
+          this.team.request = [];
+        }
 
-      this.request = this.team.request;
+        this.request = this.team.request;
+      }
 
       //cargamos los roles types
       for (let rol of MyApp.User.roles) {
@@ -150,7 +152,7 @@ export class ViewProfilePage {
         team
       }).toPromise();
 
-      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team+ "/"+ ramdon);
+      this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team + "/" + ramdon);
 
       //es necesario actualizar la image del nav manualmente
       document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);

@@ -11,7 +11,7 @@ import { MyApp } from '../../app/app.component';
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url = 'https://api.lockerroomapp.com'; // 'http://192.168.1.11:8187';
+  public static url = 'http://192.168.1.11:8187'; // 'https://api.lockerroomapp.com';
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

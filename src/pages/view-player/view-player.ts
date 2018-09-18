@@ -24,7 +24,7 @@ export class ViewPlayerPage {
   public isManager = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-    this.player = this.navParams.get("player");
+    this.player = this.navParams.get("player"); console.log(this.player);
     this.user = this.navParams.get("user");
 
     //Para comprobar si el miembro del roster es un manager
