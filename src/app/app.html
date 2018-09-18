@@ -11,13 +11,14 @@
 				<img (click)="goProfile()" [hidden]="!defaultImageUser" src="./assets/imgs/user-menu.png" class="userimg">
 				<img (click)="goProfile()" [hidden]="defaultImageUser" id="imageSlide" (load)="loadImageMenu()" class="userimg">
 				<img src="./assets/imgs/gear-icon.png" class="icon-gear">
-				<!--div class="new-menu" [hidden]="newData([{id:'request', role: 'Manager'}])"></div-->
-				<span class="identity"> {{rolIdentity | translate}}	{{identity}}</span>
+				<!-- <div class="new-menu" >{{rolIdentity | translate}}	{{identity}}</div> -->
 			</div>
 			
 
 			<div class="info">
 				<h4 id="nameSlide" class="email">{{user.email}}</h4>
+				<h4 class="email">{{rolIdentity | translate}}	{{identity}}</h4>
+
 			</div>
 		</div>
 	</ion-header>

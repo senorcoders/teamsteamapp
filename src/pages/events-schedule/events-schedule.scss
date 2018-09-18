@@ -444,4 +444,15 @@ page-events-schedule {
     .gallery-grid-img{
         max-height: 100px;
     }
+    .invite-btn{
+        border-radius: 50px !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        width: 140px !important;
+         ion-icon{
+            font-size: 1.7rem;
+            padding-right: 5px;
+            flex: 0;
+        }
+    }
 }

@@ -85,12 +85,14 @@ ion-menu {
         .email {
             margin: 0;
             padding: 0;
-            color: white;
+            color: rgba(255, 255, 255, 0.7);
             font-size: 1.2rem;
             width: 100%;
             padding-left: 1rem;
             display: flex;
             align-items: center;
+            padding-left: 0;
+
         }
     }
     .list-ios>.item-block:last-child,
@@ -197,4 +199,12 @@ button[ion-fab] {
     border-radius: 50%;
     left: 27px;
     top: 4px;
+}
+
+#nameSlide{
+    font-size: 1.5rem;
+    margin-bottom: 5px;
+    padding-left: 0;
+    color: white !important;
+    word-break: break-word;
 }
