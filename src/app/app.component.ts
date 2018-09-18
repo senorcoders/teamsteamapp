@@ -355,6 +355,12 @@ export class MyApp {
 
   public validRolePage(page, newDatas) {
 
+    let valid = MyApp.User === undefined || MyApp.User === null;
+
+    if (valid === true) {
+      return false;
+    }
+
     //El usuario puede estar sin ningun rol
     //cuando es asi no se muestra ningun item en el nav
     if (MyApp.User.role === null && MyApp.User.role === undefined) return false;
@@ -368,12 +374,6 @@ export class MyApp {
     }
 
     if (page.role === "*") return true;
-
-    let valid = MyApp.User === undefined || MyApp.User === null;
-
-    if (valid === true) {
-      return true;
-    }
 
     if (Object.prototype.toString.call(page.role) === "[object String]")
       return MyApp.User.role.name === page.role;
