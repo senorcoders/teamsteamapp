@@ -138,13 +138,13 @@ export class MyApp {
       console.log("User", this.user);
 
       //Si es un agente libre
-      if(MyApp.User.role.name === 'OwnerLeague'){
+      if (MyApp.User.role.name === 'OwnerLeague') {
         this.statusBar.backgroundColorByHexString("#32a0fe");
 
-      }else{
+      } else {
         this.statusBar.backgroundColorByHexString("#fe324d");
       }
-     if (MyApp.User.role.name === "FreeAgent") {
+      if (MyApp.User.role.name === "FreeAgent") {
         this.rolIdentity = "";
         this.identity = "";
         this.nav.root = AgentFreePage;
@@ -156,13 +156,13 @@ export class MyApp {
           let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
           this.rolIdentity = "TEAM";
           this.identity = team.name;
-        }else{
+        } else {
           let league;
-          if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]"){
+          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
             league = MyApp.User.role.league;
-          }else{
-            league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
-          } 
+          } else {
+            league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+          }
           this.rolIdentity = "LEAGUE.NAME";
           this.identity = league.name;
         }
@@ -171,7 +171,7 @@ export class MyApp {
 
       //console.log(this.user);
       let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ MyApp.User.team);
+      this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       //ahora asignamos el lenaguaje si es que esta definido
@@ -193,7 +193,7 @@ export class MyApp {
 
       console.log("cambiooo", this.user);
       let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
-      this.userimg = interceptor.transformUrl("/userprofile/images/"+ MyApp.User.id+ "/"+ team);
+      this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;
@@ -204,12 +204,12 @@ export class MyApp {
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
         this.rolIdentity = "TEAM";
         this.identity = team.name;
-      }else{
+      } else {
         let league;
-        if(Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]"){
+        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
           league = MyApp.User.role.league;
-        }else{
-          league = await this.http.get("/leagues/"+ MyApp.User.role.league).toPromise() as any;
+        } else {
+          league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
         this.rolIdentity = "LEAGUE.NAME";
         this.identity = league.name;
@@ -355,6 +355,16 @@ export class MyApp {
 
   public validRolePage(page, newDatas) {
 
+    let valid = MyApp.User === undefined || MyApp.User === null;
+
+    if (valid === true) {
+      return false;
+    }
+
+    //El usuario puede estar sin ningun rol
+    //cuando es asi no se muestra ningun item en el nav
+    if (MyApp.User.role === null && MyApp.User.role === undefined) return false;
+
     //Para verificar si nesesita de newData, para mostrarse
     newDatas = newDatas || 'not';
     if (newDatas !== 'not') {
@@ -364,12 +374,6 @@ export class MyApp {
     }
 
     if (page.role === "*") return true;
-
-    let valid = MyApp.User === undefined || MyApp.User === null;
-
-    if (valid === true) {
-      return true;
-    }
 
     if (Object.prototype.toString.call(page.role) === "[object String]")
       return MyApp.User.role.name === page.role;

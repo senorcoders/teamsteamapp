@@ -67,6 +67,8 @@ export class AssistenceComponent {
   async ionViewDidLoad() {
     let load = HelpersProvider.me.getLoadingStandar();
     try {
+      //si se repeats es igual a true quiere decir que ya se envio
+      // la asistencia por medio del router y no hay que cargarla por el medio del api
       if (this.repeats === false) {
         let assistence: any = await this.http.get("/assistence/" + this.event.id).toPromise()
         if (assistence.length !== 0) {

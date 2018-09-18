@@ -20,97 +20,129 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
   templateUrl: 'roster.html',
 })
 export class RosterPage {
-  
-  public user=MyApp.User;
-  public isManager:boolean=false;
 
-  public players=[];
-  public playersOrigin=[];
-  public filtro="";
+  public user = MyApp.User;
+  public isManager: boolean = false;
 
-  public updateImagePlayer = (index:number, stringBase64:string)=>{
+  public players = [];
+  public playersOrigin = [];
+  public filtro = "";
+
+  public managers = [];
+  public managersOrigin = [];
+
+  public updateImagePlayer = (index: number, stringBase64: string) => {
 
     let t = this; console.log(index);
-    return new Promise(function(resolve, reject){
+    return new Promise(function (resolve, reject) {
       t.players[index].image = stringBase64;
     })
 
   }
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, 
+  constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public auth: AuthServiceProvider,
     public loading: LoadingController
   ) {
   }
 
-  async ionViewDidLoad(){
+  async ionViewDidLoad() {
 
     let load = HelpersProvider.me.getLoadingStandar();
-    try{
-      
-    let players:any = await this.http.get("/players/team/"+ this.user.team).toPromise();
+    try {
 
-    this.players = players;
+      //Cargamos primeramente los players
+      let players = await this.http.get("/players/team/" + this.user.team).toPromise() as any[];
 
-    this.players = this.players.filter(function(item){
-      return item.user !== undefined;
-    });
+      this.players = players.filter(function (item) {
+        return item.user !== undefined;
+      });
 
-    this.players = await Promise.all(this.players.map(async function(item){
-      
+      this.players = this.players.map(function (item) {
         item.loadImage = false;
-        let ramdon = new Date().getTime();
-        item.image = interceptor.transformUrl("/userprofile/images/"+ item.user.id+ "/"+ MyApp.User.team);
-
+        item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
         return item;
-      }));
+      });
 
       this.playersOrigin = this.players;
 
+      //Cargamos los managers
+      let managers = await this.http.get(`/roles?where={"team":"${this.user.team}","name":"Manager"}`).toPromise() as any[];
+
+      this.managers = managers.filter(function (item) {
+        return item.user !== undefined;
+      });
+
+      this.managers = this.managers.map(function (item) {
+        item.loadImage = false;
+        item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
+        return item;
+      });
+
+      this.managersOrigin = this.managers;
+
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
-    
+
     load.dismiss();
   }
 
-  public success(event, player){
+  public success(event, player) {
     player.loadImage = true;
   }
 
-  public editMember(index:number, member:any){
+  public validEditEnable(player) {
+    if (this.user.role.name !== 'Manager') return true;
+    if (player.hasOwnProperty("name")) return true;
+
+    return false;
+  }
+
+  public editMember(index: number, member: any) {
     this.navCtrl.push(MemberRosterPage, {
-      player : member,
+      player: member,
       index,
       updateImage: this.updateImagePlayer
     });
   }
 
-  public viewPlayer(member){
+  public viewPlayer(member) {
     this.navCtrl.push(ViewPlayerPage, {
-      player : member,
-      user : this.user
+      player: member,
+      user: this.user
     });
   }
 
-  public search(){
-    if(this.filtro===""){
+  public search() {
+    if (this.filtro === "") {
       this.players = this.playersOrigin;
+      this.managers = this.managersOrigin;
       return;
     }
 
-    this.players = this.playersOrigin.filter(function(it){
+    this.players = this.playersOrigin.filter(function (it) {
       return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
-      it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
-    }.bind(this))
+        it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
+    }.bind(this));
+    
+    this.managers = this.managersOrigin.filter(function (it) {
+      return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
+    }.bind(this));
   }
 
-  public addPlayer(){
+  public notMembers() {
+    if (this.playersOrigin.length === 0 && this.managersOrigin.length === 0) return true;
+    return false;
+  }
+
+  public addPlayer() {
     this.navCtrl.push(CreatePlayerPage);
   }
 
-  public goChat(user){
+  public goChat(user) {
     this.navCtrl.push(ChatOnePersonPage, { user });
   }
 

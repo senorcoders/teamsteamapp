@@ -1,34 +1,66 @@
 page-roster {
-    .scroll-content{
+    .scroll-content {
         background-color: #f2f5f8 !important;
     }
-
-    .not-players{
+    .not-players {
         padding: 10px;
-        h4{
+        h4 {
             color: #008e76 !important;
             font-size: 1.4rem !important;
             margin-top: 0 !important;
             margin-bottom: 4px !important;
         }
-        .bold{
+        .bold {
             color: #1a5d58 !important;
         }
     }
-
-    #list {
+    .list {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        padding-bottom: 10px !important;
+        .divider {
+            display: flex;
+            flex-basis: calc(33.3333% * 3);
+            margin-top: 10px;
+            margin-bottom: 10px;
+            div {
+                flex-basis: 33.3333%;
+                width: 33.3333%;
+                display: flex;
+                align-items: center;
+                span {
+                    width: 100%;
+                    text-align: center;
+                    display: block;
+                    color: #e1e4ea;
+                    text-transform: uppercase;
+                    font-size: 1.6rem;
+                }
+                .line {
+                    height: 2px;
+                    background-color: #e1e4ea;
+                    flex-basis: 100%;
+                    width: 100%;
+                }
+            }
+            .left {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+            .right {
+                padding-left: 10px;
+                padding-right: 10px;
+            }
+        }
         .item {
             background-color: white;
             flex-basis: 30.3333%;
             width: 30.3333%;
             margin-top: 10px !important;
+            padding: 4px; //border: 1px solid #bdbdbd;
             padding: 4px;
-            //border: 1px solid #bdbdbd;
-            padding: 4px;
-            box-shadow:  1px 1px 1px #e3e6e8, 2px 2px 2px #eaedf0, -1px -1px 1px #e3e6e8, -2px -2px 2px #eaedf0;
+            box-shadow: 1px 1px 1px #e3e6e8, 2px 2px 2px #eaedf0, -1px -1px 1px #e3e6e8, -2px -2px 2px #eaedf0;
             ion-avatar {
                 display: flex;
                 justify-content: space-around;
@@ -52,12 +84,12 @@ page-roster {
                 a {
                     text-decoration: none !important;
                 }
-                .chat{
+                .chat {
                     color: #fe324d !important;
                     font-size: 1.5rem;
                     line-height: 1.9rem;
                 }
-                .edit{
+                .edit {
                     color: #c3c6c9 !important;
                     font-size: 1.3rem;
                     line-height: 1.9rem;
@@ -65,18 +97,16 @@ page-roster {
             }
         }
     }
-
-    button[ion-fab]{
+    button[ion-fab] {
         background-color: #fe324d !important;
         color: white !important;
     }
-
-    .invite-btn{
+    .invite-btn {
         border-radius: 50px !important;
         border-bottom-right-radius: 0 !important;
         border-top-right-radius: 0 !important;
         width: 100px !important;
-         ion-icon{
+        ion-icon {
             font-size: 1.7rem;
             padding-right: 5px;
             flex: 0;

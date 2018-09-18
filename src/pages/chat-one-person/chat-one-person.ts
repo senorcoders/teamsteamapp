@@ -211,12 +211,15 @@ export class ChatOnePersonPage {
       text: data.comment || "",
       team: MyApp.User.team,
       image: data.image,
-      status: 'pending'
+      status: 'pending',
+      dateTime: moment().toISOString(),
     };
     try {
-      let msgS = await this.http.post("/api/chat/image", msg).toPromise() as any;
-      this.pushNewMsg(msgS);
-      let index = this.getMsgIndexById(msgS.dateTime);
+      let msgPost = JSON.parse(JSON.stringify(msg));
+      msg.from = this.from;
+      this.pushNewMsg(msg);
+      await this.http.post("/api/chat/image", msgPost).toPromise();
+      let index = this.getMsgIndexById(msg.dateTime);
       if (index !== -1) {
         this.msgList[index].status = 'success';
       }
@@ -281,6 +284,8 @@ export class ChatOnePersonPage {
       status: 'pending'
     };
 
+    let newMsgPost = JSON.parse(JSON.stringify(newMsg));
+    newMsg.from = this.from;
     this.pushNewMsg(newMsg);
     this.editorMsg = '';
 
@@ -289,7 +294,7 @@ export class ChatOnePersonPage {
     }
 
     try {
-      let msg = await this.http.post("/chat", newMsg).toPromise() as any;
+      let msg = await this.http.post("/chat", newMsgPost).toPromise() as any;
       let index = this.getMsgIndexById(msg.dateTime);
       if (index !== -1) {
         this.msgList[index].status = 'success';

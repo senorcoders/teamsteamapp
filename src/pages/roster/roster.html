@@ -14,18 +14,31 @@
 
 <ion-content>
 
-  <div [hidden]="players.length!==0" class="not-players">
+  <div [hidden]="!notMembers()" class="not-players">
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.1" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.2" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.3" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' "><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
   </div>
 
-  <ion-searchbar [hidden]="players.length===0" [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)"
-    #sear>
+  <ion-searchbar [hidden]="notMembers()" [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)" #sear>
   </ion-searchbar>
 
-  <div id="list" [hidden]="players.length===0">
+
+
+  <div class="list" [hidden]="playersOrigin.length===0">
+
+    <div class="divider">
+      <div class="left">
+        <div class="line"></div>
+      </div>
+      <div>
+        <span>{{ "PLAYER" | translate}}s</span>
+      </div>
+      <div class="right">
+        <div class="line"></div>
+      </div>
+    </div>
 
     <div class="item" *ngFor="let player of players; let i = index" [hidden]="player.user.id == user.id">
 
@@ -39,7 +52,42 @@
 
         <div class="actions">
           <a href="#" class="chat" (click)="goChat(player.user)">Chat</a>
-          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" |
+          <a href="#" class="edit" [hidden]="validEditEnable(player)" (click)="editMember(i, player)">{{"EDIT" |
+            translate}}</a>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+
+  <div class="list" [hidden]="managersOrigin.length===0">
+
+    <div class="divider">
+      <div class="left">
+        <div class="line"></div>
+      </div>
+      <div>
+        <span>{{ "MANAGER" | translate}}s</span>
+      </div>
+      <div class="right">
+        <div class="line"></div>
+      </div>
+    </div>
+
+    <div class="item" *ngFor="let manager of managers; let i = index" [hidden]="manager.user.id == user.id">
+
+      <div class="inner">
+        <ion-avatar (click)="viewPlayer(manager)" style="cursor: pointer;">
+          <img [src]="manager.image" [hidden]="!manager.loadImage" (load)="success(event, manager);">
+          <img src="./assets/imgs/user.png" [hidden]="manager.loadImage">
+        </ion-avatar>
+
+        <h4>{{manager.user.firstName}} {{manager.user.lastName}}</h4>
+
+        <div class="actions">
+          <a href="#" class="chat" (click)="goChat(manager.user)">Chat</a>
+          <a href="#" class="edit" [hidden]="validEditEnable(manager)" (click)="editMember(i, manager)">{{"EDIT" |
             translate}}</a>
         </div>
       </div>
@@ -49,7 +97,7 @@
   </div>
 
 
-  <ion-fab bottom right [hidden]="user.role.name != 'Manager' " >
+  <ion-fab bottom right [hidden]="user.role.name != 'Manager' ">
     <button color="base" ion-fab icon-only (click)="addPlayer()" class="invite-btn">
       <ion-icon name="md-add"></ion-icon> INVITE
     </button>
