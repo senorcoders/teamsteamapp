@@ -64,12 +64,12 @@ export class MyApp {
   public defaultImageUser = true;
 
   public pages: Array<Object> = [
-    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "basketball", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
-    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
-    { title: "PHOTOS.TITLE", component: PhotosPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
-    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
-    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "basketball", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
-    { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "basketball", role: "OwnerLeague", watch: "", newData: "" },
+    { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "events.png", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.ROSTER", component: RosterPage, icon: "roster.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "PHOTOS.TITLE", component: PhotosPage, icon: "photos.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "chat.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
+    { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "baseball", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },

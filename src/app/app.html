@@ -25,6 +25,7 @@
 	<ion-content>
 		<ion-list>
 			<ion-item *ngFor="let p of pages" (click)="goToPage(p.component)" [hidden]="!validRolePage(p, p.newData)">
+				<img src="./assets/imgs/{{p.icon}}" item-start height="25px;">
 				{{p.title | translate}}
 				<div class="new-action" [hidden]="newData(p.watch)">{{"NEW" | translate}} <span> {{getCounts(p.watch)}} </span> </div>
 			</ion-item>
