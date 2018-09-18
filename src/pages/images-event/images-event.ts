@@ -85,7 +85,7 @@ export class ImagesEventPage {
     if (_new === true) {
       let img = new Image();
       let src = myImage.target.src;
-      src = src.split("?").shift() + "?middle=true";
+      src = src.split("?").shift() + "?large=true";
       img.setAttribute("src", src);
       const imageViewer = this.imageViewerCtrl.create(img);
       imageViewer.present();
