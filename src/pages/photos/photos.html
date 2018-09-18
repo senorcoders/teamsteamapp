@@ -26,7 +26,16 @@
   </ion-grid>
 
   <!-- para mostrar las imagenes por evento -->
-  <div class="images-event" (click)="toImages(e)" *ngFor="let e of events" [hidden]="filter!=='imagesEvent'">
+  <ion-list [hidden]="filter!=='imagesEvent'">
+      <ion-item>
+        <ion-label>Select an event</ion-label>
+        <ion-select interface="popover" [(ngModel)]="photoEvent">
+          <ion-option *ngFor="let e of events" [value]="e.name">{{e.name}}</ion-option>
+        </ion-select>
+      </ion-item>
+    </ion-list>
+  <div class="images-event" (click)="toImages(e)" *ngFor="let e of events;" [hidden]="photoEvent!==e.name">
+   
     <h3 class="title">{{e.name}}</h3>
     <!-- <ion-slides>
       <ion-slide *ngFor="let i of e.images">

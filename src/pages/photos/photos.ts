@@ -17,6 +17,7 @@ export class PhotosPage {
   public events = [];
   public allImages = [];
   public filter = "imagesEvent";
+  photoEvent:any;
   public url = interceptor.url;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
