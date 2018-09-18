@@ -11,6 +11,16 @@
 
 </ion-header>
 
+<div class="overlay shown" [hidden]="firstTime" (click)="hideOverlay()">
+   
+    <br><br><br><br><br><br>
+    <div class="bottom-tutorial">
+      <h2>Invite Players and managers to the team here!</h2>
+    </div>
+    <div class="img-down" text-right>
+      <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
+    </div>
+  </div>
 
 <ion-content>
 
@@ -98,7 +108,7 @@
 
 
   <ion-fab bottom right [hidden]="user.role.name != 'Manager' ">
-    <button color="base" ion-fab icon-only (click)="addPlayer()" class="invite-btn">
+    <button color="base" ion-fab icon-only (click)="addPlayer()" class="invite-btn" [ngClass]="!firstTime ? 'tutorial-btn' : 'test'">
       <ion-icon name="md-add"></ion-icon> INVITE
     </button>
   </ion-fab>

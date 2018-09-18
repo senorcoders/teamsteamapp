@@ -13,6 +13,7 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { MyApp } from '../../app/app.component';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { Storage } from '@ionic/storage';
 
 /**
  * para logearse en el app
@@ -42,7 +43,8 @@ export class LoginPage {
     public http : HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider,
     private diagnostic: Diagnostic,
-    public plt: Platform
+    public plt: Platform,
+    private storage: Storage
   ) {
     
   }
@@ -113,6 +115,9 @@ export class LoginPage {
         if(user){
           this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByHexString("#fe324d");
+          this.storage.set('firstTime', true);
+          this.storage.set('firstTimeRoster', true);
+
           if (MyApp.User.hasOwnProperty("team")||MyApp.User.role.name==="OwnerLeague") {
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
             if(this.plt.is('ios')){

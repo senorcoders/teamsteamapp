@@ -5,6 +5,10 @@ page-events-schedule {
     ion-navbar {
         height: auto !important;
     }
+
+    ion-header, ion-fab{
+        z-index: 99999;
+    }
     .toolbar-background-md,
     .toolbar-background {
         background-color: white !important;
@@ -454,5 +458,52 @@ page-events-schedule {
             padding-right: 5px;
             flex: 0;
         }
+        &.tutorial-btn{
+            border: 3px solid;
+        }
     }
+
+    .overlay {
+        display: none;
+            
+        &.shown {
+            position: fixed;
+            display: block;
+            padding: 40px 20px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba( 0, 0, 0, 0.7 );
+            z-index: 9999;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+
+    .header-tutorial{
+        margin-top: 15px;
+        img{
+            width: 100px;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        p{
+            color: #fff;
+            font-size: 15px;
+            text-align: right;
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+
+    .bottom-tutorial{
+        text-align: center;
+
+        h2{
+            color: #fff;
+        }
+    }
+
+    
 }
