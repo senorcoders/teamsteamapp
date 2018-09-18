@@ -28,6 +28,9 @@ export class RosterPage {
   public playersOrigin = [];
   public filtro = "";
 
+  public managers = [];
+  public managersOrigin = [];
+
   public updateImagePlayer = (index: number, stringBase64: string) => {
 
     let t = this; console.log(index);
@@ -51,23 +54,32 @@ export class RosterPage {
       //Cargamos primeramente los players
       let players = await this.http.get("/players/team/" + this.user.team).toPromise() as any[];
 
-      //Cargamos los managers
-      let managers = await this.http.get(`/roles?where={"team":"${this.user.team}","name":"Manager"}`).toPromise() as any[];
-
-      players = players.concat(managers);
-
       this.players = players.filter(function (item) {
         return item.user !== undefined;
       });
 
-      this.players = await Promise.all(this.players.map(async function (item) {
+      this.players = this.players.map(function (item) {
         item.loadImage = false;
         item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
-
         return item;
-      }));
+      });
 
       this.playersOrigin = this.players;
+
+      //Cargamos los managers
+      let managers = await this.http.get(`/roles?where={"team":"${this.user.team}","name":"Manager"}`).toPromise() as any[];
+
+      this.managers = managers.filter(function (item) {
+        return item.user !== undefined;
+      });
+
+      this.managers = this.managers.map(function (item) {
+        item.loadImage = false;
+        item.image = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + MyApp.User.team);
+        return item;
+      });
+
+      this.managersOrigin = this.managers;
 
     }
     catch (e) {
@@ -106,13 +118,24 @@ export class RosterPage {
   public search() {
     if (this.filtro === "") {
       this.players = this.playersOrigin;
+      this.managers = this.managersOrigin;
       return;
     }
 
     this.players = this.playersOrigin.filter(function (it) {
       return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
         it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
-    }.bind(this))
+    }.bind(this));
+    
+    this.managers = this.managersOrigin.filter(function (it) {
+      return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
+        it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
+    }.bind(this));
+  }
+
+  public notMembers() {
+    if (this.playersOrigin.length === 0 && this.managersOrigin.length === 0) return true;
+    return false;
   }
 
   public addPlayer() {
