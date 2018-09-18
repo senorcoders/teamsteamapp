@@ -1,7 +1,8 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <ion-title>{{"PLAYER" | translate}}</ion-title>
+    <ion-title *ngIf="!isManager">{{"PLAYER" | translate}}</ion-title>
+    <ion-title *ngIf="isManager">{{"MANAGER" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -27,22 +28,22 @@
           <p> {{player.user.lastName}} </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!isManager">
           <h2>{{"BIRTHDAY" | translate}}</h2>
           <p> {{player.birthDateParsed}} </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!isManager">
           <h2>{{"ROSTER.GENDER" | translate}}</h2>
           <p> {{player.gender}} </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!isManager">
           <h2>{{"ROSTER.YERSERYNUMBERonly" | translate}}</h2>
           <p> {{player.yerseyNumber}} </p>
         </ion-item>
 
-        <ion-item>
+        <ion-item *ngIf="!isManager">
           <h2>{{"ROSTER.POSITIONS" | translate}}</h2>
           <p *ngFor="let position of player.positions"> {{position}} </p>
         </ion-item>

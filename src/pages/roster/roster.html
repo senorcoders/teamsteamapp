@@ -14,18 +14,18 @@
 
 <ion-content>
 
-  <div [hidden]="players.length!==0" class="not-players">
+  <div [hidden]="playersOrigin.length!==0" class="not-players">
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.1" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.2" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' ">{{"ROSTER.NOTPLAYERS.3" | translate}}</h4>
     <h4 [hidden]="user.role.name != 'Manager' "><a href="https://admin.lockerroomapp.com">admin.lockerroomapp.com</a></h4>
   </div>
 
-  <ion-searchbar [hidden]="players.length===0" [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)"
+  <ion-searchbar [hidden]="playersOrigin.length===0" [(ngModel)]="filtro" showCancelButton="true" (ionInput)="search($event)"
     #sear>
   </ion-searchbar>
 
-  <div id="list" [hidden]="players.length===0">
+  <div id="list" [hidden]="playersOrigin.length===0">
 
     <div class="item" *ngFor="let player of players; let i = index" [hidden]="player.user.id == user.id">
 
@@ -39,7 +39,7 @@
 
         <div class="actions">
           <a href="#" class="chat" (click)="goChat(player.user)">Chat</a>
-          <a href="#" class="edit" [hidden]="user.role.name !== 'Manager'" (click)="editMember(i, player)">{{"EDIT" |
+          <a href="#" class="edit" [hidden]="validEditEnable(player)" (click)="editMember(i, player)">{{"EDIT" |
             translate}}</a>
         </div>
       </div>

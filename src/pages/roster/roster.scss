@@ -20,6 +20,7 @@ page-roster {
         display: flex;
         flex-wrap: wrap;
         justify-content: space-around;
+        padding-bottom: 10px !important;
         .item {
             background-color: white;
             flex-basis: 30.3333%;
