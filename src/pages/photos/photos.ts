@@ -34,11 +34,20 @@ export class PhotosPage {
 
       //Obtenemos todas las imagenes
       let imgs = [];
-      for (let e of this.events) {
+      for (let  e of this.events) {
         let is = e.images || [];
         imgs = imgs.concat(is);
       }
       this.allImages = imgs;
+      let eLeng:any = this.events.length;
+      for (let index in this.events){
+        let n:any = index;
+        console.log(index, this.events.length);
+        if(n == (eLeng - 1 )){
+          console.log(this.events[n].name);
+          this.photoEvent = this.events[n].name;
+        }
+      }
     }
     catch (e) {
       console.error(e);

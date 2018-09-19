@@ -30,7 +30,7 @@
       <ion-item>
         <ion-label>Select an event</ion-label>
         <ion-select interface="popover" [(ngModel)]="photoEvent">
-          <ion-option *ngFor="let e of events" [value]="e.name">{{e.name}}</ion-option>
+          <ion-option *ngFor="let e of events; let last = last" [value]="e.name" [selected]="last ? true : false">{{e.name}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>
@@ -42,11 +42,20 @@
         <img [src]="url+i.src+'?small=true'">
       </ion-slide>
     </ion-slides> -->
-    <ion-grid>
+    <ion-grid *ngIf="e.images">
       <ion-row>
         <img col-4 [src]="url+i.src+'?middle=true'" (click)="presentImage($event, true)" class="gallery-grid-img"
           *ngFor="let i of e.images">
       </ion-row>
     </ion-grid>
+    <ion-grid *ngIf="!e.images">
+      <ion-row text-center>
+        <ion-col col-12>
+            <p>No photos have beed added to this event</p>
+
+        </ion-col>
+
+      </ion-row>
+    </ion-grid> 
   </div>
 </ion-content>
