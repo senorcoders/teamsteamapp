@@ -31,13 +31,16 @@ export class SettingPage {
   public setting: Setting;
   public userRole = "";
   public version = "0.0.9"
-  public user = JSON.parse( JSON.stringify(MyApp.User) );
+  public user = JSON.parse(JSON.stringify(MyApp.User));
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private storage: Storage, private auth: AuthServiceProvider
   ) {
     this.setting = new Setting();
-    this.userRole = MyApp.User.role.name;
+    if (MyApp.User.role !== null && MyApp.User.role !== undefined)
+      this.userRole = MyApp.User.role.name;
+    else
+      this.userRole = "None";
   }
 
   async ionViewDidLoad() {
@@ -131,9 +134,9 @@ export class SettingPage {
       await this.storage.remove("role");
 
       await this.changeRol();
-      
+
       this.userRole = MyApp.User.role.name;
-      this.user = JSON.parse( JSON.stringify(MyApp.User) );
+      this.user = JSON.parse(JSON.stringify(MyApp.User));
 
       this.navCtrl.pop();
     }

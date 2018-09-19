@@ -54,7 +54,14 @@ export class ViewProfilePage {
 
   async ionViewWillEnter() {
 
-    this.user = MyApp.User;
+    this.user = JSON.parse( JSON.stringify(MyApp.User) );
+
+    //Para cuando el usuario no tiene rol
+    if(this.user.role===null||this.user.role==undefined){
+      this.user.role = {
+        name: "None"
+      };
+    }
     if (!this.user.hasOwnProperty("options")) {
       this.user.options = { language: 'en' };
     }
@@ -93,11 +100,11 @@ export class ViewProfilePage {
       // console.log(this.rolesTypes);
 
       //Si el rol es de league cargamos la liga
-      if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
-        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-          this.league = await this.http.get("/leagues/" + MyApp.User.role.league.id).toPromise() as any;
+      if (this.user.role.league !== undefined && this.user.role.league !== null) {
+        if (Object.prototype.toString.call(this.user.role.league) === "[object Object]")
+          this.league = await this.http.get("/leagues/" + this.user.role.league.id).toPromise() as any;
         else
-          this.league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+          this.league = await this.http.get("/leagues/" + this.user.role.league).toPromise() as any;
       }
 
     }
@@ -105,6 +112,12 @@ export class ViewProfilePage {
       console.error(e);
     }
     load.dismissAll();
+  }
+
+  public teamsPresent(){
+    if(this.user.role===undefined||this.user.role===null) return false;
+    
+    return this.user.role.hasOwnProperty('team')
   }
 
   public selectLeagues() {
@@ -397,7 +410,7 @@ export class ViewProfilePage {
     if (MyApp.User === null || MyApp.User === undefined)
       return true;
 
-    if (this.team.request.length !== 0 && MyApp.User.role.name === "Manager") return false;
+    if (this.team.request.length !== 0 && this.user.role.name === "Manager") return false;
 
     return true;
   }

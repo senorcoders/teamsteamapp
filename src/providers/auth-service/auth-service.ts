@@ -150,8 +150,10 @@ export class AuthServiceProvider {
     if (user != null) {
       MyApp.User = user;
       MyApp.User.role = role;
-      if (MyApp.User.role.hasOwnProperty("team")) {
-        MyApp.User.team = role.team.id;
+      if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
+        if (MyApp.User.role.hasOwnProperty("team")) {
+          MyApp.User.team = role.team.id;
+        }
       }
       this.menuCtrl.swipeEnable(true);
       return true;
@@ -231,13 +233,13 @@ export class AuthServiceProvider {
     this.user = MyApp.User;
   }
 
-  public async fetchAndUpdateRoles(){
-    try{
+  public async fetchAndUpdateRoles() {
+    try {
       let roles = await this.http.get(`/roles?where={"user":"${MyApp.User.id}"}`).toPromise();
       MyApp.User.roles = roles;
       await this.storage.set("user", MyApp.User);
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }

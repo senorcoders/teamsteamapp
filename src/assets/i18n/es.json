@@ -384,5 +384,6 @@
         "TITLE": "Fotos",
         "TITLEEVENTS": "Imágenes de los eventos"
     },
-    "REMOVEACCOUNT": "Eliminar mi cuenta del equipo"
+    "REMOVEACCOUNT": "Eliminar mi cuenta del equipo",
+    "NONE":"Ninguno"
 }

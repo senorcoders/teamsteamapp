@@ -1,5 +1,5 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
-import { Platform, Nav, Events, MenuController } from 'ionic-angular';
+import { Platform, Nav, Events, MenuController, ViewController } from 'ionic-angular';
 
 import { Push, PushObject } from '@ionic-native/push';
 
@@ -17,20 +17,18 @@ import { ViewProfilePage } from '../pages/view-profile/view-profile';
 
 import { TranslateService } from '@ngx-translate/core';
 import { HelpersProvider } from '../providers/helpers/helpers';
-import { AddTeamPage } from '../pages/add-team/add-team';
 import { WebIntent } from '@ionic-native/web-intent';
 import { INotificationProvider } from '../providers/i-notification/i-notification';
 import { ViewRequestsPage } from '../pages/view-requests/view-requests';
 import { AgentFreePage } from '../pages/agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../pages/places-player-free/places-player-free';
 import { RequestsPlayerPage } from '../pages/requests-player/requests-player';
-import { CreateLeaguePage } from '../pages/create-league/create-league';
 import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
-import { SettingPage } from '../pages/setting/setting';
 import { RequestsLeaguePage } from '../pages/requests-league/requests-league';
 import { StatusBar } from '@ionic-native/status-bar';
 import { PhotosPage } from '../pages/photos/photos';
 
+import * as moment from 'moment';
 
 @Component({
   templateUrl: 'app.html'
@@ -62,7 +60,7 @@ export class MyApp {
   public username = "Senorcoders";
   public userimg = "./assets/imgs/user.jpg";
   public defaultImageUser = true;
-  public fullName:any;
+  public fullName: any;
 
   public pages: Array<Object> = [
     { title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "events.png", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
@@ -113,6 +111,45 @@ export class MyApp {
 
   }
 
+  //Para cuando se cambia de pantalla
+  //Enviamos los datos al api
+  ngAfterViewInit() {
+    this.nav.viewDidEnter.subscribe((data: ViewController) => {
+
+      if (this.platform.is('cordova')) {
+        let screen: any = {
+          startTime: new Date().toISOString(),
+          screen: data.instance.constructor.name,
+          firstName: MyApp.User.firstName,
+          lastName: MyApp.User.lastName,
+          userEmail: MyApp.User.email
+        };
+
+        if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+          screen.team = MyApp.User.team
+        } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+            screen.league = MyApp.User.role.league.id;
+          else
+            screen.league = MyApp.User.role.league.id;
+        }
+
+        data.willUnload.subscribe(async () => {
+          screen.endTime = new Date().toISOString();
+
+          //Calculamos el tiempo que estuvo en la pantalla en segundos
+          let dateTime = moment(screen.startTime),
+            dateTimeEnd = moment(screen.endTime);
+          let diff = moment.duration(dateTime.diff(dateTimeEnd));
+          screen.timeVisited = Math.abs(diff.seconds());
+
+          await this.http.post("/screen", screen).toPromise()
+        });
+      }
+
+    });
+  }
+
   public async init() {
     try {
       MyApp.me = this;
@@ -131,59 +168,7 @@ export class MyApp {
     var authenticated = await this.auth.checkUser();
     if (authenticated === true) {
 
-      this.statusBar.overlaysWebView(false);
-
-      this.user = this.auth.User();
-      MyApp.User = this.auth.User();
-
-      this.fullName = this.user.firstName + ' ' + this.user.lastName;
-
-      console.log("User", this.user);
-
-      //Si es un agente libre
-      if (MyApp.User.role.name === 'OwnerLeague') {
-        this.statusBar.backgroundColorByHexString("#32a0fe");
-
-      } else {
-        this.statusBar.backgroundColorByHexString("#fe324d");
-      }
-      if (MyApp.User.role.name === "FreeAgent") {
-        this.rolIdentity = "";
-        this.identity = "";
-        this.nav.root = AgentFreePage;
-      } else {
-        this.nav.root = EventsSchedulePage;
-        if (MyApp.User.hasOwnProperty("team")) {
-
-          //Para actualizar el nombre del equipo en menu slide
-          let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-          this.rolIdentity = "TEAM";
-          this.identity = team.name;
-        } else {
-          let league;
-          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
-            league = MyApp.User.role.league;
-          } else {
-            league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
-          }
-          this.rolIdentity = "LEAGUE.NAME";
-          this.identity = league.name;
-        }
-
-      }
-
-      //console.log(this.user);
-      let ramdon = new Date().getTime();
-      this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
-      document.getElementById("imageSlide").setAttribute("src", this.userimg);
-
-      //ahora asignamos el lenaguaje si es que esta definido
-      if (MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language')) {
-        await this.helper.setLanguage(MyApp.User.options.language);
-      } else {
-        this.helper.setLanguage('en')
-      }
-
+      await this.proccessViews();
     } else {
       this.nav.root = LoginPage;
     }
@@ -200,8 +185,11 @@ export class MyApp {
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;
+      if (MyApp.User.role == undefined || MyApp.User.role == null) {
 
-      if (MyApp.User.hasOwnProperty("team")) {
+        this.rolIdentity = "";
+        this.identity = "";
+      } else if (MyApp.User.hasOwnProperty("team")) {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
@@ -224,11 +212,91 @@ export class MyApp {
 
   }
 
+  private async proccessViews() {
+
+    this.statusBar.overlaysWebView(false);
+
+    this.user = this.auth.User();
+    MyApp.User = this.auth.User();
+
+    this.fullName = this.user.firstName + ' ' + this.user.lastName;
+
+    console.log("User", this.user);
+
+    //Si es un agente libre
+    if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
+      if (MyApp.User.role.name === 'OwnerLeague') {
+        this.statusBar.backgroundColorByHexString("#32a0fe");
+
+      } else {
+        this.statusBar.backgroundColorByHexString("#fe324d");
+      }
+    }
+
+    if (MyApp.User.role == undefined || MyApp.User.role == null) {
+
+      this.nav.root = ViewProfilePage;
+      this.rolIdentity = "";
+      this.identity = "";
+    } else if (MyApp.User.role.name === "FreeAgent") {
+
+      this.rolIdentity = "";
+      this.identity = "";
+      this.nav.root = AgentFreePage;
+    } else {
+
+      this.nav.root = EventsSchedulePage;
+      if (MyApp.User.hasOwnProperty("team")) {
+
+        //Para actualizar el nombre del equipo en menu slide
+        let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
+        this.rolIdentity = "TEAM";
+        this.identity = team.name;
+      } else {
+        let league;
+        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
+          league = MyApp.User.role.league;
+        } else {
+          league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+        }
+        this.rolIdentity = "LEAGUE.NAME";
+        this.identity = league.name;
+      }
+
+    }
+
+
+    /**********
+       * 
+       * Para asignar la imagen en el menu
+       */
+    this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
+    document.getElementById("imageSlide").setAttribute("src", this.userimg);
+
+
+    //ahora asignamos el lenaguaje si es que esta definido
+    if (MyApp.User.hasOwnProperty('options') && MyApp.User.options.hasOwnProperty('language')) {
+      await this.helper.setLanguage(MyApp.User.options.language);
+    } else {
+      this.helper.setLanguage('en')
+    }
+
+  }
+
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
   private async serviceNewDatas() {
     //get new requests for managers
     if (MyApp.User === null || MyApp.User === undefined)
       return;
+
+    let image = document.getElementById("imageSlide") as HTMLImageElement;
+    if (image !== null) {
+      if (image.naturalHeight === 0 && image.naturalWidth === 0) {
+        if (this.defaultImageUser == false) {
+          this.zone.run(function () { this.defaultImageUser = true; }.bind(this))
+        }
+      }
+    }
 
     //Para comprobar si hay nuevos request
     //Para los players
@@ -242,37 +310,42 @@ export class MyApp {
     }
     this.checkNewDatas();
     this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
-    if (MyApp.User.role.name === "FreeAgent")
-      return;
 
-    //Para saber si hay request para league
-    if (MyApp.User.role.name === "Manager") {
+    if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
+      if (MyApp.User.role.name === "FreeAgent")
+        return;
 
-      let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
-      if (requestsLeague.length > 0) {
-        MyApp.newDatas["requestLeague"] = true;
-        MyApp.counts["requestLeague"] = requestsLeague.length;
-      } else {
-        MyApp.newDatas["requestLeague"] = false;
-        MyApp.counts["requestLeague"] = 0;
+      //Para saber si hay request para league
+      if (MyApp.User.role.name === "Manager") {
+
+        let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
+        if (requestsLeague.length > 0) {
+          MyApp.newDatas["requestLeague"] = true;
+          MyApp.counts["requestLeague"] = requestsLeague.length;
+        } else {
+          MyApp.newDatas["requestLeague"] = false;
+          MyApp.counts["requestLeague"] = 0;
+        }
+        this.checkNewDatas();
+        this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
       }
-      this.checkNewDatas();
-      this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
     }
 
-    //Para saber si hay nuevos request para unirse a equipos
-    this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
-    //console.log(this.team);
-    if (!this.team.hasOwnProperty("request")) {
-      this.team.request = [];
-    }
+    if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+      //Para saber si hay nuevos request para unirse a equipos
+      this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+      //console.log(this.team);
+      if (!this.team.hasOwnProperty("request")) {
+        this.team.request = [];
+      }
 
-    if (this.team.request.length !== 0) {
-      MyApp.newDatas["request"] = true;
-      MyApp.counts["request"] = this.team.request.length;
-    } else {
-      MyApp.newDatas["request"] = false;
-      MyApp.counts["request"] = 0;
+      if (this.team.request.length !== 0) {
+        MyApp.newDatas["request"] = true;
+        MyApp.counts["request"] = this.team.request.length;
+      } else {
+        MyApp.newDatas["request"] = false;
+        MyApp.counts["request"] = 0;
+      }
     }
 
     this.checkNewDatas();
