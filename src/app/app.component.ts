@@ -122,7 +122,8 @@ export class MyApp {
           screen: data.instance.constructor.name,
           firstName: MyApp.User.firstName,
           lastName: MyApp.User.lastName,
-          userEmail: MyApp.User.email
+          userEmail: MyApp.User.email,
+          platform: this.platform.is("ios") ? 'ios' : 'android'
         };
 
         if (MyApp.User.team !== undefined && MyApp.User.team !== null) {

@@ -13,15 +13,15 @@
 
     <ion-list-header>
       {{ 'NEWEVENT.TITLE' | translate }}
-    </ion-list-header>
+    </ion-list-header> 
 
     <ion-item>
-      <ion-label floating>{{ 'NAME' | translate }}</ion-label>
+      <ion-label floating>{{ 'NAME' | translate }} <span style="color: red;">*</span></ion-label>
       <ion-input type="text" [(ngModel)]="name"> </ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>{{ 'NEWEVENT.TYPE' | translate }}</ion-label>
+      <ion-label floating>{{ 'NEWEVENT.TYPE' | translate }} <span style="color: red;">*</span></ion-label>
       <ion-select [(ngModel)]="type">
         <ion-option value='practice' *ngIf="!league">{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
         <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
@@ -51,28 +51,30 @@
       <ion-toggle [(ngModel)]="repeatsDaily"></ion-toggle>
     </ion-item>
 
+    <ion-item *ngIf="!repeats">
+      <h4 class="date-time" (click)="setDate()"> {{'DATE' | translate }}: {{date}} <span style="color: red;">*</span></h4>
+    </ion-item>
+
   </ion-list>
 
   <ion-grid>
     <ion-row>
-      <ion-col *ngIf="!repeats">
-        <ion-item>
-          <h4 class="date-time" (click)="setDate()"> {{'DATE' | translate }}: {{date}} </h4>
-        </ion-item>
-      </ion-col>
-      <ion-col>
-        <ion-item>
-          <h4 class="date-time" (click)="setTime()">{{'TIME' | translate }}: {{time}} </h4>
-        </ion-item>
-      </ion-col>
-    </ion-row>
+    <ion-col>
+      <ion-item>
+        <h4 class="date-time" (click)="setTime()">{{'TIME' | translate }}: {{time}} <span style="color: red;">*</span></h4>
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item>
+        <h4 class="date-time" (click)="setTimeEnd()">{{'TIMEEND' | translate }}: {{timeEnd}} </h4>
+      </ion-item>
+    </ion-col>
+  </ion-row>
   </ion-grid>
 
   <ion-list>
 
-    <ion-item>
-      <h4 class="date-time" (click)="setTimeEnd()">{{'TIMEEND' | translate }}: {{timeEnd}} </h4>
-    </ion-item>
+   
 
     <ion-item>
       <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
@@ -89,8 +91,11 @@
     </ion-item>
 
     <ion-item *ngIf="!league">
-      <ion-label floating>{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="percentageNotification"> </ion-input>
+      <ion-label stacked>{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }} <span style="color: red;">*</span></ion-label>
+      <ion-range min="0" max="100" [(ngModel)]="percentageNotification" color="primary">
+          <ion-label range-left>0</ion-label>
+          <ion-label range-right>100</ion-label>
+      </ion-range>
     </ion-item>
 
     <ion-item *ngIf="!league">
@@ -111,10 +116,10 @@
   </ion-list>
 
   <ion-list>
-    <ion-list-header>{{'LOCATION' | translate }}</ion-list-header>
+    <ion-list-header><strong>{{'LOCATION' | translate }}</strong></ion-list-header>
 
     <ion-item>
-      <ion-label floating>{{'NEWEVENT.ENTERADDRES' | translate }}</ion-label>
+      <ion-label floating>{{'NEWEVENT.ENTERADDRES' | translate }} <span style="color: red;">*</span></ion-label>
       <ion-textarea [(ngModel)]="address"></ion-textarea>
     </ion-item>
 
@@ -132,11 +137,13 @@
       <ion-textarea [(ngModel)]="locationDetail"></ion-textarea>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label floating>{{'WEBSITE' | translate }}</ion-label>
       <ion-input type="url" [(ngModel)]="locationLink"></ion-input>
-    </ion-item>
+    </ion-item> -->
   </ion-list>
+
+  <ion-label>{{'NEWEVENT.ADDIMAGE' | translate }}</ion-label>
 
   <ion-avatar [hidden]="!image">
     <img width="100%" (load)="success()" [src]="imageSrc">

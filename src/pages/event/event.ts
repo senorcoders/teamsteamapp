@@ -332,9 +332,32 @@ export class EventPage {
     this.map.setOptions({ draggable: true });
   }
 
+  public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?: string) {
+
+    cancel = cancel || new Function();
+  
+    let si = await this.helper.getWords("YES"), no = await this.helper.getWords("NO");
+    let til = await this.helper.getWords("DELETEEVENT");
+    let alert = this.alertCtrl.create({
+      title: til,
+      buttons: [
+        {
+          text: no,
+          role: 'cancel',
+          handler: () => cancel()
+        },
+        {
+          text: si,
+          handler: () => acept()
+        }
+      ]
+    });
+    alert.present();
+  }
+
   public async remove() {
 
-    await this.helper.presentAlertStandar(this.deleteEvent.bind(this));
+    await this.presentAlertStandar(this.deleteEvent.bind(this));
 
   }
 

@@ -41,7 +41,7 @@ export class NewEventPage {
 
   //var for inputs event
   public name: string = "";
-  public type: string = "event";
+  public type: string = "practice";
   public repeats: boolean = false;
   public repeatsDaily: boolean = false;
   public repeatsDays: Array<any> = [];
@@ -99,7 +99,8 @@ export class NewEventPage {
 
     let mapOptions: any = {
       center: origin,
-      zoom: 8
+      zoom: 8,
+      scrollWheelZoom: false
     };
 
     this.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);

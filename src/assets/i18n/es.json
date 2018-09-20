@@ -37,7 +37,7 @@
         "DAYSREPEATS": "Días",
         "NOTIFY": "Notificar",
         "OPTIONALINFO": "Información Opcional",
-        "LOCATIONDETAIL": "Detalles",
+        "LOCATIONDETAIL": "Notas sobre la ubicación",
         "TYPE": "Tipo",
         "NEWTEAMACTION": "Crear Nuevo Equipo",
         "TYPES": {
@@ -49,16 +49,18 @@
         "MINUTESBEFORE": "minutos antes",
         "ATTENDENCETRACKING": "Tomar Asistencia",
         "PINMAP": "O MAPA",
-        "ENTERADDRES": "Digita La Dirección",
+        "ENTERADDRES": "Ingresa la dirección o mueve el pin en el mapa",
         "SUCCESS-TEXT": {
             "ONE": "Su evento",
             "TWO": "se ha guardado",
             "THREE": "con éxito"
         },
         "PORCENTAGENOTIFICATION": "Porcentaje de Asistencia para Recibir Notificación",
-        "SEARCHPLAYER": "Buscar Jugadores",
+        "SEARCHPLAYER": "Reclutar atletas para este evento?",
         "POSITION": "Posición",
-        "ADDPOSITION": "Agregue las posiciones de los jugadores que quiere buscar"
+        "ADDPOSITION": "Agregue las posiciones de los jugadores que quiere buscar",
+        "ADDIMAGE": "Añadir imagen a este evento"
+
     },
     "NEWTEAM": {
         "TITLE": "Nuevo Equipo",
@@ -76,10 +78,10 @@
     },
     "DAILY": "Diario",
     "NAME": "Nombre",
-    "DATE": "Fecha",
-    "TIME": "Hora",
+    "DATE": "Fecha del Evento",
+    "TIME": "Hora de Inicio",
     "TIMEEND": "Hora de Finalización",
-    "DESCRIPTION": "Descripción",
+    "DESCRIPTION": "Descripción del Evento",
     "SPORT": "Deporte",
     "SPORTS": {
         "BASEBALL&SOFTBALL": "Béisbol y Softbol",
@@ -149,6 +151,7 @@
     "SAVE": "Guardar",
     "UPDATE": "Actualizar",
     "DELETE": "Eliminar",
+    "DELETEEVENT": "Eliminar Evento?",
     "REMOVE": "Remover",
     "SAVING": "Guardando...",
     "UPDATING": "Actualizando...",

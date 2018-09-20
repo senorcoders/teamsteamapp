@@ -52,7 +52,7 @@ export class SettingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private storage: Storage, private auth: AuthServiceProvider
   ) {
-    
+
     if (MyApp.User.role !== null && MyApp.User.role !== undefined)
       this.userRole = MyApp.User.role.name;
     else
@@ -108,7 +108,7 @@ export class SettingPage {
       if (part === "team") {
         let confi = this.setting.team;
         await this.http.put("/teams/" + MyApp.User.team, { configuration: confi }).toPromise() as any;
-      }else if(part==="user"){
+      } else if (part === "user") {
         await this.http.put("/user/" + MyApp.User.id, { options: this.setting.user }).toPromise() as any;
       }
     }
@@ -118,6 +118,26 @@ export class SettingPage {
       //   this.setting.team[id] = !this.setting.team[id];
       // } 
       await HelpersProvider.me.presentAlertErrorStandar();
+    }
+  }
+
+  public async toogleSubscribeTopicPush() {
+    try {
+      if (HelpersProvider.me.platform.is("cordova")) {
+        if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+          if (this.setting.user.notifications.events === false) {
+            await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+          } else {
+            await MyApp.me.pushObject.subscribe(MyApp.User.team);
+          }
+        }
+      }
+      await this.stateChange("user");
+    }
+    catch (e) {
+      console.error(e);
+      this.setting.user.notifications.events = !this.setting.user.notifications.events;
+      HelpersProvider.me.presentAlertErrorStandar();
     }
   }
 

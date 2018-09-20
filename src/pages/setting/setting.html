@@ -36,11 +36,11 @@
     <ion-list-header>
       {{"SETTING.NOTIFICATIONS" | translate}}
     </ion-list-header>
-    <ion-item>
+    <ion-item *ngIf="user.hasOwnProperty('team')">
       <ion-label>
         {{"NAVMENU.EVENTS" | translate}}
       </ion-label>
-      <ion-toggle [(ngModel)]="setting.user.notifications.events" (ionChange)="stateChange('user')"></ion-toggle>
+      <ion-toggle [(ngModel)]="setting.user.notifications.events" (ionChange)="toogleSubscribeTopicPush()"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-label>
