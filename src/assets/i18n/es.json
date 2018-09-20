@@ -104,7 +104,9 @@
         "WATERPOLO": "Water Polo",
         "WRESTLING": "Lucha",
         "MMA": "Artes Marciales Mixtas",
-        "YOGA": "Yoga"
+        "YOGA": "Yoga",
+        "SKATING": "Skating"
+
     },
     "SEARCHTEAM": {
         "TITLE": "Encuentra tu equipo",

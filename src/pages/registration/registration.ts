@@ -54,6 +54,7 @@ export class RegistrationPage {
   public userValid=false;
   public teamValid=false;
   public leagueValid=false;
+  sports:any = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
@@ -63,10 +64,18 @@ export class RegistrationPage {
     public ngZone: NgZone
   ) {
     this.selectNew = "team";
+    this.getSports();
   }
 
   public async getWord(key) {
     return HelpersProvider.me.getWords(key);
+  }
+
+  getSports(){
+    this.http.get('/sports').subscribe(result => {
+      //console.log(result);
+      this.sports = result;
+    });
   }
 
   public changePhoto() {
