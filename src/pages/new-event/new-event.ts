@@ -41,7 +41,7 @@ export class NewEventPage {
 
   //var for inputs event
   public name: string = "";
-  public type: string = "event";
+  public type: string = "practice";
   public repeats: boolean = false;
   public repeatsDaily: boolean = false;
   public repeatsDays: Array<any> = [];

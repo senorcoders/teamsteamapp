@@ -37,7 +37,7 @@
         "DAYSREPEATS": "Repeats Days",
         "NOTIFY": "NOTIFY",
         "OPTIONALINFO": "OPTIONAL INFO",
-        "LOCATIONDETAIL": "LOCATION DETAIL",
+        "LOCATIONDETAIL": "Notes about location",
         "TYPE": "Type",
         "TYPES": {
             "GAME": "Game",
@@ -48,16 +48,17 @@
         "MINUTESBEFORE": "minutes before",
         "ATTENDENCETRACKING": "Attendence Tracking",
         "PINMAP": "OR PIN MAP",
-        "ENTERADDRES": "Enter Address",
+        "ENTERADDRES": "Enter Address or move pin on map",
         "SUCCESS-TEXT": {
             "ONE": "Your event",
             "TWO": "has been saved",
             "THREE": " successfully"
         },
         "PORCENTAGENOTIFICATION": "% Attendance to receive notification",
-        "SEARCHPLAYER": "Looking for players?",
+        "SEARCHPLAYER": "Recruit Athletes for this event?",
         "POSITION": "Position",
-        "ADDPOSITION": "Add position of players you are looking for"
+        "ADDPOSITION": "Add position of players you are looking for",
+        "ADDIMAGE": "Add image to this event"
     },
     "NEWTEAM":{
         "TITLE": "New Team",
@@ -75,10 +76,10 @@
     },
     "DAILY": "Daily",
     "NAME": "Name",
-    "DATE": "Date",
-    "TIME": "Time",
+    "DATE": "Date of Event",
+    "TIME": "Start Time",
     "TIMEEND": "End Time",
-    "DESCRIPTION": "Description",
+    "DESCRIPTION": "Event Description",
     "SPORT": "Sport",
     "SPORTS":{
         "BASEBALL&SOFTBALL": "Baseball & Softball",
