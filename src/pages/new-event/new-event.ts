@@ -99,7 +99,8 @@ export class NewEventPage {
 
     let mapOptions: any = {
       center: origin,
-      zoom: 8
+      zoom: 8,
+      scrollWheelZoom: false
     };
 
     this.map = new google.maps.Map(document.getElementById("map_canvas"), mapOptions);
