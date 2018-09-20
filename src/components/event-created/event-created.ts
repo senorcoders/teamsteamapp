@@ -15,6 +15,9 @@ export class EventCreatedComponent {
     public navCtrl: NavController
   ) {
     this.event = this.navParams.get("event");
+    setTimeout(() =>{
+      this.leave();
+    }, 4000);
   }
 
   ionViewDidLoad(){

@@ -150,6 +150,7 @@
     "SAVE": "Guardar",
     "UPDATE": "Actualizar",
     "DELETE": "Eliminar",
+    "DELETEEVENT": "Eliminar Evento?",
     "REMOVE": "Remover",
     "SAVING": "Guardando...",
     "UPDATING": "Actualizando...",
