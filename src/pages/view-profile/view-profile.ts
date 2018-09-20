@@ -475,7 +475,7 @@ export class ViewProfilePage {
   }
 
   public async changeRol() {
-
+      console.log("change");
     let role = this.roles.find(function (it) {
       return it.id === this.rolType;
     }.bind(this)) as any;
