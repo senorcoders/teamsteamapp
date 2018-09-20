@@ -26,7 +26,7 @@
       <ion-toggle [(ngModel)]="setting.team.chatEachPlayer" (ionChange)="stateChange('team')"></ion-toggle>
     </ion-item>
 
-    <ion-item *ngIf="userRole!=='OwnerLeague'&&userRole!=='None'" (click)="removeAccount()">
+    <ion-item *ngIf="userRole!=='OwnerLeague'&&userRole!=='None'&&userRole!=='FreeAgent'" (click)="removeAccountConfirm()">
       {{"REMOVEACCOUNT" | translate}} ({{user.role.team.name}})
     </ion-item>
 
@@ -59,7 +59,7 @@
   <ion-list>
     <ion-item>
       <ion-label floating>{{'CHAGELANGUAGE' | translate}}</ion-label>
-      <ion-select [(ngModel)]="setting.user.language" (ionChange)="stateChange('user')">
+      <ion-select [(ngModel)]="setting.user.language" (ionChange)="stateChange('user', 'language')">
         <ion-option value="en">English</ion-option>
         <ion-option value="es">Español </ion-option>
       </ion-select>

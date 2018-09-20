@@ -103,12 +103,16 @@ export class SettingPage {
     return objectOf;
   }
 
-  public async stateChange(part: string) {
+  public async stateChange(part: string, id?: string) {
     try {
       if (part === "team") {
         let confi = this.setting.team;
         await this.http.put("/teams/" + MyApp.User.team, { configuration: confi }).toPromise() as any;
       } else if (part === "user") {
+        id = id || "";
+        if (id === 'language') {
+          HelpersProvider.me.setLanguage(this.setting.user.language);
+        }
         await this.http.put("/user/" + MyApp.User.id, { options: this.setting.user }).toPromise() as any;
       }
     }
@@ -141,7 +145,12 @@ export class SettingPage {
     }
   }
 
-  public async removeAccount() {
+  public async removeAccountConfirm(){
+    let msg = await HelpersProvider.me.getWords("REMOVEACCOUNT");
+    HelpersProvider.me.presentAlertStandar(this.removeAccount.bind(this), ()=>{}, msg);
+  }
+
+  private async removeAccount() {
     let load = HelpersProvider.me.getLoadingStandar();
     try {
       if (MyApp.User.role.name === "Manager") {
