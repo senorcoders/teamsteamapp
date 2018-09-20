@@ -183,6 +183,8 @@ import { SelectEventPageModule } from '../pages/select-event/select-event.module
 import { SelectEventPage } from '../pages/select-event/select-event';
 import { PhotosPage } from '../pages/photos/photos';
 import { PhotosPageModule } from '../pages/photos/photos.module';
+import { NotificationPageModule } from '../pages/notification/notification.module';
+import { NotificationPage } from '../pages/notification/notification';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -276,7 +278,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImagesEventPageModule,
     UploadMultiplesImagesPageModule,
     SelectEventPageModule,
-    PhotosPageModule
+    PhotosPageModule,
+    NotificationPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -358,7 +361,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImagesEventPage,
     UploadMultiplesImagesPage,
     SelectEventPage,
-    PhotosPage
+    PhotosPage,
+    NotificationPage
   ],
   providers: [
     StatusBar,

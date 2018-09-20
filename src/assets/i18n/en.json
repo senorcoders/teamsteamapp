@@ -386,5 +386,8 @@
         "TITLEEVENTS": "Images of the events"
     },
     "REMOVEACCOUNT": "Remove my account from this team",
-    "NONE":"None"
+    "NONE":"None",
+    "NOTIFCATION":{
+        "TITLE": "Send notification to group"
+    }
 }

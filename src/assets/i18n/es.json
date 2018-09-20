@@ -390,5 +390,8 @@
         "TITLEEVENTS": "Imágenes de los eventos"
     },
     "REMOVEACCOUNT": "Eliminar mi cuenta del equipo",
-    "NONE":"Ninguno"
+    "NONE":"Ninguno",
+    "NOTIFCATION":{
+        "TITLE": "Enviar notificación a grupo"
+    }
 }
