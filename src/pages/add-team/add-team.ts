@@ -26,6 +26,8 @@ export class AddTeamPage {
   public team: any;
   public updateImage = false;
 
+  public sports = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public loadingCtrl: LoadingController,
     public helper: HelpersProvider, public alertCtrl: AlertController,
@@ -45,6 +47,17 @@ export class AddTeamPage {
       this.update = true;
     }
 
+  }
+
+  async ionViewDidLoad() {
+    let load = HelpersProvider.me.getLoadingStandar();
+    try {
+      this.sports = await this.http.get("/sports").toPromise() as any[];
+    }
+    catch (e) {
+      console.error(e);
+    }
+    load.dismiss();
   }
 
   public async success() {
@@ -85,7 +98,7 @@ export class AddTeamPage {
         name: this.name, description: this.description, city: this.city, sport: this.sport, configuration: { valid: true }
       }).toPromise();
 
-      let newRole:any = await this.http.post("/roles", {
+      let newRole: any = await this.http.post("/roles", {
         name: "Manager",
         user: MyApp.User.id,
         team: newTeam.id
@@ -95,7 +108,7 @@ export class AddTeamPage {
       if (this.imageSrc !== "")
         await this.http.post("/images/teams", { id: newTeam.id, image: this.imageSrc }).toPromise();
 
-        MyApp.User.roles.push(newRole);
+      MyApp.User.roles.push(newRole);
       await this.auth.updateUser(MyApp.User);
 
       console.log(newTeam);

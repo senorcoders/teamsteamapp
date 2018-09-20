@@ -501,6 +501,7 @@ export class ViewProfilePage {
 
     await this.auth.updateRole(role);
 
+    await this.ionViewWillEnter();
   }
 
 }

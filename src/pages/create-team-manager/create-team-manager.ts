@@ -35,11 +35,24 @@ export class CreateTeamManagerPage {
   public city = "";
   public updateImage = false;
 
+  public sports = [];
+
   constructor(public viewCtrl: ViewController, public navCtrl: NavController,
     public navParams: NavParams, public helper: HelpersProvider,
     public alertCtrl: AlertController, public http: HttpClient,
     public loadingCtrl: LoadingController
   ) {
+  }
+
+  async ionViewDidLoad() {
+    let load = HelpersProvider.me.getLoadingStandar();
+    try {
+      this.sports = await this.http.get("/sports").toPromise() as any[];
+    }
+    catch (e) {
+      console.error(e);
+    }
+    load.dismiss();
   }
 
   public changePhotoUser() {

@@ -51,9 +51,11 @@ export class RegistrationPage {
   public teamsSelect = [];
   public imageSrcLeague = "";
 
-  public userValid=false;
-  public teamValid=false;
-  public leagueValid=false;
+  public userValid = false;
+  public teamValid = false;
+  public leagueValid = false;
+
+  public sports = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
@@ -63,6 +65,17 @@ export class RegistrationPage {
     public ngZone: NgZone
   ) {
     this.selectNew = "team";
+  }
+
+  async ionViewDidLoad() {
+    let load = HelpersProvider.me.getLoadingStandar();
+    try {
+      this.sports = await this.http.get("/sports").toPromise() as any[];
+    }
+    catch (e) {
+      console.error(e);
+    }
+    load.dismiss();
   }
 
   public async getWord(key) {
@@ -192,17 +205,17 @@ export class RegistrationPage {
     this.imageLeague = true;
   }
 
-  validEmail(){
+  validEmail() {
     return !this.helper.validEmail(this.email);
   }
 
-  public async save(){
+  public async save() {
     let load = this.helper.getLoadingStandar();
     await this.saveAction();
     load.dismiss();
   }
   public async saveAction() {
-    
+
     try {
 
       this.userValid = true;
@@ -231,7 +244,7 @@ export class RegistrationPage {
           return;
         }
       } else if (this.selectNew === "ownerLeague") {
-        this.leagueValid=true;
+        this.leagueValid = true;
         if (
           this.nameLeague == ''
         ) {
@@ -349,24 +362,24 @@ export class RegistrationPage {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
           }
         } else if (err) {
-  
+
           if (err.hasOwnProperty("message")) {
-  
+
             let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
             this.presentAlert(passwordM);
             return;
-  
+
           } else if (err.hasOwnProperty("verify")) {
             let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
             this.presentAlert(msgVerifiedEmail);
             return;
           } else {
-  
+
             let invalidM = await this.helper.getWords("INVALIDPASS");
             this.presentAlert(invalidM);
             return;
           }
-  
+
         } else {
           let notConectionMSG = await this.helper.getWords("ERRORCONECTION");
           this.alertCtrl.create({
@@ -375,9 +388,9 @@ export class RegistrationPage {
             buttons: ["Ok"]
           }).present();
         }
-  
+
       }.bind(this)
-  
+
       if (this.selectNew === "team")
         await this.auth.Login(user.email, call);
       else if (this.selectNew === "agentFree")

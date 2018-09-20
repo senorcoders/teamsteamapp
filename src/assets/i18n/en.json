@@ -101,7 +101,8 @@
         "WATERPOLO": "Water Polo",
         "WRESTLING": "Wrestling",
         "MMA":"MMA",
-        "YOGA": "Yoga"
+        "YOGA": "Yoga",
+        "SKATING": "Skating"
     },
     "SEARCHTEAM": {
         "TITLE": "Find your team",
@@ -342,7 +343,8 @@
     "NOTCHATEACHPLAYER":"The manager blocked the messages with other players",
     "SETTING": {
         "NAME": "Settings",
-        "CHATEACHPLAYER": "Chat Between Each Athlete"
+        "CHATEACHPLAYER": "Chat Between Each Athlete",
+        "NOTIFICATIONS": "Notifications"
     },
     "SELECTROLE": "Select your role",
     "ROLTEAM": "Team Manager",

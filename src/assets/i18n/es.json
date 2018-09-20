@@ -22,7 +22,7 @@
         "EVENTS": "Eventos",
         "MYTASK": "Tareas",
         "ROSTER": "Jugadores",
-        "MESSAGES": "Mensajes Recientes",
+        "MESSAGES": "Mensajes",
         "PROFILE": "Perfil",
         "LOGOUT": "Cerrar Sesión"
     },
@@ -102,7 +102,8 @@
         "WATERPOLO": "Water Polo",
         "WRESTLING": "Lucha",
         "MMA": "Artes Marciales Mixtas",
-        "YOGA": "Yoga"
+        "YOGA": "Yoga",
+        "SKATING": "Patinaje"
     },
     "SEARCHTEAM": {
         "TITLE": "Encuentra tu equipo",
@@ -344,7 +345,8 @@
     "NOTCHATEACHPLAYER": "El manager bloqueo los mensajes con otros jugadores",
     "SETTING": {
         "NAME": "Ajustes",
-        "CHATEACHPLAYER": "Chatear Entre Cada Jugador"
+        "CHATEACHPLAYER": "Chatear Entre Cada Jugador",
+        "NOTIFICATIONS": "Notificaciones"
     },
     "SELECTROLE": "Selecciona tu rol",
     "ROLTEAM": "Manager de Equipo",

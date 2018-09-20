@@ -13,10 +13,26 @@ class Setting {
     chatEachPlayer: boolean
   };
 
+  public user: {
+    language: string,
+    notifications: {
+      events: boolean,
+      chats: boolean,
+      tasks: boolean
+    }
+  }
+
   constructor() {
     this.team = {
       chatEachPlayer: true
     };
+    this.user = {
+      language: "en", notifications: {
+        events: true,
+        chats: true,
+        tasks: true
+      }
+    }
   }
 
 }
@@ -28,7 +44,7 @@ class Setting {
 })
 export class SettingPage {
 
-  public setting: Setting;
+  public setting = new Setting();
   public userRole = "";
   public version = "0.0.9"
   public user = JSON.parse(JSON.stringify(MyApp.User));
@@ -36,7 +52,7 @@ export class SettingPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private storage: Storage, private auth: AuthServiceProvider
   ) {
-    this.setting = new Setting();
+    
     if (MyApp.User.role !== null && MyApp.User.role !== undefined)
       this.userRole = MyApp.User.role.name;
     else
@@ -59,6 +75,12 @@ export class SettingPage {
         }
       }
 
+      //Cargamos las opciones del usuario
+      let user = await this.http.get("/user/" + MyApp.User.id).toPromise() as any;
+      user.options = user.options || {};
+      this.setting.user = this.loadPropertys(user.options, this.setting.user);
+      this.setting.user.language = MyApp.User.options.language;
+      console.log(this.setting);
     }
     catch (e) {
       console.error(e);
@@ -67,11 +89,27 @@ export class SettingPage {
     load.dismiss();
   }
 
-  public async stateChange(e, part: string, id: string) {
+  private loadPropertys(object: any, objectOf: any) {
+    for (let name of Object.keys(objectOf)) {
+      if (Object.prototype.toString.call(objectOf[name]) === "[object Object]") {
+        object[name] = object[name] || {};
+        objectOf[name] = this.loadPropertys(object[name], objectOf[name]);
+      } else {
+        if (object[name] !== undefined && object[name] !== null)
+          objectOf[name] = object[name];
+      }
+    }
+
+    return objectOf;
+  }
+
+  public async stateChange(part: string) {
     try {
       if (part === "team") {
         let confi = this.setting.team;
         await this.http.put("/teams/" + MyApp.User.team, { configuration: confi }).toPromise() as any;
+      }else if(part==="user"){
+        await this.http.put("/user/" + MyApp.User.id, { options: this.setting.user }).toPromise() as any;
       }
     }
     catch (e) {
