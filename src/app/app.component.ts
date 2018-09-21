@@ -29,6 +29,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { PhotosPage } from '../pages/photos/photos';
 
 import * as moment from 'moment';
+import { NotificationPage } from '../pages/notification/notification';
 
 @Component({
   templateUrl: 'app.html'
@@ -69,6 +70,7 @@ export class MyApp {
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "chat.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
+    { title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },

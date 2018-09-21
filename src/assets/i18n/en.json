@@ -388,6 +388,12 @@
     "REMOVEACCOUNT": "Remove my account from this team",
     "NONE":"None",
     "NOTIFCATION":{
-        "TITLE": "Send notification to group"
+        "TITLE": "Send notification to group",
+        "GROUP": "Group",
+        "SENT": "Send Notification",
+        "SENTATHLETES": "Send Notification to All Athletes",
+        "SENTFAMILYS": "Send Notification to All Family",
+        "SENTMANAGERS": "Send Notification to All Managers",
+        "SUCCESS": "Notification Sent"
     }
 }

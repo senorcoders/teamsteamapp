@@ -1,6 +1,10 @@
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar color="base">
+    <button ion-button icon-only menuToggle start>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
     <ion-title>{{"NOTIFCATION.TITLE" | translate}}</ion-title>
   </ion-navbar>
 
@@ -8,5 +12,29 @@
 
 
 <ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{"NOTIFCATION.GROUP" | translate}}</ion-label>
+      <ion-select [(ngModel)]="group">
+        <ion-option value="athletes">{{"NOTIFCATION.SENTATHLETES" | translate}}</ion-option>
+        <ion-option value="managers">{{"NOTIFCATION.SENTMANAGERS" | translate}}</ion-option>
+        <ion-option value="familys">{{"NOTIFCATION.SENTFAMILYS" | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"TITLE" | translate}}</ion-label>
+      <ion-input [(ngModel)]="title"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{"MESSAGE" | translate}}</ion-label>
+      <ion-textarea [(ngModel)]="message"></ion-textarea>
+    </ion-item>
+
+  </ion-list>
+
+  <button ion-button (click)="sendNoti()">{{"NOTIFCATION.SENT" | translate}}</button>
 
 </ion-content>
