@@ -78,6 +78,7 @@ export class SettingPage {
       //Cargamos las opciones del usuario
       let user = await this.http.get("/user/" + MyApp.User.id).toPromise() as any;
       user.options = user.options || {};
+      console.log(user.options);
       this.setting.user = this.loadPropertys(user.options, this.setting.user);
       this.setting.user.language = MyApp.User.options.language;
       console.log(this.setting);
@@ -145,9 +146,9 @@ export class SettingPage {
     }
   }
 
-  public async removeAccountConfirm(){
+  public async removeAccountConfirm() {
     let msg = await HelpersProvider.me.getWords("REMOVEACCOUNT");
-    HelpersProvider.me.presentAlertStandar(this.removeAccount.bind(this), ()=>{}, msg);
+    HelpersProvider.me.presentAlertStandar(this.removeAccount.bind(this), () => { }, msg);
   }
 
   private async removeAccount() {

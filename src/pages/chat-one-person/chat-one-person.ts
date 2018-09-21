@@ -95,7 +95,9 @@ export class ChatOnePersonPage {
 
   private async loadingChatsUp() {
     try {
-      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
+      let query = { "or": [{ to: this.to.id, from: this.from.id }, { from: this.to.id, to: this.from.id }] };
+
+      let mgs = await this.http.get(`/chat?where=${JSON.stringify(query)}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
       mgs = mgs.filter(it => {
         return it.hasOwnProperty("from") && it.hasOwnProperty("to");
       });
@@ -254,8 +256,8 @@ export class ChatOnePersonPage {
   */
   private async getMsg() {
     try {
-      let ramdon = new Date().getTime();
-      let mgs = await this.http.get(`/chat?where={"to":"${this.to.id}","from":"${this.from.id}"}&sort=dateTime DESC&limit=20`).toPromise() as any[];
+      let query = { "or": [{ to: this.to.id, from: this.from.id }, { from: this.to.id, to: this.from.id }] };
+      let mgs = await this.http.get(`/chat?where=${JSON.stringify(query)}&sort=dateTime DESC&limit=20`).toPromise() as any[];
       this.msgList = mgs.map(function (item) {
         item.photo = interceptor.transformUrl("/userprofile/images/" + item.to.id + "/" + MyApp.User.team);
         return item;

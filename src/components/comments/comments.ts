@@ -49,8 +49,6 @@ export class CommentsComponent {
       return item;
     });
 
-    console.log(this.commentsList);
-
     //esta funcion es para actualizar la diferencida de tiempo
     let t = this;
     this.updateTimeMessage = setInterval(function () {

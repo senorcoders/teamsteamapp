@@ -62,10 +62,6 @@ export class ViewProfilePage {
         name: "None"
       };
     }
-    if (!this.user.hasOwnProperty("options")) {
-      this.user.options = { language: 'en' };
-    }
-    this.lang = this.user.options.language;
 
     let load = this.helper.getLoadingStandar(), ramdon = new Date().getTime();
     try {
@@ -448,10 +444,6 @@ export class ViewProfilePage {
     let load = HelpersProvider.me.getLoadingStandar();
     await MyApp.me.logout();
     load.dismissAll();
-  }
-
-  openSelect() {
-    this.selectRef.open();
   }
 
   public openSelectRolesTypes() {

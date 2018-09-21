@@ -54,13 +54,6 @@
       {{ "CLEARDEVICES" | translate}}
     </ion-item>
 
-    <!-- <ion-item (click)="openSelect()">
-      <div class="icon-box-bg third-bg" item-start>
-          <img src="./assets/imgs/change-language.svg" width="40px">
-        </div>
-      {{'CHAGELANGUAGE' | translate}}
-    </ion-item> -->
-
     <ion-item (click)="addTeam()">
       <div class="icon-box-bg" item-start>
           <img src="./assets/imgs/add-team.png" width="40px">
@@ -120,11 +113,6 @@
     </ion-item> -->
 
   </ion-list>
-
-  <ion-select [(ngModel)]="lang" hidden (ionChange)='changeLang()' #mySelect>
-    <ion-option value="en">English</ion-option>
-    <ion-option value="es">Español </ion-option>
-  </ion-select>
 
   <ion-select [(ngModel)]="rolType" hidden (ionChange)='changeRol()' #myRoles>
     <ion-option [value]="rol.id" *ngFor="let rol of rolesTypes;">{{rol.name.toUpperCase() | translate}}</ion-option>
