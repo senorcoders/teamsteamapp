@@ -13,6 +13,7 @@ import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
 import { SelectOwnerLeaguePage } from '../select-owner-league/select-owner-league';
 import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -62,7 +63,7 @@ export class RegistrationPage {
     private http: HttpClient, public auth: AuthServiceProvider,
     public statusBar: StatusBar, public device: Device,
     public modalCtrl: ModalController, public geolocation: Geolocation,
-    public ngZone: NgZone
+    public ngZone: NgZone, private storage: Storage
   ) {
     this.selectNew = "team";
   }
@@ -348,7 +349,7 @@ export class RegistrationPage {
             id: user.id,
             image: this.imageSrc
           }).toPromise();
-        }
+        } 
       }
 
       let call = async function (err, user) {
@@ -357,6 +358,8 @@ export class RegistrationPage {
           this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByHexString("#fe324d");
           if (MyApp.User.hasOwnProperty("team")) {
+            this.storage.set('firstTime', true);
+            this.storage.set('firstTimeRoster', true);
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
