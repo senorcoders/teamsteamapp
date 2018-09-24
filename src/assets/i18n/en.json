@@ -395,5 +395,10 @@
         "SENTFAMILYS": "Send Notification to All Family",
         "SENTMANAGERS": "Send Notification to All Managers",
         "SUCCESS": "Notification Sent"
+    },
+    "CHANGEROL":{
+        "TITLE": "Change Role",
+        "TOASING": "Role to assign",
+        "SELECTFAMILY": "Select relatives"
     }
 }

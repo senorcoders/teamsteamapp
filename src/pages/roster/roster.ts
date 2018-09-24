@@ -31,7 +31,7 @@ export class RosterPage {
 
   public managers = [];
   public managersOrigin = [];
-  firstTime:boolean = true;
+  firstTime: boolean = true;
 
   public updateImagePlayer = (index: number, stringBase64: string) => {
 
@@ -48,11 +48,10 @@ export class RosterPage {
   ) {
   }
 
-  ionViewWillEnter(){
+  ionViewWillEnter() {
     this.storage.get('firstTimeRoster').then((val) => {
-      console.log("Val", val);
 
-      if(val == true && this.user.role.name === "Manager"){
+      if (val == true && this.user.role.name === "Manager") {
         this.firstTime = false;
 
       }
@@ -66,7 +65,7 @@ export class RosterPage {
     try {
 
       //Cargamos primeramente los players
-      let players = await this.http.get("/players/team/" + this.user.team).toPromise() as any[];
+      let players = await this.http.get(`/roles?where={"team":"${MyApp.User.team}","name":"Player"}`).toPromise() as any[];
 
       this.players = players.filter(function (item) {
         return item.user !== undefined;
@@ -109,7 +108,7 @@ export class RosterPage {
 
   public validEditEnable(player) {
     if (this.user.role.name !== 'Manager') return true;
-    if (player.hasOwnProperty("name")) return true;
+    if (player.name === "Manager") return true;
 
     return false;
   }
@@ -140,7 +139,7 @@ export class RosterPage {
       return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
         it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
     }.bind(this));
-    
+
     this.managers = this.managersOrigin.filter(function (it) {
       return it.user.firstName.toLowerCase().includes(this.filtro.toLowerCase()) ||
         it.user.lastName.toLowerCase().includes(this.filtro.toLowerCase());
@@ -160,7 +159,7 @@ export class RosterPage {
     this.navCtrl.push(ChatOnePersonPage, { user });
   }
 
-  hideOverlay(){
+  hideOverlay() {
     this.storage.set('firstTimeRoster', false);
     this.firstTime = true;
   }

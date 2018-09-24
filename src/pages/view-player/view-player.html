@@ -11,7 +11,7 @@
 <ion-content padding>
   <ion-card>
     <ion-card-header>
-      {{player.user.firstName+ " "+ player.user.lastName}}
+      {{player.user.email}}
     </ion-card-header>
     <img (load)="success(event)" [hidden]="!image" [src]="imageSrc" />
     <img [hidden]="image" src="./assets/imgs/user.png" />
@@ -48,6 +48,9 @@
           <p *ngFor="let position of player.positions"> {{position}} </p>
         </ion-item>
 
+        <ion-item *ngIf="!isManager">
+          <button ion-button (click)="changeRol()">{{"CHANGEROL.TITLE" | translate}}</button>
+        </ion-item>
       </ion-list>
     </ion-card-content>
   </ion-card>

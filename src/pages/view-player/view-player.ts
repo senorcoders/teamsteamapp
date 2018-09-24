@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import * as moment from 'moment';
 import { MyApp } from '../../app/app.component';
+import { ChangeRolPlayerPage } from '../change-rol-player/change-rol-player';
 
 /**
  * Para visualizar el player
@@ -28,7 +29,7 @@ export class ViewPlayerPage {
     this.user = this.navParams.get("user");
 
     //Para comprobar si el miembro del roster es un manager
-    this.isManager = this.player.hasOwnProperty("name");
+    this.isManager = this.player.name === "Manager"
 
     if (this.player.positions === undefined) {
       this.player.positions = [];
@@ -39,6 +40,10 @@ export class ViewPlayerPage {
     this.player.birthDateParsed = moment(this.player.birthDay).format("DD MMM YYYY");
     this.imageSrc = interceptor.transformUrl("/userprofile/images/" + this.player.user.id + "/" + MyApp.User.team);
 
+  }
+
+  public changeRol() {
+    this.navCtrl.push(ChangeRolPlayerPage, { player: this.player });
   }
 
   public success(e) {

@@ -1,0 +1,29 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"CHANGEROL.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <ion-list>
+    <ion-item>{{player.user.firstName+ " "+ player.user.lastName}}</ion-item>
+    <ion-item>
+      <ion-label floating>{{"CHANGEROL.TOASING" | translate}}</ion-label>
+      <ion-select [(ngModel)]="rol">
+        <ion-option value="Manager">Manager</ion-option>
+        <ion-option value="Family">{{"FAMILY" | translate}}</ion-option>
+      </ion-select>
+    </ion-item>
+    <ion-item [hidden]="rol!=='Family'">
+      <ion-label floating>{{"CHANGEROL.TOASING" | translate}}</ion-label>
+      <ion-select [(ngModel)]="familyEmail" multiple="true">
+        <ion-option *ngFor="let play of players" [value]="play.user.id">{{play.user.firstName+ " "+ play.user.lastName}}</ion-option>
+      </ion-select>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button (click)="changeRol()">{{"CHANGE" | translate}}</button>
+</ion-content>

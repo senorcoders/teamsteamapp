@@ -396,8 +396,13 @@
         "GROUP": "Grupo",
         "SENT": "Enviar Notificación",
         "SENTATHLETES": "Enviar Notificación a todos los atletas",
-        "SENTFAMILYS": "Enviar notificación a toda la familia",
-        "SENTMANAGERS": "Enviar notificación a toda la familia",
+        "SENTFAMILYS": "Enviar Notificación a todos Familiares",
+        "SENTMANAGERS": "Enviar Notificación a todos los Managers",
         "SUCCESS": "Notificación Enviada"
+    },
+    "CHANGEROL":{
+        "TITLE": "Cambiar Rol",
+        "TOASING": "Rol a asignar",
+        "SELECTFAMILY": "Selecione los familiares"
     }
 }
