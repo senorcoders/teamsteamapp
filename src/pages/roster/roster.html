@@ -56,6 +56,7 @@
         <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;">
           <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
           <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
+          <div class="layover" [hidden]="player.firstTime" >{{"INVITED" | translate}}</div>
         </ion-avatar>
 
         <h4>{{player.user.firstName}} {{player.user.lastName}}</h4>

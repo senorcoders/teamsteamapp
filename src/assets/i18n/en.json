@@ -400,5 +400,6 @@
         "TITLE": "Change Role",
         "TOASING": "Role to assign",
         "SELECTFAMILY": "Select relatives"
-    }
+    },
+    "INVITED": "Invited"
 }

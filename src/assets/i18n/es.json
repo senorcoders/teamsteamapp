@@ -404,5 +404,6 @@
         "TITLE": "Cambiar Rol",
         "TOASING": "Rol a asignar",
         "SELECTFAMILY": "Selecione los familiares"
-    }
+    },
+    "INVITED": "Invitado"
 }

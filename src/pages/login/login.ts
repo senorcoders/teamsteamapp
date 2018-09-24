@@ -25,31 +25,31 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'login.html',
 })
 export class LoginPage {
-  
-  public showPassword:boolean=false;
-  public firstname:string="";
-  public lastname:string="";
-  public email:string="";
-  public password="";
 
-  public emailTrans="";
-  public passwordTrans="";
+  public showPassword: boolean = false;
+  public firstname: string = "";
+  public lastname: string = "";
+  public email: string = "";
+  public password = "";
 
-  constructor(public navCtrl: NavController, 
+  public emailTrans = "";
+  public passwordTrans = "";
+
+  constructor(public navCtrl: NavController,
     public navParams: NavParams,
-    public alertCtrl:AlertController,
+    public alertCtrl: AlertController,
     public authService: AuthServiceProvider,
     private ngZone: NgZone,
-    public http : HttpClient, public statusBar: StatusBar,
+    public http: HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider,
     private diagnostic: Diagnostic,
     public plt: Platform,
     private storage: Storage
   ) {
-    
+
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
     this.statusBar.overlaysWebView(true);
   }
 
@@ -60,94 +60,97 @@ export class LoginPage {
     this.statusBar.overlaysWebView(true);
   }
 
-  public forgotPassword(){
+  public forgotPassword() {
     console.log('forgot password');
   }
 
-  public Register(){
+  public Register() {
     this.statusBar.overlaysWebView(false);
     this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(RegistrationPage);
     //this.navCtrl.push(PaymentSubscripcionPage);
   }
 
-  showGPSalert(){
+  showGPSalert() {
     this.diagnostic.isLocationEnabled().then(
       (isAvailable) => {
-      console.log('Is available? ' + isAvailable);
-      if(isAvailable == false){
-        const confirm = this.alertCtrl.create({
-          title: 'Turn on GPS Location Services',
-          message: 'Please turn on your GPS location services',
-          buttons: [
-            {
-              text: 'Cancel',
-              handler: () => {
-                console.log('Disagree clicked');
+        console.log('Is available? ' + isAvailable);
+        if (isAvailable == false) {
+          const confirm = this.alertCtrl.create({
+            title: 'Turn on GPS Location Services',
+            message: 'Please turn on your GPS location services',
+            buttons: [
+              {
+                text: 'Cancel',
+                handler: () => {
+                  console.log('Disagree clicked');
+                }
+              },
+              {
+                text: 'Go to Settings',
+                handler: () => {
+                  this.diagnostic.switchToLocationSettings();
+                }
               }
-            },
-            {
-              text: 'Go to Settings',
-              handler: () => {
-               this.diagnostic.switchToLocationSettings();
-              }
-            }
-          ]
-        });
-        confirm.present();
-      }
-      }).catch( (e) => {
-      console.log(e);
+            ]
+          });
+          confirm.present();
+        }
+      }).catch((e) => {
+        console.log(e);
       });
   }
 
-  public async Login(){
-    
-    if( this.email == '' ){
+  public async Login() {
+
+    if (this.email == '') {
 
       let emptyM = await this.helper.getWords("EMPTYFIELDS");
       this.presentAlert(emptyM);
 
-    }else{
+    } else {
 
-     this.authService.Login(this.email, async function(err, user){
+      this.authService.Login(this.email, async function (err, user) {
 
-        if(user){
+        if (user) {
           this.statusBar.overlaysWebView(false);
           this.statusBar.backgroundColorByHexString("#fe324d");
-          
 
-          if (MyApp.User.hasOwnProperty("team")||MyApp.User.role.name==="OwnerLeague") {
+          if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
+            await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
+          }
+
+          if (MyApp.User.hasOwnProperty("team") || MyApp.User.role.name === "OwnerLeague") {
             this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
-            if(this.plt.is('ios')){
-                this.showGPSalert();
+            if (this.plt.is('ios')) {
+              this.showGPSalert();
             }
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
-            if(this.plt.is('ios')){
+            if (this.plt.is('ios')) {
               this.showGPSalert();
+            }
           }
-          }
-        }else if( err ){
+        } else if (err) {
 
-          if( err.hasOwnProperty("message") ){
+          if (err.hasOwnProperty("message")) {
 
             let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
             this.presentAlert(passwordM);
             return;
 
-          }else if( err.hasOwnProperty("verify") ){
+          } else if (err.hasOwnProperty("verify")) {
             let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
             this.presentAlert(msgVerifiedEmail);
             return;
-          }else{
+          } else {
 
             let invalidM = await this.helper.getWords("INVALIDPASS");
             this.presentAlert(invalidM);
             return;
           }
-          
-        }else{
+
+        } else {
           this.alertCtrl.create({
             title: "Error",
             message: "Error In The Connection",
@@ -172,34 +175,34 @@ export class LoginPage {
     alert.present();
   }
 
-  public async toPassword(){
-    let response:any;
-    response = await this.http.get('/user?where={"username":{"like":"'+ /*this.username+*/ '"}}').toPromise();
-    if( response.length > 0){
+  public async toPassword() {
+    let response: any;
+    response = await this.http.get('/user?where={"username":{"like":"' + /*this.username+*/ '"}}').toPromise();
+    if (response.length > 0) {
       this.showPassword = true;
-    }else{
+    } else {
       console.log("Register");
     }
-    
+
   }
 
-  public toUserName(){
+  public toUserName() {
     this.showPassword = false;
   }
 
-  public goSearchTeam(){
+  public goSearchTeam() {
     this.statusBar.overlaysWebView(false);
     this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(SearchTeamsPage)
   }
 
-  public goInvitation(){
+  public goInvitation() {
     this.statusBar.overlaysWebView(false);
     this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(FormPlayerRegistrationPage);
   }
 
-  public goForgotPassword(){
+  public goForgotPassword() {
     this.statusBar.overlaysWebView(false);
     this.statusBar.backgroundColorByHexString("#fe324d");
     this.navCtrl.push(ForgotPasswordPage);

@@ -198,6 +198,9 @@ export class MyApp {
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
         this.rolIdentity = "TEAM";
         this.identity = team.name;
+        if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
+          await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
+        }
       } else {
         let league;
         if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {

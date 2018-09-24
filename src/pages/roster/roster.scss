@@ -2,7 +2,8 @@ page-roster {
     .scroll-content {
         background-color: #f2f5f8 !important;
     }
-    ion-header, ion-fab{
+    ion-header,
+    ion-fab {
         z-index: 99999;
     }
     .not-players {
@@ -74,6 +75,19 @@ page-roster {
                     max-height: 102px;
                     object-fit: cover;
                 }
+                .layover {
+                    background-color: rgba( 0, 0, 0, 0.7);
+                    position: relative;
+                    left: 0;
+                    right: 0;
+                    width: 100%;
+                    margin-left: -100%;
+                    color: white;
+                    text-align: center;
+                    font-size: 1.5rem;
+                    padding-top: calc(50% - 0.75rem);
+                    text-transform: uppercase;
+                }
             }
             h4 {
                 margin: 0 !important;
@@ -114,14 +128,12 @@ page-roster {
             padding-right: 5px;
             flex: 0;
         }
-        &.tutorial-btn{
+        &.tutorial-btn {
             border: 3px solid;
         }
     }
-
     .overlay {
         display: none;
-            
         &.shown {
             position: fixed;
             display: block;
@@ -130,16 +142,15 @@ page-roster {
             left: 0;
             bottom: 0;
             right: 0;
-            background: rgba( 0, 0, 0, 0.7 );
+            background: rgba( 0, 0, 0, 0.7);
             z-index: 9999;
             overflow-y: auto;
             overflow-x: hidden;
         }
     }
-    .bottom-tutorial{
+    .bottom-tutorial {
         text-align: center;
-
-        h2{
+        h2 {
             color: #fff;
         }
     }

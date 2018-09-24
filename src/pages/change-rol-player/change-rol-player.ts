@@ -65,6 +65,10 @@ export class ChangeRolPlayerPage {
           }
         }
 
+        let players = await HelpersProvider.me.http.get(`/players?where={"user":"${this.player.user.id}","team":"${MyApp.User.team}"}`).toPromise() as any[];
+        for (let play of players) {
+          await HelpersProvider.me.http.delete("/players/" + play.id).toPromise();
+        }
         load.dismiss();
         this.navCtrl.setRoot(RosterPage);
       } else
