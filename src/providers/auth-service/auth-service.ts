@@ -253,13 +253,13 @@ export class AuthServiceProvider {
       if (role.hasOwnProperty("team")) {
         MyApp.User.team = role.team.id;
         this.user.team = role.team.id;
-        await MyApp.notifcations(MyApp.User.team);
+        //await MyApp.notifcations(MyApp.User.team);
       }
 
       if (role.name === "FreeAgent") {
         await MyApp.me.pushObject.unregister();
         if (MyApp.User.role.hasOwnProperty("team")) {
-          await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+          //await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
         }
 
         //Quitamos el tokenReg
