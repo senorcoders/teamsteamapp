@@ -46,7 +46,6 @@ export class EventsSchedulePage {
   public filter = "all";
   public url = interceptor.url;
 
-  public allImages = [];
   firstTime:boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -151,14 +150,6 @@ export class EventsSchedulePage {
 
       //Filramos los eventos
       this.filterEvents();
-
-      //Obtenemos todas las imagenes
-      let imgs = [];
-      for (let e of this.eventsOrigin) {
-        let is = e.images || [];
-        imgs = imgs.concat(is);
-      }
-      this.allImages = imgs;
 
     }
     catch (e) {

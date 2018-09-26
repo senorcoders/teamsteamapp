@@ -565,6 +565,7 @@ export class MyApp {
 
       });
 
+
       MyApp.me.pushObject.on('registration').subscribe((registration: any) => {
 
         if (MyApp.User.tokenReady === true) {
