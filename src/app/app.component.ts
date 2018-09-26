@@ -500,11 +500,22 @@ export class MyApp {
 
   public static async initNotifcations() {
 
+
+    console.log("Dentro de initNOt", MyApp.User.roles);
+
+
     if (MyApp.me.notificationEnable === true && MyApp.me.permision === false) {
       return;
     }
 
-    MyApp.notifcations(MyApp.User.team);
+   
+
+
+    MyApp.User.roles.forEach(element => {
+      if(element.team != ""){
+        MyApp.notifcations(element.team.id);
+     }
+    });
 
   }
 
