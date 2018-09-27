@@ -62,6 +62,7 @@ export class EditEventPage {
   public optionalInfo: string = "";
   public description: string = "";
   public address = '';
+  public dateEnd = "";
 
   //index of event to update
   public index = 0;
@@ -107,6 +108,8 @@ export class EditEventPage {
     this.description = this.event.description;
     this.team = this.event.team;
     this.imageSrc = this.event.imageSrc;
+    this.dateEnd = this.event.dateEnd || "";
+    this.dateEnd = this.dateEnd !== "" ? moment(this.dateEnd).format("DD MMM YYYY") : '';
     this.timeEnd = this.event.dateTimeEnd || "";
     this.percentageNotification = this.event.percentageNotification || 100;
     this.searchPlayer = this.event.searchPlayer || false;
@@ -215,6 +218,13 @@ export class EditEventPage {
     this.helper.nativeDatePicker()
       .then(date => {
         this.date = moment(date).format("DD MMM YYYY");
+      })
+  }
+
+  public setDateEnd() {
+    this.helper.nativeDatePicker()
+      .then(date => {
+        this.dateEnd = moment(date).format("DD MMM YYYY");
       })
   }
 
@@ -387,6 +397,9 @@ export class EditEventPage {
     }
     if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;
+    }
+    if (this.repeats === true && this.dateEnd !== "") {
+      event.dateEnd = moment(this.dateEnd, "DD MMM YYYY").toISOString();
     }
     if (this.timeEnd !== '') {
       event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()

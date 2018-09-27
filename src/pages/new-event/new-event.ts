@@ -52,6 +52,7 @@ export class NewEventPage {
   public optionalInfo: string = "";
   public description: string = "";
   public address = "";
+  public dateEnd = "";
 
   //for max date and min date asing in date time picker
   public minDate: string;
@@ -170,6 +171,13 @@ export class NewEventPage {
     this.helper.nativeDatePicker()
       .then(date => {
         this.date = moment(date).format("DD MMM YYYY");
+      })
+  }
+
+  public setDateEnd() {
+    this.helper.nativeDatePicker()
+      .then(date => {
+        this.dateEnd = moment(date).format("DD MMM YYYY");
       })
   }
 
@@ -333,8 +341,11 @@ export class NewEventPage {
     if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;
     }
+    if (this.repeats === true && this.dateEnd !== "") {
+      event.dateEnd = moment(this.dateEnd, "DD MMM YYYY").toISOString();
+    }
     if (this.timeEnd !== '') {
-      event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString()
+      event.dateTimeEnd = moment(this.timeEnd, "hh:mm a").toISOString();
     }
     console.log(event);
 

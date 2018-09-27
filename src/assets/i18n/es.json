@@ -79,6 +79,7 @@
     "DAILY": "Diario",
     "NAME": "Nombre",
     "DATE": "Fecha del Evento",
+    "DATEEND": "Fecha Fin",
     "TIME": "Hora de Inicio",
     "TIMEEND": "Hora de Finalización",
     "DESCRIPTION": "Descripción del Evento",
