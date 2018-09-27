@@ -15,6 +15,8 @@ declare var NFile: any;
 })
 export class ImagesEventPage {
 
+  public static __name = "ImagesEventPage"
+
   public event: any = {};
   public images = [];
   public grid = false;

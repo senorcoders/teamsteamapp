@@ -7,6 +7,8 @@ import { ViewController, NavParams } from 'ionic-angular';
   templateUrl: 'date-time-picker.html'
 })
 export class DateTimePickerComponent {
+
+  public static __name = "DateTimePickerComponent"
   
   @ViewChild("reloj") reloj:ElementRef;
   public hoursView: HTMLDivElement;

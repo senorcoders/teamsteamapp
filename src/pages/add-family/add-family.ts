@@ -12,6 +12,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class AddFamilyPage {
 
+  public static __name = "AddFamilyPage"
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

@@ -29,6 +29,8 @@ declare var google: any;
 })
 export class EventPage {
 
+  public static __name = "EventPage"
+
   map: any;
   load: Loading;
 

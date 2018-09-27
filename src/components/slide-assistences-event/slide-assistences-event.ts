@@ -13,6 +13,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class SlideAssistencesEventComponent {
 
+  public static __name = "SlideAssistencesEventComponent"
+
   @ViewChild('slides') slides: Slides;
   public players: Array<any> = [];
   public assistences: Array<any> = [];

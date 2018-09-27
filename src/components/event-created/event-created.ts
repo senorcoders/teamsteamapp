@@ -9,6 +9,8 @@ import { EventsSchedulePage } from '../../pages/events-schedule/events-schedule'
 })
 export class EventCreatedComponent {
 
+  public static __name = "EventCreatedComponent"
+
   public event:any={};
 
   constructor(public navParams: NavParams, public statusBar: StatusBar,

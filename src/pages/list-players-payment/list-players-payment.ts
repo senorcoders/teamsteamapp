@@ -15,6 +15,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class ListPlayersPaymentPage {
 
+  public static __name = "ListPlayersPaymentPage"
+
   public user:any={};
   public players:Array<any>=[];
   public multi=false;

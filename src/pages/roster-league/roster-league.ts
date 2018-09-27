@@ -17,6 +17,9 @@ import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 })
 export class RosterLeaguePage {
 
+  public static __name = "RosterLeague"
+
+
   public user:any={};
   public players:Array<any>=[];
   public team:any={};

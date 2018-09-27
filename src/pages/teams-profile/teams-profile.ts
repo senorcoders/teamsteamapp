@@ -15,6 +15,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class TeamsProfilePage {
 
+  public static __name = "TeamsProfilePage"
+
+
   public menu = false;
   public roles: Array<any> = [];
   public user: any = { role: {} };

@@ -14,6 +14,9 @@ import { ImageViewerController } from 'ionic-img-viewer';
 })
 export class PhotosPage {
 
+  public static __name = "PhotosPage"
+
+
   public events = [];
   public allImages = [];
   public filter = "imagesEvent";

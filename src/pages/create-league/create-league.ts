@@ -15,6 +15,8 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class CreateLeaguePage {
 
+  public static __name = "CreateLeaguePage"
+
   public name = "";
   public description = "";
   public usersOwners = [];

@@ -74,8 +74,8 @@ export class MyApp {
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
-    { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
-    { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
+    { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "nearby-events-icon.svg", role: "FreeAgent", watch: "", newData: "" },
+    { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "events-places.svg", role: "FreeAgent", watch: "", newData: "" },
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
@@ -117,11 +117,13 @@ export class MyApp {
   //Enviamos los datos al api
   ngAfterViewInit() {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
-      console.log(data.component.__name);
-      if (this.platform.is('cordova')) {
+      if (MyApp.User === null || MyApp.User === undefined) return;
+      console.log(data.component.hasOwnProperty("__name"));
+      if (this.platform.is('cordova') && data.component.hasOwnProperty("__name") === true) {
+        console.log(data.component.__name);
         let screen: any = {
           startTime: new Date().toISOString(),
-          screen: data.name,
+          screen: data.component.__name,
           firstName: MyApp.User.firstName,
           lastName: MyApp.User.lastName,
           userEmail: MyApp.User.email,
@@ -508,13 +510,15 @@ export class MyApp {
       return;
     }
 
-   
+
 
 
     MyApp.User.roles.forEach(element => {
-      if(element.team != ""){
-        MyApp.notifcations(element.team.id);
-     }
+      if (Object.prototype.toString.call(element.team) === "[object String]") {
+        MyApp.notifcations(element.team);
+      } else if (Object.prototype.toString.call(element.team) === "[object String]") {
+        MyApp.notifcations(element.team);
+      }
     });
 
   }

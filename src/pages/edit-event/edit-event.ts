@@ -18,6 +18,9 @@ declare var google: any;
   templateUrl: 'edit-event.html',
 })
 export class EditEventPage {
+
+  public static __name = "EditEvent"
+
   private team: string;
 
   map: any;

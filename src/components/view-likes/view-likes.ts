@@ -13,6 +13,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class ViewLikesComponent {
 
+  public static __name = "ViewLikesComponent"
+
   public likes:Array<any>=[];
   public users:Array<any>=[];
 

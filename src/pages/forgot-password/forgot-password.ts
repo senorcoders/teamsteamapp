@@ -12,6 +12,8 @@ import { ResetPasswordPage } from '../reset-password/reset-password';
 })
 export class ForgotPasswordPage {
 
+  public static __name = "ForgotPasswordPage"
+
   public email="";
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

@@ -23,6 +23,9 @@ import { Storage } from '@ionic/storage';
 })
 export class RegistrationPage {
 
+  public static __name = "RegistrationPage"
+
+
   public firstname = "";
   public lastname = "";
   public email = "";

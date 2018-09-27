@@ -25,6 +25,9 @@ import { SettingPage } from '../setting/setting';
   templateUrl: 'view-profile.html',
 })
 export class ViewProfilePage {
+
+  public static __name = "ViewProfilePage"
+
   @ViewChild('mySelect') selectRef: Select;
   @ViewChild('myRoles') myRoles: Select;
 

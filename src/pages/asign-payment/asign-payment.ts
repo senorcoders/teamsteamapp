@@ -12,6 +12,8 @@ import { AsingpaymentComponent } from '../../components/asingpayment/asingpaymen
 })
 export class AsignPaymentPage {
 
+  public static __name = "AsignPaymentPage"
+
   public player:any={ user: { firstName: "", lastName: "", email: "" } };
   public imageSrc="";
   public image=false;

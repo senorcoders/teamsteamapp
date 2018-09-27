@@ -12,6 +12,8 @@ import { NavParams, ViewController } from 'ionic-angular';
 })
 export class ViewTrakingComponent {
 
+  public static __name = "ViewTrakingComponent"
+
   public Comments=CommentsComponent;
   public LikesUp=ViewLikesComponent;
   public LikesDown=ViewLikesComponent;

@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CreateTeamManagerPage {
 
+  public static __name = "CreateTeamManagerPage"
+
   public team: any = {};
 
   //for user

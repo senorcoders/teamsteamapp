@@ -14,6 +14,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class TrackingEventManagerComponent {
 
+  public static __name = "TrackingEventManagerComponent"
+
   private event:any;
   public trackings:Array<any>=[];
   public trackingsFilter:Array<any>=[];

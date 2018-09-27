@@ -18,6 +18,8 @@ declare var google: any;
 })
 export class NewEventPage {
 
+  public static __name = "NewEventPage"
+
   private team: any;
   map: any;
   marker: any;

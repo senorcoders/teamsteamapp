@@ -21,6 +21,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class MemberRosterPage {
 
+  public static __name = "MemberRosterPage"
+
   public load: Loading;
 
   public player: any;

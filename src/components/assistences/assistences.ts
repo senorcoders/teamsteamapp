@@ -13,6 +13,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class AssistencesComponent {
 
+  public static __name = "AssistencesComponent"
+
   public event: any;
   public user = MyApp.User;
   public assistences = [];

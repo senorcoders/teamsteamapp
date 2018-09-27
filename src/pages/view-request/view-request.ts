@@ -12,6 +12,9 @@ import { MyApp } from '../../app/app.component';
 })
 export class ViewRequestPage {
 
+  public static __name = "ViewRequestPage"
+
+
   public user: any = { fullName: "", email: "", password: "" };
   public request: any;
   public imageSrc = "";

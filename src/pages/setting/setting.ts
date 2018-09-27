@@ -44,6 +44,9 @@ class Setting {
 })
 export class SettingPage {
 
+  public static __name = "SettingPage"
+
+
   public setting = new Setting();
   public userRole = "";
   public version = "0.0.10"

@@ -13,6 +13,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class EventTeamJoinPage {
 
+  public static __name = "EventTeamJoinPage"
+
   public event: any;
   public team: any;
   public loadImage = false;

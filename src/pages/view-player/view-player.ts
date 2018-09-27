@@ -16,6 +16,9 @@ import { ChangeRolPlayerPage } from '../change-rol-player/change-rol-player';
 })
 export class ViewPlayerPage {
 
+  public static __name = "ViewPlayer"
+
+
   public player: any;
   public user: any;
 

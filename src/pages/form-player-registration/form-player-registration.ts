@@ -10,6 +10,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class FormPlayerRegistrationPage {
 
+  public static __name = "FormPlayerRegistrationPage"
+
   public form:any={ fields : [] };
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

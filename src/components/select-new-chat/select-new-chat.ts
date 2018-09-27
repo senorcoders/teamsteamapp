@@ -10,6 +10,8 @@ import { ChatOnePersonPage } from '../../pages/chat-one-person/chat-one-person';
 })
 export class SelectNewChatComponent {
 
+  public static __name = "SelectNewChatComponent"
+
   public peoples:Array<any>=[];
   public search:string='';
   public user:any={};

@@ -12,6 +12,9 @@ import { MyApp } from '../../app/app.component';
 })
 export class PaymentPage {
 
+  public static __name = "PaymentPAge"
+
+
   public payment:any;
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private iab: InAppBrowser

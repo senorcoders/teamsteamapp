@@ -9,6 +9,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class PrivacyPolicePage {
 
+  public static __name = "PrivacyPolicePage"
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

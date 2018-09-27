@@ -14,6 +14,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class CheckPaidPage {
 
+  public static __name = "ChatPaidPage"
+
   public moth:any;
   private init=false;
 

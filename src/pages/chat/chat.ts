@@ -22,6 +22,8 @@ import { ListChatsPage } from '../list-chats/list-chats';
 })
 export class ChatPage {
 
+  public static __name = "ChatPage"
+
   @ViewChild(Content) content: Content;
   public loadingChats = false;
   private skip = 20;

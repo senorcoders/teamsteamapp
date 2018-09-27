@@ -19,6 +19,8 @@ import { ChatFamilyPage } from '../chat-family/chat-family';
 })
 export class ListChatsPage {
 
+  public static __name = "ListChatsPage"
+
   public listUsers:Array<any>=[];
   public team:any={ name : "" };
   public idTeam:string;

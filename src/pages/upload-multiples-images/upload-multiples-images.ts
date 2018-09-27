@@ -15,6 +15,9 @@ declare var NFile:any;
 })
 export class UploadMultiplesImagesPage {
 
+  public static __name = "UploadMultiplesImagesPage"
+
+
   public images: LibraryItem[] = [];
   private id = "";
 

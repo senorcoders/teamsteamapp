@@ -19,6 +19,9 @@ import { ListChatsPage } from '../list-chats/list-chats';
   templateUrl: 'chat-one-person.html',
 })
 export class ChatOnePersonPage {
+
+  public static __name = "ChatOnePersonPage"
+
   @ViewChild(Content) content: Content;
   public loadingChats = false;
   private skip = 20;

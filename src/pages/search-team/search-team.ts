@@ -8,6 +8,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class SearchTeamPage {
 
+  public static __name = "SearchTeamPage"
+
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

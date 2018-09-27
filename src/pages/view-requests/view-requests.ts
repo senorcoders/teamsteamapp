@@ -14,6 +14,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class ViewRequestsPage {
 
+  public static __name = "ViewRequestsPage"
+
+
   public request:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

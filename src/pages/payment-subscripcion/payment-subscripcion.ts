@@ -14,6 +14,9 @@ import * as moment from 'moment';
 })
 export class PaymentSubscripcionPage {
 
+  public static __name = "PaymentSubscripcionsPage"
+
+
   public try = true;
   public month = "";
   public paid:any={ paid: false };

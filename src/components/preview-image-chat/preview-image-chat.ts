@@ -7,6 +7,8 @@ import { ViewController, NavParams } from 'ionic-angular';
 })
 export class PreviewImageChatComponent {
 
+  public static __name = "PreviewImageChatComponent"
+
   public image="";
   public comment="";
 

@@ -12,6 +12,9 @@ import { LoginPage } from '../login/login';
 })
 export class ResetPasswordPage {
 
+  public static __name = "ResetPaswordPage"
+
+
   public code="";
   public password="";
   public repeatPassword="";

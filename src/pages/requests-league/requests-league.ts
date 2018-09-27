@@ -14,6 +14,9 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 })
 export class RequestsLeaguePage {
 
+  public static __name = "RequestsLeaguePage"
+
+
   public requests = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

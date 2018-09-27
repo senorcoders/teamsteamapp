@@ -12,6 +12,8 @@ import { ToChatToPerfilPlayerComponent } from '../to-chat-to-perfil-player/to-ch
 })
 export class CommentsComponent {
 
+  public static __name = "CommentsComponent"
+
   @ViewChild(Content) content: Content;
   @ViewChild('chat_input') messageInput: TextInput;
   public commentsList=[];

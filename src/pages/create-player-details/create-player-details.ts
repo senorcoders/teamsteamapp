@@ -17,6 +17,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class CreatePlayerDetailsPage {
 
+  public static __name = "CreatePlayerDetailsPage"
+
   public save:boolean=true;
 
   public user:any;

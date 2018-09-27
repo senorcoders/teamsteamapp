@@ -17,6 +17,9 @@ declare var google: any;
 })
 export class PlayerCloseEventPage {
 
+  public static __name = "PlayerCloseEventPage"
+
+
   triggerPLayer: any;
   players: Array<any> = [];
   event: any = { name: "" };

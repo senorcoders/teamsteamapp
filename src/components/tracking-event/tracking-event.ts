@@ -10,6 +10,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class TrackingEventComponent {
 
+  public static __name = "TrackingEventComponent"
+
   public event:any={};
   public tracking:any={};
 

@@ -13,6 +13,8 @@ import { EventTeamJoinPage } from '../event-team-join/event-team-join';
 })
 export class AgentFreePage {
 
+  public static __name = "AgentFreePage"
+
   public events=[];
   private idEventTime:number=-1;
 

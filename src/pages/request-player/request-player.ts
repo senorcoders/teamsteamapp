@@ -14,6 +14,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class RequestPlayerPage {
 
+  public static __name = "RequestPlayerPage"
+
+
   public request: any = {};
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

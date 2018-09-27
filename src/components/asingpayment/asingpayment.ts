@@ -11,6 +11,8 @@ import { MyApp } from '../../app/app.component';
 })
 export class AsingpaymentComponent {
 
+  public static __name = "AsingpaymentComponent";
+
   public players:Array<any>=[];
   public player:any={ user: { firstName: "", lastName: "", email: "" } };
   public multi=false;
