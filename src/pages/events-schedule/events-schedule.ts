@@ -23,6 +23,8 @@ import { Storage } from '@ionic/storage';
 })
 export class EventsSchedulePage {
 
+  public static __name = "EventsSchedulePage";
+
   @ViewChild("addEventButton") addEventButton: ElementRef;
   public user: any = {
     role: {

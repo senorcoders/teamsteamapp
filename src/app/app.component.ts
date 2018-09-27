@@ -117,7 +117,7 @@ export class MyApp {
   //Enviamos los datos al api
   ngAfterViewInit() {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
-      // console.log(data.name);
+      console.log(data.component.__name);
       if (this.platform.is('cordova')) {
         let screen: any = {
           startTime: new Date().toISOString(),
