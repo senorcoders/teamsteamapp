@@ -14,6 +14,8 @@ desea enviar un mensaje o ver el perfil del player
 })
 export class ToChatToPerfilPlayerComponent {
 
+  public static __name = "ToChatToPerfilComponent"
+
   public user:any={};
 
   constructor(public viewCtrl : ViewController, private navParams: NavParams,

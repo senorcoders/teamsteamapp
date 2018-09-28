@@ -12,6 +12,9 @@ import { MyApp } from '../../app/app.component';
 })
 export class NotificationPage {
 
+  public static __name = "NotificationPage"
+
+
   public group = "athletes";
   public title = "";
   public message = "";

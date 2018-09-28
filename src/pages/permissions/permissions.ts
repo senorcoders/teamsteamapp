@@ -13,6 +13,9 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 })
 export class PermissionsPage {
 
+  public static __name = "PermissionsPage"
+
+
   constructor(public navCtrl: NavController,
     private photoLibrary: PhotoLibrary, private platform: Platform, private toastCtrl: ToastController) {
   }

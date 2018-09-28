@@ -17,6 +17,8 @@ import  * as moment from 'moment';
 })
 export class MyTaskPage {
 
+  public static __name = "MyTaskPage"
+
   public tasks:Array<any>=[];
   public role = "";
 

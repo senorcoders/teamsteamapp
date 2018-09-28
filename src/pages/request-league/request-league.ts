@@ -10,6 +10,9 @@ import { HttpClient } from '@angular/common/http';
   templateUrl: 'request-league.html',
 })
 export class RequestLeaguePage {
+
+  public static __name = "RequestLeague"
+
   
   public image=false;
   public request:any={};

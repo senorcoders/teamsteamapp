@@ -15,6 +15,9 @@ import { SelectEventPage } from '../select-event/select-event';
 })
 export class NewTaskPage {
 
+  public static __name = "NewTaskPage"
+
+
   public name: string = "";
   public description: string = "";
   public assign = "";

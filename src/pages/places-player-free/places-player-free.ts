@@ -13,6 +13,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class PlacesPlayerFreePage {
 
+  public static __name = "PlacesPlayerFreePage"
+
+
   public places = [];
   public myPosition: any;
 

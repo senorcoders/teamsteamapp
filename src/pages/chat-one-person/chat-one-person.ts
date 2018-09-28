@@ -19,6 +19,9 @@ import { ListChatsPage } from '../list-chats/list-chats';
   templateUrl: 'chat-one-person.html',
 })
 export class ChatOnePersonPage {
+
+  public static __name = "ChatOnePersonPage"
+
   @ViewChild(Content) content: Content;
   public loadingChats = false;
   private skip = 20;
@@ -110,6 +113,7 @@ export class ChatOnePersonPage {
       this.msgList = mgs.reverse().concat(this.msgList);
       this.skip += 20;
       this.loadingChats = false;
+      await this.updateMsgsDelivered();
     }
     catch (e) {
       console.error(e);
@@ -140,15 +144,36 @@ export class ChatOnePersonPage {
       t.changeDectRef.reattach();
     }, 30 * 1000);
 
+    //Subscribe to received change chat
+    console.log("chat-updated-" + MyApp.User.id);
+    this.sockets.subscribe("chat-updated-" + MyApp.User.id, this.updateMsg.bind(this));
+
     // Subscribe to received  new message events
-    this.sockets.subscribeWithPush("chat", function (msg) {
+    this.sockets.subscribeWithPush("chat", async function (msg) {
       this.pushNewMsg(msg);
+
+      try {
+        //Actualizamos a entregado
+        await this.http.put("/chat/" + msg.id, { view: 3 }).toPromise();
+        msg.view = 3;
+        this.updateMsg(msg);
+      }
+      catch (e) {
+        console.error(e);
+      }
+
     }.bind(this));
 
     this.showEmojiPicker = false;
     this.content.resize();
     this.scrollToBottom();
 
+  }
+
+  ionViewWillLeave() {
+    // unsubscribe
+    window.clearInterval(this.updateTimeMessage);
+    this.sockets.unsubscribeWithPush("chat");
   }
 
   private async notEachPlayer() {
@@ -159,24 +184,6 @@ export class ChatOnePersonPage {
       dismissOnPageChange: true
     })
       .present();
-  }
-
-  ionViewWillLeave() {
-    // unsubscribe
-    window.clearInterval(this.updateTimeMessage);
-    this.sockets.unsubscribeWithPush("chat");
-  }
-
-  public insertMsg(msg) {
-    //<span class="triangle"></span>
-    if (msg.hasOwnProperty("type") && msg.type === 'image') {
-      return `
-      <img src="${this.urlImg(msg.id)}" alt="">
-      <p class="line-breaker ">${msg.text}</p>`
-    }
-
-    return `
-      <p class="line-breaker ">${msg.text}</p>`
   }
 
   public urlImg(id: string) {
@@ -212,19 +219,20 @@ export class ChatOnePersonPage {
       to: this.to.id,
       text: data.comment || "",
       team: MyApp.User.team,
+      type: "image",
       image: data.image,
       status: 'pending',
       dateTime: moment().toISOString(),
     };
+
+    let load = this.helper.getLoadingStandar();
     try {
       let msgPost = JSON.parse(JSON.stringify(msg));
+      msg = await this.http.post("/api/chat/image", msgPost).toPromise();
       msg.from = this.from;
+      msg.status = "success";
+      msg.view = 1;
       this.pushNewMsg(msg);
-      await this.http.post("/api/chat/image", msgPost).toPromise();
-      let index = this.getMsgIndexById(msg.dateTime);
-      if (index !== -1) {
-        this.msgList[index].status = 'success';
-      }
     }
     catch (e) {
       console.error(e);
@@ -232,6 +240,8 @@ export class ChatOnePersonPage {
         await this.notEachPlayer();
       }
     }
+
+    load.dismiss();
   }
 
   onFocus() {
@@ -263,6 +273,7 @@ export class ChatOnePersonPage {
         return item;
       }).reverse();
 
+      await this.updateMsgsDelivered();
     }
     catch (e) {
       console.error(e);
@@ -300,6 +311,7 @@ export class ChatOnePersonPage {
       let index = this.getMsgIndexById(msg.dateTime);
       if (index !== -1) {
         this.msgList[index].status = 'success';
+        this.msgList[index].view = 1;
       }
     }
     catch (e) {
@@ -330,12 +342,22 @@ export class ChatOnePersonPage {
       //console.log("add new message", this.msgList);
       this.scrollToBottom();
       setTimeout(this.deleteNotificationLocal.bind(this), 1000);
+
     }
 
   }
 
   getMsgIndexById(id: string) {
     return this.msgList.findIndex(e => e.dateTime === id)
+  }
+
+  private updateMsg(msg) {
+    // console.log("new updated", msg, "\n\n", this.msgList);
+    let index = this.getMsgIndexById(msg.dateTime); console.log("index", index);
+    if (index !== -1) {
+      this.ngZone.run(() => { this.msgList[index] = msg; });
+    }
+    this.scrollToBottom();
   }
 
   scrollToBottom() {
@@ -350,5 +372,23 @@ export class ChatOnePersonPage {
     return index;
   }
 
+  private async updateMsgsDelivered() {
+    let msgReceiveds = this.msgList.filter(it => {
+      return it.to.id === MyApp.User.id;
+    });
 
+    for (let msg of msgReceiveds) {
+      if (msg.view < 3) {
+        try {
+          await this.http.put("/chat/" + msg.id, { view: 3 }).toPromise();
+          msg.view = 3;
+          this.updateMsg(msg);
+        }
+        catch (e) {
+          console.error(e);
+        }
+      }
+    }
+
+  }
 }

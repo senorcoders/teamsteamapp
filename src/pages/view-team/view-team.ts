@@ -14,6 +14,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
   templateUrl: 'view-team.html',
 })
 export class ViewTeamPage {
+  
+  public static __name = "ViewTeamPage"
+
 
   public team: any = {};
   public image = false;

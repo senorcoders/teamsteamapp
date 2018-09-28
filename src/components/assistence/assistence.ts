@@ -12,6 +12,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class AssistenceComponent {
 
+  public static __name = "AssistenceComponent"
+
   public players: Array<any> = [];
   public assistence: any = { players: [] };
   public event: any = {};

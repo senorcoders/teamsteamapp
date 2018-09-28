@@ -16,8 +16,6 @@
         <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
         <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
         <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
-        <!-- <ion-option value='imagesEvent'>{{ 'IMAGESBYEVENT' | translate }}</ion-option>
-        <ion-option value='imagesAll'>{{ 'IMAGESALL' | translate }}</ion-option> -->
       </ion-select>
     </ion-row>
   </ion-navbar>
@@ -56,27 +54,6 @@
     </h4>
   </div>
 
-  <!-- para mostrar todas las images -->
-  <ion-grid *ngIf="filter==='imagesAll'">
-    <ion-row>
-      <img class="images-all" (click)="presentImage($event)" [src]="url+i.src+'?small=true'" *ngFor="let i of allImages" col-6>
-    </ion-row>
-  </ion-grid>
-
-  <!-- para mostrar las imagenes por evento -->
-  <div class="images-event" (click)="toImages(e)" *ngFor="let e of eventsOrigin" [hidden]="filter!=='imagesEvent'">
-    <h3 class="title">{{e.name}}</h3>
-    <!-- <ion-slides>
-      <ion-slide *ngFor="let i of e.images">
-        <img [src]="url+i.src+'?small=true'">
-      </ion-slide>
-    </ion-slides> -->
-    <ion-grid>
-        <ion-row>
-          <img col-4 [src]="url+i.src+'?middle=true'" (click)="presentImage($event, true)" class="gallery-grid-img" *ngFor="let i of e.images">
-        </ion-row>
-      </ion-grid>
-  </div>
 
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
     <!-- esto es para mostrar un color en la esquina derecha se muestra segun su tipo -->

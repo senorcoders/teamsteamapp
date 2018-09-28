@@ -13,6 +13,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class ViewPaymentsPlayerPage {
 
+  public static __name = "ViewPaymentsPlayer"
+
+
   public payments:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

@@ -17,6 +17,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
   templateUrl: 'task.html',
 })
 export class TaskPage {
+
+  public static __name = "TaskPage"
+
   
   public task:any;
   public load:Loading;

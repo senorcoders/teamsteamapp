@@ -26,6 +26,8 @@ import { Storage } from '@ionic/storage';
 })
 export class LoginPage {
 
+  public static __name = "LoginPage"
+
   public showPassword: boolean = false;
   public firstname: string = "";
   public lastname: string = "";

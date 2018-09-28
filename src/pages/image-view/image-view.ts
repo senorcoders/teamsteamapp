@@ -12,6 +12,8 @@ import { File, IWriteOptions } from '@ionic-native/file';
 })
 export class ImageViewPage {
 
+  public static __name = "ImageViewPage"
+
   @ViewChild('angularCropper') public angularCropper: AngularCropperjsComponent;
 
   selectedLibraryItem: LibraryItem;

@@ -74,8 +74,8 @@ export class MyApp {
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
-    { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
-    { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "baseball", role: "FreeAgent", watch: "", newData: "" },
+    { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "nearby-events-icon.svg", role: "FreeAgent", watch: "", newData: "" },
+    { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "events-places.svg", role: "FreeAgent", watch: "", newData: "" },
   ];
   public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
 
@@ -117,39 +117,50 @@ export class MyApp {
   //Enviamos los datos al api
   ngAfterViewInit() {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
-      // console.log(data.name);
-      if (this.platform.is('cordova')) {
-        let screen: any = {
-          startTime: new Date().toISOString(),
-          screen: data.name,
-          firstName: MyApp.User.firstName,
-          lastName: MyApp.User.lastName,
-          userEmail: MyApp.User.email,
-          platform: this.platform.is("ios") ? 'ios' : 'android'
-        };
+      try {
+        if (MyApp.User === null || MyApp.User === undefined) return;
+        console.log(data.component.hasOwnProperty("__name"));
+        if (this.platform.is('cordova') && data.component.hasOwnProperty("__name") === true) {
+          console.log(data.component.__name);
+          let screen: any = {
+            startTime: new Date().toISOString(),
+            screen: data.component.__name,
+            firstName: MyApp.User.firstName,
+            lastName: MyApp.User.lastName,
+            userEmail: MyApp.User.email,
+            platform: this.platform.is("ios") ? 'ios' : 'android'
+          };
 
-        if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
-          screen.team = MyApp.User.team
-        } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
-          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-            screen.league = MyApp.User.role.league.id;
-          else
-            screen.league = MyApp.User.role.league.id;
+          if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+            screen.team = MyApp.User.team
+          } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+            if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+              screen.league = MyApp.User.role.league.id;
+            else
+              screen.league = MyApp.User.role.league.id;
+          }
+
+          data.willUnload.subscribe(async () => {
+            try {
+              screen.endTime = new Date().toISOString();
+
+              //Calculamos el tiempo que estuvo en la pantalla en segundos
+              let dateTime = moment(screen.startTime),
+                dateTimeEnd = moment(screen.endTime);
+              let diff = moment.duration(dateTime.diff(dateTimeEnd));
+              screen.timeVisited = Math.abs(diff.seconds());
+
+              await this.http.post("/screen", screen).toPromise();
+            }
+            catch (e) {
+              console.error(e);
+            }
+          });
         }
-
-        data.willUnload.subscribe(async () => {
-          screen.endTime = new Date().toISOString();
-
-          //Calculamos el tiempo que estuvo en la pantalla en segundos
-          let dateTime = moment(screen.startTime),
-            dateTimeEnd = moment(screen.endTime);
-          let diff = moment.duration(dateTime.diff(dateTimeEnd));
-          screen.timeVisited = Math.abs(diff.seconds());
-
-          await this.http.post("/screen", screen).toPromise()
-        });
       }
-
+      catch (e) {
+        console.error(e);
+      }
     });
   }
 
@@ -508,13 +519,15 @@ export class MyApp {
       return;
     }
 
-   
+
 
 
     MyApp.User.roles.forEach(element => {
-      if(element.team != ""){
-        MyApp.notifcations(element.team.id);
-     }
+      if (Object.prototype.toString.call(element.team) === "[object String]") {
+        MyApp.notifcations(element.team);
+      } else if (Object.prototype.toString.call(element.team) === "[object String]") {
+        MyApp.notifcations(element.team);
+      }
     });
 
   }
@@ -575,6 +588,7 @@ export class MyApp {
         MyApp.me.processNotification(intents);*/
 
       });
+
 
       MyApp.me.pushObject.on('registration').subscribe((registration: any) => {
 

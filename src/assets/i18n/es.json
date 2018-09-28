@@ -79,6 +79,7 @@
     "DAILY": "Diario",
     "NAME": "Nombre",
     "DATE": "Fecha del Evento",
+    "DATEEND": "Fecha Fin",
     "TIME": "Hora de Inicio",
     "TIMEEND": "Hora de Finalización",
     "DESCRIPTION": "Descripción del Evento",
@@ -405,5 +406,9 @@
         "TOASING": "Rol a asignar",
         "SELECTFAMILY": "Selecione los familiares"
     },
-    "INVITED": "Invitado"
+    "INVITED": "Invitado",
+    "NOHAVEEMAIL": "No tienes correo?",
+    "EMAILVERIFICATION": "Correo de recuperación",
+    "EMAILVERIFICATIONMSG": "Inserta un correo de comprobacion y nosotros te generaremos uno.",
+    "REMEMBEREMAILVERIFICATION": "Recuerda ir perfil y guardar su nuevo correo de locker room para iniciar sesion"
 }

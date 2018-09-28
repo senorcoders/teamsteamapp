@@ -9,6 +9,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class FormRequestPage {
 
+  public static __name = "FormRequestPage"
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 

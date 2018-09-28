@@ -11,6 +11,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class FormJoinTeamPage {
 
+  public static __name = "FormJoinTeamPage"
+
   public firstName = "";
   public lastName = "";
   public email = "";

@@ -13,6 +13,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class SelectLeaguesPage {
 
+  public static __name = "SelectLeaguesPage"
+
+
   public leagues = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http:HttpClient, public auth:AuthServiceProvider

@@ -20,6 +20,8 @@ import { ListChatsPage } from '../list-chats/list-chats';
 })
 export class ChatFamilyPage {
 
+  public static __name = "ChatFamilyPage"
+
   @ViewChild(Content) content: Content;
   public loadingChats = false;
   private skip = 20;

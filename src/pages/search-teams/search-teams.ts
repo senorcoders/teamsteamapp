@@ -14,6 +14,9 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class SearchTeamsPage {
 
+  public static __name = "SearchTeamsPage"
+
+
   @ViewChild("#sear") Search;
   public filtro="";
   public teams:Array<any>=[];

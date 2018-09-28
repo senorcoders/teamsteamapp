@@ -11,6 +11,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class EditFamilyPage {
 
+  public static __name = "EditFamily"
+
   public player:any;
 
   public person1:any={

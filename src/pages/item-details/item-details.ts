@@ -14,6 +14,8 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class ItemDetailsPage {
 
+  public static __name = "ItemDetailsPage"
+
   selectedLibraryItem: LibraryItem;
   public resolve: Function;
   public reject: Function;

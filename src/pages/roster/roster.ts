@@ -22,6 +22,9 @@ import { Storage } from '@ionic/storage';
 })
 export class RosterPage {
 
+  public static __name = "RosterPage"
+
+
   public user = MyApp.User;
   public isManager: boolean = false;
 

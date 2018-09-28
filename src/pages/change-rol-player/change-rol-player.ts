@@ -12,6 +12,8 @@ import { RosterPage } from '../roster/roster';
 })
 export class ChangeRolPlayerPage {
 
+  public static __name = "ChangeRolPlayerPage"
+
   public rol = "Manager";
   public player: any = {};
   public players = [];

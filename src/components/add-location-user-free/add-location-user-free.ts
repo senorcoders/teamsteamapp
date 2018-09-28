@@ -11,6 +11,8 @@ declare var google: any;
 })
 export class AddLocationUserFreeComponent {
 
+  public static __name = "AddLocationUserFreeComponent";
+
   //Para mostrar el mapa sin usar el plugin
   map: any;
   directionsService = new google.maps.DirectionsService;

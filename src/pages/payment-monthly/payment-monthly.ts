@@ -14,6 +14,9 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 })
 export class PaymentMonthlyPage {
 
+  public static __name = "PaymentMonthlyPage"
+
+
   public paids:Array<any>=[];
   public team:any;
 

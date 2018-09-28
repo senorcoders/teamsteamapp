@@ -12,7 +12,7 @@ page-chat-one-person {
         height: 45px;
         box-shadow: 0 0 2px rgba(0, 0, 0, 0.36);
     }
-    ion-title div{
+    ion-title div {
         font-size: 1.7rem !important;
         padding-left: 15% !important;
     }
@@ -94,6 +94,9 @@ page-chat-one-person {
                     }
                 }
             }
+            .views {
+                display: flex;
+            }
         }
         .message.left {
             .msg-content {
@@ -112,6 +115,9 @@ page-chat-one-person {
                     border-right-width: 0;
                     left: -5px;
                 }
+            }
+            .views {
+                display: none !important;
             }
         }
         .message.right {
@@ -138,6 +144,15 @@ page-chat-one-person {
                     border-left-width: 0;
                     right: -5px;
                 }
+            }
+            .views {
+                justify-content: flex-end;
+            }
+        }
+        .message.success{
+            .views ion-icon {
+                color: #fe324d !important;
+                font-weight: bold;
             }
         }
     }

@@ -11,6 +11,8 @@ import { CreateTeamManagerPage } from '../../pages/create-team-manager/create-te
 })
 export class AddTeamsLeagueComponent {
 
+  public static __name = "AddTeamsLeagueComponent";
+
   public search = "";
   public teams = [];
   public teamsSelect = [];

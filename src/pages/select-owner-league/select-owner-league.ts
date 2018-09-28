@@ -10,6 +10,9 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 })
 export class SelectOwnerLeaguePage {
 
+  public static __name = "SelectOwnerLeaguePage"
+
+
   public search="";
   public user:any;
   public userEnable=false;

@@ -18,19 +18,21 @@
             <ion-spinner></ion-spinner>
         </div>
         <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from.id !== from.id "
-            [class.right]=" msg.from.id === from.id ">
+            [class.right]=" msg.from.id === from.id " [class.success]="msg.view>=3">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">
                     <p>&nbsp;&nbsp;&nbsp;{{msg.dateTime | relativeTime}}</p>
                 </div>
-                <!--div class="msg-content" [hidden]="msg.type === 'image' ">
-                    <span class="triangle"></span>
-                    <p class="line-breaker ">{{msg.text}}</p>
-                </div-->
-                <div class="msg-content" [innerHTML]="insertMsg(msg)">
-
+                <div class="msg-content">
+                    <img [src]="urlImg(msg.id)" *ngIf="msg.type==='image'">
+                    <p class="line-breaker">{{msg.text}}</p>
+                    <div class="views">
+                        <ion-icon name="ios-checkmark" *ngIf="msg.view>=1"></ion-icon>
+                        <ion-icon name="ios-checkmark" *ngIf="msg.view>=2"></ion-icon>
+                    </div>
                 </div>
+
             </div>
         </div>
 

@@ -14,6 +14,9 @@ import { RosterLeaguePage } from '../roster-league/roster-league';
 })
 export class TeamsLeaguePage {
 
+  public static __name = "TeamsLeaguePage"
+
+
   public league: any;
   public teams = [];
 

@@ -16,6 +16,9 @@ import { ImageViewPage } from '../image-view/image-view';
   templateUrl: 'camera.html',
 })
 export class CameraPage {
+
+  public static __name = "CameraPage"
+
   private picture: string;
   public resolve: Function;
   public reject: Function;

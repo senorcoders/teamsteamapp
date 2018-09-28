@@ -14,6 +14,8 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class AddTeamPage {
 
+  public static __name = "AddTeamPage"
+
   public name = "";
   public image = false;
   public imageSrc = "";

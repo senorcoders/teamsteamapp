@@ -11,6 +11,9 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 })
 export class SelectEventPage {
 
+  public static __name = "SelectEventPage"
+
+
   public filtro = "";
   public events = [];
   constructor(public navCtrl: NavController, public navParams: NavParams,

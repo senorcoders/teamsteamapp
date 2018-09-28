@@ -11,6 +11,9 @@ import { RequestPlayerPage } from '../request-player/request-player';
 })
 export class RequestsPlayerPage {
 
+  public static __name = "RequestsPLayerPage"
+
+
   public requests:Array<any>=[];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,

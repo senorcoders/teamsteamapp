@@ -22,6 +22,8 @@ const THUMBNAIL_HEIGHT = 150;
 })
 export class LibraryImagesPage {
 
+  public static __name = "LibraryImagesPage"
+
   thumbnailWidth = THUMBNAIL_WIDTH + 'px';
   thumbnailHeight = THUMBNAIL_HEIGHT + 'px';
   library;
