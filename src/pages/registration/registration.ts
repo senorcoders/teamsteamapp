@@ -61,6 +61,9 @@ export class RegistrationPage {
 
   public sports = [];
 
+  public nohave = false;
+  public emailVerification = "";
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider,
@@ -75,6 +78,8 @@ export class RegistrationPage {
     let load = HelpersProvider.me.getLoadingStandar();
     try {
       this.sports = await this.http.get("/sports").toPromise() as any[];
+      if (this.helper.enableMapsLocation === false)
+        await this.helper.reloadGoogleplaces();
     }
     catch (e) {
       console.error(e);
@@ -209,8 +214,8 @@ export class RegistrationPage {
     this.imageLeague = true;
   }
 
-  validEmail() {
-    return !this.helper.validEmail(this.email);
+  validEmail(email) {
+    return !this.helper.validEmail(email);
   }
 
   public async save() {
@@ -218,22 +223,37 @@ export class RegistrationPage {
     await this.saveAction();
     load.dismiss();
   }
+
   public async saveAction() {
 
     try {
 
       this.userValid = true;
 
-      if (
-        this.firstname === "" ||
-        this.lastname === "" ||
-        this.email === ""
-      ) {
-        let empty = await this.helper.getWords("EMPTYFIELDS");
-        this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-          .present();
-        return;
+      if (this.nohave === false) {
+        if (
+          this.firstname === "" ||
+          this.lastname === "" ||
+          this.email === ""
+        ) {
+          let empty = await this.helper.getWords("EMPTYFIELDS");
+          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
+            .present();
+          return;
+        }
+      } else {
+        if (
+          this.firstname === "" ||
+          this.lastname === "" ||
+          this.emailVerification === ""
+        ) {
+          let empty = await this.helper.getWords("EMPTYFIELDS");
+          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
+            .present();
+          return;
+        }
       }
+
 
       if (this.selectNew === "team") {
         this.teamValid = true;
@@ -274,12 +294,14 @@ export class RegistrationPage {
         }
       }
 
-      let email: any = await this.http.get("/user/enable/" + this.email).toPromise();
-      if (email.valid === false) {
-        let emailM = await this.helper.getWords("EMAILREADY");
-        this.alertCtrl.create({ message: emailM, buttons: ["Ok"] })
-          .present();
-        return;
+      if (this.nohave === false) {
+        let email: any = await this.http.get("/user/enable/" + this.email).toPromise();
+        if (email.valid === false) {
+          let emailM = await this.helper.getWords("EMAILREADY");
+          this.alertCtrl.create({ message: emailM, buttons: ["Ok"] })
+            .present();
+          return;
+        }
       }
 
 
@@ -298,6 +320,9 @@ export class RegistrationPage {
           "city": this.city,
           "configuration": { "valid": true }
         };
+        if (this.nohave === true) {
+          user.emailVerification = this.emailVerification;
+        }
       } else if (this.selectNew === "agentFree") {
         user = {
           user: {
@@ -310,6 +335,9 @@ export class RegistrationPage {
             "configuration": { "valid": true },
           }
         };
+        if (this.nohave === true) {
+          user.user.emailVerification = this.emailVerification;
+        }
       } else {
         user = {
           "password": this.password,
@@ -317,17 +345,21 @@ export class RegistrationPage {
           "lastName": this.lastname,
           "email": this.email,
         };
+        if (this.nohave === true) {
+          user.emailVerification = this.emailVerification;
+        }
       }
 
       for (let n of Object.keys(info)) {
         user[n] = info[n];
       }
 
-      if (this.selectNew === "team")
-        await this.http.post("/user/team", user).toPromise();
-      else if (this.selectNew === "agentFree")
-        await this.http.post("/user/free", user).toPromise();
-      else {
+      if (this.selectNew === "team") {
+        user = await this.http.post("/user/team", user).toPromise();
+        user = user.user;
+      } else if (this.selectNew === "agentFree") {
+        user = await this.http.post("/user/free", user).toPromise();
+      } else {
         user = await this.http.post("/user-registration", user).toPromise();
         this.usersOwners.push(user);
         let users: any[] = [];
@@ -352,7 +384,15 @@ export class RegistrationPage {
             id: user.id,
             image: this.imageSrc
           }).toPromise();
-        } 
+        }
+      }
+
+      if (this.nohave == true) {
+        this.alertCtrl.create({
+          message: await this.helper.getWords("REMEMBEREMAILVERIFICATION"),
+          buttons: ["Ok"]
+        })
+          .present();
       }
 
       let call = async function (err, user) {

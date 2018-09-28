@@ -402,5 +402,9 @@
         "TOASING": "Role to assign",
         "SELECTFAMILY": "Select relatives"
     },
-    "INVITED": "Invited"
+    "INVITED": "Invited",
+    "NOHAVEEMAIL": "Do not have email?",
+    "EMAILVERIFICATION": "Recovery email",
+    "EMAILVERIFICATIONMSG": "Insert a verification email and we will generate one for you.",
+    "REMEMBEREMAILVERIFICATION": "Remember to go profile and save your new locker room email to start session"
 }

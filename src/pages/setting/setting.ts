@@ -83,7 +83,12 @@ export class SettingPage {
       user.options = user.options || {};
       console.log(user.options);
       this.setting.user = this.loadPropertys(user.options, this.setting.user);
-      this.setting.user.language = MyApp.User.options.language;
+      if (MyApp.User.options !== undefined && MyApp.User.options.language !== undefined) {
+        this.setting.user.language = MyApp.User.options.language;
+      }else{
+        this.setting.user.language = "en";
+      }
+      
       console.log(this.setting);
     }
     catch (e) {
