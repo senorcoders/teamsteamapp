@@ -406,5 +406,8 @@
     "NOHAVEEMAIL": "Do not have email?",
     "EMAILVERIFICATION": "Recovery email",
     "EMAILVERIFICATIONMSG": "Insert a verification email and we will generate one for you.",
-    "REMEMBEREMAILVERIFICATION": "Remember to go profile and save your new locker room email to start session"
+    "REMEMBEREMAILVERIFICATION": "Remember to go profile and save your new locker room email to start session",
+    "EMAILTYPE": "Owner of the mail",
+    "CHECKEMAILGENERATED": "We will create an email for the player to start a session, to verify the account, the relative's email will be used.",
+    "DETAILSPLAYERCHECKEMAIL": "See the player's details to see the assigned mail."
 }

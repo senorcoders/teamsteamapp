@@ -410,5 +410,8 @@
     "NOHAVEEMAIL": "No tienes correo?",
     "EMAILVERIFICATION": "Correo de recuperación",
     "EMAILVERIFICATIONMSG": "Inserta un correo de comprobacion y nosotros te generaremos uno.",
-    "REMEMBEREMAILVERIFICATION": "Recuerda ir perfil y guardar su nuevo correo de locker room para iniciar sesion"
+    "REMEMBEREMAILVERIFICATION": "Recuerda ir perfil y guardar su nuevo correo de locker room para iniciar sesion",
+    "EMAILTYPE": "Dueño del correo",
+    "CHECKEMAILGENERATED": "Crearemos un correo para que el jugador inicie sesion, para verificar la cuenta se usara el correo del familiar.",
+    "DETAILSPLAYERCHECKEMAIL": "Ve los detalles del jugador para ver el correo asignado."
 }

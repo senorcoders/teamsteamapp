@@ -23,6 +23,8 @@ export class CreatePlayerPage {
   public email: string = "";
   public password: string = "standard";
 
+  public emailType = "player";
+
   public imageSrc: string;
   public image: boolean = false;
 
@@ -170,32 +172,35 @@ export class CreatePlayerPage {
       return;
     }
 
-    //Comprobamos si ya existe el correo
+    //si el correo es de jugador Comprobamos si ya existe el correo
     //si ya existe le avisamos al usuario
-    if (await this.checkendEmail() === true) {
-      return this.alertCtrl.create({
-        message: await this.helper.getWords("PLAYEREXISTS"),
-        buttons:[{text: "No", handler: function(){ load.dismiss() } }, {
-          text: "Ok",
-          handler: function(){ this.saveFinish.bind(this)(load) }.bind(this)
-        }]
-      })
-      .present();
+    if (this.emailType === "player") {
+      if (await this.checkendEmail() === true) {
+        return this.alertCtrl.create({
+          message: await this.helper.getWords("PLAYEREXISTS"),
+          buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
+            text: "Ok",
+            handler: function () { this.saveFinish.bind(this)(load) }.bind(this)
+          }]
+        })
+          .present();
+      }
     }
 
-    this.saveFinish(load);
+    this.saveFinish.bind(this)(load);
 
   }
 
-  public async saveFinish(load:Loading) {
+  public async saveFinish(load: Loading) {
 
-    this.user = {
+    let user: any = {
       // username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
       email: this.email.toLowerCase(),
-      image: this.imageSrc
+      image: this.imageSrc,
+      emailType: this.emailType
     };
 
     let positions: Array<any> = this.positions.split(",");
@@ -215,19 +220,27 @@ export class CreatePlayerPage {
 
     try {
 
-      this.user.contacts = this.contacts;
-      let user: any = await this.http.post("/user/player", { user: this.user, player: player }).toPromise();
+      user.contacts = this.contacts;
+      user = await this.http.post("/user/player", { user, player }).toPromise();
 
 
-      if (this.user.hasOwnProperty('image') && this.user.image != '') {
+      if (user.hasOwnProperty('image') && this.user.image != '') {
         await this.http.post("/userprofile/images", {
           id: user.id,
           image: this.user.image,
           team: MyApp.User.team
         }).toPromise();
       }
-    
+
       load.dismiss();
+      if (this.emailType === "family") {
+        this.alertCtrl.create({
+          message: await this.helper.getWords("DETAILSPLAYERCHECKEMAIL"),
+          buttons: ["Ok"]
+        })
+          .present();
+      }
+
       if (this.navParams.get("team") !== undefined) {
         this.navCtrl.pop();
       } else {

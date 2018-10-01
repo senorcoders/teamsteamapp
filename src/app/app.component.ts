@@ -73,7 +73,7 @@ export class MyApp {
     { title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
-    { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "baseball", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
+    { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "request-icon.svg", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "nearby-events-icon.svg", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "events-places.svg", role: "FreeAgent", watch: "", newData: "" },
   ];

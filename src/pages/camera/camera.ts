@@ -5,6 +5,7 @@ import { PhotoLibrary } from '@ionic-native/photo-library';
 import { LibraryImagesPage } from '../library-images/library-images';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { ImageViewPage } from '../image-view/image-view';
+import { HelpersProvider } from '../../providers/helpers/helpers';
 //declare var cordova: any; // global variable for paths
 
 /**
@@ -121,12 +122,12 @@ export class CameraPage {
 
     try {
       
-      console.log("ionViewWillEnter " + Math.random());
+      console.log(this.cameraPreview, "ionViewWillEnter " + Math.random());
       let previewOtions: CameraPreviewOptions = {
         x: 0,
         y: 56,
-        width: window.screen.width,
-        height: window.screen.height - 156,
+        width: HelpersProvider.me.platform.width(),
+        height: HelpersProvider.me.platform.height() - 156,
         camera: 'rear',
         tapPhoto: false,
         previewDrag: false,
