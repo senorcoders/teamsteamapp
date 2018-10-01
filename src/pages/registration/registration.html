@@ -13,21 +13,21 @@
 
     <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
-        {{"FIRSTNAME" | translate}}
+        {{"FIRSTNAME" | translate}} <span style="color: red;">*</span>
       </ion-label>
       <ion-input type="text" [ngClass]="userValid==true&&firstname===''?'not-valid':''" [(ngModel)]="firstname"></ion-input>
     </ion-item>
 
     <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
-        {{"LASTNAME" | translate}}
+        {{"LASTNAME" | translate}} <span style="color: red;">*</span>
       </ion-label>
       <ion-input type="text" [ngClass]="userValid==true&&lastname===''?'not-valid':''" [(ngModel)]="lastname"></ion-input>
     </ion-item>
 
     <ion-item *ngIf="!nohave" [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
-        {{"EMAIL" | translate}}
+        {{"EMAIL" | translate}} <span style="color: red;">*</span>
       </ion-label>
       <ion-input type="email" [ngClass]="userValid==true&&validEmail(email)===true?'not-valid':''" [(ngModel)]="email"></ion-input>
     </ion-item>
