@@ -47,7 +47,7 @@ export class ChatOnePersonPage {
     ChatPage.changeMessages(payload);*/
   }
 
-  //private static changeMessages: Function = function (payload) { console.log(payload) };
+  public planPremiun = false;
 
   constructor(private http: HttpClient,
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
@@ -121,6 +121,11 @@ export class ChatOnePersonPage {
   }
 
   async ionViewDidLoad() {
+
+    //Para saber si tiene una cuenta premiun
+    let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
+    this.planPremiun = status.msg;
+
     //Para saber si el manager bloqueo los mensajes con los otros jugadores
     let team = await this.http.get("/teams/" + MyApp.User.team).toPromise() as any;
     if (team.configuration !== undefined) {

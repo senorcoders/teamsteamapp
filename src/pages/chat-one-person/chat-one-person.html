@@ -27,7 +27,7 @@
                 <div class="msg-content">
                     <img [src]="urlImg(msg.id)" *ngIf="msg.type==='image'">
                     <p class="line-breaker">{{msg.text}}</p>
-                    <div class="views">
+                    <div class="views" *ngIf="planPremiun">
                         <ion-icon name="ios-checkmark" *ngIf="msg.view>=1"></ion-icon>
                         <ion-icon name="ios-checkmark" *ngIf="msg.view>=2"></ion-icon>
                     </div>
