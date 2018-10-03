@@ -60,9 +60,6 @@ export class EventsSchedulePage {
     private storage: Storage
   ) {
 
-    if (this.navParams.get("notification") === undefined)
-      MyApp.initNotifcations();
-
     this.locationAccuracy.canRequest().then((canRequest: boolean) => {
 
       if (canRequest) {

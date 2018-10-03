@@ -111,58 +111,59 @@ export class LoginPage {
       this.presentAlert(emptyM);
 
     } else {
-
-      this.authService.Login(this.email, async function (err, user) {
-
-        if (user) {
-          this.statusBar.overlaysWebView(false);
-          this.statusBar.backgroundColorByHexString("#fe324d");
-
-          if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
-            await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
-          }
-
-          if (MyApp.User.hasOwnProperty("team") || MyApp.User.role.name === "OwnerLeague") {
-            this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
-            if (this.plt.is('ios')) {
-              this.showGPSalert();
-            }
-          } else {
-            this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
-            if (this.plt.is('ios')) {
-              this.showGPSalert();
-            }
-          }
-        } else if (err) {
-
-          if (err.hasOwnProperty("message")) {
-
-            let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
-            this.presentAlert(passwordM);
-            return;
-
-          } else if (err.hasOwnProperty("verify")) {
-            let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
-            this.presentAlert(msgVerifiedEmail);
-            return;
-          } else {
-
-            let invalidM = await this.helper.getWords("INVALIDPASS");
-            this.presentAlert(invalidM);
-            return;
-          }
-
-        } else {
-          this.alertCtrl.create({
-            title: "Error",
-            message: "Error In The Connection",
-            buttons: ["Ok"]
-          }).present();
-        }
-
-      }.bind(this));
-
+      this.authService.Login(this.email, this.actionLogin.bind(this));
     }
+  }
+
+  private async actionLogin(err, user) {
+    if (user) {
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.backgroundColorByHexString("#fe324d");
+
+      if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
+        await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
+      }
+
+      if (MyApp.User.hasOwnProperty("team") || MyApp.User.role.name === "OwnerLeague") {
+        await this.navCtrl.setRoot(EventsSchedulePage);
+        if (this.plt.is('ios')) {
+          this.showGPSalert();
+        }
+      } else {
+        await this.navCtrl.setRoot(AgentFreePage);
+        if (this.plt.is('ios')) {
+          this.showGPSalert();
+        }
+      }
+      await MyApp.initNotifcations();
+
+    } else if (err) {
+
+      if (err.hasOwnProperty("message")) {
+
+        let passwordM = await this.helper.getWords("INVALIDUSERNAMEYPASS")
+        this.presentAlert(passwordM);
+        return;
+
+      } else if (err.hasOwnProperty("verify")) {
+        let msgVerifiedEmail = await this.helper.getWords("VERFIEDDEVICE");
+        this.presentAlert(msgVerifiedEmail);
+        return;
+      } else {
+
+        let invalidM = await this.helper.getWords("INVALIDPASS");
+        this.presentAlert(invalidM);
+        return;
+      }
+
+    } else {
+      this.alertCtrl.create({
+        title: "Error",
+        message: "Error In The Connection",
+        buttons: ["Ok"]
+      }).present();
+    }
+
   }
 
   async presentAlert(message) {

@@ -282,7 +282,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectEventPageModule,
     PhotosPageModule,
     NotificationPageModule,
-    ChangeRolPlayerPageModule
+    ChangeRolPlayerPageModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -366,7 +366,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectEventPage,
     PhotosPage,
     NotificationPage,
-    ChangeRolPlayerPage
+    ChangeRolPlayerPage,
   ],
   providers: [
     StatusBar,

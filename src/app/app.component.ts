@@ -511,33 +511,26 @@ export class MyApp {
 
   public static async initNotifcations() {
 
-
-    console.log("Dentro de initNOt", MyApp.User.roles);
-
-
-    if (MyApp.me.notificationEnable === true && MyApp.me.permision === false) {
+    if (MyApp.me.permision === false) {
       return;
     }
 
-
-
-
-    MyApp.User.roles.forEach(element => {
-      if (Object.prototype.toString.call(element.team) === "[object String]") {
-        MyApp.notifcations(element.team);
-      } else if (Object.prototype.toString.call(element.team) === "[object String]") {
-        MyApp.notifcations(element.team);
-      }
-    });
-
+    MyApp.notifcations();
   }
 
 
   //#region for push notifications configuration
-  public static async notifcations(team) {
+  public static async notifcations() {
 
-    // Return a list of currently configured channels
-    //MyApp.pusherNotification.listChannels().then((channels) => console.log('List of channels', channels))
+    //creamos los topics para subscribirse
+    let topics = [];
+    for (let element of MyApp.User.roles) {
+      if (Object.prototype.toString.call(element.team) === "[object String]") {
+        topics.push(element.team);
+      } else if (Object.prototype.toString.call(element.team) === "[object Object]") {
+        topics.push(element.team.id);
+      }
+    }
 
     // to initialize push notifications
 
@@ -545,11 +538,10 @@ export class MyApp {
     const options: any = {
       android: {
         senderID: "318853826702",
-        topics: [team],
+        topics,
         sound: true,
         vibrate: true,
-        soundname: "default"/*,
-        forceShow: true*/
+        soundname: "default"
       },
       ios: {
         alert: 'true',

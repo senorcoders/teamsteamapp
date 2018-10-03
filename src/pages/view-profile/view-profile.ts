@@ -119,9 +119,7 @@ export class ViewProfilePage {
     return this.user.role.hasOwnProperty('team')
   }
 
-  public selectLeagues() {
-    this.navCtrl.push(SelectLeaguesPage);
-  }
+  
 
   public async loadImage() {
     this.image = true;
@@ -318,10 +316,15 @@ export class ViewProfilePage {
   public editable() {
     return this.user.role.name != 'Manager' && !this.edit;
   }
+  
+  public selectLeagues() {
+    this.navCtrl.push(SelectLeaguesPage);
+  }
 
   public selectTeams() {
     this.navCtrl.push(TeamsProfilePage);
   }
+
 
   public viewContacts() {
     this.navCtrl.push(ContactsProfilePage);
@@ -333,25 +336,6 @@ export class ViewProfilePage {
 
   public paymentsMonthly() {
     this.navCtrl.push(PaymentMonthlyPage);
-  }
-
-  private async resendCode() {
-
-    try {
-
-      /*let resend = */await this.http.post("/user/resend-code", {
-        id: MyApp.User.id,
-        email: MyApp.User.email,
-        verificationCode: MyApp.User.verificationCode
-      }).toPromise();
-
-      //console.log(resend);
-
-    }
-    catch (e) {
-      console.error(e);
-    }
-
   }
 
   public goAbout() {
