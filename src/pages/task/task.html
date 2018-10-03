@@ -19,6 +19,7 @@
     <ion-card-content>
       <ion-card-title>{{task.text}}</ion-card-title>
       <p>{{task.dateParsed}}</p>
+      <p *ngIf="user.id!==task.for.id">{{"FOR" | translate}} {{task.for.firstName+ " "+ task.for.lastName}}</p>
     </ion-card-content>
   </ion-card>
 

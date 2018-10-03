@@ -20,61 +20,62 @@ export class TaskPage {
 
   public static __name = "TaskPage"
 
-  
-  public task:any;
-  public load:Loading;
-  public manager:boolean=false;
+
+  public task: any;
+  public load: Loading;
+  public manager: boolean = false;
+  public user = MyApp.User;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, public alertCtrl: AlertController, 
+    public http: HttpClient, public alertCtrl: AlertController,
     public auth: AuthServiceProvider, public loading: LoadingController
-      ) {
+  ) {
     this.task = this.navParams.get("task");
     this.task.dateParsed = moment(this.task.dateTime).format('ddd DD MMM YYYY hh:mm a');
     this.manager = MyApp.User.role.name === "Manager";
   }
 
   //pedir la contraseña para comprobar si el usuario es el legitimo
-  public requestRemove(){
+  public requestRemove() {
     HelpersProvider.me.presentAlertStandar(this.removeTask.bind(this));
   }
 
   //Para eliminar tareas
-  public async removeTask(){
-    
+  public async removeTask() {
+
     let valid = true;
     this.load = HelpersProvider.me.getLoadingStandar();
-    try{
-      let t = await this.http.delete("/task/"+ this.task.id).toPromise();
+    try {
+      let t = await this.http.delete("/task/" + this.task.id).toPromise();
       console.log(t);
       this.load.dismiss();
     }
-    catch(e){
+    catch (e) {
       console.error(e);
-      valid=false;
+      valid = false;
       this.load.dismiss();
     }
 
-    if( valid ) this.navCtrl.pop();
+    if (valid) this.navCtrl.pop();
   }
-  
+
   //Para cambiar de completada a no completada y viceversa
-  public async changeStatus(){
+  public async changeStatus() {
     let completad = !this.task.completad;
     //task.team = Object.prototype.toString.call(this.task.team) === '[object String]'  ? this.task.team : this.task.team.id;
     let valid = true;
 
-    try{
-      let ta = await this.http.put('/task/'+ this.task.id, {completad}).toPromise();
+    try {
+      let ta = await this.http.put('/task/' + this.task.id, { completad }).toPromise();
       console.log(ta);
     }
-    catch(e){
+    catch (e) {
       console.error(e);
       valid = false;
     }
 
-    if( valid ) this.task.completad = completad;
-    
+    if (valid) this.task.completad = completad;
+
   }
 
 }

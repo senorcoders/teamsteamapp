@@ -29,6 +29,9 @@ export class NewTaskPage {
 
   public event: any = {};
 
+  public eventID = "";
+  public events = [];
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private datePicker: DatePicker, private alertCtrl: AlertController,
     public http: HttpClient, private helper: HelpersProvider,
@@ -39,6 +42,9 @@ export class NewTaskPage {
   }
 
   async ngOnInit() {
+
+    //Para obtener los eventos
+    this.events = await this.http.get("/event/team/upcoming/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.team).toPromise() as any[];
 
     let family: any = await this.http.get('/family?where={"team":"' + MyApp.User.team + '"}').toPromise();
     let players: any = await this.http.get("/players/team/" + MyApp.User.team).toPromise();
@@ -58,6 +64,10 @@ export class NewTaskPage {
         family.push(p);
       }
     }
+    //Quitamos el actual usuario en el app
+    family = family.filter(it=>{ console.log(it.user.id, MyApp.User.id);
+      return it.user.id !== MyApp.User.id;
+    });
 
     this.players = family;
 
@@ -77,7 +87,7 @@ export class NewTaskPage {
     this.event = {};
   }
 
-  public existsEvent(){
+  public existsEvent() {
     return this.event.hasOwnProperty("id");
   }
 
@@ -113,7 +123,7 @@ export class NewTaskPage {
 
     let valid = true;
     try {
-      let t:any = {
+      let t: any = {
         name: this.name,
         text: this.description,
         dateTime: moment(this.date + " " + this.time, "ddd DD MMM YYYY hh:mm a").toISOString(),
@@ -123,8 +133,8 @@ export class NewTaskPage {
         completad: false
       };
 
-      if(this.event.hasOwnProperty("id")){
-        t.event = this.event.id;
+      if (this.eventID !== "") {
+        t.event = this.eventID;
       }
 
       let task = await this.http.post("/task", t).toPromise();

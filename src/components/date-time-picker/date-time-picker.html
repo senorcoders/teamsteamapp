@@ -1,11 +1,19 @@
-<button ion-button round outline class="close-icon" (click)="viewCtrl.dismiss()" >
-  <ion-icon name="close"></ion-icon>
-</button>
-<div #reloj class="reloj">
+<div id="reloj-container">
+  <div id="inner">
+    <h4>
+      {{hour}}:{{minute}}
+    </h4>
+    <div>
+      <span (click)="setA('am');" [ngClass]="a==='am' ? 'select': ''">AM</span>
+      <span (click)="setA('pm');" [ngClass]="a==='pm' ? 'select': ''">PM</span>
+    </div>
+  </div>
 
-</div>
-<div class="date-time-set">
-  <h4>{{hour}}:{{minute}} <span (click)="setA('am');" [ngClass]="a==='am' ? 'select': ''">AM</span>-<span (click)="setA('pm');" [ngClass]="a==='pm' ? 'select': ''">PM</span> </h4>
-  <button ion-button (click)="setDateTime()" >Set</button>
-  <button ion-button (click)="clear()" >Clear</button>
+  <div #reloj class="reloj">
+
+  </div>
+  <div class="date-time-set">
+    <button ion-button (click)="clear()">Cancel</button>
+    <button ion-button (click)="setDateTime()">Ok</button>
+  </div>
 </div>

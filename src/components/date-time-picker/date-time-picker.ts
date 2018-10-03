@@ -9,28 +9,28 @@ import { ViewController, NavParams } from 'ionic-angular';
 export class DateTimePickerComponent {
 
   public static __name = "DateTimePickerComponent"
-  
-  @ViewChild("reloj") reloj:ElementRef;
+
+  @ViewChild("reloj") reloj: ElementRef;
   public hoursView: HTMLDivElement;
   public minutesView: HTMLDivElement;
 
-  private hour:string="12";
-  private minute:string="00";
-  public a="am";
+  private hour: string = "12";
+  private minute: string = "00";
+  public a = "am";
 
   constructor(private viewCtrl: ViewController, public navParams: NavParams) {
   }
 
-  ionViewDidEnter(){
+  ionViewDidEnter() {
 
     //Para el contenedor de la hora
-    this.hoursView =  document.createElement("div");
+    this.hoursView = document.createElement("div");
     this.hoursView.classList.add("clockpicker-hours");
     this.hoursView.classList.add("clockpicker-dial");
     this.reloj.nativeElement.appendChild(this.hoursView);
 
     //Para el contenedor de los minutos
-    this.minutesView =  document.createElement("div");
+    this.minutesView = document.createElement("div");
     this.minutesView.classList.add("clockpicker-dial");
     this.minutesView.classList.add("clockpicker-minutes");
     this.minutesView.classList.add("hidden-trans");
@@ -41,8 +41,8 @@ export class DateTimePickerComponent {
     this.setHours(docehoras);
   }
 
-  private setHours(doceHoras:boolean){
-    
+  private setHours(doceHoras: boolean) {
+
     // Can I use transition ?
     /*var transitionSupported = (function(){
       var style = document.createElement('div').style;
@@ -52,76 +52,76 @@ export class DateTimePickerComponent {
         'msTransition' in style ||
         'OTransition' in style;
     })();*/
-    
+
     //para calculos de posicionamiento
     let dialRadius = 100,
-		outerRadius = 80,
-		// innerRadius = 80 on 12 hour clock
-		innerRadius = 54,
-		tickRadius = 13;
+      outerRadius = 80,
+      // innerRadius = 80 on 12 hour clock
+      innerRadius = 54,
+      tickRadius = 13;
 		/*diameter = dialRadius * 2,
     duration = transitionSupported ? 350 : 1;*/
-    
-    let  tickTpl = document.createElement("div");
+
+    let tickTpl = document.createElement("div");
     tickTpl.classList.add("clockpicker-tick");
-    let i, tick:HTMLDivElement, radian, radius;
+    let i, tick: HTMLDivElement, radian, radius;
 
     // Hours view
-  if (doceHoras === true) {
-    for (i = 1; i < 13; i += 1) {
-      tick = tickTpl.cloneNode() as HTMLDivElement;
-      radian = i / 6 * Math.PI;
-      radius = outerRadius;
-      tick.style.fontSize = '120%';
-      tick.style.left = (dialRadius + Math.sin(radian) * radius - tickRadius).toString()+ "px";
-      tick.style.top= (dialRadius - Math.cos(radian) * radius - tickRadius).toString()+ "px";
-      tick.innerHTML = i === 0 ? '00' : i;
-      tick.onclick = function(e){
-        this.setHour(e.srcElement.innerHTML);
-        console.log(e.srcElement.innerHTML);
-      }.bind(this);
-      this.hoursView.appendChild(tick);
-    }
-  } else {
-    for (i = 0; i < 24; i += 1) {
-      tick = tickTpl.cloneNode() as HTMLDivElement;
-      radian = i / 6 * Math.PI;
-      var inner = i > 0 && i < 13;
-      radius = inner ? innerRadius : outerRadius;
-      tick.style.left = (dialRadius + Math.sin(radian) * radius - tickRadius).toString()+ "px";
-      tick.style.top= (dialRadius - Math.cos(radian) * radius - tickRadius).toString()+ "px";
-      if (inner) {
+    if (doceHoras === true) {
+      for (i = 1; i < 13; i += 1) {
+        tick = tickTpl.cloneNode() as HTMLDivElement;
+        radian = i / 6 * Math.PI;
+        radius = outerRadius;
         tick.style.fontSize = '120%';
+        tick.style.left = (dialRadius + Math.sin(radian) * radius - tickRadius).toString() + "px";
+        tick.style.top = (dialRadius - Math.cos(radian) * radius - tickRadius).toString() + "px";
+        tick.innerHTML = i === 0 ? '00' : i;
+        tick.onclick = function (e) {
+          this.setHour(e.srcElement.innerHTML);
+          console.log(e.srcElement.innerHTML);
+        }.bind(this);
+        this.hoursView.appendChild(tick);
       }
-      tick.innerHTML = i === 0 ? '00' : i;
-      tick.onclick = function(e){
-        this.setHour(e.srcElement.innerHTML);
-        console.log(e.srcElement.innerHTML);
-      }.bind(this);
-      this.hoursView.appendChild(tick);
-      //tick.on(mousedownEvent, mousedown);
-    }
+    } else {
+      for (i = 0; i < 24; i += 1) {
+        tick = tickTpl.cloneNode() as HTMLDivElement;
+        radian = i / 6 * Math.PI;
+        var inner = i > 0 && i < 13;
+        radius = inner ? innerRadius : outerRadius;
+        tick.style.left = (dialRadius + Math.sin(radian) * radius - tickRadius).toString() + "px";
+        tick.style.top = (dialRadius - Math.cos(radian) * radius - tickRadius).toString() + "px";
+        if (inner) {
+          tick.style.fontSize = '120%';
+        }
+        tick.innerHTML = i === 0 ? '00' : i;
+        tick.onclick = function (e) {
+          this.setHour(e.srcElement.innerHTML);
+          console.log(e.srcElement.innerHTML);
+        }.bind(this);
+        this.hoursView.appendChild(tick);
+        //tick.on(mousedownEvent, mousedown);
+      }
 
-  }
+    }
     this.setMinutes(dialRadius, outerRadius, tickRadius);
   }
 
-  
-  public setMinutes(dialRadius, outerRadius, tickRadius){
 
-    let  tickTpl = document.createElement("div");
+  public setMinutes(dialRadius, outerRadius, tickRadius) {
+
+    let tickTpl = document.createElement("div");
     tickTpl.classList.add("clockpicker-tick");
-    let i, tick:HTMLDivElement, radian;
+    let i, tick: HTMLDivElement, radian;
 
     for (i = 0; i < 60; i += 15) {
       tick = tickTpl.cloneNode() as HTMLDivElement;
       radian = i / 30 * Math.PI;
-      tick.style.left = (dialRadius + Math.sin(radian) * outerRadius - tickRadius).toString()+ "px";
-      tick.style.top= (dialRadius - Math.cos(radian) * outerRadius - tickRadius).toString()+ "px";
+      tick.style.left = (dialRadius + Math.sin(radian) * outerRadius - tickRadius).toString() + "px";
+      tick.style.top = (dialRadius - Math.cos(radian) * outerRadius - tickRadius).toString() + "px";
 
       tick.style.fontSize = '120%';
-      tick.innerHTML =  this.leadingZero(i).toString();
-      tick.onclick = function(e){
+      tick.innerHTML = this.leadingZero(i).toString();
+      tick.onclick = function (e) {
         this.setMinute(e.srcElement.innerHTML);
         console.log(e.srcElement.innerHTML);
       }.bind(this);
@@ -132,39 +132,45 @@ export class DateTimePickerComponent {
   }
 
   private leadingZero(num) {
-		return (num < 10 ? '0' : '') + num;
+    return (num < 10 ? '0' : '') + num;
   }
-  
-  public setHour(hour){
+
+  public setHour(hour) {
     this.hour = hour;
     this.minutesView.classList.remove("hidden-trans");
     this.minutesView.removeAttribute("hidden");
 
     this.hoursView.classList.add("hidden-trans");
-    setTimeout(function(){
+    setTimeout(function () {
       this.hoursView.setAttribute("hidden", "");
     }.bind(this), 1000);
   }
 
-  public setMinute(minute){
+  public setMinute(minute) {
     this.minute = minute;
   }
 
-  public setDateTime(){
-    this.viewCtrl.dismiss(this.hour+ ":"+ this.minute+ " "+ this.a);
+  public setDateTime() {
+    this.viewCtrl.dismiss(this.hour + ":" + this.minute + " " + this.a);
   }
 
-  public clear(){
-    this.minutesView.classList.add("hidden-trans");
-    this.minutesView.setAttribute("hidden", "");
-    this.hoursView.classList.remove("hidden-trans");
-    this.hoursView.removeAttribute("hidden");
-    this.hour = "12";
-    this.minute = "00";
+  public clear() {
+    let hiddenHours = this.hoursView.getAttribute("hidden");
+    if (hiddenHours !== null) {
+      this.minutesView.classList.add("hidden-trans");
+      this.minutesView.setAttribute("hidden", "");
+      this.hoursView.classList.remove("hidden-trans");
+      this.hoursView.removeAttribute("hidden");
+      this.hour = "12";
+      this.minute = "00";
+    } else {
+      this.viewCtrl.dismiss();
+    }
+
   }
 
-  public setA(m){
-    this.a=m;
+  public setA(m) {
+    this.a = m;
   }
 
   /*
