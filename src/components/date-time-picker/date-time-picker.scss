@@ -5,7 +5,7 @@ date-time-picker {
     justify-content: center;
     flex-direction: column;
     #reloj-container {
-        background-color: #fe324d; // display: flex;
+        background-color: white; // display: flex;
         justify-content: center;
         align-content: center; // flex-wrap: wrap;
         flex-basis: 240px;
@@ -137,7 +137,7 @@ date-time-picker {
         button {
             background-color: white !important;
             border-width: 0 !important;
-            color: #00bcd5 !important;
+            color: #fe324d !important;
             box-shadow: none !important;
         }
     }

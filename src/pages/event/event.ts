@@ -56,7 +56,7 @@ export class EventPage {
   public players = [];
   public assistences = [];
 
-  public numTasks=0;
+  public numTasks = 0;
 
   //Para mostrar el mapa sin usar el plugin
   directionsService = new google.maps.DirectionsService;
@@ -89,10 +89,6 @@ export class EventPage {
     this.event = e;
     this.index = this.navParams.get("index");
 
-    //Para saber si se tiene que motras la opcion para ver jugadores cercanos a un evento
-    this.checkEnablePlayerClose();
-    this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
-
     //for image user that published events
     this.imgUser = interceptor.transformUrl("/userprofile/images/" + this.event.user.id + "/" + MyApp.User.team);
 
@@ -101,11 +97,92 @@ export class EventPage {
 
     //Para ver si tiene tareas pendientes el usuario
     this.event.tasks = this.event.tasks || [];
-    if(this.league===false){
-      this.numTasks = this.event.tasks.filter(it=>{
+    if (this.league === false) {
+      this.numTasks = this.event.tasks.filter(it => {
         return it.for === MyApp.User.id && it.completad === false;
       }).length;
     }
+  }
+
+  private getDayCercano(days: any): any {
+
+    let daysNumber = {
+      "m": 1,
+      "tu": 2,
+      "w": 3,
+      "th": 4,
+      "f": 5,
+      "sa": 6,
+      "su": 7
+    };
+    ////console.log(days);
+    let daysMoment = [];
+    let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
+
+
+    for (let day of Days) {
+      let newmoment = moment();
+      newmoment.day(daysNumber[day]);
+      daysMoment.push(newmoment);
+    }
+
+
+    //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
+    let ind = 0, day = 0;
+    for (let i = 0; i < daysMoment.length; i++) {
+      if (daysMoment[i].day() > day) {
+        day = daysMoment[i].day();
+        ind = i;
+      }
+    }
+    if (moment().day() > daysMoment[ind].day()) {
+      let d = daysMoment[0];
+      d.add(7, "days");
+      return d;
+    }
+
+
+    if (Days.length === 1) {
+      let newmoment = moment();
+      newmoment.day(daysNumber[Days[0]]);
+      return newmoment;
+    }
+
+    let cercanoMoment, diasNumber = [], diaNumber = 0;
+    for (let i = 0; i < daysMoment.length; i++) {
+      diasNumber.push({ diff: daysMoment[i].diff(moment(), "hours"), i: i });
+    }
+
+    let diasNumberTemp = [];
+    for (let i = 0; i < diasNumber.length; i++) {
+      if (diasNumber[i].diff < 0) { } else {
+        diasNumberTemp.push(diasNumber[i]);
+      }
+    }
+    diasNumber = diasNumberTemp;
+
+    if (diasNumber.length === 0) {
+      let d = daysMoment[0];
+      d.add(7, "days");
+      return d;
+    }
+
+    for (let i = 0; i < diasNumber.length; i++) {
+      //console.log(diasNumber[i]);
+      if (i === 0) {
+        cercanoMoment = daysMoment[diasNumber[i].i];
+        diaNumber = diasNumber[i].diff;
+      }
+
+      if (diaNumber > diasNumber[i].diff) {
+        cercanoMoment = daysMoment[diasNumber[i].i];
+        diaNumber = diasNumber[i].diff;
+      }
+
+    }
+
+    return cercanoMoment;
+
   }
 
   async ionViewDidLoad() {
@@ -113,7 +190,25 @@ export class EventPage {
     //para obtener los trackings del evento
     try {
       this.tracking = await this.http.get("/traking/query/" + MyApp.User.id + "/" + this.event.id).toPromise();
-      //console.log(this.tracking);
+
+      //Para saber si el evento es semanal
+      let weeks = this.event.repeats === true && this.event.repeatsDaily === false;
+
+      if (weeks === true) {
+        let day = this.getDayCercano(this.event.repeatsDays);
+        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+        this.event.parsedDateTime = [moth, day.format("DD")];
+        ////console.log(it.name, it.parsedDateTime);
+      } else {
+        let day = moment(this.event.dateTime);
+        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+        this.event.parsedDateTime = [moth, day.format("DD")];
+      }
+
+      //Para saber si se tiene que motras la opcion para ver jugadores cercanos a un evento
+      this.checkEnablePlayerClose();
+      this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
+
     }
     catch (e) {
       console.error(e);
@@ -128,7 +223,7 @@ export class EventPage {
     }
 
     let userPublisher: any = await this.http.get("/user/" + idUser).toPromise();
-    this.name = userPublisher.firstName+ " "+ userPublisher.lastName;
+    this.name = userPublisher.firstName + " " + userPublisher.lastName;
 
     //for geoconder location, obtener por nombre de location
     this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
@@ -213,7 +308,7 @@ export class EventPage {
     this.loadImage = true;
   }
 
-  public toTasks(){
+  public toTasks() {
     this.navCtrl.push(MyTaskPage);
   }
 
@@ -337,7 +432,7 @@ export class EventPage {
   public async presentAlertStandar(acept: Function, cancel?: Function, concatMessage?: string) {
 
     cancel = cancel || new Function();
-  
+
     let si = await this.helper.getWords("YES"), no = await this.helper.getWords("NO");
     let til = await this.helper.getWords("DELETEEVENT");
     let alert = this.alertCtrl.create({
@@ -492,7 +587,7 @@ export class EventPage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(response) {
-    
+
     if (EventsSchedulePage.by === "past") return;
 
     let guardar = this.tracking.user !== undefined;

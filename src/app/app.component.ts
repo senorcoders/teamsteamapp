@@ -170,6 +170,7 @@ export class MyApp {
       this.serviceNewDatas();
       setInterval(this.serviceNewDatas.bind(this), 6000);
       await this.initAuth();
+      await MyApp.initNotifcations();
     }
     catch (e) {
       console.error(e);
@@ -511,7 +512,7 @@ export class MyApp {
 
   public static async initNotifcations() {
 
-    if (MyApp.me.permision === false) {
+    if (MyApp.me.permision === false || MyApp.User === null || MyApp.User === undefined) {
       return;
     }
 
@@ -600,9 +601,11 @@ export class MyApp {
     catch (e) {
       console.error(e);
     }
-
     //#endregion
+    await this.processIntents();
+  }
 
+  public static async processIntents() {
     //#region para cuando se toca una notification y el app esta cerrada y entra
     try {
       let intents = await MyApp.me.webIntent.getIntent();
@@ -618,7 +621,6 @@ export class MyApp {
       INotificationProvider.me.processNotificacionBackground(intent);
     }, console.error);
     //#endregion
-
   }
 
 
