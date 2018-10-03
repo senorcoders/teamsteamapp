@@ -256,19 +256,18 @@ export class AuthServiceProvider {
         //await MyApp.notifcations(MyApp.User.team);
       }
 
-      if (role.name === "FreeAgent") {
-        await MyApp.me.pushObject.unregister();
-        if (MyApp.User.role.hasOwnProperty("team")) {
-          //await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
-        }
-
-        //Quitamos el tokenReg
-        if (MyApp.User.tokenReg !== undefined || MyApp.User.tokenReg !== null) {
-          let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
-          console.log(success);
-        }
-        delete MyApp.User.team;
-      }
+      // if (role.name === "FreeAgent") {
+      //   await MyApp.me.pushObject.unregister();
+      //   if (MyApp.User.role.hasOwnProperty("team")) {
+      //     //await MyApp.me.pushObject.unsubscribe(MyApp.User.team);
+      //   }
+      //   //Quitamos el tokenReg
+      //   if (MyApp.User.tokenReg !== undefined || MyApp.User.tokenReg !== null) {
+      //     let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
+      //     console.log(success);
+      //   }
+      //   delete MyApp.User.team;
+      // }
 
       this.changesUpdate();
     }
