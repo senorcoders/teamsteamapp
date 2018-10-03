@@ -110,7 +110,7 @@
 
   <ion-fab bottom right [hidden]="user.role.name != 'Manager' ">
     <button color="base" ion-fab icon-only (click)="addPlayer()" class="invite-btn" [ngClass]="!firstTime ? 'tutorial-btn' : 'test'">
-      <ion-icon name="md-add"></ion-icon> INVITE
+      <ion-icon name="md-add"></ion-icon> {{"INVITE" | translate}}
     </button>
   </ion-fab>
 

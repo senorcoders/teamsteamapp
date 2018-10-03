@@ -410,5 +410,8 @@
     "EMAILTYPE": "Owner of the mail",
     "CHECKEMAILGENERATED": "We will create an email for the player to start a session, to verify the account, the relative's email will be used.",
     "DETAILSPLAYERCHECKEMAIL": "See the player's details to see the assigned email.",
-    "FOR": "For"
+    "FOR": "For",
+    "CREATEEVENT": "CREATE EVENT",
+    "INVITE": "INVITE"
+
 }
