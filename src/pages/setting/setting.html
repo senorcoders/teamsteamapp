@@ -64,6 +64,15 @@
         <ion-option value="es">Español </ion-option>
       </ion-select>
     </ion-item>
+
+    <ion-item>
+      <ion-label floating>{{'WHEATER.SETTINGTITLE' | translate}}</ion-label>
+      <ion-select [(ngModel)]="setting.user.temp" (ionChange)="stateChange('user', 'temp')">
+        <ion-option value="celsius">Celsius</ion-option>
+        <ion-option value="farenheit">Farenheit </ion-option>
+      </ion-select>
+    </ion-item>
+
   </ion-list>
 
 </ion-content>

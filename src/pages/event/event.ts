@@ -52,6 +52,19 @@ export class EventPage {
     change: false
   };
 
+  //Para el clima
+  public wheater: any = {
+    enable: false,
+    close: false,
+    data: {
+
+    },
+    item: {
+      temp_celcius: 0,
+      temp_fahrenheit: 0
+    }
+  }
+
   //Para las assistences
   public players = [];
   public assistences = [];
@@ -102,6 +115,112 @@ export class EventPage {
         return it.for === MyApp.User.id && it.completad === false;
       }).length;
     }
+  }
+
+  async ionViewDidLoad() {
+
+    //para obtener los trackings del evento
+    try {
+      this.tracking = await this.http.get("/traking/query/" + MyApp.User.id + "/" + this.event.id).toPromise();
+
+      //Para saber si el evento es semanal
+      let weeks = this.event.repeats === true && this.event.repeatsDaily === false;
+
+      let day: moment.Moment;
+      if (weeks === true) {
+        day = this.getDayCercano(this.event.repeatsDays);
+        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+        this.event.parsedDateTime = [moth, day.format("DD")];
+        ////console.log(it.name, it.parsedDateTime);
+      } else {
+        day = moment(this.event.dateTime);
+        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
+        this.event.parsedDateTime = [moth, day.format("DD")];
+      }
+      this.event.day = day;
+
+      //Para saber si se tiene que mostraa la opcion para ver jugadores cercanos a un evento
+      this.checkEnablePlayerClose();
+      this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    console.log(this.event);
+    let idUser: string;
+    if (Object.prototype.toString.call(this.event.user) === '[object String]') {
+      idUser = this.event.user
+    } else {
+      idUser = this.event.user.id;
+    }
+
+    let userPublisher: any = await this.http.get("/user/" + idUser).toPromise();
+    this.name = userPublisher.firstName + " " + userPublisher.lastName;
+
+    //for geoconder location, obtener por nombre de location
+    this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
+    try {
+
+      if (this.location.useMap === true) {
+        this.location.position = { lat: this.event.location.lat, lng: this.event.location.lng };
+        let places = await this.helper.locationToPlaces(this.location.position);
+        if (places === null) return;
+        this.location.place = places;
+      } else {
+
+        let geocoder = new google.maps.Geocoder()
+        geocoder.geocode({ address: this.event.location.address }, function (res, status) {
+
+          if (res.length === 0) return;
+
+          res = res[0];
+          if (res.geometry) {
+            let lat = res.geometry.location.lat();
+            let lot = res.geometry.location.lng();
+            this.loadMap = this.loadMap.bind(this);
+            this.loadMap(lat, lot);
+            //Para leer el clima
+            this.loadWheater.bind(this)(lat, lot);
+          }
+
+        }.bind(this));
+
+      }
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    if (moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid()) {
+      this.event.dateTime = moment(this.event.dateTime).format("MM/DD/YYYY hh:mm a");
+    }
+
+    this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a").format("Do MMMM YYYY hh:mm a");
+
+    this.event.link = '';
+    if (this.event.location.hasOwnProperty('link')) {
+
+      if (!this.event.location.link.includes("http") || !this.event.location.link.includes("https")) {
+        this.event.link = "http://" + this.event.location.link;
+      } else
+        this.event.link = this.event.location.link
+
+    }
+
+
+    if (this.location.useMap === true) {
+      this.loadMap(this.event.location.lat, this.event.location.lng);
+      this.loadWheater(this.event.location.lat, this.event.location.lng);
+    }
+
+    let counts = await this.getTrackings(this.event);
+
+    this.event.countYes = counts.countYes;
+    this.event.countNo = counts.countNo;
+    this.event.countMaybe = counts.countMaybe;
   }
 
   private getDayCercano(days: any): any {
@@ -185,105 +304,65 @@ export class EventPage {
 
   }
 
-  async ionViewDidLoad() {
-
-    //para obtener los trackings del evento
+  private async loadWheater(lat, lon) {
+    if (EventsSchedulePage.by === "past") return;
     try {
-      this.tracking = await this.http.get("/traking/query/" + MyApp.User.id + "/" + this.event.id).toPromise();
+      let api = `/data/2.5/forecast?lat=${lat}&lon=${lon}`;
+      let data: any = await this.http.get(api).toPromise();
+      this.wheater.data = data;
 
-      //Para saber si el evento es semanal
-      let weeks = this.event.repeats === true && this.event.repeatsDaily === false;
-
-      if (weeks === true) {
-        let day = this.getDayCercano(this.event.repeatsDays);
-        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
-        this.event.parsedDateTime = [moth, day.format("DD")];
-        ////console.log(it.name, it.parsedDateTime);
-      } else {
-        let day = moment(this.event.dateTime);
-        let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
-        this.event.parsedDateTime = [moth, day.format("DD")];
-      }
-
-      //Para saber si se tiene que motras la opcion para ver jugadores cercanos a un evento
-      this.checkEnablePlayerClose();
-      this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
-
-    }
-    catch (e) {
-      console.error(e);
-    }
-
-    console.log(this.event);
-    let idUser: string;
-    if (Object.prototype.toString.call(this.event.user) === '[object String]') {
-      idUser = this.event.user
-    } else {
-      idUser = this.event.user.id;
-    }
-
-    let userPublisher: any = await this.http.get("/user/" + idUser).toPromise();
-    this.name = userPublisher.firstName + " " + userPublisher.lastName;
-
-    //for geoconder location, obtener por nombre de location
-    this.location.useMap = this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng");
-    try {
-
-      if (this.location.useMap === true) {
-        this.location.position = { lat: this.event.location.lat, lng: this.event.location.lng };
-        let places = await this.helper.locationToPlaces(this.location.position);
-        if (places === null) return;
-        this.location.place = places;
-      } else {
-
-        let geocoder = new google.maps.Geocoder()
-        geocoder.geocode({ address: this.event.location.address }, function (res, status) {
-
-          if (res.length === 0) return;
-
-          res = res[0];
-          if (res.geometry) {
-            let lat = res.geometry.location.lat();
-            let lot = res.geometry.location.lng();
-            this.loadMap = this.loadMap.bind(this);
-            this.loadMap(lat, lot);
+      //Encontramos el pronotico mas cercano al dia del evento 
+      let list = data.list, itemCercano: any, day: moment.Moment = this.event.day, diff: moment.Duration;
+      for (let item of list) {
+        let dayItem = moment(item.dt_txt, "YYYY-MM-DD HH:mm:ss");
+        let duration = moment.duration(day.diff(dayItem));
+        if (diff === null || diff === undefined) {
+          if (day.isSameOrBefore(dayItem)) {
+            diff = duration;
+            itemCercano = item;
           }
+          continue;
+        }
 
-        }.bind(this));
+        if (Math.abs(diff.asMinutes()) > Math.abs(duration.asMinutes()) && day.isSameOrBefore(dayItem)) {
+          diff = duration;
+          itemCercano = item;
+        }
+      }
 
+      console.log(itemCercano);
+      if (itemCercano !== null && itemCercano !== undefined) {
+
+        //Cargamos las configuraciones
+        let user = await this.http.get("/user/" + MyApp.User.id).toPromise() as any;
+        user.options = user.options || {};
+
+        if (user.options !== undefined && user.options.language !== undefined) {
+          user.options.temp = user.options.temp;
+        } else {
+          user.options.temp = "celsius";
+        }
+        console.log(user.options);
+
+        this.wheater.close = diff.asDays() < 5;
+        this.wheater.item = itemCercano;
+
+        let parseToFixed = (number: any) => {
+          return parseInt(number, 10);
+        }
+
+        let temp = Number(itemCercano.main.temp), celcius = temp - 273.15;
+        let fahrenheit = (temp - 273.15) * 9 / 5 + 32;
+        this.wheater.item.temp_celcius = parseToFixed(celcius);
+        this.wheater.item.temp_fahrenheit = parseToFixed(fahrenheit);
+        this.wheater.public = user.options.temp === 'celsius' ? this.wheater.item.temp_celcius : this.wheater.item.temp_fahrenheit;
+        this.wheater.enable = true;
       }
 
     }
     catch (e) {
       console.error(e);
     }
-
-    if (moment(this.event.dateTime, "YYYY-MM-DDTHH:mm:ss.SSS[Z]", true).isValid()) {
-      this.event.dateTime = moment(this.event.dateTime).format("MM/DD/YYYY hh:mm a");
-    }
-
-    this.event.parsedTime = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a").format("Do MMMM YYYY hh:mm a");
-
-    this.event.link = '';
-    if (this.event.location.hasOwnProperty('link')) {
-
-      if (!this.event.location.link.includes("http") || !this.event.location.link.includes("https")) {
-        this.event.link = "http://" + this.event.location.link;
-      } else
-        this.event.link = this.event.location.link
-
-    }
-
-
-    if (this.location.useMap === true) {
-      this.loadMap(this.event.location.lat, this.event.location.lng);
-    }
-
-    let counts = await this.getTrackings(this.event);
-
-    this.event.countYes = counts.countYes;
-    this.event.countNo = counts.countNo;
-    this.event.countMaybe = counts.countMaybe;
   }
 
   ionViewWillEnter() {
@@ -331,7 +410,6 @@ export class EventPage {
     }
     console.log(this.enablePlayerClose);
   }
-
 
   //Para obtener los tracking de event
   private async getTrackings(event) {

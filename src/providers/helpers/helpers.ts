@@ -30,6 +30,7 @@ export class HelpersProvider {
   public static me: HelpersProvider;
 
   public enableMapsLocation = false;
+  public wheaterApiKey = "";
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public datePicker: DatePicker, private translate: TranslateService,
@@ -41,11 +42,27 @@ export class HelpersProvider {
     this.init();
   }
 
-  private init() {
+  private async init() {
+
     HelpersProvider.me = this;
     if (window.hasOwnProperty("google") === true) {
       HelpersProvider.me.enableMapsLocation = true;
     }
+    
+    try {
+      this.wheaterApiKey = await this.storage.get("apiKey");
+      if (this.wheaterApiKey === null || this.wheaterApiKey === undefined) {
+        let user:any = await this.storage.get("user");
+        if (user !== null && user !== undefined) {
+          this.wheaterApiKey = await this.http.get("/apikey/wheater?token="+ user.token, { responseType: "text" }).toPromise();
+          this.storage.set("apiKey", this.wheaterApiKey);
+        }
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
   }
 
   public async reloadGoogleplaces(sleep?: boolean) {
@@ -123,14 +140,14 @@ export class HelpersProvider {
   }
 
   public base64ToArrayBuffer(base64) {
-    var binary_string =  window.atob(base64);
+    var binary_string = window.atob(base64);
     var len = binary_string.length;
-    var bytes = new Uint8Array( len );
-    for (var i = 0; i < len; i++)        {
-        bytes[i] = binary_string.charCodeAt(i);
+    var bytes = new Uint8Array(len);
+    for (var i = 0; i < len; i++) {
+      bytes[i] = binary_string.charCodeAt(i);
     }
     return bytes.buffer;
-}
+  }
 
   //usa el endpoint del server para volver mas liviana una imagen
   public PerformanceImage(base64: string): Promise<string> {

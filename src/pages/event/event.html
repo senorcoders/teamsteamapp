@@ -90,6 +90,15 @@
       </div>
     </div>
 
+    <!-- clima del event -->
+    <ion-item id="wheater" *ngIf="wheater.enable">
+      <span *ngIf="wheater.close">{{"WHEATER.CLOSE" | translate}}</span>
+      <span *ngIf="!wheater.close">{{"WHEATER.LARGE" | translate}}</span>
+      <img item-end class="icon-wheater" src="./assets/imgs/icon-wheater.png" >
+      <span item-end>{{wheater.public}}</span>
+      <img item-end class="icon-wheater" src="./assets/imgs/termometro.png" >
+    </ion-item>
+
     <ion-item class="assistence" (click)="toImages()" >
       {{'GALLERY' | translate}}
     </ion-item>

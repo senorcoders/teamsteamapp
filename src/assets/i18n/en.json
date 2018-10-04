@@ -412,6 +412,11 @@
     "DETAILSPLAYERCHECKEMAIL": "See the player's details to see the assigned email.",
     "FOR": "For",
     "CREATEEVENT": "CREATE EVENT",
-    "INVITE": "INVITE"
+    "INVITE": "INVITE",
+    "WHEATER":{
+        "CLOSE": "Expected Weather",
+        "LARGE": "Weather starts closer to the event",
+        "SETTINGTITLE": "Climate unit"
+    }
 
 }

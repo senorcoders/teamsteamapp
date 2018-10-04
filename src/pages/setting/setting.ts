@@ -19,7 +19,8 @@ class Setting {
       events: boolean,
       chats: boolean,
       tasks: boolean
-    }
+    },
+    temp: 'celsius' | 'farenheit'
   }
 
   constructor() {
@@ -31,7 +32,8 @@ class Setting {
         events: true,
         chats: true,
         tasks: true
-      }
+      },
+      temp: "celsius"
     }
   }
 
@@ -85,10 +87,10 @@ export class SettingPage {
       this.setting.user = this.loadPropertys(user.options, this.setting.user);
       if (MyApp.User.options !== undefined && MyApp.User.options.language !== undefined) {
         this.setting.user.language = MyApp.User.options.language;
-      }else{
+      } else {
         this.setting.user.language = "en";
       }
-      
+
       console.log(this.setting);
     }
     catch (e) {

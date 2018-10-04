@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs/Observable';
 import { HttpEvent, HttpInterceptor, HttpHandler, HttpRequest} from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
+import { HelpersProvider } from '../helpers/helpers';
 
 /**
  * intercepta todas lo peticiones que se realizan por http cliente para añadir 
@@ -17,6 +18,14 @@ export class interceptor implements HttpInterceptor {
 
     if( req.url.includes("./assets/i18n/") ) return next.handle(req);
     if( req.url.includes("maps.googleapis.com") ) return next.handle(req);
+    if( req.url.includes("/data/2.5/forecast") ) {
+      let url = "https://api.openweathermap.org";
+      req = req.clone({
+        url: url + req.url+ `&APPID=${HelpersProvider.me.wheaterApiKey}`
+      });
+
+      return next.handle(req);
+    }
 
     if( MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token') ){
 

@@ -46,6 +46,13 @@ export class AuthServiceProvider {
       } else {
 
         //For save
+
+        //guardamos el wheaterApi
+        let apiKey = data.wheaterApiKey;
+        delete data.wheaterApiKey;
+        await this.storage.set("apiKey", apiKey);
+        HelpersProvider.me.wheaterApiKey = apiKey;
+
         data.tokenReady = false;
         await this.storage.set('user', data);
         this.user = data;
@@ -191,6 +198,8 @@ export class AuthServiceProvider {
 
     var data = await this.storage.remove("user");
     data = await this.storage.remove("role");
+    data = await this.storage.remove("apiKey");
+    HelpersProvider.me.wheaterApiKey = "";
     this.user = null;
     delete MyApp.User;
 
