@@ -35,7 +35,10 @@ export class RosterPage {
   public managers = [];
   public managersOrigin = [];
   firstTime: boolean = true;
-
+  teamID:any;
+  code:any;
+  joinOverlay:boolean = true;
+  arrowIcon:any = "md-arrow-dropdown";
   public updateImagePlayer = (index: number, stringBase64: string) => {
 
     let t = this; console.log(index);
@@ -49,6 +52,9 @@ export class RosterPage {
     public http: HttpClient, public auth: AuthServiceProvider,
     public loading: LoadingController, private storage: Storage
   ) {
+    this.teamID = this.user.team;
+    this.getInvitationCode();
+
   }
 
   ionViewWillEnter() {
@@ -165,5 +171,23 @@ export class RosterPage {
   hideOverlay() {
     this.storage.set('firstTimeRoster', false);
     this.firstTime = true;
+  }
+
+
+  getInvitationCode(){
+    this.http.get('/teams-code/' + this.teamID).subscribe(result => {
+      if(result['code']){
+        this.code = result['code'];
+      }
+    })
+  }
+
+  toggleOverlay(){
+    this.joinOverlay = !this.joinOverlay;
+    if(this.arrowIcon == 'md-arrow-dropdown'){
+      this.arrowIcon = "md-arrow-dropup";
+    }else{
+      this.arrowIcon = "md-arrow-dropdown";
+    }
   }
 }

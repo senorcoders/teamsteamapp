@@ -394,7 +394,7 @@ export class MyApp {
   }
 
   public getRolIdentity(){
-    return this.rolIdentity+ " "+ this.identity;
+    return  this.identity;
   }
 
   public newData(id): boolean {
