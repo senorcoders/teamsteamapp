@@ -38,7 +38,7 @@
         "NOTIFY": "NOTIFY",
         "OPTIONALINFO": "OPTIONAL INFO",
         "LOCATIONDETAIL": "Notes about location",
-        "TYPE": "Type",
+        "TYPE": "Choose Contact Type",
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",
@@ -126,7 +126,7 @@
         "YERSERYNUMBERonly": "Jersey Number",
         "YERSERYNUMBER": "Jersey Number (optional)",
         "POSITIONS": "Positions (separated by comma)",
-        "ADDITIONALCONTACTINFORMATION": "Other People   to Contact",
+        "ADDITIONALCONTACTINFORMATION": "Secondary Contact Information",
         "CONTACTNAME": "Contact Name",
         "EMAILPHONE": "Email / Phone",
         "VALUE": "Value",
