@@ -111,16 +111,14 @@ export class AuthServiceProvider {
       if (MyApp.User.role.hasOwnProperty("team")) {
         MyApp.User.team = user.roles[0].team.id;
         await this.setTimeZoneTeam();
-        //Para actualizar el nombre del equipo en menu slide
-        document.getElementById("nameTeam").innerHTML = MyApp.User.role.team.name;
-
       }
 
-      let t = this;
-      this.zone.run(function () { t.changesUpdate(); });
-      callback();
     } catch (e) {
       console.error(e);
+    }
+    finally {
+      let t = this;
+      this.zone.run(function () { t.changesUpdate(); });
       callback();
     }
 
@@ -206,7 +204,7 @@ export class AuthServiceProvider {
     return data === undefined;
   }
 
-  private changesUpdate() {
+  public changesUpdate() {
     this.functions();
   }
 

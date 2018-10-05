@@ -122,7 +122,10 @@ export class SettingPage {
       } else if (part === "user") {
         id = id || "";
         if (id === 'language') {
-          HelpersProvider.me.setLanguage(this.setting.user.language);
+          this.auth.zone.run(function(){
+            HelpersProvider.me.setLanguage(this.setting.user.language);
+            this.auth.changesUpdate();
+          }.bind(this));
         }
         await this.http.put("/user/" + MyApp.User.id, { options: this.setting.user }).toPromise() as any;
       }

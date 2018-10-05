@@ -59,8 +59,7 @@ export class MyApp {
   public team: any = { request: [] }
 
   public username = "Senorcoders";
-  public userimg = "./assets/imgs/user.jpg";
-  public defaultImageUser = true;
+  public userimg = "";
   public fullName: any;
 
   public pages: Array<Object> = [
@@ -190,11 +189,9 @@ export class MyApp {
 
     //se actualiza nombre y la imagen de usuario manualmente por ngZone ni dateRef funcionan
     this.auth.changeUser(async function () {
-
       this.defaultImageUser = true;
       this.user = this.auth.User();
 
-      console.log("cambiooo", this.user);
       let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
       this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team);
       document.getElementById("imageSlide").setAttribute("src", this.userimg);
@@ -208,7 +205,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity = "TEAM";
+        this.rolIdentity =  await this.helper.getWords("TEAM");
         this.identity = team.name;
         if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
           await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
@@ -220,9 +217,13 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity = "LEAGUE.NAME";
+        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
+
+      this.zone.run(function(){
+        console.log("cambiooo", MyApp.User);
+      });
 
     }.bind(this));
 
@@ -238,8 +239,6 @@ export class MyApp {
     MyApp.User = this.auth.User();
 
     this.fullName = this.user.firstName + ' ' + this.user.lastName;
-
-    console.log("User", this.user);
 
     //Si es un agente libre
     if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
@@ -268,7 +267,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity = "TEAM";
+        this.rolIdentity =  await this.helper.getWords("TEAM");
         this.identity = team.name;
       } else {
         let league;
@@ -277,7 +276,7 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity = "LEAGUE.NAME";
+        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
 
@@ -299,6 +298,10 @@ export class MyApp {
       this.helper.setLanguage('en')
     }
 
+    this.zone.run(function(){
+      console.log("user", MyApp.User);
+    });
+
   }
 
   //#region Para maneja los puntos de notifications en el app, puntos rojos cuando hay algo nuevo
@@ -306,15 +309,6 @@ export class MyApp {
     //get new requests for managers
     if (MyApp.User === null || MyApp.User === undefined)
       return;
-
-    let image = document.getElementById("imageSlide") as HTMLImageElement;
-    if (image !== null) {
-      if (image.naturalHeight === 0 && image.naturalWidth === 0) {
-        if (this.defaultImageUser == false) {
-          this.zone.run(function () { this.defaultImageUser = true; }.bind(this))
-        }
-      }
-    }
 
     //Para comprobar si hay nuevos request
     //Para los players
@@ -392,6 +386,17 @@ export class MyApp {
     document.querySelector("button[menutoggle]").removeChild(document.querySelector("div.point-new-menu-toggle"));
   }
 
+  //Para obtener el nombre del usuario para mostrarlo en el menu
+  public getName() {
+    if (MyApp.User === null || MyApp.User === undefined) return '';
+
+    return MyApp.User.firstName+ " "+ MyApp.User.lastName;
+  }
+
+  public getRolIdentity(){
+    return this.rolIdentity+ " "+ this.identity;
+  }
+
   public newData(id): boolean {
     if (MyApp.User === null || MyApp.User === undefined) return true;
 
@@ -423,8 +428,8 @@ export class MyApp {
   }
   //#endregion
 
-  public loadImageMenu() {
-    this.defaultImageUser = false;
+  public errorLoadImage(e) {
+    e.target.src = "./assets/imgs/user-menu.png"
   }
 
   public async logout() {
