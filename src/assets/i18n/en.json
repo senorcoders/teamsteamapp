@@ -420,6 +420,14 @@
     },
     "MYTEAMS": "My Teams",
     "MYTEAMSANDLEAGUE": "My Teams and Leagues",
-    "LEAGUES": "Leagues"
+    "LEAGUES": "Leagues",
+    "TEAMCODE": "Team Code",
+    "METHODJOIN": "Method to join",
+    "USECODETEAM": "Team code",
+    "USEREQUEST": "Send request",
+    "ENTERCODE": "Enter the code",
+    "CODE": "Code",
+    "ENTER": "Enter",
+    "CODEINCORRECT": "Código incorrecto"
 
 }

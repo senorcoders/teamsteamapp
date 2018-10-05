@@ -79,6 +79,7 @@ export class ViewProfilePage {
 
       if (this.user.role.hasOwnProperty("team")) {
         this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+        console.log(this.team);
         if (!this.team.hasOwnProperty("request")) {
           this.team.request = [];
         }

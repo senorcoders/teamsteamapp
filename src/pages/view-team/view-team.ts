@@ -1,11 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, AlertController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ModalController, AlertController, ActionSheetController } from 'ionic-angular';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { FormJoinTeamPage } from '../form-join-team/form-join-team';
 import { LoginPage } from '../login/login';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { FormJoinTeamCodePage } from '../form-join-team-code/form-join-team-code';
 
 
 @IonicPage()
@@ -14,7 +15,7 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
   templateUrl: 'view-team.html',
 })
 export class ViewTeamPage {
-  
+
   public static __name = "ViewTeamPage"
 
 
@@ -26,7 +27,7 @@ export class ViewTeamPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, private modalCtrl: ModalController,
-    public alertCtrl: AlertController
+    public alertCtrl: AlertController, public actionSheet: ActionSheetController
   ) {
 
     this.team = this.navParams.get("team");
@@ -68,6 +69,63 @@ export class ViewTeamPage {
 
   public success() {
     this.image = true;
+  }
+
+  public async questionUse() {
+    this.actionSheet.create({
+      title: await HelpersProvider.me.getWords("METHODJOIN"),
+      buttons: [
+        {
+          text: await HelpersProvider.me.getWords("USECODETEAM"),
+          handler: this.joinTeamCodeVeriy.bind(this),
+        },
+        {
+          text: await HelpersProvider.me.getWords("USEREQUEST"),
+          handler: this.sendRequest.bind(this)
+        }
+      ]
+    })
+      .present();
+  }
+
+  private async joinTeamCodeVeriy() {
+    this.alertCtrl.create({
+      message: await HelpersProvider.me.getWords("ENTERCODE"),
+      inputs: [
+        { name: "code", placeholder: await HelpersProvider.me.getWords("CODE") }
+      ],
+      buttons: [
+        { text: await HelpersProvider.me.getWords("CANCEL") },
+        {
+          text: await HelpersProvider.me.getWords("ENTER"),
+          handler: this.validCode.bind(this)
+        }
+      ]
+    })
+    .present();
+  }
+
+  private async validCode(data){
+    try{
+      let code  = await HelpersProvider.me.http.get(`/team-code/${data.code}/${this.team.id}`).toPromise() as any[];
+      if(code.length===1){
+        this.joinTeamCode(data.code, code[0]);
+      }else{
+        let eqiv = this.alertCtrl.create({
+          message: await HelpersProvider.me.getWords("CODEINCORRECT"),
+          buttons: ["Ok"]
+        });
+        eqiv.present();
+        eqiv.onDidDismiss(this.joinTeamCodeVeriy.bind(this))
+      }
+    }
+    catch(e){
+      console.error(e);
+    }
+  }
+
+  private joinTeamCode(code, team){
+    this.navCtrl.push(FormJoinTeamCodePage, {code, team});
   }
 
   public async sendRequest() {

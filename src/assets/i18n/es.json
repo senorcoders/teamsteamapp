@@ -424,6 +424,13 @@
     },
     "MYTEAMS": "Mis Equipos",
     "MYTEAMSANDLEAGUE": "Mis Equipos y Ligas",
-    "LEAGUES": "Ligas"
-
+    "LEAGUES": "Ligas",
+    "TEAMCODE": "Código de equipo",
+    "METHODJOIN": "Método para unirse",
+    "USECODETEAM": "Código de equipo",
+    "USEREQUEST": "Enviar solicitud",
+    "ENTERCODE": "Ingrese el código",
+    "CODE": "Código",
+    "ENTER": "Entrar",
+    "CODEINCORRECT": "Código incorrecto"
 }
