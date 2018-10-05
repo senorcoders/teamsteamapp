@@ -38,6 +38,7 @@
         <img src="./assets/imgs/change-teams.png" width="40px">
       </div>
       {{"TEAM" | translate}} {{team.name}}
+      <ion-icon item-end name="md-arrow-dropdown"></ion-icon>
     </ion-item>
 
     <ion-item (click)="selectRole()" *ngIf="user.role.name==='OwnerLeague'">
