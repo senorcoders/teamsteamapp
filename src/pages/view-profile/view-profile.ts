@@ -6,14 +6,12 @@ import { HelpersProvider } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ContactsProfilePage } from '../contacts-profile/contacts-profile';
-import { TeamsProfilePage } from '../teams-profile/teams-profile';
 import { ViewRequestsPage } from '../view-requests/view-requests';
 import { PaymentMonthlyPage } from '../payment-monthly/payment-monthly';
 import { PrivacyPolicePage } from '../privacy-police/privacy-police';
 import { ListPlayersPaymentPage } from '../list-players-payment/list-players-payment';
 import { ViewPaymentsPlayerPage } from '../view-payments-player/view-payments-player';
 import { Storage } from '@ionic/storage';
-import { SelectLeaguesPage } from '../select-leagues/select-leagues';
 import { AddTeamPage } from '../add-team/add-team';
 import { CreateLeaguePage } from '../create-league/create-league';
 import { SettingPage } from '../setting/setting';
@@ -313,14 +311,6 @@ export class ViewProfilePage {
   //este es para comprobar si el usuario desea editar datos
   public editable() {
     return this.user.role.name != 'Manager' && !this.edit;
-  }
-
-  public selectLeagues() {
-    this.navCtrl.push(SelectLeaguesPage);
-  }
-
-  public selectTeams() {
-    this.navCtrl.push(TeamsProfilePage);
   }
 
   public selectRole() {

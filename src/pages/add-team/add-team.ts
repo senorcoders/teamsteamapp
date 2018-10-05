@@ -3,9 +3,9 @@ import { IonicPage, NavController, NavParams, LoadingController, AlertController
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../../providers/helpers/helpers';
-import { TeamsProfilePage } from '../teams-profile/teams-profile';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ViewProfilePage } from '../view-profile/view-profile';
 
 @IonicPage()
 @Component({
@@ -115,7 +115,7 @@ export class AddTeamPage {
 
       console.log(newTeam);
       load.dismiss();
-      this.navCtrl.setRoot(TeamsProfilePage, { menu: true });
+      this.navCtrl.setRoot(ViewProfilePage, { menu: true });
     }
     catch (e) {
       load.dismiss();
@@ -156,7 +156,7 @@ export class AddTeamPage {
         return;
       }
 
-      this.navCtrl.setRoot(TeamsProfilePage);
+      this.navCtrl.setRoot(ViewProfilePage);
     }
     catch (e) {
       load.dismiss();

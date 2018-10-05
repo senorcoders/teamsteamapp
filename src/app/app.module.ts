@@ -57,7 +57,6 @@ import { File } from '@ionic-native/file';
 //for  multilanguage
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { ContactsProfilePage } from '../pages/contacts-profile/contacts-profile';
-import { TeamsProfilePage } from '../pages/teams-profile/teams-profile';
 import { AddTeamPage } from '../pages/add-team/add-team';
 import { SearchTeamsPage } from '../pages/search-teams/search-teams';
 import { ViewTeamPage } from '../pages/view-team/view-team';
@@ -112,7 +111,6 @@ import { ChatOnePersonPageModule } from '../pages/chat-one-person/chat-one-perso
 import { ListChatsPageModule } from '../pages/list-chats/list-chats.module';
 import { ViewProfilePageModule } from '../pages/view-profile/view-profile.module';
 import { ContactsProfilePageModule } from '../pages/contacts-profile/contacts-profile.module';
-import { TeamsProfilePageModule } from '../pages/teams-profile/teams-profile.module';
 import { SearchTeamsPageModule } from '../pages/search-teams/search-teams.module';
 import { SearchTeamPageModule } from '../pages/search-team/search-team.module';
 import { ViewTeamPageModule } from '../pages/view-team/view-team.module';
@@ -163,8 +161,6 @@ import { CreateTeamManagerPageModule } from '../pages/create-team-manager/create
 import { CreateTeamManagerPage } from '../pages/create-team-manager/create-team-manager';
 import { TeamsLeaguePageModule } from '../pages/teams-league/teams-league.module';
 import { TeamsLeaguePage } from '../pages/teams-league/teams-league';
-import { SelectLeaguesPageModule } from '../pages/select-leagues/select-leagues.module';
-import { SelectLeaguesPage } from '../pages/select-leagues/select-leagues';
 import { RosterLeaguePage } from '../pages/roster-league/roster-league';
 import { RosterLeaguePageModule } from '../pages/roster-league/roster-league.module';
 import { SettingPage } from '../pages/setting/setting';
@@ -241,7 +237,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ListChatsPageModule,
     ViewProfilePageModule,
     ContactsProfilePageModule,
-    TeamsProfilePageModule,
     SearchTeamsPageModule,
     SearchTeamPageModule,
     ViewTeamPageModule,
@@ -273,7 +268,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     SelectOwnerLeaguePageModule,
     CreateTeamManagerPageModule,
     TeamsLeaguePageModule,
-    SelectLeaguesPageModule,
     RosterLeaguePageModule,
     SettingPageModule,
     RequestLeaguePageModule,
@@ -320,7 +314,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ToChatToPerfilPlayerComponent,
     ViewProfilePage,
     ContactsProfilePage,
-    TeamsProfilePage,
     AddTeamPage,
     SearchTeamsPage,
     ViewTeamPage,
@@ -358,7 +351,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddTeamsLeagueComponent,
     CreateTeamManagerPage,
     TeamsLeaguePage,
-    SelectLeaguesPage,
     RosterLeaguePage,
     SettingPage,
     RequestLeaguePage,
