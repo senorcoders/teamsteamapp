@@ -38,7 +38,7 @@
         "NOTIFY": "NOTIFY",
         "OPTIONALINFO": "OPTIONAL INFO",
         "LOCATIONDETAIL": "Notes about location",
-        "TYPE": "Type",
+        "TYPE": "Choose Contact Type",
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",
@@ -107,7 +107,7 @@
         "SKATING": "Skating"
     },
     "SEARCHTEAM": {
-        "TITLE": "Find your team",
+        "TITLE": "Join your team",
         "ACTION": "Name of the Team"
     },
     "LOGIN":{
@@ -126,14 +126,14 @@
         "YERSERYNUMBERonly": "Jersey Number",
         "YERSERYNUMBER": "Jersey Number (optional)",
         "POSITIONS": "Positions (separated by comma)",
-        "ADDITIONALCONTACTINFORMATION": "Other People   to Contact",
+        "ADDITIONALCONTACTINFORMATION": "Secondary Contact Information",
         "CONTACTNAME": "Contact Name",
         "EMAILPHONE": "Email / Phone",
         "VALUE": "Value",
         "DETAILSPLAYER": "Continue Adding Athlete",
         "NONPLAYER": "Family Member",
         "MANAGERACCESS": "Manager Access",
-        "CREATEPLAYER": "Add Athlete",
+        "CREATEPLAYER": "Add User",
         "NOTPLAYERS": {
             "1": "Add Athletes, Coaches, Parents  here",
             "2": "They will receive Invites to the app as you add them to your roster.",
@@ -376,7 +376,7 @@
     "CAMERA": "Camera",
     "IMAGESBYEVENT": "Images by Event",
     "IMAGESALL": "All Images",
-    "PLAYEREXISTS": "There is already a user with this email, I want to add it to the team?",
+    "PLAYEREXISTS": "There is already a user with this email, add it to the team?",
     "VERSION": "Version (Build Number)",
     "SELECTEVENT": {
         "TITLE": "Select Event",
