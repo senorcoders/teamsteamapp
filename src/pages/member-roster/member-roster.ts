@@ -246,24 +246,17 @@ export class MemberRosterPage {
   public async deletePlayer() {
     let t = this, load = HelpersProvider.me.getLoadingStandar();
     try {
-      //await this.http.delete("/user/"+ this.player.user.id).toPromise();
-      await this.http.delete("/players/" + this.player.id).toPromise();
-      /*await Promise.all(this.contacts.map(async function(item){
-        await t.http.delete("/contacts/"+ item.id).toPromise();
-      }));*/
+
+      await this.http.delete("/players/" + this.player.user.id + "/" + MyApp.User.team, { responseType: "text" }).toPromise();
 
       if (t.image === true) {
-        await this.http.delete("/images/users/" + this.player.user.id).toPromise();
+        await this.http.delete(`/userprofile/${this.player.user.id}/${MyApp.User.team}`, { responseType: "text" }).toPromise();
       }
 
     }
     catch (e) {
       console.error(e);
-      t.alertCtrl.create({
-        title: "Error",
-        message: "Unexpected Error",
-        buttons: ["Ok"]
-      }).present();
+      await HelpersProvider.me.presentAlertErrorStandar()
     }
 
     load.dismiss();
