@@ -421,6 +421,9 @@
         "CLOSE": "Clima esperado",
         "LARGE": "El clima cercano al dia del evento",
         "SETTINGTITLE": "Unidad del clima"
-    }
+    },
+    "MYTEAMS": "Mis Equipos",
+    "MYTEAMSANDLEAGUE": "Mis Equipos y Ligas",
+    "LEAGUES": "Ligas"
 
 }

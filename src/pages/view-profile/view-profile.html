@@ -33,60 +33,60 @@
   <ion-list>
 
 
-    <ion-item (click)="selectTeams()" *ngIf="teamsPresent()">
+    <ion-item (click)="selectRole()" *ngIf="teamsPresent()">
       <div class="icon-box-bg" item-start>
         <img src="./assets/imgs/change-teams.png" width="40px">
       </div>
       {{"TEAM" | translate}} {{team.name}}
     </ion-item>
 
-    <ion-item (click)="selectLeagues()" *ngIf="user.role.name==='OwnerLeague'">
+    <ion-item (click)="selectRole()" *ngIf="user.role.name==='OwnerLeague'">
       <div class="icon-box-bg fourth-bg" item-start>
-          <img src="./assets/imgs/change-teams.png" width="40px">
-        </div>
+        <img src="./assets/imgs/change-teams.png" width="40px">
+      </div>
       {{"LEAGUE.NAME" | translate}} {{league.name}}
     </ion-item>
 
 
     <ion-item (click)="answerDeleteDevices()">
       <div class="icon-box-bg second-bg" item-start>
-          <img src="./assets/imgs/logout-all-devices.svg" width="40px">
-        </div>
+        <img src="./assets/imgs/logout-all-devices.svg" width="40px">
+      </div>
       {{ "CLEARDEVICES" | translate}}
     </ion-item>
 
     <ion-item (click)="addTeam()">
       <div class="icon-box-bg" item-start>
-          <img src="./assets/imgs/add-team.png" width="40px">
-        </div>
+        <img src="./assets/imgs/add-team.png" width="40px">
+      </div>
       {{'NEWTEAM.ADD' | translate}}
     </ion-item>
 
     <ion-item (click)="createLeague()">
       <div class="icon-box-bg second-bg" item-start>
-          <img src="./assets/imgs/create-league.svg" width="40px">
-        </div>
+        <img src="./assets/imgs/create-league.svg" width="40px">
+      </div>
       {{'LEAGUE.CREATE.ACTION' | translate}}
     </ion-item>
 
     <ion-item (click)="openSelectRolesTypes()" *ngIf="IsValidToTeam()">
       <div class="icon-box-bg third-bg" item-start>
-          <img src="./assets/imgs/change-role.svg" width="40px">
-        </div>
-        {{ "CHANGEROLE" | translate}} ({{user.role.name.toUpperCase() | translate}})    
-      </ion-item>
+        <img src="./assets/imgs/change-role.svg" width="40px">
+      </div>
+      {{ "CHANGEROLE" | translate}} ({{user.role.name.toUpperCase() | translate}})
+    </ion-item>
 
-    <ion-item (click)="setting()"> 
+    <ion-item (click)="setting()">
       <div class="icon-box-bg fourth-bg" item-start>
-          <img src="./assets/imgs/settings.svg" width="40px">
-        </div>
+        <img src="./assets/imgs/settings.svg" width="40px">
+      </div>
       {{'SETTING.NAME' | translate}}
     </ion-item>
 
     <ion-item (click)="logout()">
       <div class="icon-box-bg" item-start>
-          <img src="./assets/imgs/logout.png" width="40px">
-        </div>
+        <img src="./assets/imgs/logout.png" width="40px">
+      </div>
       {{'NAVMENU.LOGOUT' | translate}}
     </ion-item>
 

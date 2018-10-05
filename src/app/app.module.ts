@@ -187,6 +187,8 @@ import { NotificationPageModule } from '../pages/notification/notification.modul
 import { NotificationPage } from '../pages/notification/notification';
 import { ChangeRolPlayerPageModule } from '../pages/change-rol-player/change-rol-player.module';
 import { ChangeRolPlayerPage } from '../pages/change-rol-player/change-rol-player';
+import { SelectTeamsLeaguesPageModule } from '../pages/select-teams-leagues/select-teams-leagues.module';
+import { SelectTeamsLeaguesPage } from '../pages/select-teams-leagues/select-teams-leagues';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -283,6 +285,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhotosPageModule,
     NotificationPageModule,
     ChangeRolPlayerPageModule,
+    SelectTeamsLeaguesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -367,6 +370,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PhotosPage,
     NotificationPage,
     ChangeRolPlayerPage,
+    SelectTeamsLeaguesPage
   ],
   providers: [
     StatusBar,

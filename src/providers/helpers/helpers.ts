@@ -22,6 +22,14 @@ import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocati
  * este servicio contiene funciones generales que son usadas mas de una ves por las diferentes componentes
  */
 
+declare global {
+  interface Object {
+    existsProperty(name: string): boolean;
+    typeArray(): boolean;
+    typeObject(): boolean;
+  }
+}
+
 @Injectable()
 export class HelpersProvider {
   public static lat: string = "51.5033640";
@@ -40,6 +48,7 @@ export class HelpersProvider {
     public device: Device, public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
   ) {
     this.init();
+    this.polyfill();
   }
 
   private async init() {
@@ -61,6 +70,39 @@ export class HelpersProvider {
     }
     catch (e) {
       console.error(e);
+    }
+
+  }
+
+  private polyfill() {
+    if (!Object["exitsProperty"]) {
+      Object.defineProperty(Object.prototype, "existsProperty", {
+        value: function (name: string) {
+          return this[name] !== undefined && this[name] !== null;
+        },
+        writable: false,
+        enumerable: false,
+      })
+    }
+
+    if (!Object["typeArray"]) {
+      Object.defineProperty(Object.prototype, "typeArray", {
+        value: function () {
+          return Object.prototype.toString.call(this) === "[object Array]";
+        },
+        writable: false,
+        enumerable: false,
+      });
+    }
+
+    if (!Object["typeObject"]) {
+      Object.defineProperty(Object.prototype, "typeObject", {
+        value: function () {
+          return Object.prototype.toString.call(this) === "[object Object]";
+        },
+        writable: false,
+        enumerable: false,
+      })
     }
 
   }

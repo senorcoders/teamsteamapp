@@ -17,6 +17,7 @@ import { SelectLeaguesPage } from '../select-leagues/select-leagues';
 import { AddTeamPage } from '../add-team/add-team';
 import { CreateLeaguePage } from '../create-league/create-league';
 import { SettingPage } from '../setting/setting';
+import { SelectTeamsLeaguesPage } from '../select-teams-leagues/select-teams-leagues';
 
 
 @IonicPage()
@@ -57,10 +58,10 @@ export class ViewProfilePage {
 
   async ionViewWillEnter() {
 
-    this.user = JSON.parse( JSON.stringify(MyApp.User) );
+    this.user = JSON.parse(JSON.stringify(MyApp.User));
 
     //Para cuando el usuario no tiene rol
-    if(this.user.role===null||this.user.role==undefined){
+    if (this.user.role === null || this.user.role == undefined) {
       this.user.role = {
         name: "None"
       };
@@ -88,15 +89,12 @@ export class ViewProfilePage {
       }
 
       //cargamos los roles types
-      for (let rol of MyApp.User.roles) {
-        let index = this.rolesTypes.findIndex(it => {
-          return rol.name === it.name;
-        });
-        if (index === -1) {
-          this.rolesTypes.push(rol);
+      this.rolesTypes = MyApp.User.roles.filter(it => {
+        if (MyApp.User.role.hasOwnProperty("team") && it.hasOwnProperty("team")) {
+          return MyApp.User.role.team.id === it.team.id;
         }
-      }
-      // console.log(this.rolesTypes);
+        return false;
+      });
 
       //Si el rol es de league cargamos la liga
       if (this.user.role.league !== undefined && this.user.role.league !== null) {
@@ -113,13 +111,13 @@ export class ViewProfilePage {
     load.dismissAll();
   }
 
-  public teamsPresent(){
-    if(this.user.role===undefined||this.user.role===null) return false;
-    
+  public teamsPresent() {
+    if (this.user.role === undefined || this.user.role === null) return false;
+
     return this.user.role.hasOwnProperty('team')
   }
 
-  
+
 
   public async loadImage() {
     this.image = true;
@@ -316,13 +314,17 @@ export class ViewProfilePage {
   public editable() {
     return this.user.role.name != 'Manager' && !this.edit;
   }
-  
+
   public selectLeagues() {
     this.navCtrl.push(SelectLeaguesPage);
   }
 
   public selectTeams() {
     this.navCtrl.push(TeamsProfilePage);
+  }
+
+  public selectRole() {
+    this.navCtrl.push(SelectTeamsLeaguesPage);
   }
 
 

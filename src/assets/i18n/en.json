@@ -417,6 +417,9 @@
         "CLOSE": "Expected Weather",
         "LARGE": "Weather starts closer to the event",
         "SETTINGTITLE": "Climate unit"
-    }
+    },
+    "MYTEAMS": "My Teams",
+    "MYTEAMSANDLEAGUE": "My Teams and Leagues",
+    "LEAGUES": "Leagues"
 
 }
