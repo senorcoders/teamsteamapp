@@ -17,7 +17,7 @@
         <div id="loadtoUp" *ngIf="loadingChats">
             <ion-spinner></ion-spinner>
         </div>
-        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" [class.left]=" msg.from.id !== from.id "
+        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" (click)="showIfImage(msg)" [class.left]=" msg.from.id !== from.id "
             [class.right]=" msg.from.id === from.id " [class.success]="msg.view>=3">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">

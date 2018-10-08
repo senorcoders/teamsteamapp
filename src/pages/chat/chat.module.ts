@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { ChatPage } from './chat';
 import { PipesModule } from '../../pipes/pipes.module';
 import { EmojiPickerComponentModule } from '../../components/emoji-picker/emoji-picker.module';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { EmojiPickerComponentModule } from '../../components/emoji-picker/emoji-
   imports: [
     IonicPageModule.forChild(ChatPage),
     PipesModule,
-    EmojiPickerComponentModule
+    EmojiPickerComponentModule,
+    IonicImageViewerModule
   ]
 })
 export class ChatPageModule {}

@@ -9,6 +9,7 @@ import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { PreviewImageChatComponent } from '../../components/preview-image-chat/preview-image-chat';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { ListChatsPage } from '../list-chats/list-chats';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 /**
  * este es para chat entre el manager y un solo jugador
@@ -53,7 +54,7 @@ export class ChatOnePersonPage {
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
     public navParams: NavParams, public sockets: WebSocketsProvider,
     public helper: HelpersProvider, public modal: ModalController,
-    public toastCtrl: ToastController
+    public toastCtrl: ToastController, public imageViewerCtrl: ImageViewerController
   ) {
     this.to = this.navParams.get("user");
     this.from = MyApp.User;
@@ -395,5 +396,15 @@ export class ChatOnePersonPage {
       }
     }
 
+  }
+
+  public showIfImage(msg) {
+    if (msg.type === "image") {
+      let img = new Image();
+      let src = this.urlImg(msg.id);
+      img.setAttribute("src", src);
+      const imageViewer = this.imageViewerCtrl.create(img);
+      imageViewer.present();
+    }
   }
 }
