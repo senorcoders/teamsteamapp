@@ -30,7 +30,6 @@ import { EventPage } from '../pages/event/event';
 import { ViewPlayerPage } from '../pages/view-player/view-player';
 import { EditFamilyPage } from '../pages/edit-family/edit-family';
 import { CreatePlayerPage } from '../pages/create-player/create-player';
-import { CreatePlayerDetailsPage } from '../pages/create-player-details/create-player-details';
 import { NewEventPage } from '../pages/new-event/new-event';
 import { EditEventPage } from '../pages/edit-event/edit-event';
 import { HelpersProvider } from '../providers/helpers/helpers';
@@ -96,7 +95,6 @@ import { EventPageModule } from '../pages/event/event.module';
 import { ViewPlayerPageModule } from '../pages/view-player/view-player.module';
 import { EditFamilyPageModule } from '../pages/edit-family/edit-family.module';
 import { CreatePlayerPageModule } from '../pages/create-player/create-player.module';
-import { CreatePlayerDetailsPageModule } from '../pages/create-player-details/create-player-details.module';
 import { NewEventPageModule } from '../pages/new-event/new-event.module';
 import { EditEventPageModule } from '../pages/edit-event/edit-event.module';
 import { ChatPageModule } from '../pages/chat/chat.module';
@@ -223,7 +221,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewPlayerPageModule,
     EditFamilyPageModule,
     CreatePlayerPageModule,
-    CreatePlayerDetailsPageModule,
     NewEventPageModule,
     EditEventPageModule,
     AgentFreePageModule,
@@ -295,7 +292,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ViewPlayerPage,
     EditFamilyPage,
     CreatePlayerPage,
-    CreatePlayerDetailsPage,
     NewEventPage,
     EditEventPage,
     ChatPage,
