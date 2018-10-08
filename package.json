@@ -48,7 +48,7 @@
     "cordova-plugin-camera-preview": "^0.9.0",
     "cordova-plugin-datepicker": "^0.9.3",
     "cordova-plugin-device": "^2.0.2",
-    "cordova-plugin-file": "^6.0.1",
+    "cordova-plugin-file": "^5.0.0",
     "cordova-plugin-geolocation": "^4.0.1",
     "cordova-plugin-globalization": "^1.11.0",
     "cordova-plugin-inappbrowser": "^3.0.0",
@@ -74,7 +74,8 @@
     "rxjs": "5.5.2",
     "sw-toolbox": "3.6.0",
     "xml2js": "^0.4.19",
-    "zone.js": "0.8.18"
+    "zone.js": "0.8.18",
+    "cordova-plugin-statusbar": "~2.4.1"
   },
   "devDependencies": {
     "@angular/cli": "^6.2.1",
@@ -120,11 +121,12 @@
       },
       "cordova-plugin-request-location-accuracy": {},
       "cordova-plugin-splashscreen": {},
-      "cordova-plugin-file": {}
+      "cordova-plugin-file": {},
+      "cordova-plugin-statusbar": {}
     },
     "platforms": [
-      "android",
-      "ios"
+      "ios",
+      "android"
     ]
   }
 }
