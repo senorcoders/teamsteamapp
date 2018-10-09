@@ -428,6 +428,11 @@
     "ENTERCODE": "Enter the code",
     "CODE": "Code",
     "ENTER": "Enter",
-    "CODEINCORRECT": "Código incorrecto"
-
+    "CODEINCORRECT": "Código incorrecto",
+    "LIVESCORE": {
+        "TITLE": "Live Score",
+        "PERIOD": "Period",
+        "US": "US",
+        "THEM": "Them"
+    }
 }

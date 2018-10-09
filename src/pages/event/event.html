@@ -94,18 +94,22 @@
     <ion-item id="wheater" *ngIf="wheater.enable">
       <span *ngIf="wheater.close">{{"WHEATER.CLOSE" | translate}}</span>
       <span *ngIf="!wheater.close">{{"WHEATER.LARGE" | translate}}</span>
-      <img item-end class="icon-wheater" src="./assets/imgs/icon-wheater.png" >
+      <img item-end class="icon-wheater" src="./assets/imgs/icon-wheater.png">
       <span item-end>{{wheater.public}}</span>
-      <img item-end class="icon-wheater" src="./assets/imgs/termometro.png" >
+      <img item-end class="icon-wheater" src="./assets/imgs/termometro.png">
     </ion-item>
 
-    <ion-item class="assistence" (click)="toImages()" >
+    <ion-item class="assistence" (click)="toImages()">
       {{'GALLERY' | translate}}
     </ion-item>
     <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toAssistence()" [hidden]="league">
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
-    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" class="assistence" (click)="toPlayerClose()">
+    <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toLiveScore()" *ngIf="liveScore">
+      {{'LIVESCORE.TITLE' | translate}}
+    </ion-item>
+    <ion-item *ngIf="enablePlayerClose" style="border-top: 1px solid white;" [hidden]="league" class="assistence"
+      (click)="toPlayerClose()">
       {{'PLAYERCLOSEEVENT' | translate}}
     </ion-item>
 
@@ -141,8 +145,8 @@
   </ion-fab>
 
   <ion-fab [hidden]="hiddenEditRemove()" bottom right (click)="remove()">
-    <button color="base" ion-fab icon-only >
-      <ion-icon name="ios-trash"></ion-icon> 
+    <button color="base" ion-fab icon-only>
+      <ion-icon name="ios-trash"></ion-icon>
     </button>
   </ion-fab>
 </ion-content>

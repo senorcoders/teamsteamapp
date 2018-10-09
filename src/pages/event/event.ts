@@ -19,6 +19,7 @@ import { AssistenceComponent } from '../../components/assistence/assistence';
 import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
 import { ImagesEventPage } from '../images-event/images-event';
 import { MyTaskPage } from '../my-task/my-task';
+import { LiveScorePage } from '../live-score/live-score';
 
 declare var google: any;
 
@@ -80,6 +81,10 @@ export class EventPage {
 
   public league = false;
 
+  //Para mostrar cuando el live score esta habilitado
+  public liveScore = false;
+  public planPremiun = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public loading: LoadingController, public alertCtrl: AlertController,
     private http: HttpClient, public auth: AuthServiceProvider, public helper: HelpersProvider,
@@ -131,7 +136,6 @@ export class EventPage {
         day = this.getDayCercano(this.event.repeatsDays);
         let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
         this.event.parsedDateTime = [moth, day.format("DD")];
-        ////console.log(it.name, it.parsedDateTime);
       } else {
         day = moment(this.event.dateTime);
         let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
@@ -139,7 +143,22 @@ export class EventPage {
       }
       this.event.day = day;
 
-      //Para saber si se tiene que mostraa la opcion para ver jugadores cercanos a un evento
+      //Para saber si ya se muestra en live score
+      //Es solo para plan premiun
+      let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
+      this.planPremiun = status.msg; console.log("subscription", this.planPremiun, day.format("DD/MM/YYYY hh:mm:ss a"));
+      if (this.planPremiun === false && this.event.type === "game") {
+        // Se muestra 30 minutos antes de que comienza el evento
+        // y 12 horas despues del evento
+        let start = day, end = day, now = moment();
+        start.subtract(30, "minutes");
+        end.add(12, "hours"); console.log(start.format("DD/MM/YYYY hh:mm:ss a"), end.format("DD/MM/YYYY hh:mm:ss a"));
+        if (now.isBefore(start)) {
+          this.liveScore = true;
+        }
+      }
+
+      //Para saber si se tiene que mostrar la opcion para ver jugadores cercanos a un evento
       this.checkEnablePlayerClose();
       this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
 
@@ -735,6 +754,10 @@ export class EventPage {
 
   public toImages() {
     this.navCtrl.push(ImagesEventPage, { event: this.event });
+  }
+
+  public toLiveScore() {
+    this.navCtrl.push(LiveScorePage, { event: this.event });
   }
 
 }
