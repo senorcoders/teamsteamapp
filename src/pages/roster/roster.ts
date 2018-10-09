@@ -35,10 +35,10 @@ export class RosterPage {
   public managers = [];
   public managersOrigin = [];
   firstTime: boolean = true;
-  teamID:any;
-  code:any;
-  joinOverlay:boolean = true;
-  arrowIcon:any = "md-arrow-dropdown";
+  teamID: any;
+  code: any;
+  joinOverlay: boolean = true;
+  arrowIcon: any = "md-arrow-dropdown";
   public updateImagePlayer = (index: number, stringBase64: string) => {
 
     let t = this; console.log(index);
@@ -161,7 +161,7 @@ export class RosterPage {
   }
 
   public addPlayer() {
-    this.navCtrl.push(CreatePlayerPage);
+    this.navCtrl.push(CreatePlayerPage, { players: this.playersOrigin });
   }
 
   public goChat(user) {
@@ -174,19 +174,19 @@ export class RosterPage {
   }
 
 
-  getInvitationCode(){
+  getInvitationCode() {
     this.http.get('/teams-code/' + this.teamID).subscribe(result => {
-      if(result['code']){
+      if (result['code']) {
         this.code = result['code'];
       }
     })
   }
 
-  toggleOverlay(){
+  toggleOverlay() {
     this.joinOverlay = !this.joinOverlay;
-    if(this.arrowIcon == 'md-arrow-dropdown'){
+    if (this.arrowIcon == 'md-arrow-dropdown') {
       this.arrowIcon = "md-arrow-dropup";
-    }else{
+    } else {
       this.arrowIcon = "md-arrow-dropdown";
     }
   }

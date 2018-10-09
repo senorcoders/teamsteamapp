@@ -4,6 +4,7 @@ import { ChatFamilyPage } from './chat-family';
 import { TranslateModule } from '@ngx-translate/core';
 import { EmojiPickerComponentModule } from '../../components/emoji-picker/emoji-picker.module';
 import { PipesModule } from '../../pipes/pipes.module';
+import { IonicImageViewerModule } from 'ionic-img-viewer';
 
 @NgModule({
   declarations: [
@@ -13,7 +14,8 @@ import { PipesModule } from '../../pipes/pipes.module';
     IonicPageModule.forChild(ChatFamilyPage),
     TranslateModule.forChild(),
     EmojiPickerComponentModule,
-    PipesModule
+    PipesModule,
+    IonicImageViewerModule
   ],
 })
 export class ChatFamilyPageModule {}

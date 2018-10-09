@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-//import { CreatePlayerDetailsPage } from '../create-player-details/create-player-details';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
@@ -46,12 +45,16 @@ export class CreatePlayerPage {
   public infoContact: string = "";
   public typeContact: string = "email";
 
+  public players = [];
+  public playersSelects = [];
+  public relationships = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
     public loading: LoadingController, public helper: HelpersProvider,
     public datePicker: DatePicker
   ) {
+    this.players = this.navParams.get("players");
   }
 
   ionViewDidLoad() {
@@ -187,11 +190,18 @@ export class CreatePlayerPage {
       }
     }
 
-    this.saveFinish.bind(this)(load);
+    if (this.nonPlayer === false && this.managerAccess === false) {
+      this.savePlayer.bind(this)(load);
+    } else if (this.nonPlayer === true) {
+      this.saveFamily.bind(this)(load);
+    } else {
+      this.saveManager.bind(this)(load);
+    }
+
 
   }
 
-  public async saveFinish(load: Loading) {
+  private async savePlayer(load: Loading) {
 
     let user: any = {
       // username: this.username,
@@ -222,15 +232,7 @@ export class CreatePlayerPage {
 
       user.contacts = this.contacts;
       user = await this.http.post("/user/player", { user, player }).toPromise();
-
-
-      if (user.hasOwnProperty('image') && this.user.image != '') {
-        await this.http.post("/userprofile/images", {
-          id: user.id,
-          image: this.user.image,
-          team: MyApp.User.team
-        }).toPromise();
-      }
+      this.saveImage(user);
 
       load.dismiss();
       if (this.emailType === "family") {
@@ -248,13 +250,101 @@ export class CreatePlayerPage {
       }
 
     } catch (e) {
-
       load.dismiss();
       console.error(e);
       this.alertCtrl.create({
         title: "Error",
         buttons: ["Ok"]
       }).present();
+    }
+  }
+
+  public getEmail(id):String{
+    let player = this.players.find(function(it){ return it.id === id; })
+    if(player === undefined){return ""; }
+    return player.user.email;
+  }
+
+  private async saveFamily(load) {
+    try {
+
+      if (this.playersSelects.length === 0 ||
+        this.playersSelects.length !== this.relationships.filter(it => it !== "").length
+      ) {
+        load.dismiss();
+        let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
+          emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
+        this.alertCtrl.create({
+          title: requiredM,
+          message: emptyM,
+          buttons: ["Ok"]
+        }).present();
+
+        return;
+      }
+
+      let i = 0;
+      let family = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email.toLowerCase(),
+        emailType: this.emailType,
+        team: MyApp.User.team,
+        familys: this.playersSelects.map(function (it) {
+          let p = { id: it, relationship: this.relationships[i] };
+          i += 1;
+          return p;
+        }.bind(this))
+      };
+      let user = await this.http.post("/user/family", family).toPromise();
+      this.saveImage(user);
+
+      if (this.navParams.get("team") !== undefined) {
+        this.navCtrl.pop();
+      } else {
+        this.navCtrl.setRoot(RosterPage);
+      }
+    }
+    catch (e) {
+      console.error(e);
+      this.helper.presentAlertErrorStandar();
+    }
+
+    load.dismiss();
+  }
+
+  private async saveManager(load) {
+    try {
+      let manager = {
+        firstName: this.firstName,
+        lastName: this.lastName,
+        email: this.email.toLowerCase(),
+        team: MyApp.User.team
+      };
+      let user = await this.http.post("/user/manager", manager).toPromise();
+      this.saveImage(user);
+
+      if (this.navParams.get("team") !== undefined) {
+        this.navCtrl.pop();
+      } else {
+        this.navCtrl.setRoot(RosterPage);
+      }
+    }
+    catch (e) {
+      console.error(e);
+      this.helper.presentAlertErrorStandar();
+    }
+
+    load.dismiss();
+  }
+
+  private async saveImage(user) {
+    if (user.hasOwnProperty('image') && this.imageSrc !== '') {
+      await this.http.post("/userprofile/images", {
+        id: user.id,
+        image: this.imageSrc,
+        team: MyApp.User.team
+      }).toPromise();
     }
   }
 

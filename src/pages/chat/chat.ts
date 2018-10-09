@@ -11,6 +11,7 @@ import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { PreviewImageChatComponent } from '../../components/preview-image-chat/preview-image-chat';
 import { ListChatsPage } from '../list-chats/list-chats';
+import { ImageViewerController } from 'ionic-img-viewer';
 
 /**
  * este es para chat de todo el equipo
@@ -55,7 +56,8 @@ export class ChatPage {
   constructor(navParams: NavParams, private events: Events,
     private http: HttpClient, private ngZone: NgZone,
     public changeDectRef: ChangeDetectorRef, private subscription: WebSocketsProvider,
-    public helper: HelpersProvider, public modal: ModalController
+    public helper: HelpersProvider, public modal: ModalController,
+    private imageViewerCtrl: ImageViewerController
   ) {
 
     this.ramdon = new Date().getTime();
@@ -107,8 +109,8 @@ export class ChatPage {
       mgs = mgs.filter(it => {
         return it.hasOwnProperty("user") && it.hasOwnProperty("team");
       });
-      
-      if(mgs.length===0){
+
+      if (mgs.length === 0) {
         this.loadingChats = false;
         return;
       }
@@ -331,6 +333,16 @@ export class ChatPage {
 
   public customTrackBy(index: number, obj: any): any {
     return index;
+  }
+
+  public showIfImage(msg) {
+    if (msg.type === "image") {
+      let img = new Image();
+      let src = this.urlImg(msg.id);
+      img.setAttribute("src", src);
+      const imageViewer = this.imageViewerCtrl.create(img);
+      imageViewer.present();
+    }
   }
 
 }

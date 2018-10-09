@@ -557,7 +557,7 @@ export class MyApp {
       },
       windows: {},
       browser: {
-        pushServiceURL: 'https://serviciosrivenses.firebaseio.com'
+        pushServiceURL: 'https://locker-room-a910e.firebaseio.com'
       }
     };
 
