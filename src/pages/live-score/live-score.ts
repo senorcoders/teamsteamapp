@@ -7,6 +7,7 @@ import * as moment from 'moment';
 import { ToChatToPerfilPlayerComponent } from '../../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
 import { NgControl } from '@angular/forms';
 import { HelpersProvider } from '../../providers/helpers/helpers';
+import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 
 @IonicPage()
 @Component({
@@ -37,8 +38,8 @@ export class LiveScorePage {
 
   constructor(public http: HttpClient, public navParams: NavParams,
     public changeDectRef: ChangeDetectorRef, public zone: NgZone,
-    public eventPush: Events, public viewCtrl: ViewController,
-    public modalCtrl: ModalController
+    public viewCtrl: ViewController, public modalCtrl: ModalController,
+    public socket: WebSocketsProvider
   ) {
     this.event = this.navParams.get("event");
     this.user = MyApp.User;
@@ -51,7 +52,6 @@ export class LiveScorePage {
     //Para obtener el score
     //Se obtiene el ultimo
     let scores = await this.http.get(`/scorepart?where={"game":"${this.event.id}"}&sort=createdAt%20DESC&limit=30000`).toPromise() as any[];
-    console.log(scores);
     this.us = scores[0].us;
     this.period = scores[0].period;
     this.them = scores[0].them;
@@ -70,11 +70,14 @@ export class LiveScorePage {
       t.changeDectRef.reattach();
     }, 30 * 1000);
 
-    //suscripcion para cuando se recibe un nuevo commentario por medio de push notifications
-    this.eventPush.subscribe('comment:received', (comment) => {
-      console.log(comment);
-      this.pushNewComment(comment);
-    });
+    //suscripcion para cuando se recibe un nuevo commentario y score
+    this.socket.subscribe("commentscorepart-added-" + this.event.id, this.pushNewComment.bind(this));
+
+    this.socket.subscribe("scorepart-updated-" + this.event.id, function (score:any) {
+      this.us = score.us;
+      this.period = score.period;
+      this.them = score.them;
+    }.bind(this));
 
     this.showEmojiPicker = false;
     this.content.resize();
@@ -84,9 +87,6 @@ export class LiveScorePage {
 
   ionViewDidLeave() {
     clearInterval(this.updateTimeMessage);
-    this.eventPush.unsubscribe('comment:received', () => {
-      console.log("unsubscribe comment")
-    });
   }
 
   public errorLoadImage(e) {

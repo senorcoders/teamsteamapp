@@ -3,6 +3,7 @@ import { IonicPageModule } from 'ionic-angular';
 import { LiveScorePage } from './live-score';
 import { TranslateModule } from '@ngx-translate/core';
 import { PipesModule } from '../../pipes/pipes.module';
+import { EmojiPickerComponentModule } from '../../components/emoji-picker/emoji-picker.module';
 
 @NgModule({
   declarations: [
@@ -11,7 +12,8 @@ import { PipesModule } from '../../pipes/pipes.module';
   imports: [
     IonicPageModule.forChild(LiveScorePage),
     TranslateModule.forChild(),
-    PipesModule
+    PipesModule,
+    EmojiPickerComponentModule
   ],
 })
 export class LiveScorePageModule {}

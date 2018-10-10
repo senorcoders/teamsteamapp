@@ -42,27 +42,27 @@
 
   </div>
 
-
-  <ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
-    <ion-grid class="input-wrap">
-      <ion-row>
-        <ion-col col-2>
-          <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
-            <ion-icon name="md-happy"></ion-icon>
-          </button>
-        </ion-col>
-        <ion-col col-8>
-          <ion-textarea #chat_input placeholder="Comment" [(ngModel)]="editorMsg" (keyup.enter)="sendComment()"
-            (ionFocus)="onFocus()">
-          </ion-textarea>
-        </ion-col>
-        <ion-col col-2>
-          <button ion-button clear icon-only item-right (click)="sendComment()">
-            <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
-          </button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-  </ion-footer>
-
 </ion-content>
+
+<ion-footer no-border [style.height]="showEmojiPicker ? '255px' : '55px'">
+  <ion-grid class="input-wrap">
+    <ion-row>
+      <ion-col col-2>
+        <button ion-button clear icon-only item-right (click)="switchEmojiPicker()">
+          <ion-icon name="md-happy"></ion-icon>
+        </button>
+      </ion-col>
+      <ion-col col-8>
+        <ion-textarea #chat_input placeholder="Comment" [(ngModel)]="editorMsg" (keyup.enter)="sendComment()"
+          (ionFocus)="onFocus()">
+        </ion-textarea>
+      </ion-col>
+      <ion-col col-2>
+        <button ion-button clear icon-only item-right (click)="sendComment()">
+          <ion-icon name="ios-send" ios="ios-send" md="md-send"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <emoji-picker *ngIf="showEmojiPicker" [(ngModel)]="editorMsg"></emoji-picker>
+</ion-footer>
