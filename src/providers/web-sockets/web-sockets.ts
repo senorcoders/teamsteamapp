@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
+import { MyApp } from '../../app/app.component';
 
 declare var io: any;
 
@@ -34,10 +35,16 @@ export class WebSocketsProvider {
         console.log("script loaded");
       }
 
+      //Asignamos los query para iniciar la sesion
+      if (MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token'))
+        io.sails.query = `user=${MyApp.User.id}&token=${MyApp.User.token}`;
+      else
+        return;
+
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
         WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
-      }else{
-        if(WebSocketsProvider.conexion.isConnected() === false){
+      } else {
+        if (WebSocketsProvider.conexion.isConnected() === false) {
           WebSocketsProvider.conexion.reconnect();
         }
       }
@@ -78,6 +85,41 @@ export class WebSocketsProvider {
 
   }
 
+  public async reconnect() {
+    try {
+      console.log("iniciando conexion");
+      if ((window as any).io === undefined) {
+        await this.initConnetionSockets();
+        console.log("script type");
+        await this.loopCheckConnect();
+        console.log("script loaded");
+      }
+
+      //Asignamos los query para iniciar la sesion
+      if (MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token'))
+        io.sails.query = `user=${MyApp.User.id}&token=${MyApp.User.token}`;
+      else
+        return;
+
+      if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
+        WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+      } else {
+        if (WebSocketsProvider.conexion.isConnected() === false) {
+          WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+        } else {
+          WebSocketsProvider.conexion.disconnect();
+          //Esperamos un 1500 milisegundos para reconectar
+          await new Promise((resolve) => setTimeout(resolve, 15000));
+          this.reconnect();
+        }
+      }
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
   public async subscribe(model: string, callback: Function) {
 
     await this.initConexion();
@@ -86,6 +128,19 @@ export class WebSocketsProvider {
       callback(event);
     });
     console.log(WebSocketsProvider.conexion);
+  }
+
+  public disconnect() {
+    try {
+      if (WebSocketsProvider.conexion !== null || WebSocketsProvider.conexion !== undefined) {
+        if (WebSocketsProvider.conexion.isConnected() === true) {
+          WebSocketsProvider.conexion.disconnect();
+        }
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
   public subscribeWithPush(model: string, add?: Function, update?: Function, remove?: Function) {

@@ -146,13 +146,13 @@ export class EventPage {
       //Para saber si ya se muestra en live score
       //Es solo para plan premiun
       let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
-      this.planPremiun = status.msg;
+      this.planPremiun = status.msg; console.log(this.planPremiun, this.event.type);
       if (this.planPremiun === true && this.event.type === "game") {
         // Se muestra 30 minutos antes de que comienza el evento
         // y 12 horas despues del evento
-        let start = day, end = day, now = moment();
+        let start = day, end = day, now = moment(); console.log("m");
         start.subtract(30, "minutes");
-        end.add(12, "hours"); console.log(start.format("DD/MM/YYYY hh:mm:ss a"), end.format("DD/MM/YYYY hh:mm:ss a"));
+        end.add(12, "hours");
         if (now.isBefore(start)) {
           this.liveScore = true;
         }

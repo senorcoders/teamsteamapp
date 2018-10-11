@@ -5,6 +5,11 @@
             <img class="user-img" [hidden]="!_photoReady" (load)="photoReady()" [src]="photo">
             <img class="user-img" [hidden]="_photoReady" src="./assets/imgs/logo-login.png">
             <ion-title>{{to.firstName+ " "+ to.lastName}}</ion-title>
+            <div id="online">
+                <div class="icon-online" [ngClass]="userOnline===true?'':'not'"></div>
+                <span [hidden]="!userOnline">{{"ONLINE" | translate}}</span>
+                <span [hidden]="userOnline">{{"OFFLINE" | translate}}</span>
+            </div>
         </ion-row>
     </ion-navbar>
 
@@ -17,8 +22,8 @@
         <div id="loadtoUp" *ngIf="loadingChats">
             <ion-spinner></ion-spinner>
         </div>
-        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" (click)="showIfImage(msg)" [class.left]=" msg.from.id !== from.id "
-            [class.right]=" msg.from.id === from.id " [class.success]="msg.view>=3">
+        <div *ngFor="let msg of msgList; let i = index; trackBy: customTrackBy" class="message" (click)="showIfImage(msg)"
+            [class.left]=" msg.from.id !== from.id " [class.right]=" msg.from.id === from.id " [class.success]="msg.view>=3">
             <ion-spinner name="dots" *ngIf="msg.status === 'pending'"></ion-spinner>
             <div class="msg-detail">
                 <div class="msg-info">

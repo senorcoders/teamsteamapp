@@ -434,5 +434,7 @@
         "PERIOD": "Period",
         "US": "US",
         "THEM": "Them"
-    }
+    },
+    "ONLINE": "en línea",
+    "OFFLINE": "Desconectado"
 }

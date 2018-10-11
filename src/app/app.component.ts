@@ -30,6 +30,7 @@ import { PhotosPage } from '../pages/photos/photos';
 
 import * as moment from 'moment';
 import { NotificationPage } from '../pages/notification/notification';
+import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 
 @Component({
   templateUrl: 'app.html'
@@ -84,7 +85,7 @@ export class MyApp {
     public zone: NgZone, public translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent,
     private INoti: INotificationProvider, public splash: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar, private socket:WebSocketsProvider
   ) {
     platform.ready().then(this.initPlatform.bind(this));
   }
@@ -183,6 +184,8 @@ export class MyApp {
     if (authenticated === true) {
 
       await this.proccessViews();
+      //Para iniciar sesion en websocket
+      await this.socket.initConexion();
     } else {
       this.nav.root = LoginPage;
     }
@@ -220,6 +223,9 @@ export class MyApp {
         this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
+
+      //Para reconnectar con sesion en websocket
+      await this.socket.reconnect();
 
       this.zone.run(function(){
         console.log("cambiooo", MyApp.User);

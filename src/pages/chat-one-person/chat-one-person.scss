@@ -1,4 +1,25 @@
 page-chat-one-person {
+    #online{
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        padding-top: 5px;
+        .icon-online{
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background-color: #fe324d;
+        }
+        span{
+            text-align: center;
+            width: 100%;
+            flex-basis: 100%;
+            font-size: 1.2rem;
+        }
+        .icon-online.not{
+            background-color: #ffb9c2 !important;
+        }
+    }
     $userBackgroundColor: #fff;
     $toUserBackgroundColor: #fe324d;
     #loadtoUp {

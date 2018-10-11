@@ -50,6 +50,9 @@ export class ChatOnePersonPage {
 
   public planPremiun = false;
 
+  //Para saber si el usuario esta online
+  public userOnline = false;
+
   constructor(private http: HttpClient,
     private ngZone: NgZone, public changeDectRef: ChangeDetectorRef,
     public navParams: NavParams, public sockets: WebSocketsProvider,
@@ -123,22 +126,32 @@ export class ChatOnePersonPage {
 
   async ionViewDidLoad() {
 
-    //Para saber si tiene una cuenta premiun
-    let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
-    this.planPremiun = status.msg;
+    try {
+      //Para saber si tiene una cuenta premiun
+      let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
+      this.planPremiun = status.msg;
 
-    //Para saber si el manager bloqueo los mensajes con los otros jugadores
-    let team = await this.http.get("/teams/" + MyApp.User.team).toPromise() as any;
-    if (team.configuration !== undefined) {
-      let confi = team.configuration;
-      if (confi.hasOwnProperty("chatEachPlayer") === true) {
-        if (confi.chatEachPlayer === false) {
-          await this.notEachPlayer();
+      this.to = await this.http.get("/user/" + this.to.id).toPromise() as any; console.log(this.to);
+      if (this.to.online !== undefined) {
+        this.userOnline = this.to.online;
+      }
+
+      //Para saber si el manager bloqueo los mensajes con los otros jugadores
+      let team = await this.http.get("/teams/" + MyApp.User.team).toPromise() as any;
+      if (team.configuration !== undefined) {
+        let confi = team.configuration;
+        if (confi.hasOwnProperty("chatEachPlayer") === true) {
+          if (confi.chatEachPlayer === false) {
+            await this.notEachPlayer();
+          }
         }
       }
-    }
 
-    this.photo = interceptor.transformUrl("/userprofile/images/" + this.to.id + "/" + MyApp.User.team);
+      this.photo = interceptor.transformUrl("/userprofile/images/" + this.to.id + "/" + MyApp.User.team);
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
   async ionViewDidEnter() {
@@ -151,8 +164,14 @@ export class ChatOnePersonPage {
     }, 30 * 1000);
 
     //Subscribe to received change chat
-    console.log("chat-updated-" + MyApp.User.id);
     this.sockets.subscribe("chat-updated-" + MyApp.User.id, this.updateMsg.bind(this));
+
+    //Subscribe para cuando el usuario esta online
+    this.sockets.subscribe('user-updated-' + this.to.id, function (user) {
+      if (user.online !== undefined)
+        this.userOnline = user.online;
+
+    }.bind(this));
 
     // Subscribe to received  new message events
     this.sockets.subscribeWithPush("chat", async function (msg) {
