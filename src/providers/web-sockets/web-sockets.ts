@@ -31,7 +31,7 @@ export class WebSocketsProvider {
         await this.initConnetionSockets();
         console.log("script type");
         await this.loopCheckConnect();
-        console.log("scirpt loaded");
+        console.log("script loaded");
       }
 
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {

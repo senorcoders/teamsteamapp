@@ -11,6 +11,7 @@ import { ChatPage } from '../../pages/chat/chat';
 import { MyApp } from '../../app/app.component';
 import { PlayerCloseEventPage } from '../../pages/player-close-event/player-close-event';
 import { ChatFamilyPage } from '../../pages/chat-family/chat-family';
+import { LiveScorePage } from '../../pages/live-score/live-score';
 
 
 @Injectable()
@@ -62,6 +63,10 @@ export class INotificationProvider {
     } else if (intent.extras.is.includes("player-near.")) {
       let eventID = intent.extras.is.split(".")[1];
       await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: PlayerCloseEventPage, data: { eventID, player: data } }], { notification: true });
+    } else if (intent.extras.is === "scorepart") {
+      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
+    }else if(intent.extras.is === "commentscorepart"){
+      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
     }
 
   }

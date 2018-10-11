@@ -185,6 +185,8 @@ import { SelectTeamsLeaguesPageModule } from '../pages/select-teams-leagues/sele
 import { SelectTeamsLeaguesPage } from '../pages/select-teams-leagues/select-teams-leagues';
 import { FormJoinTeamCodePage } from '../pages/form-join-team-code/form-join-team-code';
 import { FormJoinTeamCodePageModule } from '../pages/form-join-team-code/form-join-team-code.module';
+import { LiveScorePageModule } from '../pages/live-score/live-score.module';
+import { LiveScorePage } from '../pages/live-score/live-score';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -279,7 +281,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     NotificationPageModule,
     ChangeRolPlayerPageModule,
     SelectTeamsLeaguesPageModule,
-    FormJoinTeamCodePageModule
+    FormJoinTeamCodePageModule,
+    LiveScorePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -363,6 +366,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ChangeRolPlayerPage,
     SelectTeamsLeaguesPage,
     FormJoinTeamCodePage,
+    LiveScorePage
   ],
   providers: [
     StatusBar,

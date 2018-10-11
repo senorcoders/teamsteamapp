@@ -432,5 +432,11 @@
     "ENTERCODE": "Ingrese el código",
     "CODE": "Código",
     "ENTER": "Entrar",
-    "CODEINCORRECT": "Código incorrecto"
+    "CODEINCORRECT": "Código incorrecto",
+    "LIVESCORE": {
+        "TITLE": "Puntaje en vivo",
+        "PERIOD": "Periodo",
+        "US": "Nosotros",
+        "THEM": "Ellos"
+    }
 }
