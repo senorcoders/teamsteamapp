@@ -5,7 +5,7 @@
             <img class="user-img" [hidden]="!_photoReady" (load)="photoReady()" [src]="photo">
             <img class="user-img" [hidden]="_photoReady" src="./assets/imgs/logo-login.png">
             <ion-title>{{to.firstName+ " "+ to.lastName}}</ion-title>
-            <div id="online">
+            <div id="online" *ngIf="planPremiun">
                 <div class="icon-online" [ngClass]="userOnline===true?'':'not'"></div>
                 <span [hidden]="!userOnline">{{"ONLINE" | translate}}</span>
                 <span [hidden]="userOnline">{{"OFFLINE" | translate}}</span>

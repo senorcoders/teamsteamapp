@@ -131,9 +131,19 @@ export class ChatOnePersonPage {
       let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
       this.planPremiun = status.msg;
 
-      this.to = await this.http.get("/user/" + this.to.id).toPromise() as any; console.log(this.to);
-      if (this.to.online !== undefined) {
-        this.userOnline = this.to.online;
+      if (this.planPremiun === true) {
+        this.to = await this.http.get("/user/" + this.to.id).toPromise() as any; console.log(this.to);
+        if (this.to.online !== undefined) {
+          this.userOnline = this.to.online;
+        }
+
+        //Subscribe para cuando el usuario esta online
+        this.sockets.subscribe('user-updated-' + this.to.id, function (user) {
+          if (user.online !== undefined)
+            this.userOnline = user.online;
+
+        }.bind(this));
+        
       }
 
       //Para saber si el manager bloqueo los mensajes con los otros jugadores
@@ -165,13 +175,6 @@ export class ChatOnePersonPage {
 
     //Subscribe to received change chat
     this.sockets.subscribe("chat-updated-" + MyApp.User.id, this.updateMsg.bind(this));
-
-    //Subscribe para cuando el usuario esta online
-    this.sockets.subscribe('user-updated-' + this.to.id, function (user) {
-      if (user.online !== undefined)
-        this.userOnline = user.online;
-
-    }.bind(this));
 
     // Subscribe to received  new message events
     this.sockets.subscribeWithPush("chat", async function (msg) {
