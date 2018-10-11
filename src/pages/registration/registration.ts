@@ -13,7 +13,6 @@ import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
 import { SelectOwnerLeaguePage } from '../select-owner-league/select-owner-league';
 import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
-import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -69,7 +68,7 @@ export class RegistrationPage {
     private http: HttpClient, public auth: AuthServiceProvider,
     public statusBar: StatusBar, public device: Device,
     public modalCtrl: ModalController, public geolocation: Geolocation,
-    public ngZone: NgZone, private storage: Storage
+    public ngZone: NgZone
   ) {
     this.selectNew = "team";
   }

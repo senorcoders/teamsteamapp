@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { MyTaskPage } from '../my-task/my-task';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';

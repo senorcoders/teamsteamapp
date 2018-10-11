@@ -1,4 +1,4 @@
-import { Component, NgZone } from '@angular/core';
+import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, Platform } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
@@ -13,7 +13,6 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { MyApp } from '../../app/app.component';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { Storage } from '@ionic/storage';
 
 /**
  * para logearse en el app
@@ -41,12 +40,10 @@ export class LoginPage {
     public navParams: NavParams,
     public alertCtrl: AlertController,
     public authService: AuthServiceProvider,
-    private ngZone: NgZone,
     public http: HttpClient, public statusBar: StatusBar,
     private helper: HelpersProvider,
     private diagnostic: Diagnostic,
-    public plt: Platform,
-    private storage: Storage
+    public plt: Platform
   ) {
 
   }

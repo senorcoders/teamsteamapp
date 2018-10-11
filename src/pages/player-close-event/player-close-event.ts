@@ -4,8 +4,6 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
-import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
-import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
 declare var google: any;
@@ -39,7 +37,7 @@ export class PlayerCloseEventPage {
     this.event = await this.http.get("/event/" + this.navParams.get("eventID")).toPromise() as any;
     let events = await this.parserEvents([this.event]);
     this.event = events[0];
-    let date = moment(this.event.parsedDateTime[0] + this.event.parsedDateTime[1] + this.event.Time, "MMMMDDhh:mm a")
+    //let date = moment(this.event.parsedDateTime[0] + this.event.parsedDateTime[1] + this.event.Time, "MMMMDDhh:mm a")
 
     //Para obtener la location del evento
     if (this.event.location.hasOwnProperty("lat") && this.event.location.hasOwnProperty("lng")) {
@@ -97,7 +95,7 @@ export class PlayerCloseEventPage {
 
   private async parserEvents(events) {
 
-    let user = MyApp.User, th = this;
+    let th = this;
     ////console.log(size);
     try {
 

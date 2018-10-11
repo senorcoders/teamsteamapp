@@ -411,18 +411,18 @@ export class EventPage {
   }
 
   public checkEnablePlayerClose() {
-    let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
+    // let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
     let date = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
     date.subtract(30, "minutes");
-    let now = moment();
-    // console.log(
-    //   now.format("DD/MM/YYYY hh:mm:ss a"),
-    //   date.format("DD/MM/YYYY hh:mm:ss a"),
-    //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
-    //   now.isAfter(date),
-    //   now.isBefore(dateEvent),
-    //   this.user.role.name
-    // );
+    // let now = moment();
+    // // console.log(
+    // //   now.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   date.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   now.isAfter(date),
+    // //   now.isBefore(dateEvent),
+    // //   this.user.role.name
+    // // );
 
     if (EventsSchedulePage.by !== "past") {
       this.enablePlayerClose = true;

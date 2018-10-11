@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ModalController, ActionSheetController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { LibraryImagesPage } from '../library-images/library-images';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { interceptor } from '../../providers/auth-service/interceptor';
@@ -22,8 +22,8 @@ export class ImagesEventPage {
   public grid = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private http: HttpClient, private modalCtrl: ModalController,
-    private action: ActionSheetController, private imageViewerCtrl: ImageViewerController
+    private http: HttpClient, private action: ActionSheetController, 
+    private imageViewerCtrl: ImageViewerController
   ) {
     this.event = this.navParams.get("event");
   }

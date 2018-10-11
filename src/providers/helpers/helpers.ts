@@ -4,7 +4,7 @@ import { Platform, Loading, LoadingController, ModalController, AlertController,
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
-import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
+import { DatePicker } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';

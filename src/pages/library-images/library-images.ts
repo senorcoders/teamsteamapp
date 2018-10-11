@@ -1,9 +1,7 @@
 import { Component, NgZone } from '@angular/core';
 import { ChangeDetectorRef } from '@angular/core';
-import { Platform, ToastController, ModalController, IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Platform, ToastController, IonicPage, NavController, NavParams } from 'ionic-angular';
 
-import { PermissionsPage } from '../permissions/permissions';
-import { DomSanitizer } from '@angular/platform-browser';
 import { PhotoLibrary, LibraryItem } from '@ionic-native/photo-library';
 import { ImageViewPage } from '../image-view/image-view';
 import { UploadMultiplesImagesPage } from '../upload-multiples-images/upload-multiples-images';
@@ -47,9 +45,9 @@ export class LibraryImagesPage {
 
   constructor(public navCtrl: NavController, private photoLibrary: PhotoLibrary,
     private platform: Platform, private cd: ChangeDetectorRef,
-    private toastCtrl: ToastController, private modalCtrl: ModalController,
-    public navParams: NavParams, public zone: NgZone,
-    private sanitizer: DomSanitizer) {
+    private toastCtrl: ToastController, public navParams: NavParams, 
+    public zone: NgZone
+    ) {
 
     if (this.navParams.get("multi") !== undefined) {
       this.multiples = true;
