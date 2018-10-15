@@ -78,11 +78,10 @@ export class AssistenceComponent {
         }
       }
 
-      this.players = await this.http.get('/players?where={"team":"' + MyApp.User.team + '"}').toPromise() as any;
-
-
+      this.players = await this.http.get('/roles?where={"team":"' + MyApp.User.team + '","name":"Player"}').toPromise() as any;
+      console.log(this.players);
       //Filtramos los que no tenga user
-      this.players = this.players.filter(it => it.hasOwnProperty("user"));
+      this.players = this.players.filter(it => it.user.typeObject());
       this.factorize();
     }
     catch (e) {

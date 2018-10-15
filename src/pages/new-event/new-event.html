@@ -95,7 +95,7 @@
     </ion-item>
 
     <ion-item *ngIf="!league">
-      <ion-label stacked>{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }} <span style="color: red;">*</span></ion-label>
+      <ion-label stacked>{{percentageNotification}}{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }} <span style="color: red;">*</span></ion-label>
       <ion-range min="0" max="100" [(ngModel)]="percentageNotification" color="primary">
           <ion-label range-left>0</ion-label>
           <ion-label range-right>100</ion-label>
