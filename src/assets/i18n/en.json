@@ -44,6 +44,10 @@
             "PRACTICE": "Practice",
             "EVENT": "Other Event"
         },
+        "SENDNOTI": {
+            "CREATED": "Send Notification when this event is created",
+            "UPDATED": "Send Notification when this event is updated"
+        },
         "NOTIFYSTARTEVENT": "Notify that the event starts",
         "MINUTESBEFORE": "minutes before",
         "ATTENDENCETRACKING": "Attendence Tracking",
