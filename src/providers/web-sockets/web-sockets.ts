@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
 import { MyApp } from '../../app/app.component';
+import { HelpersProvider } from '../helpers/helpers';
 
 declare var io: any;
 
@@ -125,9 +126,8 @@ export class WebSocketsProvider {
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      callback(event);
+      HelpersProvider.me.zone.run(function(){ callback(event); });
     });
-    console.log(WebSocketsProvider.conexion);
   }
 
   public disconnect() {

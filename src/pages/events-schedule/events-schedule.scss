@@ -125,6 +125,15 @@ page-events-schedule {
         flex-wrap: wrap;
         padding: 15px;
         border-radius: 10px !important;
+        .not-view{
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            margin-top: -5px;
+            margin-left: -4px;
+        }
         .dateTime {
             width: 20%;
             flex-basis: 20%;

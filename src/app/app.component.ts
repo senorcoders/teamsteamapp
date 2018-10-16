@@ -118,7 +118,6 @@ export class MyApp {
   ngAfterViewInit() {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
       try {
-        console.log("isDevMode", isDevMode());
         if (MyApp.User === null || MyApp.User === undefined) return;
         
         if (this.platform.is('cordova') &&

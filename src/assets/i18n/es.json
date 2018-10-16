@@ -444,5 +444,11 @@
         "THEM": "Ellos"
     },
     "ONLINE": "en línea",
-    "OFFLINE": "Desconectado"
+    "OFFLINE": "Desconectado",
+    "VIEWSEVENT": {
+        "TITLE": "Vistas del Evento",
+        "VIEWS": "Vistas",
+        "NOVIEWS": "No Vistas"
+    },
+    "USER": "Usuario"
 }

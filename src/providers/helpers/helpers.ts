@@ -42,8 +42,8 @@ export class HelpersProvider {
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public datePicker: DatePicker, private translate: TranslateService,
-    private zone: NgZone, private loading: LoadingController,
-    private modalCtrl: ModalController, public camera: Camera,
+    public zone: NgZone, private loading: LoadingController,
+    public modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
     public device: Device, public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
   ) {
@@ -566,7 +566,7 @@ export class HelpersProvider {
 
   public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
 
-    config.debug = true;
+    config.debug = false;
 
     this.backgroundGeolocation.configure(config)
       .subscribe(function (location: BackgroundGeolocationResponse) {

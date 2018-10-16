@@ -439,6 +439,12 @@
         "US": "US",
         "THEM": "Them"
     },
-    "ONLINE": "en línea",
-    "OFFLINE": "Desconectado"
+    "ONLINE": "online",
+    "OFFLINE": "offline",
+    "VIEWSEVENT": {
+        "TITLE": "Event Views",
+        "VIEWS": "Views",
+        "NOVIEWS": "No Views"
+    },
+    "USER": "User"
 }

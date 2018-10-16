@@ -20,6 +20,7 @@ import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
 import { ImagesEventPage } from '../images-event/images-event';
 import { MyTaskPage } from '../my-task/my-task';
 import { LiveScorePage } from '../live-score/live-score';
+import { ViewsEventPage } from '../views-event/views-event';
 
 declare var google: any;
 
@@ -162,6 +163,20 @@ export class EventPage {
       this.checkEnablePlayerClose();
       this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
 
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    //Para guardar la vista del usuario
+    try {
+      this.http.post("/viewsevent", {
+        event: this.event.id,
+        team: MyApp.User.team,
+        user: MyApp.User.id
+      }, { responseType: "text" }).subscribe((e) => {
+        console.log("view add ", e);
+      });
     }
     catch (e) {
       console.error(e);
@@ -758,6 +773,10 @@ export class EventPage {
 
   public toLiveScore() {
     this.navCtrl.push(LiveScorePage, { event: this.event });
+  }
+
+  public toViewsEvent() {
+    this.navCtrl.push(ViewsEventPage, { event: this.event });
   }
 
 }
