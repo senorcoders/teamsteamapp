@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, isDevMode } from '@angular/core';
 import { Platform, Nav, Events, MenuController, ViewController } from 'ionic-angular';
 
 import { Push, PushObject } from '@ionic-native/push';
@@ -85,7 +85,7 @@ export class MyApp {
     public zone: NgZone, public translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent,
     private INoti: INotificationProvider, public splash: SplashScreen,
-    private statusBar: StatusBar, private socket:WebSocketsProvider
+    private statusBar: StatusBar, private socket: WebSocketsProvider
   ) {
     platform.ready().then(this.initPlatform.bind(this));
   }
@@ -118,10 +118,13 @@ export class MyApp {
   ngAfterViewInit() {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
       try {
+        console.log("isDevMode", isDevMode());
         if (MyApp.User === null || MyApp.User === undefined) return;
-        console.log(data.component.hasOwnProperty("__name"));
-        if (this.platform.is('cordova') && data.component.hasOwnProperty("__name") === true) {
-          console.log(data.component.__name);
+        
+        if (this.platform.is('cordova') &&
+          data.component.hasOwnProperty("__name") === true &&
+          isDevMode() === false) {
+            
           let screen: any = {
             startTime: new Date().toISOString(),
             screen: data.component.__name,
@@ -208,7 +211,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity =  await this.helper.getWords("TEAM");
+        this.rolIdentity = await this.helper.getWords("TEAM");
         this.identity = team.name;
         if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
           await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
@@ -220,14 +223,14 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
+        this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
 
       //Para reconnectar con sesion en websocket
       await this.socket.reconnect();
 
-      this.zone.run(function(){
+      this.zone.run(function () {
         console.log("cambiooo", MyApp.User);
       });
 
@@ -273,7 +276,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity =  await this.helper.getWords("TEAM");
+        this.rolIdentity = await this.helper.getWords("TEAM");
         this.identity = team.name;
       } else {
         let league;
@@ -282,7 +285,7 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
+        this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
 
@@ -304,7 +307,7 @@ export class MyApp {
       this.helper.setLanguage('en')
     }
 
-    this.zone.run(function(){
+    this.zone.run(function () {
       console.log("user", MyApp.User);
     });
 
@@ -396,11 +399,11 @@ export class MyApp {
   public getName() {
     if (MyApp.User === null || MyApp.User === undefined) return '';
 
-    return MyApp.User.firstName+ " "+ MyApp.User.lastName;
+    return MyApp.User.firstName + " " + MyApp.User.lastName;
   }
 
-  public getRolIdentity(){
-    return  this.identity;
+  public getRolIdentity() {
+    return this.identity;
   }
 
   public newData(id): boolean {

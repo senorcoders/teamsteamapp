@@ -12,7 +12,7 @@ import { HelpersProvider } from '../helpers/helpers';
 @Injectable()
 export class interceptor implements HttpInterceptor {
 
-  public static url = 'https://api.lockerroomapp.com'; // 'http://192.168.1.8:8187';
+  public static url =  'https://api.lockerroomapp.com'; //  'https://cuddly-newt-97.localtunnel.me'; 
   
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
