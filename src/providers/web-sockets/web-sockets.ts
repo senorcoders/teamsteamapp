@@ -11,6 +11,21 @@ declare var io: any;
 export class WebSocketsProvider {
 
   public static conexion: any;
+  public static addFunction = function (onConnect: boolean, callback: Function, bind: any) {
+    WebSocketsProvider.functions.push({ onConnect, callback: callback.bind(this) });
+  };
+  public static removeFunction = function (callback: Function, bind: any) {
+    let index = WebSocketsProvider.functions.findIndex(it => {
+      return "" + it === "" + callback.bind(this);
+    });
+    if (index !== -1) {
+      if (WebSocketsProvider.functions.length === 1)
+        WebSocketsProvider.functions = [];
+      else
+        WebSocketsProvider.functions.splice(index, 1);
+    }
+  };
+  private static functions: { onConnect: boolean, callback: Function }[] = [];
 
   constructor(public http: HttpClient, private event: Events) {
 
@@ -44,6 +59,7 @@ export class WebSocketsProvider {
 
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
         WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+        this.asignFunctions();
       } else {
         if (WebSocketsProvider.conexion.isConnected() === false) {
           WebSocketsProvider.conexion.reconnect();
@@ -104,9 +120,11 @@ export class WebSocketsProvider {
 
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
         WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+        this.asignFunctions();
       } else {
         if (WebSocketsProvider.conexion.isConnected() === false) {
           WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+          this.asignFunctions();
         } else {
           WebSocketsProvider.conexion.disconnect();
           //Esperamos un 1500 milisegundos para reconectar
@@ -121,12 +139,27 @@ export class WebSocketsProvider {
     }
   }
 
+  private asignFunctions() {
+    WebSocketsProvider.conexion.on("connect", async function () {
+      let onconnects = WebSocketsProvider.functions.filter(it => it.onConnect);
+      for(let fn of onconnects){
+        await fn.callback();
+      }
+    });
+    WebSocketsProvider.conexion.on("disconnect", async function () {
+      let onconnects = WebSocketsProvider.functions.filter(it => !it.onConnect);
+      for(let fn of onconnects){
+        await fn.callback();
+      }
+    });
+  }
+
   public async subscribe(model: string, callback: Function) {
 
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      HelpersProvider.me.zone.run(function(){ callback(event); });
+      HelpersProvider.me.zone.run(function () { callback(event); });
     });
   }
 
