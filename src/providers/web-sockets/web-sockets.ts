@@ -11,12 +11,12 @@ declare var io: any;
 export class WebSocketsProvider {
 
   public static conexion: any;
-  public static addFunction = function (onConnect: boolean, callback: Function, bind: any) {
-    WebSocketsProvider.functions.push({ onConnect, callback: callback.bind(this) });
+  public static addFunction = function (onConnect: boolean, callback: Function, context: any) {
+    WebSocketsProvider.functions.push({ onConnect, callback: callback.bind(context) });
   };
-  public static removeFunction = function (callback: Function, bind: any) {
+  public static removeFunction = function (callback: Function, context: any) {
     let index = WebSocketsProvider.functions.findIndex(it => {
-      return "" + it === "" + callback.bind(this);
+      return "" + it === "" + callback.bind(context);
     });
     if (index !== -1) {
       if (WebSocketsProvider.functions.length === 1)
@@ -145,12 +145,14 @@ export class WebSocketsProvider {
       for(let fn of onconnects){
         await fn.callback();
       }
+      HelpersProvider.me.zone.run(function(){ console.log("connect with websocket"); });
     });
     WebSocketsProvider.conexion.on("disconnect", async function () {
       let onconnects = WebSocketsProvider.functions.filter(it => !it.onConnect);
       for(let fn of onconnects){
         await fn.callback();
       }
+      HelpersProvider.me.zone.run(function(){ console.log("disconnect with websocket"); });
     });
   }
 

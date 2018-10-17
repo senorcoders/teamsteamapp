@@ -169,8 +169,7 @@ export class MyApp {
   public async init() {
     try {
       MyApp.me = this;
-      this.serviceNewDatas();
-      setInterval(this.serviceNewDatas.bind(this), 6000);
+      WebSocketsProvider.addFunction(true, this.serviceNewDatas, this);
       await this.initAuth();
       await MyApp.initNotifcations();
     }
@@ -234,8 +233,6 @@ export class MyApp {
       });
 
     }.bind(this));
-
-    this.serviceNewDatas();
 
   }
 
@@ -330,6 +327,11 @@ export class MyApp {
     }
     this.checkNewDatas();
     this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+
+    //Ahora nos subscirbemos con websocket a los nuevo request players
+    this.socket.subscribe('request-added-' + MyApp.User.team, function(){
+
+    }.bind(this));
 
     if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
       if (MyApp.User.role.name === "FreeAgent")
