@@ -37,11 +37,11 @@ export class EventTeamJoinPage {
     this.loadImage = false;
   }
 
-  public async joinTeam() {
+  public async joinTeam(acept:boolean) {
     let load = HelpersProvider.me.getLoadingStandar();
     try {
       let user = { firstName: MyApp.User.firstName, lastName: MyApp.User.lastName, email: MyApp.User.email };
-      let request: any = { acept: false, idUser: "", user: user, role: "Player", freeAgent: true };
+      let request: any = { acept, idUser: "", user: user, role: "Player", freeAgent: true };
       let team: any = await this.http.get("/teams/" + this.team.id).toPromise();
       if (!team.hasOwnProperty("request")) {
         team.request = [];

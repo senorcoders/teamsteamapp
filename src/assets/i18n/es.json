@@ -450,5 +450,6 @@
         "VIEWS": "Vistas",
         "NOVIEWS": "No Vistas"
     },
-    "USER": "Usuario"
+    "USER": "Usuario",
+    "NOJOIN": "No unirme"
 }

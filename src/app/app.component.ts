@@ -72,12 +72,16 @@ export class MyApp {
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
     { title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
-    { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
+    { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "request-icon.svg", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "request-icon.svg", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "nearby-events-icon.svg", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "events-places.svg", role: "FreeAgent", watch: "", newData: "" },
   ];
-  public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
+  public newDataSchema = [
+    { id: 'request', role: 'Manager' }, 
+    { id: 'chat', role: '*' }, 
+    { id: 'requestPlayer', role: 'FreeAgent' }
+  ];
 
   constructor(public platform: Platform, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public pusherNotification: Push,
@@ -119,11 +123,11 @@ export class MyApp {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
       try {
         if (MyApp.User === null || MyApp.User === undefined) return;
-        
+
         if (this.platform.is('cordova') &&
           data.component.hasOwnProperty("__name") === true &&
           isDevMode() === false) {
-            
+
           let screen: any = {
             startTime: new Date().toISOString(),
             screen: data.component.__name,
@@ -315,7 +319,7 @@ export class MyApp {
     if (MyApp.User === null || MyApp.User === undefined)
       return;
 
-    //Para comprobar si hay nuevos request
+    //#region Para comprobar si hay nuevos request
     //Para los players
     let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
     if (requestsPlayer.length > 0) {
@@ -329,15 +333,39 @@ export class MyApp {
     this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
 
     //Ahora nos subscirbemos con websocket a los nuevo request players
-    this.socket.subscribe('request-added-' + MyApp.User.team, function(){
-
+    //Para cuando se agrega uno nuevo
+    this.socket.subscribe('request-added-' + MyApp.User.id, async function () {
+      let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
+      if (requestsPlayer.length > 0) {
+        MyApp.newDatas["requestPlayer"] = true;
+        MyApp.counts["requestPlayer"] = requestsPlayer.length;
+      } else {
+        MyApp.newDatas["requestPlayer"] = false;
+        MyApp.counts["requestPlayer"] = 0;
+      }
+      this.checkNewDatas();
+      this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
     }.bind(this));
+    //Para cuando se actualiza un request, lo eliminamos
+    this.socket.subscribe('request-updated-' + MyApp.User.id, async function () {
+      let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
+      if (requestsPlayer.length > 0) {
+        MyApp.newDatas["requestPlayer"] = true;
+        MyApp.counts["requestPlayer"] = requestsPlayer.length;
+      } else {
+        MyApp.newDatas["requestPlayer"] = false;
+        MyApp.counts["requestPlayer"] = 0;
+      }
+      this.checkNewDatas();
+      this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    }.bind(this));
+    //#endregion
 
+    //#region Para saber si hay request para league
     if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
       if (MyApp.User.role.name === "FreeAgent")
         return;
 
-      //Para saber si hay request para league
       if (MyApp.User.role.name === "Manager") {
 
         let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
@@ -352,9 +380,10 @@ export class MyApp {
         this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
       }
     }
+    //#endregion
 
+    //#region Para saber si hay nuevos request para unirse a equipos
     if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
-      //Para saber si hay nuevos request para unirse a equipos
       this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
       //console.log(this.team);
       if (!this.team.hasOwnProperty("request")) {
@@ -372,6 +401,7 @@ export class MyApp {
 
     this.checkNewDatas();
     this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    //#endregion
   }
 
   private checkNewDatas() {

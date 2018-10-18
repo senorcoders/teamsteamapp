@@ -446,5 +446,6 @@
         "VIEWS": "Views",
         "NOVIEWS": "No Views"
     },
-    "USER": "User"
+    "USER": "User",
+    "NOJOIN": "Do not join"
 }
