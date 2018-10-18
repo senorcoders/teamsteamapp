@@ -377,23 +377,33 @@ export class MyApp {
 
     //#region Para saber si hay nuevos request para unirse a equipos
     if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
-      this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
-      //console.log(this.team);
-      if (!this.team.hasOwnProperty("request")) {
-        this.team.request = [];
-      }
+      let requestTeam = async function () {
+        this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+        if (!this.team.hasOwnProperty("request")) {
+          this.team.request = [];
+        }
 
-      if (this.team.request.length !== 0) {
-        MyApp.newDatas["request"] = true;
-        MyApp.counts["request"] = this.team.request.length;
-      } else {
-        MyApp.newDatas["request"] = false;
-        MyApp.counts["request"] = 0;
-      }
+        if (this.team.request.length !== 0) {
+          MyApp.newDatas["request"] = true;
+          MyApp.counts["request"] = this.team.request.length;
+        } else {
+          MyApp.newDatas["request"] = false;
+          MyApp.counts["request"] = 0;
+        }
+
+        this.checkNewDatas();
+        this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+      }.bind(this);
+
+      await requestTeam();
+      //Para cuando se agrega uno nuevo
+      this.socket.subscribe('requestTeam-added-' + MyApp.User.team, requestTeam.bind(this));
+
+      //Para cuando se actualiza un request, lo eliminamos
+      this.socket.subscribe('requestTeam-updated-' + MyApp.User.team, requestTeam.bind(this));
     }
 
-    this.checkNewDatas();
-    this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+
     //#endregion
   }
 

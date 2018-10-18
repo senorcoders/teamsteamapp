@@ -27,8 +27,8 @@ export class ViewRequestsPage {
 
   async ionViewDidLoad(){
     let load = HelpersProvider.me.getLoadingStandar();
-    let team:any = await this.http.get("/team/profile/"+ MyApp.User.team).toPromise();
-    //console.log(this.team);
+    let team:any = await this.http.get("/team/"+ MyApp.User.team).toPromise();
+    console.log(team);
     if( !team.hasOwnProperty("request") ){
       team.request = [];
     }
@@ -49,6 +49,14 @@ export class ViewRequestsPage {
     }.bind(this)) );
 
     load.dismissAll();
+  }
+
+  public validResponse(request):boolean{
+    return request.acept === false && request.dened == false;
+  }
+
+  public errorLoadImage(e) {
+    e.target.src = "./assets/imgs/user-menu.png"
   }
 
   public viewRequest(request){
