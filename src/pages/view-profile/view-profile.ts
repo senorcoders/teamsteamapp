@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, LoadingController, AlertController, Select } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, Select } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HelpersProvider } from '../../providers/helpers/helpers';
@@ -48,8 +48,8 @@ export class ViewProfilePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
-    public auth: AuthServiceProvider, private loadingCtrl: LoadingController,
-    public alertCtrl: AlertController, public storage: Storage
+    public auth: AuthServiceProvider, public alertCtrl: AlertController, 
+    public storage: Storage
   ) {
 
   }

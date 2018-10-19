@@ -1,10 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
 import * as moment from 'moment';
-import { DatePicker } from '@ionic-native/date-picker';
 import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
-import { MyTaskPage } from '../my-task/my-task';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { SelectEventPage } from '../select-event/select-event';
 
@@ -33,9 +31,8 @@ export class NewTaskPage {
   public events = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    private datePicker: DatePicker, private alertCtrl: AlertController,
-    public http: HttpClient, private helper: HelpersProvider,
-    public modalCtrl: ModalController
+    private alertCtrl: AlertController, public http: HttpClient, 
+    private helper: HelpersProvider, public modalCtrl: ModalController
   ) {
     this.date = moment().format("ddd DD MMM YYYY");
     this.time = moment().format("HH:mm");

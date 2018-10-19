@@ -1,8 +1,6 @@
 import { Component, ViewChild, NgZone } from '@angular/core';
 import { ViewController, NavParams, Slides } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { MyApp } from '../../app/app.component';
-import * as moment from 'moment';
 import { AlertController } from 'ionic-angular';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
@@ -100,23 +98,23 @@ export class SlideAssistencesEventComponent {
     console.log(this.slides, this);
   }
 
-  private factorize() {
-    this.players = this.players.map(function (it) {
+  // private factorize() {
+  //   this.players = this.players.map(function (it) {
 
-      if (this.assistence.hasOwnProperty("id")) {
-        let assistence = this.assistence.players.find(function (id) { return id.id === it.id; });
-        if (assistence !== undefined) {
-          it.status = assistence.status;
-          it.late = assistence.late;
-        }
-      } else {
-        it.status = "";
-        it.late = false;
-      }
+  //     if (this.assistence.hasOwnProperty("id")) {
+  //       let assistence = this.assistence.players.find(function (id) { return id.id === it.id; });
+  //       if (assistence !== undefined) {
+  //         it.status = assistence.status;
+  //         it.late = assistence.late;
+  //       }
+  //     } else {
+  //       it.status = "";
+  //       it.late = false;
+  //     }
 
-      return it;
-    }.bind(this));
-  }
+  //     return it;
+  //   }.bind(this));
+  // }
 
   public async byPass() { }
 

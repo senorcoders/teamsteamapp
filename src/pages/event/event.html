@@ -105,6 +105,9 @@
     <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toAssistence()" [hidden]="league">
       {{'ASSISTENCEEVENT.SINGULAR' | translate}}
     </ion-item>
+    <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toViewsEvent()" *ngIf="league===false&&user.role.name==='Manager'">
+      {{'VIEWSEVENT.TITLE' | translate}}
+    </ion-item>
     <ion-item class="assistence" style="border-top: 1px solid white;" (click)="toLiveScore()" *ngIf="liveScore">
       {{'LIVESCORE.TITLE' | translate}}
     </ion-item>

@@ -23,19 +23,19 @@
 </ion-header>
 
 <div class="overlay shown" [hidden]="firstTime" (click)="hideOverlay()">
-    <div class="header-tutorial">
-      <img src="./assets/imgs/up-arrow.png" alt="">
-      <p>Click the menu button to access more options like inviting athletes to your roster</p>
-    </div>
-    <br><br><br>
-    <div class="bottom-tutorial">
-      <h2>Create a new event below</h2>
-      <h2>Everyone on your Roster will be Notified with new &amp; updated Events</h2>
-    </div>
-    <div class="img-down" text-right>
-      <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
-    </div>
+  <div class="header-tutorial">
+    <img src="./assets/imgs/up-arrow.png" alt="">
+    <p>Click the menu button to access more options like inviting athletes to your roster</p>
   </div>
+  <br><br><br>
+  <div class="bottom-tutorial">
+    <h2>Create a new event below</h2>
+    <h2>Everyone on your Roster will be Notified with new &amp; updated Events</h2>
+  </div>
+  <div class="img-down" text-right>
+    <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
+  </div>
+</div>
 
 
 <ion-content>
@@ -56,6 +56,7 @@
 
 
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
+
     <!-- esto es para mostrar un color en la esquina derecha se muestra segun su tipo -->
     <div class="color-right"></div>
     <!-- este es para events type -->
@@ -65,6 +66,9 @@
       <h2>{{e.name}}</h2>
 
       <div class="dateTimeEvent" (click)="goEvent(e)">
+        <!-- para mostrar el punto rojo cuando un evento no ha sido visto -->
+        <div class="not-view" *ngIf="inViews(e)"></div>
+
         <h3 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[0]}}</h3>
         <h4 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[1]}}</h4>
         <h4 class="date-event daily" [hidden]="!e.repeatsDaily">{{"DAILY" | translate}}</h4>
@@ -78,6 +82,9 @@
 
     <!-- este es para events type practice and game -->
     <div class="dateTime" [ngClass]="e.loadImage===true?'is-image':'not-image'" (click)="goEvent(e)">
+      <!-- para mostrar el punto rojo cuando un evento no ha sido visto -->
+      <div class="not-view" *ngIf="inViews(e)"></div>
+      
       <h3 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[0]}}</h3>
       <h4 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[1]}}</h4>
       <h4 class="date-event daily" [hidden]="!e.repeatsDaily">{{"DAILY" | translate}}</h4>
@@ -105,7 +112,8 @@
         </button>
       </ion-col>
       <ion-col col-2>
-        <button ion-button (click)="asingResponse(e, 'maybe')" [ngClass]="{'select': e.likeDown }" icon-left clear small>
+        <button ion-button (click)="asingResponse(e, 'maybe')" [ngClass]="{'select': e.likeDown }" icon-left clear
+          small>
           <!-- <ion-icon class="ball cero" [hidden]="e.countMaybe!==0"></ion-icon> -->
           <ion-icon class="ball talves"></ion-icon>
           <div class="text-inner-button text-event">{{e.countMaybe}}</div>

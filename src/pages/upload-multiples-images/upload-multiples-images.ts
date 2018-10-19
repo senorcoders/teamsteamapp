@@ -2,7 +2,6 @@ import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { LibraryItem } from '@ionic-native/photo-library';
 import { File as DFile } from '@ionic-native/file';
-import { DomSanitizer } from '@angular/platform-browser';
 import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../../providers/helpers/helpers';

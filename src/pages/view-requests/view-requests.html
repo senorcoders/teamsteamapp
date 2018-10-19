@@ -16,9 +16,9 @@
 
   <ion-list>
 
-    <ion-item *ngFor="let re of request;" (click)="viewRequest(re)">
+    <ion-item *ngFor="let re of request;" [hidden]="!validResponse(re)" (click)="viewRequest(re)">
       <ion-avatar item-start [hidden]="!re.image">
-        <img [src]="re.imageSrc" (load)="loadImage(re)">
+        <img [src]="re.imageSrc" (error)="errorLoadImage($event)">
       </ion-avatar>
       {{ re.user.fullName }}
     </ion-item>

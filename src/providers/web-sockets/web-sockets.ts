@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Events } from 'ionic-angular';
 import { interceptor } from '../auth-service/interceptor';
+import { MyApp } from '../../app/app.component';
+import { HelpersProvider } from '../helpers/helpers';
 
 declare var io: any;
 
@@ -9,6 +11,21 @@ declare var io: any;
 export class WebSocketsProvider {
 
   public static conexion: any;
+  public static addFunction = function (onConnect: boolean, callback: Function, context: any) {
+    WebSocketsProvider.functions.push({ onConnect, callback: callback.bind(context) });
+  };
+  public static removeFunction = function (callback: Function, context: any) {
+    let index = WebSocketsProvider.functions.findIndex(it => {
+      return "" + it === "" + callback.bind(context);
+    });
+    if (index !== -1) {
+      if (WebSocketsProvider.functions.length === 1)
+        WebSocketsProvider.functions = [];
+      else
+        WebSocketsProvider.functions.splice(index, 1);
+    }
+  };
+  private static functions: { onConnect: boolean, callback: Function }[] = [];
 
   constructor(public http: HttpClient, private event: Events) {
 
@@ -34,10 +51,17 @@ export class WebSocketsProvider {
         console.log("script loaded");
       }
 
+      //Asignamos los query para iniciar la sesion
+      if (MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token'))
+        io.sails.query = `user=${MyApp.User.id}&token=${MyApp.User.token}`;
+      else
+        return;
+
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
         WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
-      }else{
-        if(WebSocketsProvider.conexion.isConnected() === false){
+        this.asignFunctions();
+      } else {
+        if (WebSocketsProvider.conexion.isConnected() === false) {
           WebSocketsProvider.conexion.reconnect();
         }
       }
@@ -78,14 +102,80 @@ export class WebSocketsProvider {
 
   }
 
+  public async reconnect() {
+    try {
+      console.log("iniciando conexion");
+      if ((window as any).io === undefined) {
+        await this.initConnetionSockets();
+        console.log("script type");
+        await this.loopCheckConnect();
+        console.log("script loaded");
+      }
+
+      //Asignamos los query para iniciar la sesion
+      if (MyApp.hasOwnProperty('User') && MyApp.User.hasOwnProperty('token'))
+        io.sails.query = `user=${MyApp.User.id}&token=${MyApp.User.token}`;
+      else
+        return;
+
+      if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
+        WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+        this.asignFunctions();
+      } else {
+        if (WebSocketsProvider.conexion.isConnected() === false) {
+          WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+          this.asignFunctions();
+        } else {
+          WebSocketsProvider.conexion.disconnect();
+          //Esperamos un 1500 milisegundos para reconectar
+          await new Promise((resolve) => setTimeout(resolve, 15000));
+          this.reconnect();
+        }
+      }
+
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  private asignFunctions() {
+    WebSocketsProvider.conexion.on("connect", async function () {
+      let onconnects = WebSocketsProvider.functions.filter(it => it.onConnect);
+      for(let fn of onconnects){
+        await fn.callback();
+      }
+      HelpersProvider.me.zone.run(function(){ console.log("connect with websocket"); });
+    });
+    WebSocketsProvider.conexion.on("disconnect", async function () {
+      let onconnects = WebSocketsProvider.functions.filter(it => !it.onConnect);
+      for(let fn of onconnects){
+        await fn.callback();
+      }
+      HelpersProvider.me.zone.run(function(){ console.log("disconnect with websocket"); });
+    });
+  }
+
   public async subscribe(model: string, callback: Function) {
 
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      callback(event);
+      HelpersProvider.me.zone.run(function () { callback(event); });
     });
-    console.log(WebSocketsProvider.conexion);
+  }
+
+  public disconnect() {
+    try {
+      if (WebSocketsProvider.conexion !== null || WebSocketsProvider.conexion !== undefined) {
+        if (WebSocketsProvider.conexion.isConnected() === true) {
+          WebSocketsProvider.conexion.disconnect();
+        }
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
   public subscribeWithPush(model: string, add?: Function, update?: Function, remove?: Function) {

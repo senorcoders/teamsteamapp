@@ -68,13 +68,13 @@
     </ion-item>
 
     <ion-item>
-        <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
-          translate}}</ion-label>
-        <ion-range min="0" max="60" [(ngModel)]="timeNoti" color="primary">
-          <ion-label range-left>0</ion-label>
-          <ion-label range-right>60</ion-label>
-        </ion-range>
-      </ion-item>
+      <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
+        translate}}</ion-label>
+      <ion-range min="0" max="60" [(ngModel)]="timeNoti" color="primary">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>60</ion-label>
+      </ion-range>
+    </ion-item>
 
     <ion-item>
       <ion-label floating>{{'DESCRIPTION' | translate }}</ion-label>
@@ -82,8 +82,16 @@
     </ion-item>
 
     <ion-item *ngIf="!league">
-      <ion-label floating>{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }}</ion-label>
-      <ion-input type="number" [(ngModel)]="percentageNotification"> </ion-input>
+      <ion-label stacked>{{percentageNotification}}{{'NEWEVENT.PORCENTAGENOTIFICATION' | translate }}</ion-label>
+      <ion-range min="0" max="100" [(ngModel)]="percentageNotification" color="primary">
+        <ion-label range-left>0</ion-label>
+        <ion-label range-right>100</ion-label>
+      </ion-range>
+    </ion-item>
+
+    <ion-item *ngIf="!league">
+      <ion-label>{{'NEWEVENT.SENDNOTI.UPDATED' | translate}}?</ion-label>
+      <ion-toggle [(ngModel)]="notificationInUpdated"></ion-toggle>
     </ion-item>
 
     <ion-item *ngIf="!league">
@@ -98,7 +106,7 @@
     </ion-item>
 
     <ion-item [hidden]="!searchPlayer">
-      <button ion-button (click)="addPlayerSearch()" >{{"ROSTER.CREATEPLAYER" | translate}}</button>
+      <button ion-button (click)="addPlayerSearch()">{{"ROSTER.CREATEPLAYER" | translate}}</button>
     </ion-item>
 
   </ion-list>

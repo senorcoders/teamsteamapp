@@ -1,11 +1,10 @@
 import { Component, ViewChild, ChangeDetectorRef, NgZone } from '@angular/core';
 import { interceptor } from '../../providers/auth-service/interceptor';
 import { HttpClient } from '@angular/common/http';
-import { NavParams, TextInput, Content, Events, ViewController, ModalController, IonicPage } from 'ionic-angular';
+import { NavParams, TextInput, Content, ViewController, ModalController, IonicPage } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { ToChatToPerfilPlayerComponent } from '../../components/to-chat-to-perfil-player/to-chat-to-perfil-player';
-import { NgControl } from '@angular/forms';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 

@@ -55,6 +55,7 @@ export class NewEventPage {
   public description: string = "";
   public address = "";
   public dateEnd = "";
+  public notificationInCreate = true;
 
   //for max date and min date asing in date time picker
   public minDate: string;
@@ -339,6 +340,7 @@ export class NewEventPage {
     } else {
       event.team = this.team;
       event.percentageNotification = this.percentageNotification;
+      event.notificationInCreate = this.notificationInCreate;
     }
     if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;

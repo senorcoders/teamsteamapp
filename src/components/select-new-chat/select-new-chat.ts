@@ -36,7 +36,7 @@ export class SelectNewChatComponent {
     let sear = this.search;
 
     this.peoples = await Promise.all(this.peoples.map(async (item)=>{
-      let usn = item.user.username.toLowerCase();
+      let usn = item.firstName.toLowerCase()+ " "+ item.lastName.toLowerCase();
       if( sear === '' ){
         item.show = true;
       }else if( usn.includes(sear.toLowerCase()) ){

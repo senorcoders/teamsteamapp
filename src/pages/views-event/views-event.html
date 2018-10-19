@@ -1,0 +1,37 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"VIEWSEVENT.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+  <ion-toolbar>
+    <ion-segment [(ngModel)]="selectFilter">
+      <ion-segment-button value="views">
+        {{"VIEWSEVENT.VIEWS" | translate}} {{countYes}}
+      </ion-segment-button>
+      <ion-segment-button value="noviews">
+        {{"VIEWSEVENT.NOVIEWS" | translate}} {{countMaybe}}
+      </ion-segment-button>
+    </ion-segment>
+  </ion-toolbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list *ngIf="selectFilter==='views'">
+    <ion-item>{{"USER" | translate}}
+      <span item-end>#</span>
+    </ion-item>
+    <ion-item *ngFor="let view of views" (click)="presentTo(view.user)" >{{view.user.firstName+ " "+ view.user.lastName}}
+      <span item-end>{{view.numViews}}</span>
+    </ion-item>
+  </ion-list>
+
+  <ion-list *ngIf="selectFilter==='noviews'">
+    <ion-item *ngFor="let member of members" (click)="presentTo(member.user)" [hidden]="inViews(member.user)">{{member.user.firstName+ " "+
+      member.user.lastName}}</ion-item>
+  </ion-list>
+
+</ion-content>

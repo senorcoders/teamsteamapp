@@ -39,8 +39,6 @@ export class ListChatsPage {
     
     try{
       let users:any = await this.http.get("/chat-list/"+ MyApp.User.id+ "/"+ MyApp.User.team).toPromise();
-      
-      let ramdon = new Date().getTime();
       this.listUsers = users.map(function(item){
         
         item.loadImage = false;

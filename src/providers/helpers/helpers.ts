@@ -4,7 +4,7 @@ import { Platform, Loading, LoadingController, ModalController, AlertController,
 import { interceptor } from '../auth-service/interceptor';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { CameraPage } from '../../pages/camera/camera';
-import { DatePicker, DatePickerOptions } from '@ionic-native/date-picker';
+import { DatePicker } from '@ionic-native/date-picker';
 import { TranslateService } from '@ngx-translate/core';
 import { DateTimePickerComponent } from '../../components/date-time-picker/date-time-picker';
 import { Camera } from '@ionic-native/camera';
@@ -42,8 +42,8 @@ export class HelpersProvider {
 
   constructor(public http: HttpClient, public diagnostic: Diagnostic,
     public app: App, public datePicker: DatePicker, private translate: TranslateService,
-    private zone: NgZone, private loading: LoadingController,
-    private modalCtrl: ModalController, public camera: Camera,
+    public zone: NgZone, private loading: LoadingController,
+    public modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
     public device: Device, public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
   ) {
@@ -132,7 +132,7 @@ export class HelpersProvider {
         } else {
           await this.reloadGoogleplaces(true);
         }
-      }.bind(this), 500);
+      }.bind(this), 1000);
 
     }
     catch (e) {
@@ -517,7 +517,7 @@ export class HelpersProvider {
         return;
       }
 
-      await this.setGeofencesForIOS();
+      await this.setGeofencesAny();
 
     }
     catch (e) {
@@ -526,8 +526,8 @@ export class HelpersProvider {
   }
 
 
-  //#region geofences for ios
-  private async setGeofencesForIOS() {
+  //#region geofences
+  private async setGeofencesAny() {
     try {
       if (await this.backgroundGeolocation.isLocationEnabled() === 0) {
         let required = await this.getWords("REQUIRED"),
@@ -536,7 +536,7 @@ export class HelpersProvider {
           title: required, message: enableSetting,
           buttons: [{
             text: "Ok", handler: function () {
-              setTimeout(this.setGeofencesForIOS.bind(this), (30 * 1000));
+              setTimeout(this.setGeofencesAny.bind(this), (30 * 1000));
               this.backgroundGeolocation.showLocationSettings();
             }.bind(this)
           }]
@@ -547,8 +547,10 @@ export class HelpersProvider {
         desiredAccuracy: 10,
         stationaryRadius: 20,
         distanceFilter: 20,
-        stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+        stopOnTerminate: false,
+        interval: 4000,
         url: interceptor.transformUrl("/geofence"),
+        syncUrl: interceptor.transformUrl("/geofence-fail"),
         httpHeaders: {
           "id": MyApp.User.id + "." + MyApp.User.team
         }
@@ -574,68 +576,69 @@ export class HelpersProvider {
         // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
         // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
         // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-        this.backgroundGeolocation.finish(); // FOR IOS ONLY
+        // this.backgroundGeolocation.finish(); // FOR IOS ONLY
 
       }.bind(this));
 
     // start recording location
     this.backgroundGeolocation.start();
+    console.log("Background", this.backgroundGeolocation);
   }
 
-  public async executeGeofencesIOS(myPosition) {
-    let events: Array<any> = await this.storage.get("geofences");
-    if (Object.prototype.toString.call(events) !== '[object Array]') {
-      return;
-    }
+  // public async executeGeofencesIOS(myPosition) {
+  //   let events: Array<any> = await this.storage.get("geofences");
+  //   if (Object.prototype.toString.call(events) !== '[object Array]') {
+  //     return;
+  //   }
 
-    let rad: { radius: number } = await this.storage.get("radius");
-    for (let event of events) {
-      let distance = this.getDistanceBetweenPoints(event.origin, myPosition);
-      console.log(distance);
-      if (distance <= rad.radius) {
-        let headers = new HttpHeaders();
-        headers = headers.append("dateTime", moment().toISOString());
-        await this.http.post("/geofence", [event], { headers, responseType: "text" }).toPromise();
-      }
-    }
+  //   let rad: { radius: number } = await this.storage.get("radius");
+  //   for (let event of events) {
+  //     let distance = this.getDistanceBetweenPoints(event.origin, myPosition);
+  //     console.log(distance);
+  //     if (distance <= rad.radius) {
+  //       let headers = new HttpHeaders();
+  //       headers = headers.append("dateTime", moment().toISOString());
+  //       await this.http.post("/geofence", [event], { headers, responseType: "text" }).toPromise();
+  //     }
+  //   }
 
-  }
+  // }
 
-  private getDistanceBetweenPoints(coord1, coord2) {
+  // private getDistanceBetweenPoints(coord1, coord2) {
 
-    let earthRadius = {
-      miles: 3958.8,
-      km: 6371,
-      meters: 6371071.03
-    };
+  //   let earthRadius = {
+  //     miles: 3958.8,
+  //     km: 6371,
+  //     meters: 6371071.03
+  //   };
 
-    let R = earthRadius['meters'];
-    let lat1 = coord1.lat;
-    let lon1 = coord1.lng;
-    let lat2 = coord2.lat;
-    let lon2 = coord2.lng;
+  //   let R = earthRadius['meters'];
+  //   let lat1 = coord1.lat;
+  //   let lon1 = coord1.lng;
+  //   let lat2 = coord2.lat;
+  //   let lon2 = coord2.lng;
 
-    let dLat = this.toRad((lat2 - lat1));
-    let dLon = this.toRad((lon2 - lon1));
-    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-      Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
-      Math.sin(dLon / 2) *
-      Math.sin(dLon / 2);
-    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-    let d = R * c;
+  //   let dLat = this.toRad((lat2 - lat1));
+  //   let dLon = this.toRad((lon2 - lon1));
+  //   let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
+  //     Math.cos(this.toRad(lat1)) * Math.cos(this.toRad(lat2)) *
+  //     Math.sin(dLon / 2) *
+  //     Math.sin(dLon / 2);
+  //   let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+  //   let d = R * c;
 
-    if (isNaN(d)) {
-      return 0
-    } else {
-      return Number(d.toFixed(2));
+  //   if (isNaN(d)) {
+  //     return 0
+  //   } else {
+  //     return Number(d.toFixed(2));
 
-    }
+  //   }
 
-  }
+  // }
 
-  private toRad(x) {
-    return x * Math.PI / 180;
-  }
+  // private toRad(x) {
+  //   return x * Math.PI / 180;
+  // }
 
   public async stopGeofences() {
     await this.backgroundGeolocation.stop();

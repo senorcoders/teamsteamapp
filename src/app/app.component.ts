@@ -1,4 +1,4 @@
-import { Component, ViewChild, NgZone } from '@angular/core';
+import { Component, ViewChild, NgZone, isDevMode } from '@angular/core';
 import { Platform, Nav, Events, MenuController, ViewController } from 'ionic-angular';
 
 import { Push, PushObject } from '@ionic-native/push';
@@ -30,6 +30,7 @@ import { PhotosPage } from '../pages/photos/photos';
 
 import * as moment from 'moment';
 import { NotificationPage } from '../pages/notification/notification';
+import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 
 @Component({
   templateUrl: 'app.html'
@@ -71,12 +72,17 @@ export class MyApp {
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
     { title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },
     { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
-    { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "baseball", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
+    { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "request-icon.svg", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
     { title: "REQUESTLEAGUE.NAME", component: RequestsLeaguePage, icon: "request-icon.svg", role: "Manager", watch: "requestLeague", newData: "requestLeague" },
     { title: "AGENTFREE.TITLE", component: AgentFreePage, icon: "nearby-events-icon.svg", role: "FreeAgent", watch: "", newData: "" },
     { title: "PLACES.TITLE", component: PlacesPlayerFreePage, icon: "events-places.svg", role: "FreeAgent", watch: "", newData: "" },
   ];
-  public newDataSchema = [{ id: 'request', role: 'Manager' }, { id: 'chat', role: '*' }];
+  public newDataSchema = [
+    { id: 'request', role: 'Manager' },
+    { id: 'chat', role: '*' },
+    { id: 'requestPlayer', role: 'FreeAgent' },
+    { id: "requestLeague", role: "Manager" }
+  ];
 
   constructor(public platform: Platform, public auth: AuthServiceProvider,
     public menuCtrl: MenuController, public pusherNotification: Push,
@@ -84,7 +90,7 @@ export class MyApp {
     public zone: NgZone, public translate: TranslateService,
     private helper: HelpersProvider, public webIntent: WebIntent,
     private INoti: INotificationProvider, public splash: SplashScreen,
-    private statusBar: StatusBar
+    private statusBar: StatusBar, private socket: WebSocketsProvider
   ) {
     platform.ready().then(this.initPlatform.bind(this));
   }
@@ -118,9 +124,11 @@ export class MyApp {
     this.nav.viewDidEnter.subscribe((data: ViewController) => {
       try {
         if (MyApp.User === null || MyApp.User === undefined) return;
-        console.log(data.component.hasOwnProperty("__name"));
-        if (this.platform.is('cordova') && data.component.hasOwnProperty("__name") === true) {
-          console.log(data.component.__name);
+
+        if (this.platform.is('cordova') &&
+          data.component.hasOwnProperty("__name") === true &&
+          isDevMode() === false) {
+
           let screen: any = {
             startTime: new Date().toISOString(),
             screen: data.component.__name,
@@ -166,8 +174,7 @@ export class MyApp {
   public async init() {
     try {
       MyApp.me = this;
-      this.serviceNewDatas();
-      setInterval(this.serviceNewDatas.bind(this), 6000);
+      WebSocketsProvider.addFunction(true, this.serviceNewDatas, this);
       await this.initAuth();
       await MyApp.initNotifcations();
     }
@@ -183,6 +190,8 @@ export class MyApp {
     if (authenticated === true) {
 
       await this.proccessViews();
+      //Para iniciar sesion en websocket
+      await this.socket.initConexion();
     } else {
       this.nav.root = LoginPage;
     }
@@ -205,7 +214,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity =  await this.helper.getWords("TEAM");
+        this.rolIdentity = await this.helper.getWords("TEAM");
         this.identity = team.name;
         if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
           await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
@@ -217,17 +226,18 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
+        this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
 
-      this.zone.run(function(){
+      //Para reconnectar con sesion en websocket
+      await this.socket.reconnect();
+
+      this.zone.run(function () {
         console.log("cambiooo", MyApp.User);
       });
 
     }.bind(this));
-
-    this.serviceNewDatas();
 
   }
 
@@ -267,7 +277,7 @@ export class MyApp {
 
         //Para actualizar el nombre del equipo en menu slide
         let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity =  await this.helper.getWords("TEAM");
+        this.rolIdentity = await this.helper.getWords("TEAM");
         this.identity = team.name;
       } else {
         let league;
@@ -276,7 +286,7 @@ export class MyApp {
         } else {
           league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
         }
-        this.rolIdentity =  await this.helper.getWords("LEAGUE.NAME");
+        this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
         this.identity = league.name;
       }
 
@@ -298,7 +308,7 @@ export class MyApp {
       this.helper.setLanguage('en')
     }
 
-    this.zone.run(function(){
+    this.zone.run(function () {
       console.log("user", MyApp.User);
     });
 
@@ -310,58 +320,91 @@ export class MyApp {
     if (MyApp.User === null || MyApp.User === undefined)
       return;
 
-    //Para comprobar si hay nuevos request
+    //#region Para comprobar si hay nuevos request
     //Para los players
-    let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
-    if (requestsPlayer.length > 0) {
-      MyApp.newDatas["requestPlayer"] = true;
-      MyApp.counts["requestPlayer"] = requestsPlayer.length;
-    } else {
-      MyApp.newDatas["requestPlayer"] = false;
-      MyApp.counts["requestPlayer"] = 0;
-    }
-    this.checkNewDatas();
-    this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    let requestPlayer = async function () {
+      let requestsPlayer: any = await this.http.get("/playerfree/request/" + MyApp.User.id).toPromise();
+      if (requestsPlayer.length > 0) {
+        MyApp.newDatas["requestPlayer"] = true;
+        MyApp.counts["requestPlayer"] = requestsPlayer.length;
+      } else {
+        MyApp.newDatas["requestPlayer"] = false;
+        MyApp.counts["requestPlayer"] = 0;
+      }
+      this.checkNewDatas();
+      this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    }.bind(this);
 
+    await requestPlayer();
+
+    //Ahora nos subscirbemos con websocket a los nuevo request players
+    //Para cuando se agrega uno nuevo
+    this.socket.subscribe('request-added-' + MyApp.User.id, requestPlayer.bind(this));
+
+    //Para cuando se actualiza un request, lo eliminamos
+    this.socket.subscribe('request-updated-' + MyApp.User.id, requestPlayer.bind(this));
+    //#endregion
+
+    //#region Para saber si hay request para league
     if (MyApp.User.role !== undefined && MyApp.User.role !== null) {
       if (MyApp.User.role.name === "FreeAgent")
         return;
 
-      //Para saber si hay request para league
       if (MyApp.User.role.name === "Manager") {
 
-        let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
-        if (requestsLeague.length > 0) {
-          MyApp.newDatas["requestLeague"] = true;
-          MyApp.counts["requestLeague"] = requestsLeague.length;
-        } else {
-          MyApp.newDatas["requestLeague"] = false;
-          MyApp.counts["requestLeague"] = 0;
+        let requestLeague = async function () {
+          let requestsLeague: any[] = await this.http.get(`/teamleague?where={"teamPre":"${MyApp.User.team}"}`).toPromise() as any;
+          if (requestsLeague.length > 0) {
+            MyApp.newDatas["requestLeague"] = true;
+            MyApp.counts["requestLeague"] = requestsLeague.length;
+          } else {
+            MyApp.newDatas["requestLeague"] = false;
+            MyApp.counts["requestLeague"] = 0;
+          }
+          this.checkNewDatas();
+          this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+        }.bind(this);
+        await requestLeague();
+
+        //Para cuando se agrega uno nuevo
+        this.socket.subscribe('requestLeague-added-' + MyApp.User.team, requestLeague.bind(this));
+
+        //Para cuando se actualiza un request, lo eliminamos
+        this.socket.subscribe('requestLeague-updated-' + MyApp.User.team, requestLeague.bind(this));
+      }
+    }
+    //#endregion
+
+    //#region Para saber si hay nuevos request para unirse a equipos
+    if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+      let requestTeam = async function () {
+        this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
+        if (!this.team.hasOwnProperty("request")) {
+          this.team.request = [];
         }
+
+        if (this.team.request.length !== 0) {
+          MyApp.newDatas["request"] = true;
+          MyApp.counts["request"] = this.team.request.length;
+        } else {
+          MyApp.newDatas["request"] = false;
+          MyApp.counts["request"] = 0;
+        }
+
         this.checkNewDatas();
         this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
-      }
+      }.bind(this);
+
+      await requestTeam();
+      //Para cuando se agrega uno nuevo
+      this.socket.subscribe('requestTeam-added-' + MyApp.User.team, requestTeam.bind(this));
+
+      //Para cuando se actualiza un request, lo eliminamos
+      this.socket.subscribe('requestTeam-updated-' + MyApp.User.team, requestTeam.bind(this));
     }
 
-    if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
-      //Para saber si hay nuevos request para unirse a equipos
-      this.team = await this.http.get("/team/profile/" + MyApp.User.team).toPromise();
-      //console.log(this.team);
-      if (!this.team.hasOwnProperty("request")) {
-        this.team.request = [];
-      }
 
-      if (this.team.request.length !== 0) {
-        MyApp.newDatas["request"] = true;
-        MyApp.counts["request"] = this.team.request.length;
-      } else {
-        MyApp.newDatas["request"] = false;
-        MyApp.counts["request"] = 0;
-      }
-    }
-
-    this.checkNewDatas();
-    this.zone.run(() => { MyApp.newDatas = MyApp.newDatas; });
+    //#endregion
   }
 
   private checkNewDatas() {
@@ -390,11 +433,11 @@ export class MyApp {
   public getName() {
     if (MyApp.User === null || MyApp.User === undefined) return '';
 
-    return MyApp.User.firstName+ " "+ MyApp.User.lastName;
+    return MyApp.User.firstName + " " + MyApp.User.lastName;
   }
 
-  public getRolIdentity(){
-    return  this.identity;
+  public getRolIdentity() {
+    return this.identity;
   }
 
   public newData(id): boolean {

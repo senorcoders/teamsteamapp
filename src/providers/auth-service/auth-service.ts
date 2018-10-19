@@ -5,6 +5,7 @@ import { MenuController, Platform } from 'ionic-angular';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
 import { Globalization } from '@ionic-native/globalization';
+import { WebSocketsProvider } from '../web-sockets/web-sockets';
 
 /**
  * Para manejar la session del usuario y guardar datos importantes
@@ -21,7 +22,7 @@ export class AuthServiceProvider {
   constructor(public http: HttpClient, public storage: Storage,
     public menuCtrl: MenuController, public zone: NgZone,
     public helper: HelpersProvider, public platform: Platform,
-    public globalization: Globalization
+    public globalization: Globalization, private socket: WebSocketsProvider
   ) {
 
   }
@@ -200,6 +201,9 @@ export class AuthServiceProvider {
     HelpersProvider.me.wheaterApiKey = "";
     this.user = null;
     delete MyApp.User;
+
+    //Cerramos la sesion websocket
+    await this.socket.disconnect();
 
     return data === undefined;
   }

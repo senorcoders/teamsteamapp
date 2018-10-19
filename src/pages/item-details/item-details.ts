@@ -3,7 +3,6 @@ import { NavController } from 'ionic-angular';
 import { NavParams } from 'ionic-angular';
 
 import { LibraryItem } from '@ionic-native/photo-library';
-import { HelpersProvider } from '../../providers/helpers/helpers';
 
 /**
  * este component es para visualizar una imagen de la libreria de imagenes

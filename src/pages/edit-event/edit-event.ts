@@ -66,6 +66,7 @@ export class EditEventPage {
   public description: string = "";
   public address = '';
   public dateEnd = "";
+  public notificationInUpdated = true;
 
   //index of event to update
   public index = 0;
@@ -116,6 +117,9 @@ export class EditEventPage {
     this.timeEnd = this.event.dateTimeEnd || "";
     this.percentageNotification = this.event.percentageNotification || 100;
     this.searchPlayer = this.event.searchPlayer || false;
+    if (this.event.notificationInUpdated !== undefined)
+      this.notificationInUpdated = this.event.notificationInUpdated;
+
     if (this.searchPlayer === true) {
       this.searchPlayers = this.event.searchPlayers.split(",");
     }
@@ -126,8 +130,8 @@ export class EditEventPage {
     //Calculamos los minutos en que se envia la notification
     if (this.event.dateTimeNotification !== undefined && this.event.dateTimeNotification !== null) {
       let dateTime = moment(this.event.dateTime, "MM/DD/YYYY hh:mm a"),
-      dateTimeNotification = moment(this.event.dateTimeNotification);
-      let diff = moment.duration( dateTime.diff(dateTimeNotification) );
+        dateTimeNotification = moment(this.event.dateTimeNotification);
+      let diff = moment.duration(dateTime.diff(dateTimeNotification));
       this.timeNoti = diff.minutes();
     }
 
@@ -397,6 +401,7 @@ export class EditEventPage {
     } else {
       event.team = this.team;
       event.percentageNotification = this.percentageNotification;
+      event.notificationInUpdated = this.notificationInUpdated;
     }
     if (event.searchPlayer === true) {
       event.searchPlayers = searchPlayers;

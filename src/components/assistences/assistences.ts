@@ -91,7 +91,7 @@ export class AssistencesComponent {
   }
 
   public toAssistenceNow() {
-    let time = moment(this.event.Time, "hh:mm a"), dateTimeEnd = moment();
+    let dateTimeEnd = moment();
 
     //Si el evento tiene hora fin, se asigna, 
     //si no se asigna un tiempo de diferencia de 12 horas

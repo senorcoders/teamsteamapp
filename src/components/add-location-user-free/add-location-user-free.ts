@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { ViewController, AlertController, NavParams } from 'ionic-angular';
-import { Geolocation } from '@ionic-native/geolocation';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import * as moment from 'moment';
 

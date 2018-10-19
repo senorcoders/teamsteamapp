@@ -34,8 +34,6 @@ export class ChatFamilyPage {
   showEmojiPicker = false;
   public nameTeam: string = "";
 
-  ramdon: number;
-
   private updateTimeMessage: any;
 
   public user: any;
@@ -55,7 +53,6 @@ export class ChatFamilyPage {
     public helper: HelpersProvider, public modal: ModalController,
     public imageViewerCtrl: ImageViewerController
   ) {
-    this.ramdon = new Date().getTime();
 
     this.user = MyApp.User;
 
@@ -99,7 +96,6 @@ export class ChatFamilyPage {
 
   private async loadingChatsUp() {
     try {
-      let ramdon = this.ramdon;
       let mgs = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20&skip=${this.skip}`).toPromise() as any[];
       mgs = mgs.filter(it => {
         return it.hasOwnProperty("user");
@@ -190,7 +186,6 @@ export class ChatFamilyPage {
   */
   private async getMsg() {
     try {
-      let ramdon = this.ramdon;
       let mgs = await this.http.get(`/chatfamily?where={"team":"${MyApp.User.team}"}&sort=dateTime DESC&limit=20`).toPromise() as any[];
       mgs = mgs.filter(it => {
         return it.hasOwnProperty("user");

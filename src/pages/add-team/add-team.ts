@@ -90,8 +90,7 @@ export class AddTeamPage {
       return;
     }
 
-    let savingM = await this.helper.getWords("SAVING"),
-      undexM = await this.helper.getWords("ERORUNEXC");
+    let undexM = await this.helper.getWords("ERORUNEXC");
 
     let load = HelpersProvider.me.getLoadingStandar();
 

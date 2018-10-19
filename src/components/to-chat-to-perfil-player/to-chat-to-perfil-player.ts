@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ViewController, NavParams, NavController } from 'ionic-angular';
+import { ViewController, NavParams, NavController, App } from 'ionic-angular';
 import { ChatOnePersonPage } from '../../pages/chat-one-person/chat-one-person';
 import { ViewPlayerPage } from '../../pages/view-player/view-player';
 import { MyApp } from '../../app/app.component';
@@ -19,7 +19,7 @@ export class ToChatToPerfilPlayerComponent {
   public user:any={};
 
   constructor(public viewCtrl : ViewController, private navParams: NavParams,
-    private navController: NavController, private http: HttpClient
+    private app: App, private http: HttpClient
   ) {
     this.user = this.navParams.get("user");
   }
@@ -28,7 +28,7 @@ export class ToChatToPerfilPlayerComponent {
     let t = this;
     this.viewCtrl.dismiss()
     .then(function(){
-      t.navController.push(ChatOnePersonPage, { user: t.user });
+      t.app.getRootNav().push(ChatOnePersonPage, { user: t.user });
     });
   }
 
@@ -38,7 +38,7 @@ export class ToChatToPerfilPlayerComponent {
       let player = await this.http.get("/player/user/"+ this.user.id).toPromise();
       this.viewCtrl.dismiss()
       .then(function(){
-        t.navController.push(ViewPlayerPage, { user: MyApp.User, player : player });
+        t.app.getRootNav().push(ViewPlayerPage, { user: MyApp.User, player : player });
       });
     }
     catch(e){

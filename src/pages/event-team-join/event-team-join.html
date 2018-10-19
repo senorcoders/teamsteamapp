@@ -23,6 +23,7 @@
       </p>
     </ion-card-content>
 
-    <button ion-button (click)="joinTeam()">{{"REQUESTTEAM" | translate}}</button>
+    <button ion-button (click)="joinTeam(true)">{{"REQUESTTEAM" | translate}}</button>
+    <button ion-button (click)="joinTeam(false)">{{"NOJOIN" | translate}}</button>
   </ion-card>
 </ion-content>

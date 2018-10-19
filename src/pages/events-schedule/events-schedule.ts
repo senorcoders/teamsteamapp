@@ -48,7 +48,7 @@ export class EventsSchedulePage {
   public filter = "all";
   public url = interceptor.url;
 
-  firstTime:boolean = true;
+  firstTime: boolean = true;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public auth: AuthServiceProvider, private sockets: WebSocketsProvider,
@@ -81,7 +81,7 @@ export class EventsSchedulePage {
   public presentImage(myImage) {
     let img = new Image();
     let src = myImage.target.src;
-    src = src.split("?").shift()+ "?large=true";
+    src = src.split("?").shift() + "?large=true";
     img.setAttribute("src", src);
     const imageViewer = this.imageViewerCtrl.create(img);
     imageViewer.present();
@@ -95,12 +95,20 @@ export class EventsSchedulePage {
       await HelpersProvider.me.reloadGoogleplaces();
 
     await this.getEvents();
-    console.log(this.events);
 
     if (EventsSchedulePage.openEvent.valid === true) {
       this.goEvent(this.events[EventsSchedulePage.openEvent.index]);
       EventsSchedulePage.openEvent = { valid: false, index: 0 };
     }
+
+    //nos subscribimos para cuando el usuario entro en el evento
+    //Para quitar el punto rojo que indica que no ha entrado al evento
+    this.sockets.subscribe("viewsevent-added-" + MyApp.User.team, function (view) {
+      let index = this.eventsOrigin.findIndex(it => { return it.id === view.event });
+      if (index !== -1) {
+        this.eventsOrigin[index].views.push(view);
+      }
+    }.bind(this));
   }
 
   public addButtonHidden() {
@@ -177,7 +185,6 @@ export class EventsSchedulePage {
   private async parserEvents(events) {
 
     let user = MyApp.User, th = this;
-    ////console.log(size);
     try {
 
       //preformarting for events
@@ -190,7 +197,6 @@ export class EventsSchedulePage {
           let day = th.getDayCercano(it.repeatsDays);
           let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
           it.parsedDateTime = [moth, day.format("DD")];
-          ////console.log(it.name, it.parsedDateTime);
         } else {
           let day = moment(it.dateTime);
           let moth = await HelpersProvider.me.getWords(day.format("MMM").toUpperCase());
@@ -204,7 +210,7 @@ export class EventsSchedulePage {
         it.dateTime = moment(it.dateTime).format("MM/DD/YYYY hh:mm a");
         it.loadImage = false;
         let ramdon = new Date().getTime();
-        it.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + it.id+ "-thumbnail");
+        it.imageSrc = interceptor.transformUrl('/images/' + ramdon + '/events/' + it.id + "-thumbnail");
 
         //Para obtener los likes y comments
         let likesUp = 0, likeUp = false, likesDown = 0, likeDown = false;
@@ -262,7 +268,6 @@ export class EventsSchedulePage {
         } else {
           b1 = moment(b.dateTime, "MM/DD/YYYY hh:mm")
         }
-        //console.log(a1.format("DD/MM/YYYY"), b1.format("DD/MM/YYYY"));
         if (a1.isBefore(b1)) {            // a comes first
           return -1
         } else if (a1.isAfter(b1)) {     // b comes first
@@ -296,7 +301,6 @@ export class EventsSchedulePage {
       "sa": 6,
       "su": 7
     };
-    ////console.log(days);
     let daysMoment = [];
     let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
 
@@ -349,7 +353,6 @@ export class EventsSchedulePage {
     }
 
     for (let i = 0; i < diasNumber.length; i++) {
-      //console.log(diasNumber[i]);
       if (i === 0) {
         cercanoMoment = daysMoment[diasNumber[i].i];
         diaNumber = diasNumber[i].diff;
@@ -373,7 +376,6 @@ export class EventsSchedulePage {
     try {
       let trackings: any = await this.http.get("/trackingevent/event/" + event.id).toPromise();
 
-      //console.log(trackings);
       await Promise.all(trackings.map(async function (item) {
 
         if (item.info == 'yes')
@@ -412,7 +414,6 @@ export class EventsSchedulePage {
       let counts = await this.getTrackings(event);
 
       let index = this.events.findIndex(function (e) { return e.id === event.id; });
-      ////console.log(index, this.events);
       this.events[index].countYes = counts.countYes;
       this.events[index].countNo = counts.countNo;
       this.events[index].countMaybe = counts.countMaybe;
@@ -430,14 +431,11 @@ export class EventsSchedulePage {
     //nos subscribimos con push
     this.sockets.subscribeWithPush('event', function (data) {
 
-      //console.log("new event ", event);
-
       //Para obtener los datos de mejor manera es recargar la lista de eventos
       //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
       t.zone.run(function () { t.getEvents(); });
 
     }, function (data) {
-      //console.log("actualizamos el evento", data);
       //Para obtener los datos de manera fiel es mejor recargargar la lista de eventos
       //Sobre todo porque hay que iterar sobre ellos para calcular orden y parsear propiedades
       t.zone.run(function () {
@@ -453,7 +451,6 @@ export class EventsSchedulePage {
       });
 
     }, function (data) {
-      //console.log("eliminamos el evento", data);
       //obtenemos la posicion que tiene en el array para despues eliminarlo
       let index = t.events.findIndex(function (el) { return el.id === data.id });
       if (index !== -1) {
@@ -469,13 +466,11 @@ export class EventsSchedulePage {
 
     this.sockets.subscribeWithPush("comment", function (data) {
 
-      ////console.log("new comment", data)
       //Para actualizar cuando un commentario nuevo es realizado
       //obtenemos la posicion que tiene en el array para despues eliminarlo
       t.zone.run(function () {
 
         let index = t.events.findIndex(function (el) { return el.id === data.event });
-        ////console.log(index);
         if (index !== -1) {
           let event = t.events[index];
           event.comments.push(data);
@@ -487,27 +482,27 @@ export class EventsSchedulePage {
     });
 
     this.storage.get('firstTime').then((val) => {
-      console.log("Val", val);
-
-      if(val == true && this.user.role.name === "Manager"){
+      if (val == true && this.user.role.name === "Manager") {
         this.firstTime = false;
-
       }
-
     })
 
   }
 
   ionViewWillUnload() {
-    //console.log("unsubscribe");
     this.sockets.unsubscribeWithPush('event');
     this.sockets.unsubscribeWithPush("comment");
+  }
+
+  public inViews(e) {
+    return e.views.findIndex(it => {
+      return it.user === MyApp.User.id;
+    }) === -1;
   }
 
   public goEvent(event: any) {
 
     let index = this.events.findIndex(function (el) { return el.id === event.id });
-    //console.log(index);
     if (index === -1) return;
     this.navCtrl.push(EventPage, {
       event,
@@ -547,7 +542,6 @@ export class EventsSchedulePage {
       }
 
       let li = await this.http.post("/likes/", like).toPromise();
-      ////console.log(li);
       event.likeUp = likeUp;
       event.likeDown = !likeUp;
       event.likes.push(li);
@@ -560,7 +554,6 @@ export class EventsSchedulePage {
     let index = event.likes.findIndex(function (elem) { return elem.user === idUser });
     let like = event.likes[index];
 
-    ////console.log(like);
 
     if (event.likeUp === true && likeUp === true) {
       /*let li = */ await this.http.delete("/likes/" + like.id).toPromise();
@@ -569,7 +562,6 @@ export class EventsSchedulePage {
         event.likes = [];
       else
         event.likes.splice(index, 1);
-      ////console.log(event.likes);
       await this.countLikes(event);
       return;
 
@@ -581,14 +573,12 @@ export class EventsSchedulePage {
       else
         event.likes.splice(index, 1);
 
-      ////console.log(event.likes);
       await this.countLikes(event);
       return;
     }
 
     if (event.likeUp === false && likeUp === true && event.likeDown === true) {
       /*let li = */ await this.http.put("/likes/" + like.id, like).toPromise();
-      ////console.log(li);
       event.likeDown = false;
       event.likeUp = true;
       event.likes[index].like = likeUp;
@@ -596,7 +586,6 @@ export class EventsSchedulePage {
 
     } else if (event.likeUp === true && likeUp === false && event.likeDown === false) {
       /*let li = */ await this.http.put("/likes/" + like.id, like).toPromise();
-      ////console.log(li);
       event.likeDown = true;
       event.likeUp = false;
       event.likes[index].like = likeUp;
@@ -633,7 +622,7 @@ export class EventsSchedulePage {
     this.navCtrl.push(ImagesEventPage, { event: event });
   }
 
-  hideOverlay(){
+  hideOverlay() {
     this.storage.set('firstTime', false);
     this.firstTime = true;
   }

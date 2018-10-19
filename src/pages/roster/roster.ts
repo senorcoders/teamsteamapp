@@ -75,10 +75,9 @@ export class RosterPage {
 
       //Cargamos primeramente los players
       let players = await this.http.get(`/roles?where={"team":"${MyApp.User.team}","name":"Player"}`).toPromise() as any[];
-
       this.players = players.filter(function (item) {
         return item.user !== undefined;
-      });
+      }); 
 
       this.players = this.players.map(function (item) {
         item.loadImage = false;

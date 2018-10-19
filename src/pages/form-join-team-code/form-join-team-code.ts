@@ -7,7 +7,6 @@ import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { StatusBar } from '@ionic-native/status-bar';
-import { Storage } from '@ionic/storage';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 
 @IonicPage()
@@ -32,7 +31,7 @@ export class FormJoinTeamCodePage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, private http: HttpClient,
     public viewCtrl: ViewController, private auth: AuthServiceProvider,
-    public statusBar: StatusBar, public ngZone: NgZone, private storage: Storage,
+    public statusBar: StatusBar, public ngZone: NgZone,
     public menuCtrl: MenuController
   ) {
     this.team = this.navParams.get("team");

@@ -20,6 +20,7 @@ import { PlayerCloseEventPage } from '../player-close-event/player-close-event';
 import { ImagesEventPage } from '../images-event/images-event';
 import { MyTaskPage } from '../my-task/my-task';
 import { LiveScorePage } from '../live-score/live-score';
+import { ViewsEventPage } from '../views-event/views-event';
 
 declare var google: any;
 
@@ -146,13 +147,13 @@ export class EventPage {
       //Para saber si ya se muestra en live score
       //Es solo para plan premiun
       let status = await this.http.get(`/subscriptions/plan/team/${MyApp.User.team}`).toPromise() as { msg: boolean };
-      this.planPremiun = status.msg;
+      this.planPremiun = status.msg; console.log(this.planPremiun, this.event.type);
       if (this.planPremiun === true && this.event.type === "game") {
         // Se muestra 30 minutos antes de que comienza el evento
         // y 12 horas despues del evento
-        let start = day, end = day, now = moment();
+        let start = day, end = day, now = moment(); console.log("m");
         start.subtract(30, "minutes");
-        end.add(12, "hours"); console.log(start.format("DD/MM/YYYY hh:mm:ss a"), end.format("DD/MM/YYYY hh:mm:ss a"));
+        end.add(12, "hours");
         if (now.isBefore(start)) {
           this.liveScore = true;
         }
@@ -162,6 +163,20 @@ export class EventPage {
       this.checkEnablePlayerClose();
       this.idEventPlayerClose = setInterval(this.checkEnablePlayerClose.bind(this), 1000 * 60);
 
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    //Para guardar la vista del usuario
+    try {
+      this.http.post("/viewsevent", {
+        event: this.event.id,
+        team: MyApp.User.team,
+        user: MyApp.User.id
+      }, { responseType: "text" }).subscribe((e) => {
+        console.log("view add ", e);
+      });
     }
     catch (e) {
       console.error(e);
@@ -411,18 +426,18 @@ export class EventPage {
   }
 
   public checkEnablePlayerClose() {
-    let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
+    // let dateEvent = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
     let date = moment(this.event.parsedDateTime[0] + "/" + this.event.parsedDateTime[1] + this.event.Time, "MMMM/DDhh:mm a");
     date.subtract(30, "minutes");
-    let now = moment();
-    // console.log(
-    //   now.format("DD/MM/YYYY hh:mm:ss a"),
-    //   date.format("DD/MM/YYYY hh:mm:ss a"),
-    //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
-    //   now.isAfter(date),
-    //   now.isBefore(dateEvent),
-    //   this.user.role.name
-    // );
+    // let now = moment();
+    // // console.log(
+    // //   now.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   date.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   dateEvent.format("DD/MM/YYYY hh:mm:ss a"),
+    // //   now.isAfter(date),
+    // //   now.isBefore(dateEvent),
+    // //   this.user.role.name
+    // // );
 
     if (EventsSchedulePage.by !== "past") {
       this.enablePlayerClose = true;
@@ -758,6 +773,10 @@ export class EventPage {
 
   public toLiveScore() {
     this.navCtrl.push(LiveScorePage, { event: this.event });
+  }
+
+  public toViewsEvent() {
+    this.navCtrl.push(ViewsEventPage, { event: this.event });
   }
 
 }

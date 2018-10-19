@@ -45,6 +45,10 @@
             "PRACTICE": "Práctica",
             "EVENT": "Evento"
         },
+        "SENDNOTI": {
+            "CREATED": "Enviar notificación cuando se crea este evento",
+            "UPDATED": "Enviar notificación cuando este evento se actualice"
+        },
         "NOTIFYSTARTEVENT": "Notificar que el evento inicia",
         "MINUTESBEFORE": "minutos antes",
         "ATTENDENCETRACKING": "Tomar Asistencia",
@@ -438,5 +442,14 @@
         "PERIOD": "Periodo",
         "US": "Nosotros",
         "THEM": "Ellos"
-    }
+    },
+    "ONLINE": "en línea",
+    "OFFLINE": "Desconectado",
+    "VIEWSEVENT": {
+        "TITLE": "Vistas del Evento",
+        "VIEWS": "Vistas",
+        "NOVIEWS": "No Vistas"
+    },
+    "USER": "Usuario",
+    "NOJOIN": "No unirme"
 }
