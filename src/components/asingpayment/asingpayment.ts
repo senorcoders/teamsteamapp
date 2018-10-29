@@ -76,6 +76,7 @@ export class AsingpaymentComponent {
   public async asingPaymentOne(payment){
 
     payment.player = this.player.id;
+    payment.team = MyApp.User.team;
     try{
       let pay = await this.http.post("/player/payment/"+ MyApp.User.id+ "/"+ MyApp.User.team, payment).toPromise();
       console.log(pay);

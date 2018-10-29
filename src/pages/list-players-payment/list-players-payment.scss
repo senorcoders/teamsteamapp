@@ -1,4 +1,50 @@
 page-list-players-payment {
+    .email-paypal{
+        width: 100%;
+        padding: 7px;
+        background-color: white;
+        .email{
+            width: 100%;
+            display: flex;
+            padding-bottom: 10px;
+            align-items: center;
+            span{
+                margin-right: 5px;
+            }
+            input{
+                border-top-width: 0;
+                border-left-width: 0;
+                border-right-width: 0;
+                flex-basis: calc(100% - 102px);
+                width: calc(100% - 102px);
+            }
+            input.autowidth{
+                flex-basis: auto;
+                width: auto;
+            }
+            button{
+                font-size: 1rem;
+                padding: 0 0.2rem;
+            }
+        }
+        .email.center{
+            justify-content: space-around;
+        }
+        .grand-permission{
+            width: 100%;
+            color: red;
+            text-decoration: underline;
+            text-align: center;
+            display: block;
+        }
+    }
+    
+
+    ion-content{
+        .scroll-content{
+            padding-top: 65px !important;
+        }
+    }
 
     ion-item.multi{
         border-bottom: 1px solid #e0e0e0;

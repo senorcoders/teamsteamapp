@@ -77,6 +77,20 @@
       {{ "CHANGEROLE" | translate}} ({{user.role.name.toUpperCase() | translate}})
     </ion-item>
 
+    <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
+      <div class="icon-box-bg third-bg" item-start>
+        <ion-icon name="logo-usd" color="white" item-start></ion-icon>
+      </div>
+      {{ "PAYMENT" | translate}}
+    </ion-item>
+
+    <ion-item (click)="viewsPlayerPayments()" [hidden]="user.role.name != 'Manager' ">
+      <div class="icon-box-bg third-bg" item-start>
+        <ion-icon name="logo-usd" color="white" item-start></ion-icon>
+      </div>
+      {{ "PAYMENTPLAYERS" | translate}}
+    </ion-item>
+
     <ion-item (click)="setting()">
       <div class="icon-box-bg fourth-bg" item-start>
         <img src="./assets/imgs/settings.svg" width="40px">
@@ -91,25 +105,7 @@
       {{'NAVMENU.LOGOUT' | translate}}
     </ion-item>
 
-    <!--  <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
-      <ion-icon name="logo-usd" item-start></ion-icon>
-      {{ "PAYMENT" | translate}}
-    </ion-item>
-    <ion-item (click)="goAbout()">
-      <ion-icon name="md-lock" item-start></ion-icon>
-      {{'PRIVACY&POLICY' | translate}}
-    </ion-item>
-    <ion-item (click)="viewsPayments()" [hidden]="user.role.name != 'Player'">
-      <ion-icon name="logo-usd" item-start></ion-icon>
-      {{ "PAYMENT" | translate}}
-    </ion-item>
-
-    <ion-item (click)="viewsPlayerPayments()" [hidden]="user.role.name != 'Manager' ">
-      <ion-icon name="logo-usd" item-start></ion-icon>
-      {{ "PAYMENTPLAYERS" | translate}}
-    </ion-item>
-
-    <ion-item (click)="paymentsMonthly()" [hidden]="user.role.name != 'Manager' ">
+    <!-- <ion-item (click)="paymentsMonthly()" [hidden]="user.role.name != 'Manager' ">
       <ion-icon name="md-cash" item-start></ion-icon>
       {{"PAYMENTSUBS" | translate}}
     </ion-item> -->

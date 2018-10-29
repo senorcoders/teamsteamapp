@@ -74,7 +74,11 @@ export class RosterPage {
     try {
 
       //Cargamos primeramente los players
-      let players = await this.http.get(`/roles?where={"team":"${MyApp.User.team}","name":"Player"}`).toPromise() as any[];
+      // let players = await this.http.get(`/roles?where={"team":"${MyApp.User.team}","name":"Player"}`).toPromise() as any[];
+      // this.players = players.filter(function (item) {
+      //   return item.user !== undefined;
+      // }); 
+      let players = await this.http.get(`/players?where={"team":"${MyApp.User.team}"}`).toPromise() as any[];
       this.players = players.filter(function (item) {
         return item.user !== undefined;
       }); 
