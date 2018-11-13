@@ -456,5 +456,9 @@
         "EMAIL": "Email de Paypal",
         "PUTEMAILPAYPAL": "Ponga su email de PayPal para crear pagos",
         "GRANPERMISSION": "Necesita conceder permiso para crear los pagos"
-    }
+    },
+    "ADDFAMILY":{
+        "TITLE": "Añadir Familiar"
+    },
+    "ADDRESS": "Dirección"
 }
