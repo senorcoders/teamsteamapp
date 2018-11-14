@@ -8,34 +8,44 @@
 
 
 <ion-content padding>
-  <ion-list>
-    <ion-item
-     *ngFor="let player of players" [ngClass]="{'multi': multi, 'select': player.select }"
-     (mousedown)="pressed(player)" (mouseup)="deactive()">
 
-     <ion-avatar item-start style="cursor: pointer;" [hidden]="!player.loadImage">
+  <div ion-fixed class="email-paypal">
+    <div class="email" [ngClass]="{'center':validChange()}">
+      <span>{{"PAYPAL.EMAIL" | translate}}</span>
+      <input type="email" [(ngModel)]="emailPaypal" [ngClass]="{'autowidth': validChange()}">
+      <button ion-button *ngIf="validChange()" (click)="updateEmailPaypal()">{{"CHANGE" | translate}}</button>
+    </div>
+    <span class="grand-permission" *ngIf="validEmailPaypal()">{{"PAYPAL.PUTEMAILPAYPAL" | translate}}</span>
+    <span class="grand-permission" *ngIf="validPermission()" (click)="confirmPermission()">{{"PAYPAL.GRANPERMISSION" | translate}}</span>
+  </div>
+
+  <ion-list>
+    <ion-item *ngFor="let player of players" [ngClass]="{'multi': multi, 'select': player.select }" (mousedown)="pressed(player)"
+      (mouseup)="deactive()" [hidden]="player.user.id===user.id">
+
+      <ion-avatar item-start style="cursor: pointer;" [hidden]="!player.loadImage">
         <img [src]="player.image" (load)="success(event, player);">
       </ion-avatar>
-  
+
       <ion-avatar item-start style="cursor: pointer;" [hidden]="player.loadImage">
         <img src="./assets/imgs/user.png">
       </ion-avatar>
       {{player.user.firstName+ " "+ player.user.lastName}}
-      <ion-icon item-end [hidden]="player.debe === 0" name="logo-usd" color="danger" ></ion-icon>
-      <p item-end [hidden]="player.debe === 0" style="color: #f53d3d; font-size: 2.8rem; line-height: 1;" >{{player.debe}}</p>
+      <ion-icon item-end [hidden]="player.debe === 0" name="logo-usd" style="color: #f53d3d; font-size: 2rem; line-height: 1; margin-top: 17px;"></ion-icon>
+      <p item-end [hidden]="player.debe === 0" style="color: #f53d3d; font-size: 2rem; line-height: 1; margin-top: 5px;">{{player.debe}}</p>
     </ion-item>
   </ion-list>
 
-  <ion-fab bottom right [hidden]='!multi' >
-    <button color="base" ion-fab icon-only (click)="multiPayment()" >
+  <ion-fab bottom right [hidden]='!multi'>
+    <button color="base" ion-fab icon-only (click)="multiPayment()">
       <ion-icon name="md-open"></ion-icon>
     </button>
   </ion-fab>
 
-  <ion-fab bottom right style="bottom: 80px;" [hidden]='!multi' >
-      <button color="base" ion-fab icon-only (click)="selectAll()" >
-        <ion-icon name="md-done-all"></ion-icon>
-      </button>
-    </ion-fab>
+  <ion-fab bottom right style="bottom: 80px;" [hidden]='!multi'>
+    <button color="base" ion-fab icon-only (click)="selectAll()">
+      <ion-icon name="md-done-all"></ion-icon>
+    </button>
+  </ion-fab>
 
 </ion-content>

@@ -41,6 +41,8 @@ export class MemberRosterPage {
   public updateImageCallback: any;
   public index: any;
 
+  public isUpdating = false;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public http: HttpClient,
     public loading: LoadingController, public auth: AuthServiceProvider,
@@ -200,9 +202,16 @@ export class MemberRosterPage {
   }
 
   private async update() {
+    if (this.isUpdating === true) {
+      return;
+    }
+    this.isUpdating = true;
     //se copea el objeto de player sin referencia
     let player = JSON.parse(JSON.stringify(this.player));
     player.positions = player.positions.split(",");
+    if (Object.prototype.toString.call(player.team) === "[object Object]") {
+      player.team = player.team.id;
+    }
     delete player.user;
     delete player.image;
 
@@ -222,8 +231,8 @@ export class MemberRosterPage {
 
       return;
     }
-
     load.dismiss();
+    this.isUpdating = false;
 
     this.navCtrl.pop();
   }

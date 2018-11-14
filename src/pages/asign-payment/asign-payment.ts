@@ -14,9 +14,9 @@ export class AsignPaymentPage {
 
   public static __name = "AsignPaymentPage"
 
-  public player:any={ user: { firstName: "", lastName: "", email: "" } };
-  public imageSrc="";
-  public image=false;
+  public player: any = { user: { firstName: "", lastName: "", email: "" } };
+  public imageSrc = "";
+  public image = false;
 
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
@@ -29,24 +29,31 @@ export class AsignPaymentPage {
 
   }
 
-  public success(){
+  public success() {
     this.image = true;
   }
 
-  public assingPayment(){
+  public assingPayment() {
     let payments = this.modalCtrl.create(AsingpaymentComponent, {
-      player : this.player,
+      player: this.player,
       modal: true
     });
 
-    payments.onDidDismiss(function(data){
+    payments.onDidDismiss(async function (data) {
 
-      if( data === undefined || data === null )
+      if (data === undefined || data === null)
         return;
 
-      if( !this.player.hasOwnProperty("payments") ){
+      if (data.hasOwnProperty("msg")) {
+        let unexM = await this.helper.getWords("PAYPAL.GRANPERMISSION");
+        this.alertCtrl.create({ title: "Error", message: unexM, buttons: ["Ok"] })
+          .present();
+        return;
+      }
+
+      if (!this.player.hasOwnProperty("payments")) {
         this.player.payments = [data];
-      }else{
+      } else {
         this.player.payments.push(data);
       }
 
@@ -57,48 +64,50 @@ export class AsignPaymentPage {
   }
 
 
-  public async delete(pay){
+  public async delete(pay) {
 
     let m = await this.helper.getWords("PAYMENTSECURE");
     this.alertCtrl.create({
-      message: m+ " "+ pay.description,
+      message: m + " " + pay.description,
       buttons: [
         { text: "Cancel" },
-        { text: "Ok", handler: function(){
-          this.deletePayment(pay);
-        }.bind(this) }
+        {
+          text: "Ok", handler: function () {
+            this.deletePayment(pay);
+          }.bind(this)
+        }
       ]
     })
-    .present();
+      .present();
 
   }
 
-  private async deletePayment(pay){
-    
+  private async deletePayment(pay) {
+
     let load = this.helper.getLoadingStandar();
-    try{
+    try {
 
-      await this.http.delete("/paymentuser/"+ pay.id).toPromise();
+      await this.http.delete("/paymentuser/" + pay.id).toPromise();
 
-      let index = this.player.payments.findIndex(function(it){ return it.id === pay.id; });
-      if( this.player.payments.length === 1 ){
+      let index = this.player.payments.findIndex(function (it) { return it.id === pay.id; });
+      if (this.player.payments.length === 1) {
         this.player.payments = [];
-      }else if(index !== -1 ){
+      } else if (index !== -1) {
         this.player.payments.splice(index, 1);
       }
 
       load.dismiss();
 
     }
-    catch(e){
+    catch (e) {
       load.dismiss();
       console.error(e);
       let unexM = await this.helper.getWords("ERORUNEXC");
-      this.alertCtrl.create({ title: "Error", message: unexM, buttons: ["Ok"]})
-      .present();
+      this.alertCtrl.create({ title: "Error", message: unexM, buttons: ["Ok"] })
+        .present();
     }
 
   }
 
-  
+
 }

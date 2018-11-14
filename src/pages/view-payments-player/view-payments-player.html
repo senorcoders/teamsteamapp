@@ -13,7 +13,7 @@
     <ion-item *ngFor="let payment of payments" (click)="goPayment(payment)" >
       {{ payment.description }}
       <ion-icon item-end [hidden]="payment.invoice_paid" style="font-size: 2rem;" name="logo-usd" color="danger" ></ion-icon>
-      <p item-end [hidden]="payment.invoice_paid" style="color: #f53d3d; font-size: 2rem; line-height: 1;" >{{payment.quantity}}</p>
+      <span item-end [hidden]="payment.invoice_paid" style="color: #f53d3d; font-size: 2rem; line-height: 1; margin-top: 0;" >{{payment.quantity}}</span>
     </ion-item>
   </ion-list>
 

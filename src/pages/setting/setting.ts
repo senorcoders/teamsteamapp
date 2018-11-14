@@ -51,7 +51,7 @@ export class SettingPage {
 
   public setting = new Setting();
   public userRole = "";
-  public version = "0.0.12"
+  public version = "0.0.13"
   public user = JSON.parse(JSON.stringify(MyApp.User));
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
