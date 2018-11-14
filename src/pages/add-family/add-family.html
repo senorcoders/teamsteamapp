@@ -15,22 +15,22 @@
   <ion-list>
 
     <ion-item>
-      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
+      <ion-label floating>{{"FIRSTNAME" | translate}} <span style="color: red;">*</span></ion-label>
       <ion-input type="text" [(ngModel)]="firstname"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
+      <ion-label floating>{{"LASTNAME" | translate}} <span style="color: red;">*</span></ion-label>
       <ion-input type="text" [(ngModel)]="lastname"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+      <ion-label floating>{{"EMAIL" | translate}} <span style="color: red;">*</span></ion-label>
       <ion-input type="email" [(ngModel)]="email"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label floating>{{"RELATIONSHIP" | translate}}</ion-label>
+      <ion-label floating>{{"RELATIONSHIP" | translate}} <span style="color: red;">*</span></ion-label>
       <ion-input type="text" [(ngModel)]="relationship"></ion-input>
     </ion-item>
 

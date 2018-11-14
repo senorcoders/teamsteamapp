@@ -354,7 +354,7 @@ export class EditEventPage {
     locate.link = this.locationLink || "";
     locate.detail = this.locationDetail || "";
 
-    console.log(locate);
+    // console.log(locate);
 
     //Check if the fields required is ok
     let isRequired = await this.helper.getWords("ISREQUIRED");
