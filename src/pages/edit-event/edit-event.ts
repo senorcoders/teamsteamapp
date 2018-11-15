@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import { Geolocation } from '@ionic-native/geolocation';
 
@@ -79,6 +79,8 @@ export class EditEventPage {
 
   //Para notificar del evento 15 minutos antes
   public timeNoti = 15;
+
+  @ViewChild('addressInput') addresComponet: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public geolocation: Geolocation,
@@ -183,6 +185,12 @@ export class EditEventPage {
       this.marker.setPosition(event.latLng);
       this.locationChange = true;
     }.bind(this));
+
+    /***********
+     * Para mostrar sugerencias en el input de direccion
+     */
+    let input = (this.addresComponet as any).getNativeElement().getElementsByTagName("input")[0];
+    new google.maps.places.Autocomplete(input, {});
 
     load.dismissAll();
 
@@ -311,7 +319,8 @@ export class EditEventPage {
     let requiredM = await this.helper.getWords("REQUIRED"),
       AddressOrMap = await this.helper.getWords("ADDRESSORDATE");
 
-    if (this.location.placesubAdministrativeArea === "" && this.address === '') {
+    let address = (this.addresComponet as any).getNativeElement().getElementsByTagName("input")[0].value;
+    if (this.location.placesubAdministrativeArea === "" && address === '') {
       this.alertCtrl.create({ title: requiredM, message: AddressOrMap, buttons: ["Ok"] }).present();
       this.load.dismiss();
       return;
@@ -341,11 +350,11 @@ export class EditEventPage {
       locate = { lat: l.lat(), lng: l.lng() };
     }
 
-    locate.address = this.address;
+    locate.address = address;
     locate.link = this.locationLink || "";
     locate.detail = this.locationDetail || "";
 
-    console.log(locate);
+    // console.log(locate);
 
     //Check if the fields required is ok
     let isRequired = await this.helper.getWords("ISREQUIRED");

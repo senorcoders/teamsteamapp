@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild, ElementRef } from '@angular/core';
 import { IonicPage, NavController, NavParams, LoadingController, AlertController, Loading, ModalController } from 'ionic-angular';
 import moment from 'moment';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -73,6 +73,8 @@ export class NewEventPage {
   //Para notificar del evento 15 minutos antes
   public timeNoti = 15;
 
+  @ViewChild('addressInput') addresComponet: ElementRef;
+
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public alertCtrl: AlertController, public loading: LoadingController,
     private auth: AuthServiceProvider, private http: HttpClient,
@@ -88,10 +90,17 @@ export class NewEventPage {
   }
 
   async ionViewDidLoad() {
+
     // let load = HelpersProvider.me.getLoadingStandar();
     //cargamos google maps si a un no ha cargado
     if (HelpersProvider.me.enableMapsLocation === false)
       await HelpersProvider.me.reloadGoogleplaces();
+
+    /***********
+     * Para mostrar sugerencias en el input de direccion
+     */
+    let input = (this.addresComponet as any).getNativeElement().getElementsByTagName("input")[0];
+    new google.maps.places.Autocomplete(input, {});
 
     /***
      * Para mostrar la ubicacion actual
@@ -251,7 +260,8 @@ export class NewEventPage {
     let requiredM = await this.helper.getWords("REQUIRED"),
       AddressOrMap = await this.helper.getWords("ADDRESSORDATE");
 
-    if (this.location.change === false && this.address === '') {
+    let address = (this.addresComponet as any).getNativeElement().getElementsByTagName("input")[0].value;
+    if (this.location.change === false && address === '') {
       this.alertCtrl.create({ title: requiredM, message: AddressOrMap, buttons: ["Ok"] }).present();
       this.load.dismiss();
       return;
@@ -280,7 +290,7 @@ export class NewEventPage {
       locate = { lat: l.lat(), lng: l.lng() };
     }
 
-    locate.address = this.address;
+    locate.address = address;
     locate.link = this.locationLink || "";
     locate.detail = this.locationDetail || "";
 
