@@ -16,6 +16,7 @@ import { AddTeamPage } from '../add-team/add-team';
 import { CreateLeaguePage } from '../create-league/create-league';
 import { SettingPage } from '../setting/setting';
 import { SelectTeamsLeaguesPage } from '../select-teams-leagues/select-teams-leagues';
+import { AddFamilyPage } from '../add-family/add-family';
 
 
 @IonicPage()
@@ -48,7 +49,7 @@ export class ViewProfilePage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public helper: HelpersProvider, private http: HttpClient,
-    public auth: AuthServiceProvider, public alertCtrl: AlertController, 
+    public auth: AuthServiceProvider, public alertCtrl: AlertController,
     public storage: Storage
   ) {
 
@@ -476,4 +477,7 @@ export class ViewProfilePage {
     await this.ionViewWillEnter();
   }
 
+  public addFamily() {
+    this.navCtrl.push(AddFamilyPage)
+  }
 }

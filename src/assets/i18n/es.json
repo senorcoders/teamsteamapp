@@ -458,7 +458,8 @@
         "GRANPERMISSION": "Necesita conceder permiso para crear los pagos"
     },
     "ADDFAMILY":{
-        "TITLE": "Añadir Familiar"
+        "TITLE": "Añadir Familiar",
+        "NOTE": "Agregue miembros de la familia aquí para permitir que otros reciban notificaciones y obtengan actualizaciones."
     },
     "ADDRESS": "Dirección"
 }

@@ -69,7 +69,7 @@ export class MyApp {
     { title: "NAVMENU.ROSTER", component: RosterPage, icon: "roster.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "PHOTOS.TITLE", component: PhotosPage, icon: "photos.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "chat.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
-    { title: "ADDFAMILY.TITLE", component: AddFamilyPage, icon: "people.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
+    // { title: "ADDFAMILY.TITLE", component: AddFamilyPage, icon: "people.png", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague|Manager|Family", yes: "*" }, watch: "", newData: "" },
     { title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "add-team.png", role: "OwnerLeague", watch: "", newData: "" },
     { title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },

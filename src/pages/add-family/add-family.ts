@@ -72,7 +72,7 @@ export class AddFamilyPage {
       this.relationship = "";
       this.phoneNumber = "";
       this.address = "";
-      
+      this.navCtrl.pop();
     }catch (e) {
       load.dismiss();
       console.error(e);

@@ -454,7 +454,8 @@
         "GRANPERMISSION": "You need to grant permission to create the payments"
     },
     "ADDFAMILY":{
-        "TITLE": "Add Family"
+        "TITLE": "Add Family",
+        "NOTE": "Add Family members here to allow others to receive notifications and get updates."
     },
     "ADDRESS": "Address"
 }
