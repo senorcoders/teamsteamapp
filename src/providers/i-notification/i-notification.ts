@@ -12,6 +12,7 @@ import { MyApp } from '../../app/app.component';
 import { PlayerCloseEventPage } from '../../pages/player-close-event/player-close-event';
 import { ChatFamilyPage } from '../../pages/chat-family/chat-family';
 import { LiveScorePage } from '../../pages/live-score/live-score';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 
 @Injectable()
@@ -50,23 +51,26 @@ export class INotificationProvider {
       if (events.length === 1) {
         console.log(events[0]);
         let event = await this.http.get("/event/" + events[0]._id).toPromise();
-        await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event } }], { notification: true });
+        // await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event } }], { notification: true });
+        await HelpersProvider.me.toPages(TabsPage, [{ page: EventPage, data: { event } }]);
       }
     } else if (intent.extras.is === "event") {
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], { notification: true });
+      // await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data.eventData } }], { notification: true });
+      await HelpersProvider.me.toPages(TabsPage, [{ page: EventPage, data: { event: data.eventData } }], {});
     } else if (intent.extras.is === "task") {
-      await HelpersProvider.me.toPages(MyTaskPage, [{ page: TaskPage, data: { task: data } }]);
+      await HelpersProvider.me.toPages(TabsPage, [{ page: MyTaskPage, data: {} }, { page: TaskPage, data: { task: data } }]);
+      // await HelpersProvider.me.toPages(MyTaskPage, [{ page: TaskPage, data: { task: data } }]);
     } else if (intent.extras.is === "message") {
-      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatPage, data: {} }]);
+      await HelpersProvider.me.toPages(TabsPage, [{ page: ListChatsPage, data: {} }, { page: ChatPage, data: {} }]);
     } else if (intent.extras.is === "chatFamily") {
-      await HelpersProvider.me.toPages(ListChatsPage, [{ page: ChatFamilyPage, data: {} }]);
+      await HelpersProvider.me.toPages(TabsPage, [{ page: ListChatsPage, data: {} }, { page: ChatFamilyPage, data: {} }]);
     } else if (intent.extras.is.includes("player-near.")) {
       let eventID = intent.extras.is.split(".")[1];
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: PlayerCloseEventPage, data: { eventID, player: data } }], { notification: true });
+      await HelpersProvider.me.toPages(TabsPage, [{ page: EventsSchedulePage, data: {} }, { page: PlayerCloseEventPage, data: { eventID, player: data } }], { notification: true });
     } else if (intent.extras.is === "scorepart") {
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
-    }else if(intent.extras.is === "commentscorepart"){
-      await HelpersProvider.me.toPages(EventsSchedulePage, [{ page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
+      await HelpersProvider.me.toPages(TabsPage, [{ page: EventsSchedulePage, data: {} }, { page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
+    } else if (intent.extras.is === "commentscorepart") {
+      await HelpersProvider.me.toPages(TabsPage, [{ page: EventsSchedulePage, data: {} }, { page: EventPage, data: { event: data } }, { page: LiveScorePage, data: { event: data } }], { notification: true });
     }
 
   }

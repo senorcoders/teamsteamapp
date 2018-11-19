@@ -6,6 +6,7 @@ import { MyApp } from '../../app/app.component';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { CheckPaidPage } from '../check-paid/check-paid';
 import * as moment from 'moment';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -86,7 +87,8 @@ export class PaymentSubscripcionPage {
   }
 
   public async demo(){
-    this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot(EventsSchedulePage);
   }
 
 }

@@ -5,6 +5,7 @@ import * as moment from 'moment';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
+import { TabsPage } from '../tabs/tabs';
 
 
 @IonicPage()
@@ -39,7 +40,8 @@ export class CheckPaidPage {
     for(let p of paid){
       if( p.paid === true ){
         if( this.init === true ){
-          this.navCtrl.setRoot(EventsSchedulePage);
+          this.navCtrl.setRoot(TabsPage);
+          // this.navCtrl.setRoot(EventsSchedulePage);
         }else{
           this.navCtrl.pop()
           this.navCtrl.pop()

@@ -21,6 +21,7 @@ import { ImagesEventPage } from '../images-event/images-event';
 import { MyTaskPage } from '../my-task/my-task';
 import { LiveScorePage } from '../live-score/live-score';
 import { ViewsEventPage } from '../views-event/views-event';
+import { TabsPage } from '../tabs/tabs';
 
 declare var google: any;
 
@@ -588,7 +589,8 @@ export class EventPage {
       return;
 
     load.dismiss();
-    this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot(EventsSchedulePage);
   }
 
   private async editEvent() {

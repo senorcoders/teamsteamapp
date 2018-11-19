@@ -457,5 +457,6 @@
         "TITLE": "Add Family",
         "NOTE": "Add Family members here to allow others to receive notifications and get updates."
     },
-    "ADDRESS": "Address"
+    "ADDRESS": "Address",
+    "MORE": "More"
 }

@@ -32,6 +32,7 @@ import * as moment from 'moment';
 import { NotificationPage } from '../pages/notification/notification';
 import { WebSocketsProvider } from '../providers/web-sockets/web-sockets';
 import { AddFamilyPage } from '../pages/add-family/add-family';
+import { TabsPage } from '../pages/tabs/tabs';
 
 @Component({
   templateUrl: 'app.html'
@@ -274,7 +275,8 @@ export class MyApp {
       this.nav.root = AgentFreePage;
     } else {
 
-      this.nav.root = EventsSchedulePage;
+      // this.nav.root = EventsSchedulePage;
+      this.nav.root = TabsPage;
       if (MyApp.User.hasOwnProperty("team")) {
 
         //Para actualizar el nombre del equipo en menu slide

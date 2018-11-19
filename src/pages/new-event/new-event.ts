@@ -8,6 +8,7 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { MyApp } from '../../app/app.component';
 import { EventCreatedComponent } from '../../components/event-created/event-created';
 import { Geolocation } from '@ionic-native/geolocation';
+import { TabsPage } from '../tabs/tabs';
 
 declare var google: any;
 
@@ -429,7 +430,8 @@ export class NewEventPage {
     }
 
     await this.load.dismiss();
-    this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot(EventsSchedulePage);
     this.navCtrl.push(EventCreatedComponent, { event: newEvent });
 
   }

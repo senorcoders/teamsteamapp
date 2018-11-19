@@ -13,6 +13,7 @@ import { ForgotPasswordPage } from '../forgot-password/forgot-password';
 import { MyApp } from '../../app/app.component';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import { TabsPage } from '../tabs/tabs';
 
 /**
  * para logearse en el app
@@ -122,7 +123,8 @@ export class LoginPage {
       }
 
       if (MyApp.User.hasOwnProperty("team") || MyApp.User.role.name === "OwnerLeague") {
-        await this.navCtrl.setRoot(EventsSchedulePage);
+        await this.navCtrl.setRoot(TabsPage);
+        // await this.navCtrl.setRoot(EventsSchedulePage);
         if (this.plt.is('ios')) {
           this.showGPSalert();
         }

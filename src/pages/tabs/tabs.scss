@@ -1,3 +1,43 @@
 page-tabs {
-
+    ion-icon {
+        &[class*="custom-"] {
+            margin: 0 5px 0 0;
+            vertical-align: middle;
+            $sz: 20px;
+            width: $sz;
+            height: $sz;
+        } // custom icons
+        &[class*="events"][ng-reflect-is-active="true"] {
+            background: url("/assets/imgs/events-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }//in case of active
+        &[class*="events"][ng-reflect-is-active="false"] {
+            background: url("/assets/imgs/events-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }//in case of inactive
+        &[class*="chat"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/chat-1.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="chat"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/chat-0.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="roster"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/roster-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="roster"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/roster-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="photos"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/photos-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="photos"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/photos-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+    }
 }

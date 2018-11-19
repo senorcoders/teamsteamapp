@@ -191,6 +191,8 @@ import { ViewsEventPageModule } from '../pages/views-event/views-event.module';
 import { ViewsEventPage } from '../pages/views-event/views-event';
 import { AddFamilyPageModule } from '../pages/add-family/add-family.module';
 import { AddFamilyPage } from '../pages/add-family/add-family';
+import { TabsPage } from '../pages/tabs/tabs';
+import { TabsPageModule } from '../pages/tabs/tabs.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -288,7 +290,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormJoinTeamCodePageModule,
     LiveScorePageModule,
     ViewsEventPageModule,
-    AddFamilyPageModule
+    AddFamilyPageModule,
+    TabsPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -374,7 +377,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     FormJoinTeamCodePage,
     LiveScorePage,
     ViewsEventPage,
-    AddFamilyPage
+    AddFamilyPage,
+    TabsPage
   ],
   providers: [
     StatusBar,

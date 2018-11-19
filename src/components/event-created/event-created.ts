@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavParams, NavController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { EventsSchedulePage } from '../../pages/events-schedule/events-schedule';
+import { TabsPage } from '../../pages/tabs/tabs';
 
 @Component({
   selector: 'event-created',
@@ -31,7 +32,8 @@ export class EventCreatedComponent {
   }
 
   public leave(){
-    this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot(EventsSchedulePage);
   }
 
 }

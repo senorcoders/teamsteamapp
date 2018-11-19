@@ -13,6 +13,7 @@ import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
 import { SelectOwnerLeaguePage } from '../select-owner-league/select-owner-league';
 import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
+import { TabsPage } from '../tabs/tabs';
 
 
 @IonicPage()
@@ -402,7 +403,8 @@ export class RegistrationPage {
           if (MyApp.User.hasOwnProperty("team")) {
             this.storage.set('firstTime', true);
             this.storage.set('firstTimeRoster', true);
-            this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+            this.ngZone.run(() => this.navCtrl.setRoot(TabsPage));
+            // this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
           }

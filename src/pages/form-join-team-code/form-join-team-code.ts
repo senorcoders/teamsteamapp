@@ -8,6 +8,7 @@ import { MyApp } from '../../app/app.component';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { TabsPage } from '../tabs/tabs';
 
 @IonicPage()
 @Component({
@@ -115,7 +116,8 @@ export class FormJoinTeamCodePage {
             if (MyApp.User.hasOwnProperty("team")) {
               this.storage.set('firstTime', true);
               this.storage.set('firstTimeRoster', true);
-              this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
+              // this.ngZone.run(() => this.navCtrl.setRoot(TabsPage));
+              this.ngZone.run(() => this.navCtrl.setRoot(TabsPage));
             } else {
               this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
             }

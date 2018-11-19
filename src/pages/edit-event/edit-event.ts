@@ -9,6 +9,7 @@ import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { EventPage } from '../event/event';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { MyApp } from '../../app/app.component';
+import { TabsPage } from '../tabs/tabs';
 
 
 declare var google: any;
@@ -490,7 +491,8 @@ export class EditEventPage {
 
     await this.navCtrl.pop();
     EventsSchedulePage.openEvent = { valid: true, index: this.index };
-    this.navCtrl.setRoot(EventsSchedulePage);
+    this.navCtrl.setRoot(TabsPage);
+    // this.navCtrl.setRoot(EventsSchedulePage);
   }
 
 

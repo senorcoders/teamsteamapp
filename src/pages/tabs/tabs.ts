@@ -13,6 +13,9 @@ import { ViewProfilePage } from '../view-profile/view-profile';
 })
 export class TabsPage {
 
+  public eventsTitle = "";
+  public rosterTitle = "";
+  public chatTitle = "";
   events = EventsSchedulePage;
   roster = RosterPage;
   chat = ListChatsPage;
@@ -22,7 +25,8 @@ export class TabsPage {
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
-  ionViewDidLoad() {
+  async ionViewDidLoad() {
+
   }
 
 }
