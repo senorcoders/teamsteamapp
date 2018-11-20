@@ -1,47 +1,55 @@
 <ion-header>
 
   <ion-navbar color="base">
-    <button ion-button icon-only menuToggle start>
+    <!-- <button ion-button icon-only menuToggle start>
       <ion-icon name="menu"></ion-icon>
-    </button>
+    </button> -->
 
     <ion-title>{{"ROSTER.TITLE" | translate}}</ion-title>
+
+    <ion-buttons end>
+      <button ion-button icon-only class="requests">
+        <!-- <img src="/assets/imgs/request-icon-deactive.png">     -->
+      </button>
+    </ion-buttons>
 
   </ion-navbar>
 
 </ion-header>
 
 <div class="overlay shown" [hidden]="firstTime" (click)="hideOverlay()">
-   
-    <br><br><br><br><br><br>
-    <div class="bottom-tutorial">
-      <h2>Invite Players and managers to the team here!</h2>
-    </div>
-    <div class="img-down" text-right>
-      <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
-    </div>
+
+  <br><br><br><br><br><br>
+  <div class="bottom-tutorial">
+    <h2>Invite Players and managers to the team here!</h2>
   </div>
+  <div class="img-down" text-right>
+    <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
+  </div>
+</div>
 
 <ion-content>
   <ion-list no-lines class="joinin-list">
     <ion-item (click)="toggleOverlay()">
-        INVITATION CODE: {{code}}
-        <ion-icon item-end [name]="arrowIcon"></ion-icon>  
+      INVITATION CODE: {{code}}
+      <ion-icon item-end [name]="arrowIcon"></ion-icon>
     </ion-item>
   </ion-list>
 
   <div class="join-overlay" [hidden]="joinOverlay">
-      <h3>3 Ways to onboard your roster</h3>
-      <ol>
-        <li>Add players to your roster. They will receive an email invitation to download Locker Room in their app store. Then, 
-          using their email address, they can login.
-        </li>
-        <li>Players and Parents can request to join the team from the login screen by doing a search for the team an entering
-          their profile information.
-        </li>
-        <li>Send Players and Parents the invitation code and they can join the team immediately.</li>
-        <li>Bulk Upload or enter your roster from your laptop by visiting admin.lockerroomapp.com</li>
-      </ol>
+    <h3>3 Ways to onboard your roster</h3>
+    <ol>
+      <li>Add players to your roster. They will receive an email invitation to download Locker Room in their app store.
+        Then,
+        using their email address, they can login.
+      </li>
+      <li>Players and Parents can request to join the team from the login screen by doing a search for the team an
+        entering
+        their profile information.
+      </li>
+      <li>Send Players and Parents the invitation code and they can join the team immediately.</li>
+      <li>Bulk Upload or enter your roster from your laptop by visiting admin.lockerroomapp.com</li>
+    </ol>
   </div>
 
   <div [hidden]="!notMembers()" class="not-players">
@@ -76,7 +84,7 @@
         <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;">
           <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
           <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
-          <div class="layover" [hidden]="player.firstTime" >{{"INVITED" | translate}}</div>
+          <div class="layover" [hidden]="player.firstTime">{{"INVITED" | translate}}</div>
         </ion-avatar>
 
         <h4>{{player.user.firstName}} {{player.user.lastName}}</h4>

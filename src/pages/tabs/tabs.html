@@ -1,7 +1,14 @@
-<ion-tabs ion-fixed>
-  <ion-tab [root]="events" tabTitle="{{'NAVMENU.EVENTS' | translate}}" tabIcon="custom-events"></ion-tab>
-  <ion-tab [root]="roster" tabTitle="{{'NAVMENU.ROSTER' | translate}}" tabIcon="custom-roster"></ion-tab>
-  <ion-tab [root]="chat" tabTitle="{{'NAVMENU.MESSAGES' | translate}}" tabIcon="custom-chat"></ion-tab>
-  <ion-tab [root]="photos" tabTitle="{{'PHOTOS.TITLE' | translate}}" tabIcon="custom-photos"></ion-tab>
-  <ion-tab [root]="more" tabTitle="{{'MORE' | translate}}" tabIcon="ios-more"></ion-tab>
+<ion-tabs ion-fixed *ngIf="enableMenu">
+  <!-- <ion-tab [root]="p.component" hidden 
+  *ngFor="let p of pages"
+    tabTitle="{{p.title | translate}}" [tabIcon]="p.icon"></ion-tab> -->
+  <ion-tab [root]="returnPageComponents(1).component" *ngIf="validPage(1)" tabTitle="{{returnPageComponents(1).title | translate}}" [tabIcon]="returnPageComponents(1).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(2).component" *ngIf="validPage(2)" tabTitle="{{returnPageComponents(2).title | translate}}" [tabIcon]="returnPageComponents(2).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(4).component" *ngIf="validPage(4)" tabTitle="{{returnPageComponents(4).title | translate}}" [tabIcon]="returnPageComponents(4).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(3).component" *ngIf="validPage(3)" tabTitle="{{returnPageComponents(3).title | translate}}" [tabIcon]="returnPageComponents(3).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(5).component" *ngIf="validPage(5)" tabTitle="{{returnPageComponents(5).title | translate}}" [tabIcon]="returnPageComponents(5).icon"></ion-tab>
+  <!-- <ion-tab [root]="returnPageComponents(6).component" *ngIf="validPage(6)" tabTitle="{{returnPageComponents(6).title | translate}}" [tabIcon]="returnPageComponents(6).icon"></ion-tab> -->
+  <ion-tab [root]="returnPageComponents(7).component" *ngIf="validPage(7)" tabTitle="{{returnPageComponents(7).title | translate}}" [tabIcon]="returnPageComponents(7).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(8).component" *ngIf="validPage(8)" tabTitle="{{returnPageComponents(8).title | translate}}" [tabIcon]="returnPageComponents(8).icon"></ion-tab>
+  <ion-tab [root]="returnPageComponents(9).component" *ngIf="validPage(9)" tabTitle="{{returnPageComponents(9).title | translate}}" [tabIcon]="returnPageComponents(9).icon"></ion-tab>
 </ion-tabs>

@@ -17,6 +17,7 @@ import { CreateLeaguePage } from '../create-league/create-league';
 import { SettingPage } from '../setting/setting';
 import { SelectTeamsLeaguesPage } from '../select-teams-leagues/select-teams-leagues';
 import { AddFamilyPage } from '../add-family/add-family';
+import { MyTaskPage } from '../my-task/my-task';
 
 
 @IonicPage()
@@ -479,5 +480,9 @@ export class ViewProfilePage {
 
   public addFamily() {
     this.navCtrl.push(AddFamilyPage)
+  }
+
+  public toMyTask(){
+    this.navCtrl.push(MyTaskPage);
   }
 }

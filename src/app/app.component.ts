@@ -204,38 +204,38 @@ export class MyApp {
       this.defaultImageUser = true;
       this.user = this.auth.User();
 
-      let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
-      this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team);
-      document.getElementById("imageSlide").setAttribute("src", this.userimg);
+      // let team = MyApp.User.team !== undefined && MyApp.User.team !== null ? MyApp.User.team : "undefined";
+      // this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team);
+      // document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
       this.user = MyApp.User;
       if (MyApp.User.role == undefined || MyApp.User.role == null) {
 
-        this.rolIdentity = "";
-        this.identity = "";
+        // this.rolIdentity = "";
+        // this.identity = "";
       } else if (MyApp.User.hasOwnProperty("team")) {
 
         //Para actualizar el nombre del equipo en menu slide
-        let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
-        this.rolIdentity = await this.helper.getWords("TEAM");
-        this.identity = team.name;
+        // let team: any = await this.http.get("/teams/" + MyApp.User.team).toPromise();
+        // this.rolIdentity = await this.helper.getWords("TEAM");
+        // this.identity = team.name;
         if (MyApp.User.role.name === "Player" && MyApp.User.role.firstTime === undefined) {
           await this.http.put("/roles/" + MyApp.User.role.id, { firstTime: true }).toPromise()
         }
       } else {
-        let league;
-        if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
-          league = MyApp.User.role.league;
-        } else {
-          league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
-        }
-        this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
-        this.identity = league.name;
+        // let league;
+        // if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]") {
+        //   league = MyApp.User.role.league;
+        // } else {
+        //   league = await this.http.get("/leagues/" + MyApp.User.role.league).toPromise() as any;
+        // }
+        // this.rolIdentity = await this.helper.getWords("LEAGUE.NAME");
+        // this.identity = league.name;
       }
 
       //Para reconnectar con sesion en websocket
+      await TabsPage.reloadMenu();
       await this.socket.reconnect();
-
       this.zone.run(function () {
         console.log("cambiooo", MyApp.User);
       });
@@ -272,7 +272,7 @@ export class MyApp {
 
       this.rolIdentity = "";
       this.identity = "";
-      this.nav.root = AgentFreePage;
+      this.nav.root = TabsPage;
     } else {
 
       // this.nav.root = EventsSchedulePage;
@@ -301,8 +301,8 @@ export class MyApp {
        * 
        * Para asignar la imagen en el menu
        */
-    this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
-    document.getElementById("imageSlide").setAttribute("src", this.userimg);
+    // this.userimg = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + MyApp.User.team);
+    // document.getElementById("imageSlide").setAttribute("src", this.userimg);
 
 
     //ahora asignamos el lenaguaje si es que esta definido

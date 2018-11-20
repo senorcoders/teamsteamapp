@@ -10,6 +10,7 @@ import { MyApp } from '../../app/app.component';
 import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { Storage } from '@ionic/storage';
+import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
 
 /**
  * para mostrar la lista de jugadores del equipo
@@ -47,6 +48,8 @@ export class RosterPage {
     })
 
   }
+
+  public requests = [];
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public auth: AuthServiceProvider,
@@ -106,12 +109,20 @@ export class RosterPage {
 
       this.managersOrigin = this.managers;
 
+      //Check If There are news Request
+      this.checkRequests();
+      WebSocketsProvider.onMessages.checkRequests = this.checkRequests.bind(this);
+
     }
     catch (e) {
       console.error(e);
     }
 
     load.dismiss();
+  }
+
+  private checkRequests(){
+
   }
 
   public success(event, player) {

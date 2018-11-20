@@ -39,5 +39,37 @@ page-tabs {
             background: url("/assets/imgs/photos-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
+        &[class*="add-team"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/add-team-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="add-team"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/add-team-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="request"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/request-icon-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="request"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/request-icon-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="nearby-events"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/nearby-events-icon-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="nearby-events"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/nearby-events-icon-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="events-places"][ng-reflect-is-active="true"]  {
+            background: url("/assets/imgs/events-places-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        &[class*="events-places"][ng-reflect-is-active="false"]  {
+            background: url("/assets/imgs/events-places-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
     }
 }

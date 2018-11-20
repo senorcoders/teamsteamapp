@@ -6,6 +6,15 @@ page-roster {
     ion-fab {
         z-index: 99999;
     }
+    .requests {
+        margin: 0 5px 0 0;
+        vertical-align: middle;
+        $sz: 40px;
+        width: $sz;
+        height: $sz;
+        background: url("/assets/imgs/request-icon-deactive.png") no-repeat 50% 50%;
+        background-size: contain;
+    }
     .not-players {
         padding: 10px;
         h4 {
@@ -154,10 +163,9 @@ page-roster {
             color: #fff;
         }
     }
-
-    .joinin-list{
+    .joinin-list {
         margin-bottom: 0 !important;
-        ion-item.item{
+        ion-item.item {
             width: 100% !important;
             flex-basis: 100% !important;
             background-color: #f4324a !important;
@@ -168,8 +176,7 @@ page-roster {
             margin-top: 0 !important;
         }
     }
-
-    .join-overlay{
+    .join-overlay {
         position: fixed;
         display: block;
         padding: 10px 20px;
@@ -182,15 +189,15 @@ page-roster {
         overflow-x: hidden;
         color: #fff;
         width: 100%;
-        h3{
+        h3 {
             font-size: 16px;
             text-align: center;
             font-weight: 400;
         }
-        ol{
+        ol {
             list-style: none;
             counter-reset: item;
-            li{
+            li {
                 margin-bottom: 15px;
                 font-size: 16px;
                 counter-increment: item;
@@ -208,7 +215,7 @@ page-roster {
                 padding: 5px;
                 position: absolute;
                 left: -40px;
-              }
+            }
         }
     }
 }

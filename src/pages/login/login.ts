@@ -129,7 +129,8 @@ export class LoginPage {
           this.showGPSalert();
         }
       } else {
-        await this.navCtrl.setRoot(AgentFreePage);
+        await this.navCtrl.setRoot(TabsPage);
+        // await this.navCtrl.setRoot(AgentFreePage);
         if (this.plt.is('ios')) {
           this.showGPSalert();
         }

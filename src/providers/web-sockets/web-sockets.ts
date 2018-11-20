@@ -27,8 +27,18 @@ export class WebSocketsProvider {
   };
   private static functions: { onConnect: boolean, callback: Function }[] = [];
 
+  public static onMessages:any = {};
+
   constructor(public http: HttpClient, private event: Events) {
 
+  }
+
+  private static async executeFunctionsOnMessages(){
+    for(let nameValue of Object.keys(WebSocketsProvider.onMessages)){
+      if(WebSocketsProvider.onMessages[nameValue].typeFunction() === true){
+        await WebSocketsProvider.onMessages[nameValue]();
+      }
+    }
   }
 
   private async initConnetionSockets() {
@@ -161,7 +171,10 @@ export class WebSocketsProvider {
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      HelpersProvider.me.zone.run(function () { callback(event); });
+      HelpersProvider.me.zone.run(function () { 
+        callback(event);
+        WebSocketsProvider.executeFunctionsOnMessages();
+       });
     });
   }
 

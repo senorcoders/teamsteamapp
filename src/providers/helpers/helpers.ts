@@ -105,6 +105,16 @@ export class HelpersProvider {
       })
     }
 
+    if (!Object["typeFunction"]) {
+      Object.defineProperty(Object.prototype, "typeFunction", {
+        value: function () {
+          return Object.prototype.toString.call(this) === "[object Function]";
+        },
+        writable: false,
+        enumerable: false,
+      })
+    }
+
   }
 
   public async reloadGoogleplaces(sleep?: boolean) {
