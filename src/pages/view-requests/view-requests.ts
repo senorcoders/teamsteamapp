@@ -52,7 +52,7 @@ export class ViewRequestsPage {
   }
 
   public validResponse(request):boolean{
-    return request.acept === false && request.dened == false;
+    return request.acept === false && (request.dened == false || request.dened === undefined);
   }
 
   public errorLoadImage(e) {

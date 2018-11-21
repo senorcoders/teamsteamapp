@@ -7,10 +7,12 @@
 
     <ion-title>{{"ROSTER.TITLE" | translate}}</ion-title>
 
-    <ion-buttons end>
-      <button ion-button icon-only class="requests">
+    <ion-buttons class="requests-container" *ngIf="user.role.name==='Manager'&&requests>0" end>
+      
+      <button ion-button icon-only class="requests" (click)="goToRequest()">
         <!-- <img src="/assets/imgs/request-icon-deactive.png">     -->
       </button>
+      <span>{{requests}}</span>
     </ion-buttons>
 
   </ion-navbar>

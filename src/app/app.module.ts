@@ -193,6 +193,8 @@ import { AddFamilyPageModule } from '../pages/add-family/add-family.module';
 import { AddFamilyPage } from '../pages/add-family/add-family';
 import { TabsPage } from '../pages/tabs/tabs';
 import { TabsPageModule } from '../pages/tabs/tabs.module';
+import { OwnerLeaguesPageModule } from '../pages/owner-leagues/owner-leagues.module';
+import { OwnerLeaguesPage } from '../pages/owner-leagues/owner-leagues';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -291,7 +293,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LiveScorePageModule,
     ViewsEventPageModule,
     AddFamilyPageModule,
-    TabsPageModule
+    TabsPageModule,
+    OwnerLeaguesPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -378,7 +381,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     LiveScorePage,
     ViewsEventPage,
     AddFamilyPage,
-    TabsPage
+    TabsPage,
+    OwnerLeaguesPage
   ],
   providers: [
     StatusBar,

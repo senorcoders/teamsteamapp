@@ -1,75 +1,82 @@
 page-tabs {
-    ion-icon {
-        &[class*="custom-"] {
+    .tab-button {
+        ion-icon {
             margin: 0 5px 0 0;
             vertical-align: middle;
             $sz: 20px;
             width: $sz;
             height: $sz;
-        } // custom icons
-        &[class*="events"][ng-reflect-is-active="true"] {
-            background: url("/assets/imgs/events-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }//in case of active
-        &[class*="events"][ng-reflect-is-active="false"] {
-            background: url("/assets/imgs/events-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }//in case of inactive
-        &[class*="chat"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/chat-1.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="chat"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/chat-0.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="roster"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/roster-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="roster"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/roster-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="photos"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/photos-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="photos"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/photos-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="add-team"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/add-team-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="add-team"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/add-team-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="request"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/request-icon-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="request"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/request-icon-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="nearby-events"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/nearby-events-icon-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="nearby-events"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/nearby-events-icon-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="events-places"][ng-reflect-is-active="true"]  {
-            background: url("/assets/imgs/events-places-active.png") no-repeat 50% 50%;
-            background-size: contain;
-        }
-        &[class*="events-places"][ng-reflect-is-active="false"]  {
-            background: url("/assets/imgs/events-places-deactive.png") no-repeat 50% 50%;
-            background-size: contain;
         }
     }
+    .tab-button[aria-selected="true"] {
+        ion-icon[aria-label="custom events"] {
+            background: url("./../assets/imgs/events-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom chat"] {
+            background: url("./../assets/imgs/chat-1.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom roster"] {
+            background: url("./../assets/imgs/roster-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom photos"] {
+            background: url("./../assets/imgs/photos-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom ad-team"] {
+            background: url("./../assets/imgs/add-team-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom nearby-events"]{
+            background: url("./../assets/imgs/nearby-events-icon-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom events-places"]{
+            background: url("./../assets/imgs/events-places-active.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        
+    }
+    .tab-button[aria-selected="false"] {
+        ion-icon[aria-label="custom events"] {
+            background: url("./../assets/imgs/events-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom chat"] {
+            background: url("./../assets/imgs/chat-0.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom roster"] {
+            background: url("./../assets/imgs/roster-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom photos"] {
+            background: url("./../assets/imgs/photos-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom ad-team"] {
+            background: url("./../assets/imgs/add-team-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom nearby-events"]{
+            background: url("./../assets/imgs/nearby-events-icon-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+        ion-icon[aria-label="custom events-places"]{
+            background: url("./../assets/imgs/events-places-deactive.png") no-repeat 50% 50%;
+            background-size: contain;
+        }
+    } 
+    // ion-icon {
+    //     &[class*="request"][aria-selected="true"] {
+    //         background: url("./../assets/imgs/request-icon-active.png") no-repeat 50% 50%;
+    //         background-size: contain;
+    //     }
+    //     &[class*="request"][aria-selected="false"] {
+    //         background: url("./../assets/imgs/request-icon-deactive.png") no-repeat 50% 50%;
+    //         background-size: contain;
+    //     }
+    // }
 }

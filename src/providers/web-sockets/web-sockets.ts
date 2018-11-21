@@ -36,7 +36,10 @@ export class WebSocketsProvider {
   private static async executeFunctionsOnMessages(){
     for(let nameValue of Object.keys(WebSocketsProvider.onMessages)){
       if(WebSocketsProvider.onMessages[nameValue].typeFunction() === true){
+        
         await WebSocketsProvider.onMessages[nameValue]();
+        console.log("execute on message "+ nameValue);
+
       }
     }
   }
@@ -171,9 +174,9 @@ export class WebSocketsProvider {
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      HelpersProvider.me.zone.run(function () { 
-        callback(event);
-        WebSocketsProvider.executeFunctionsOnMessages();
+      HelpersProvider.me.zone.run(async function () { 
+        await callback(event);
+        await WebSocketsProvider.executeFunctionsOnMessages();
        });
     });
   }

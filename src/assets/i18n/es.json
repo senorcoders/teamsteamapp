@@ -462,5 +462,10 @@
         "NOTE": "Agregue miembros de la familia aquí para permitir que otros reciban notificaciones y obtengan actualizaciones."
     },
     "ADDRESS": "Dirección",
-    "MORE": "Más"
+    "MORE": "Más",
+    "OWNERSLEAGUES": {
+        "TITLE": "Dueños de Ligas",
+        "ADD": ""
+    },
+    "OWNERS": "Dueños"
 }

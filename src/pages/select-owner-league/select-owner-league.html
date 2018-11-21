@@ -22,7 +22,7 @@
         <img src="./assets/imgs/logo-login.png" [hidden]="loadImage">
         <img [src]="user.imgSrc" (load)="loadImg()" [hidden]="!loadImage">
       </ion-avatar>
-      <h2>{{user.firstName+ " "+ user.lastName}}}</h2>
+      <h2>{{user.firstName+ " "+ user.lastName}}</h2>
     </ion-item>
 
     <button ion-button (click)="add()">{{"ADD" | translate}}</button>

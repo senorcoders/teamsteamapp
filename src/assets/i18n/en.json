@@ -458,5 +458,9 @@
         "NOTE": "Add Family members here to allow others to receive notifications and get updates."
     },
     "ADDRESS": "Address",
-    "MORE": "More"
+    "MORE": "More",
+    "OWNERSLEAGUES": {
+        "TITLE": "League owners"
+    },
+    "OWNERS": "Owner"
 }

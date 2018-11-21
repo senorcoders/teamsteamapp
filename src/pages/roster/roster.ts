@@ -11,6 +11,8 @@ import { ChatOnePersonPage } from '../chat-one-person/chat-one-person';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 import { Storage } from '@ionic/storage';
 import { WebSocketsProvider } from '../../providers/web-sockets/web-sockets';
+import { RequestPlayerPage } from '../request-player/request-player';
+import { ViewRequestsPage } from '../view-requests/view-requests';
 
 /**
  * para mostrar la lista de jugadores del equipo
@@ -49,7 +51,7 @@ export class RosterPage {
 
   }
 
-  public requests = [];
+  public requests = 0;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public http: HttpClient, public auth: AuthServiceProvider,
@@ -60,7 +62,7 @@ export class RosterPage {
 
   }
 
-  ionViewWillEnter() {
+  async ionViewWillEnter() {
     this.storage.get('firstTimeRoster').then((val) => {
 
       if (val == true && this.user.role.name === "Manager") {
@@ -68,23 +70,16 @@ export class RosterPage {
 
       }
 
-    })
-  }
-
-  async ionViewDidLoad() {
+    });
 
     let load = HelpersProvider.me.getLoadingStandar();
     try {
 
       //Cargamos primeramente los players
-      // let players = await this.http.get(`/roles?where={"team":"${MyApp.User.team}","name":"Player"}`).toPromise() as any[];
-      // this.players = players.filter(function (item) {
-      //   return item.user !== undefined;
-      // }); 
       let players = await this.http.get(`/players?where={"team":"${MyApp.User.team}"}`).toPromise() as any[];
       this.players = players.filter(function (item) {
         return item.user !== undefined;
-      }); 
+      });
 
       this.players = this.players.map(function (item) {
         item.loadImage = false;
@@ -111,8 +106,6 @@ export class RosterPage {
 
       //Check If There are news Request
       this.checkRequests();
-      WebSocketsProvider.onMessages.checkRequests = this.checkRequests.bind(this);
-
     }
     catch (e) {
       console.error(e);
@@ -121,8 +114,26 @@ export class RosterPage {
     load.dismiss();
   }
 
-  private checkRequests(){
+  async ionViewDidLoad() {
+    WebSocketsProvider.onMessages.checkRequests = this.checkRequests.bind(this);
+  }
 
+  private checkRequests() {
+    this.requests = 0;
+    if (MyApp.newDatas["request"] === false && MyApp.newDatas["requestPlayer"] === false) {
+      return;
+    }
+
+    if (MyApp.newDatas["request"] === true) {
+      this.requests += MyApp.counts["request"];
+    }
+
+    if (MyApp.newDatas["requestPlayer"] === true) {
+      this.requests += MyApp.counts["requestPlayer"];
+    }
+    HelpersProvider.me.zone.run(function(){
+      console.log("request num "+ this.requests);
+    }.bind(this));
   }
 
   public success(event, player) {
@@ -202,6 +213,14 @@ export class RosterPage {
       this.arrowIcon = "md-arrow-dropup";
     } else {
       this.arrowIcon = "md-arrow-dropdown";
+    }
+  }
+
+  public goToRequest() {
+    if (MyApp.newDatas["request"] === true) {
+      this.navCtrl.push(ViewRequestsPage);
+    } else if (MyApp.newDatas["requestPlayer"] === true) {
+      this.navCtrl.push(RequestPlayerPage);
     }
   }
 }

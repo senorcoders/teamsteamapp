@@ -6,13 +6,21 @@ page-roster {
     ion-fab {
         z-index: 99999;
     }
+    .requests-container{
+        span{
+            color: #fe324d !important;
+        }
+        button{
+            margin-right: 7px,
+        }
+    }
     .requests {
         margin: 0 5px 0 0;
         vertical-align: middle;
         $sz: 40px;
         width: $sz;
         height: $sz;
-        background: url("/assets/imgs/request-icon-deactive.png") no-repeat 50% 50%;
+        background: url("/assets/imgs/request-icon-active.png") no-repeat 50% 50%;
         background-size: contain;
     }
     .not-players {

@@ -421,16 +421,16 @@ export class MyApp {
   }
 
   private insertPointNewMenuToggle() {
-    if (document.querySelector("div.point-new-menu-toggle") !== null) return;
+    // if (document.querySelector("div.point-new-menu-toggle") !== null) return;
 
-    let div = document.createElement("div");
-    div.setAttribute("class", "point-new-menu-toggle");
-    document.querySelector("button[menutoggle]").appendChild(div);
+    // let div = document.createElement("div");
+    // div.setAttribute("class", "point-new-menu-toggle");
+    // document.querySelector("button[menutoggle]").appendChild(div);
   }
 
   private deletePointNewMenuToggle() {
-    if (document.querySelector("div.point-new-menu-toggle") === null) return;
-    document.querySelector("button[menutoggle]").removeChild(document.querySelector("div.point-new-menu-toggle"));
+    // if (document.querySelector("div.point-new-menu-toggle") === null) return;
+    // document.querySelector("button[menutoggle]").removeChild(document.querySelector("div.point-new-menu-toggle"));
   }
 
   //Para obtener el nombre del usuario para mostrarlo en el menu

@@ -1,0 +1,22 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"OWNERSLEAGUES.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item *ngFor="let owner of owners" [hidden]="owner.user.id===user.id">{{owner.user.firstName+ " "+ owner.user.lastName}}</ion-item>
+  </ion-list>
+
+  <ion-fab bottom right >
+    <button ion-fab icon-only (click)="addOwner()" class="invite-btn" [ngClass]="!firstTime ? 'tutorial-btn' : 'test'">
+      <ion-icon name="md-add"></ion-icon> {{"ADD" | translate}}
+    </button>
+  </ion-fab>
+
+</ion-content>

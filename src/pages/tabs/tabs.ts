@@ -10,6 +10,7 @@ import { NotificationPage } from '../notification/notification';
 import { TeamsLeaguePage } from '../teams-league/teams-league';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../places-player-free/places-player-free';
+import { OwnerLeaguesPage } from '../owner-leagues/owner-leagues';
 
 @IonicPage()
 @Component({
@@ -25,6 +26,7 @@ export class TabsPage {
     { id: 4, title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "custom-chat", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
     // { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague|Manager|Family", yes: "*" }, watch: "", newData: "" },
     { id: 5, title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "custom-add-team", role: "OwnerLeague", watch: "", newData: "" },
+    { id: 10, title: "OWNERS", component: OwnerLeaguesPage, icon: "ios-people", role: "OwnerLeague", watch: "", newData: "" },
     // { id: 6, title: "NOTIFCATION.TITLE", component: NotificationPage, icon: "custom-request", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "", newData: "" },
     // { title: "REQUESTS", component: ViewRequestsPage, icon: "request-icon.svg", role: { not: "FreeAgent|OwnerLeague", yes: "Manager" }, watch: "request", newData: "request" },
     // { title: "REQUESTSTEAM", component: RequestsPlayerPage, icon: "request-icon.svg", role: "*", watch: "requestPlayer", newData: "requestPlayer" },
