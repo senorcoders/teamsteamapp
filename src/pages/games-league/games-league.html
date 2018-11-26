@@ -1,42 +1,10 @@
 <ion-header>
 
   <ion-navbar>
-    <!-- <button ion-button icon-only menuToggle start>
-      <ion-icon name="menu"></ion-icon>
-    </button> -->
-
-    <!-- 
-    <ion-buttons end>
-      <button ion-button>{{"PRACTICE" | translate}}</button>
-    </ion-buttons> -->
-    <ion-row>
-      <ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title>
-      <ion-select [(ngModel)]="filter" (ionChange)="filterEvents()">
-        <ion-option value='all'>{{ 'ALL' | translate }}</ion-option>
-        <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
-        <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
-        <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
-      </ion-select>
-    </ion-row>
+    <ion-title>{{"GAMES" | translate}}</ion-title>
   </ion-navbar>
 
 </ion-header>
-
-<div class="overlay shown" [hidden]="firstTime" (click)="hideOverlay()">
-  <div class="header-tutorial">
-    <img src="./assets/imgs/up-arrow.png" alt="">
-    <p>Click the menu button to access more options like inviting athletes to your roster</p>
-  </div>
-  <br><br><br>
-  <div class="bottom-tutorial">
-    <h2>Create a new event below</h2>
-    <h2>Everyone on your Roster will be Notified with new &amp; updated Events</h2>
-  </div>
-  <div class="img-down" text-right>
-    <img src="./assets/imgs/down-arrow.png" alt="" width="70px">
-  </div>
-</div>
-
 
 <ion-content>
   <div ion-fixed id="select-by">
@@ -47,13 +15,6 @@
       <pre>{{ 'EVENTS.UPCOMING' | translate }}</pre>
     </button>
   </div>
-
-  <div [hidden]="!event0||user.role.name!=='Manager'" class="no-events">
-    <h4>{{"EVENTS.NOEVENT" | translate}}
-      <a href="#" (click)="addEvent()">{{'HERE' | translate}}!</a>
-    </h4>
-  </div>
-
 
   <ion-card *ngFor="let e of events" [ngClass]="e.type">
 
@@ -84,7 +45,7 @@
     <div class="dateTime" [ngClass]="e.loadImage===true?'is-image':'not-image'" (click)="goEvent(e)">
       <!-- para mostrar el punto rojo cuando un evento no ha sido visto -->
       <div class="not-view" *ngIf="inViews(e)"></div>
-      
+
       <h3 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[0]}}</h3>
       <h4 class="date-event" [hidden]="e.repeatsDaily">{{e.parsedDateTime[1]}}</h4>
       <h4 class="date-event daily" [hidden]="!e.repeatsDaily">{{"DAILY" | translate}}</h4>
@@ -136,17 +97,5 @@
     </ion-row>
 
   </ion-card>
-
-  <ion-fab bottom left [hidden]='!league'>
-    <button ion-fab icon-only (click)="toGamesLeagues()">
-      <ion-icon name="md-calendar"></ion-icon>
-    </button>
-  </ion-fab>
-
-  <ion-fab bottom right [hidden]='addButtonHidden()'>
-    <button ion-fab icon-only (click)="addEvent()" class="invite-btn" [ngClass]="!firstTime ? 'tutorial-btn' : 'test'">
-      <ion-icon name="md-add"></ion-icon> {{"CREATEEVENT" | translate}}
-    </button>
-  </ion-fab>
 
 </ion-content>

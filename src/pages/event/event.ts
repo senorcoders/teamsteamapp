@@ -22,6 +22,7 @@ import { MyTaskPage } from '../my-task/my-task';
 import { LiveScorePage } from '../live-score/live-score';
 import { ViewsEventPage } from '../views-event/views-event';
 import { TabsPage } from '../tabs/tabs';
+import { GamesLeaguePage } from '../games-league/games-league';
 
 declare var google: any;
 
@@ -82,6 +83,7 @@ export class EventPage {
   public idEventPlayerClose: number;
 
   public league = false;
+  public inLeagueGames = false;
 
   //Para mostrar cuando el live score esta habilitado
   public liveScore = false;
@@ -121,6 +123,11 @@ export class EventPage {
       this.numTasks = this.event.tasks.filter(it => {
         return it.for === MyApp.User.id && it.completad === false;
       }).length;
+    }
+
+    //para saber si estamos in games events of league
+    if (this.navParams.get("inLeagueGames") !== undefined && this.navParams.get("inLeagueGames") !== null) {
+      this.inLeagueGames = true;
     }
   }
 
@@ -340,6 +347,7 @@ export class EventPage {
   }
 
   private async loadWheater(lat, lon) {
+    if (this.inLeagueGames === true && GamesLeaguePage.by === "past") return true;
     if (EventsSchedulePage.by === "past") return;
     try {
       let api = `/data/2.5/forecast?lat=${lat}&lon=${lon}`;
@@ -439,10 +447,14 @@ export class EventPage {
     // //   now.isBefore(dateEvent),
     // //   this.user.role.name
     // // );
-
-    if (EventsSchedulePage.by !== "past") {
+    if (this.inLeagueGames === true && GamesLeaguePage.by === "past") {
       this.enablePlayerClose = true;
+    } else {
+      if (EventsSchedulePage.by !== "past") {
+        this.enablePlayerClose = true;
+      }
     }
+
     console.log(this.enablePlayerClose);
   }
 
@@ -701,7 +713,7 @@ export class EventPage {
 
   //asigna una respuesta al evento si no esta creada se crea
   async asingResponse(response) {
-
+    if (this.inLeagueGames === true && GamesLeaguePage.by === "past") return true;
     if (EventsSchedulePage.by === "past") return;
 
     let guardar = this.tracking.user !== undefined;

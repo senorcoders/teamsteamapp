@@ -1,0 +1,513 @@
+page-games-league {
+    ion-navbar {
+        height: auto !important;
+    }
+
+    ion-header, ion-fab{
+        z-index: 99999;
+    }
+    .toolbar-background-md,
+    .toolbar-background {
+        background-color: white !important;
+    }
+    button[menutoggle] {
+        color: black !important;
+    }
+    .toolbar-title,
+    .toolbar-title-md {
+        color: black !important;
+        font-size: 2rem;
+        padding-bottom: 0;
+        padding-top: 0;
+    }
+    ion-content {
+        background-color: #f2f5f8 !important;
+    }
+    #select-by {
+        margin-top: 0;
+        width: 100%;
+        height: 70px;
+        display: flex;
+        flex-direction: row;
+        background-color: #f2f5f8 !important;
+        justify-content: space-around;
+        padding: 20px 0 20px 0;
+        /*box-shadow: 0 2px 0 0 rgba(0, 0, 0, 0.14),
+            0 3px 0 0 rgba(0, 0, 0, 0.2), 
+            0 1px 0 0 rgba(0, 0, 0, 0.12);*/
+        .select-by {
+            width: auto;
+            flex-basis: auto;
+            height: 100%;
+            border-radius: 20px !important;
+            box-shadow: 0 0 0 0 transparent !important;
+            background-color: white;
+            color: #5d6d81;
+            padding: 0 43px;
+            .button-inner {
+                display: flex !important;
+                flex-wrap: wrap;
+                flex-direction: row;
+                ion-icon {
+                    transform: rotate(180deg);
+                    height: 10px;
+                    color: #e8eaf6 !important;
+                    font-size: 25pt;
+                    margin-bottom: -15px;
+                }
+                pre {
+                    font-family: inherit !important;
+                    font-size: 1em;
+                    text-transform: capitalize !important;
+                }
+                ion-icon,
+                pre {
+                    display: block;
+                    width: 100%;
+                    text-align: center;
+                    flex-basis: 100%;
+                }
+            }
+        }
+    }
+    ion-content {
+        background-color: #e8eaf6 !important;
+        .select {
+            background-color: #fe324d !important;
+            color: white !important;
+        }
+    }
+    .scroll-content {
+        padding-top: 70px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    /***
+    ** DISEÑO PARA LOS EVENTOS
+    **/
+    .no-events {
+        height: 100%;
+        display: flex;
+        align-content: center;
+        align-items: center;
+        h4 {
+            text-align: center;
+            width: 100%;
+            flex-basis: 100%;
+            color: #008e76 !important;
+            a {
+                color: #1a5d58 !important;
+                text-decoration: none !important;
+            }
+        }
+    }
+    .text-event {
+        font-family: "Text_Event" !important;
+        display: flex;
+        justify-content: space-between;
+        i {
+            width: auto;
+            flex-basis: auto;
+        }
+    }
+    .date-event {
+        font-family: "Date_Event" !important;
+    }
+    ion-card {
+        margin: 0 0 10px 0 !important;
+        width: 100% !important;
+        display: flex !important;
+        align-content: space-between;
+        justify-content: center;
+        flex-wrap: wrap;
+        padding: 15px;
+        border-radius: 10px !important;
+        .not-view{
+            width: 10px;
+            height: 10px;
+            background-color: red;
+            border-radius: 50%;
+            position: absolute;
+            margin-top: -5px;
+            margin-left: -4px;
+        }
+        .dateTime {
+            width: 20%;
+            flex-basis: 20%;
+            border: 1px solid #fe324d;
+            height: 60px;
+            text-align: center;
+            h3,
+            h4 {
+                margin: 0 !important;
+                padding: 0 !important;
+            }
+            h3 {
+                font-size: 1em !important;
+                font-weight: bold;
+                margin-top: 15px !important;
+            }
+            h4 {
+                font-size: 1.4em !important;
+                font-weight: bold;
+            }
+            h4.daily {
+                font-size: 1.1em !important;
+                height: 100%;
+                margin: 0 !important;
+                font-weight: bold;
+                line-height: 60px;
+            }
+        }
+        .details {
+            width: 70%;
+            flex-basis: 70%;
+            margin-left: 10%;
+            p {
+                // color: #7f848c !important;
+            }
+            h2 {
+                text-transform: uppercase !important;
+                font-size: 1.6rem !important;
+            }
+            p {
+                font-size: 1.4rem !important;
+            }
+        }
+        .details-location {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            flex-basis: 100%;
+            width: 100%;
+            p {
+                flex-basis: calc(100% - 90px);
+                width: calc(100% - 90px); // color: #5d6d81 !important;
+                font-size: 1.6rem;
+                margin: 0 !important;
+            }
+            i {
+                flex-basis: 80px;
+                width: 80px; // color: #5d6d81 !important;
+                font-size: 1.3rem !important;
+                margin-top: 5px;
+            }
+        }
+    } //LINEA QUE DIVIDE LOS DATOS GENERALES DE LOS EVENTO Y LA ASSISTENCIA
+    .dividir {
+        margin-top: 10px;
+        margin-bottom: 10px;
+        margin-left: -15px;
+        margin-right: -15px;
+        width: calc(100% + 30px);
+        flex-basis: calc(100% + 30px);
+        height: 1px;
+        background-color: #dedede !important;
+    } //LA ASSISTENCIA PARA LOS EVENTOS Y JUEGOS
+    .asistencia,
+    .assistence {
+        padding-left: 0 !important;
+        font-size: 1.4rem;
+        line-height: 1.5;
+        ion-col {
+            padding: 0 !important;
+        }
+        ion-col[col-6] {
+            justify-content: flex-end;
+            display: flex;
+        } //PARA LOS CIRCULOS DE COLORES QUE SE MUESTRAN EN LAS ASISTENCIAS
+        .ball {
+            width: 1em;
+            height: 1em;
+            border-radius: 50%;
+            margin-right: 7px;
+        }
+        .text-inner-button {
+            font-size: 1.4em !important;
+            color: #c7cbcf !important;
+        }
+        .cero {
+            background-color: #c7cbcf !important;
+        }
+        .mas {
+            background-color: #088c75 !important;
+        }
+        .menos {
+            background-color: #e20666 !important;
+        }
+        .talves {
+            background-color: #ffe430 !important;
+        }
+        .chat {
+            background-color: transparent !important;
+            box-shadow: 0 0 0 transparent !important;
+            color: #c7cbcf !important;
+            font-size: 2rem;
+            .chat-0 {
+                width: 4rem;
+                height: 4rem;
+                display: block;
+                float: left;
+                margin-left: 5px;
+            }
+            .chat-more {
+                width: 3.7rem;
+                height: 3.7rem;
+                display: block;
+                float: left;
+                margin-left: 5px;
+            }
+        }
+        .chat.mas {
+            color: #fe324d !important;
+        }
+    }
+    ion-card.event {
+        .dateTime.is-image,
+        .details.is-image,
+        .assistence {
+            display: none !important;
+        }
+        .inner-image {
+            display: flex;
+            .dateTimeEvent {
+                height: 80px;
+                width: 80px;
+                h3,
+                h4 {
+                    text-align: center;
+                    text-transform: uppercase;
+                }
+                h3 {
+                    margin-top: 10px;
+                    color: #fe324d !important;
+                    font-size: 1.8rem !important;
+                }
+                h4 {
+                    color: #5d6d81 !important;
+                    font-size: 2.8rem !important;
+                }
+                h4.daily {
+                    font-size: 2rem !important;
+                    color: #fe324d !important;
+                    line-height: 80px;
+                }
+            }
+        }
+        .inner-image.is-image {
+            width: calc(100% + 30px);
+            height: 250px;
+            margin-top: -15px;
+            margin-left: -15px;
+            margin-right: -15px;
+            background-repeat: no-repeat;
+            background-size: cover;
+            justify-content: space-between;
+            align-items: flex-end;
+            h2 {
+                padding-left: 15px;
+                margin-bottom: 20px;
+                font-size: 3rem;
+                color: white;
+                text-shadow: 2px 2px 1px rgba(31, 30, 31, 0.32), -2px -2px 1px rgba(31, 30, 31, 0.32);
+            }
+            .dateTimeEvent {
+                background-color: rgba(255, 255, 255, 0.5);
+                margin-bottom: 20px;
+                padding: 5px !important;
+                margin-right: 10px;
+                font-weight: bold;
+            }
+        }
+        .inner-image.not-image {
+            display: none !important;
+        }
+        .details-event.is-image {
+            flex-basis: 100%;
+            width: 100%;
+            padding: 5px;
+            p {
+                font-size: 2rem !important;
+                margin: 0 !important;
+            }
+            i {
+                display: block;
+                text-align: right;
+            }
+        }
+        .details-event.not-image {
+            display: none !important;
+        }
+    }
+    ion-card.practice,
+    ion-card.game {
+        //Para ocultar lo que es solo para eventos
+        .inner-image {
+            display: none !important;
+        } //Para el color que se muestra en la parte derecha
+        .color-right {
+            position: absolute;
+            left: auto;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            margin-top: -15px;
+        }
+    }
+
+    ion-card.event{
+        .color-right {
+            background-image: url("../assets/imgs/game.png");
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: contain;
+            position: absolute;
+            left: auto;
+            right: 15px;
+            width: 30px;
+            height: 30px;
+            margin-top: -15px;
+        }
+    }
+    ion-card.game {
+        .details-event {
+            display: none !important;
+        }
+        .color-right {
+            background-image: url("../assets/imgs/game.png");
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: contain;
+        }
+        .dateTime {
+            h3,
+            h4 {
+                text-transform: uppercase;
+                text-align: center;
+            }
+            h3 {
+                color: #fe324d !important;
+            }
+            h4 {
+                color: #5d6d81 !important;
+            }
+        }
+    }
+    ion-card.practice {
+        .details-event,
+        .dividir {
+            display: none !important;
+        }
+        .color-right {
+            background-image: url("../assets/imgs/practice.png");
+            background-repeat: no-repeat;
+            background-position: right;
+            background-size: contain;
+        }
+        .dateTime {
+            h3,
+            h4 {
+                text-transform: uppercase;
+                text-align: center;
+            }
+            h3 {
+                color: #fe324d !important;
+            }
+            h4 {
+                color: #5d6d81 !important;
+            }
+        }
+        // .asistencia {
+        //     display: none !important;
+        // }
+    }
+
+    .images-all {
+        height: 150px;
+        object-fit: cover;
+    }
+    
+    div.images-event {
+        h3 {
+            color: #ea2e47;
+            text-align: center;
+            font-size: 1.8rem;
+        }
+        ion-slides {
+            .swiper-wrapper {
+                width: 170px !important;
+            }
+            ion-slide {
+                img {
+                    object-fit: cover;
+                    width: 150px;
+                    height: 150px;
+                }
+            }
+        }
+    }
+    button[ion-fab] {
+        background-color: #fe324d !important;
+        color: white !important;
+    }
+
+    .gallery-grid-img{
+        max-height: 100px;
+    }
+    .invite-btn{
+        border-radius: 50px !important;
+        border-bottom-right-radius: 0 !important;
+        border-top-right-radius: 0 !important;
+        width: 140px !important;
+         ion-icon{
+            font-size: 1.7rem;
+            padding-right: 5px;
+            flex: 0;
+        }
+        &.tutorial-btn{
+            border: 3px solid;
+        }
+    }
+
+    .overlay {
+        display: none;
+            
+        &.shown {
+            position: fixed;
+            display: block;
+            padding: 40px 20px;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            background: rgba( 0, 0, 0, 0.7 );
+            z-index: 9999;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+    }
+
+    .header-tutorial{
+        margin-top: 15px;
+        img{
+            width: 100px;
+            margin-top: 10px;
+            margin-left: 10px;
+        }
+        p{
+            color: #fff;
+            font-size: 15px;
+            text-align: right;
+            width: 80%;
+            margin: 0 auto;
+        }
+    }
+
+    .bottom-tutorial{
+        text-align: center;
+
+        h2{
+            color: #fff;
+        }
+    }
+}

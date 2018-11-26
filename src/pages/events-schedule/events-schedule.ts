@@ -15,6 +15,7 @@ import { LocationAccuracy } from '@ionic-native/location-accuracy';
 import { ImagesEventPage } from '../images-event/images-event';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { Storage } from '@ionic/storage';
+import { GamesLeaguePage } from '../games-league/games-league';
 
 @IonicPage()
 @Component({
@@ -36,7 +37,7 @@ export class EventsSchedulePage {
 
   public team: any;
 
-  public events: Array<any> = [];
+  public events = [];
   public eventsOrigin = [];
   public event0 = false;
 
@@ -625,6 +626,10 @@ export class EventsSchedulePage {
   hideOverlay() {
     this.storage.set('firstTime', false);
     this.firstTime = true;
+  }
+
+  public toGamesLeagues(){
+    this.navCtrl.push(GamesLeaguePage);
   }
 
 }
