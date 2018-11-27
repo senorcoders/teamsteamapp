@@ -24,12 +24,18 @@ export class GamesLeaguePage {
 
   public by = "upcoming";
   public static by = "upcoming";
+  public league:any;
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private helper: HelpersProvider, private http: HttpClient,
     private zone: NgZone
   ) {
+    if(this.navParams.get("league") !== undefined && this.navParams.get("league") !== null){
+      this.league = this.navParams.get("league");
+    }else{
+      this.league = MyApp.User.role.league
+    }
   }
 
   async ionViewDidLoad() {
@@ -43,10 +49,10 @@ export class GamesLeaguePage {
     try {
 
       let events: any;
-      if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-        events = await this.http.get("/league/games/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league.id).toPromise();
+      if (Object.prototype.toString.call(this.league) === "[object Object]")
+        events = await this.http.get("/league/games/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.league.id).toPromise();
       else
-        events = await this.http.get("/league/games/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + MyApp.User.role.league).toPromise();
+        events = await this.http.get("/league/games/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.league).toPromise();
 
       this.events = await this.parserEvents(events);
 

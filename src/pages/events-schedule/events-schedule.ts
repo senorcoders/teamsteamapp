@@ -16,6 +16,7 @@ import { ImagesEventPage } from '../images-event/images-event';
 import { ImageViewerController } from 'ionic-img-viewer';
 import { Storage } from '@ionic/storage';
 import { GamesLeaguePage } from '../games-league/games-league';
+import { SelectLeagueToChatPage } from '../select-league-to-chat/select-league-to-chat';
 
 @IonicPage()
 @Component({
@@ -630,7 +631,10 @@ export class EventsSchedulePage {
   }
 
   public toGamesLeagues() {
-    this.navCtrl.push(GamesLeaguePage);
+    if (this.league === true)
+      this.navCtrl.push(GamesLeaguePage);
+    else
+      this.navCtrl.push(SelectLeagueToChatPage, { toGames: true });
   }
 
 }

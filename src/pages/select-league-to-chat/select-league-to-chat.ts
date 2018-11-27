@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { ChatManagerOfTeamsLeaguePage } from '../chat-manager-of-teams-league/chat-manager-of-teams-league';
 import { interceptor } from '../../providers/auth-service/interceptor';
+import { GamesLeaguePage } from '../games-league/games-league';
 
 
 @IonicPage()
@@ -14,16 +15,19 @@ import { interceptor } from '../../providers/auth-service/interceptor';
 export class SelectLeagueToChatPage {
 
   public leagues = [];
-
+  public toGames = false;
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
     private http: HttpClient
   ) {
+    if (this.navParams.get("toGames") === true) {
+      this.toGames = true;
+    }
   }
 
   async ionViewDidLoad() {
     let leagueteams = await this.http.get(`/teamleague?where={"team":"${MyApp.User.team}"}`).toPromise() as any[];
-    leagueteams = leagueteams.filter(it=>{
+    leagueteams = leagueteams.filter(it => {
       return it.league !== undefined && it.league.typeObject();
     });
 
@@ -31,11 +35,11 @@ export class SelectLeagueToChatPage {
       let index = this.leagues.findIndex(it => {
         return it.id === tl.league.id;
       });
-      if (index === -1){
-        tl.league.imageSrc = interceptor.transformUrl("/images/ramdon/leagues/" + tl.league.id+ "-thumbnail");
+      if (index === -1) {
+        tl.league.imageSrc = interceptor.transformUrl("/images/ramdon/leagues/" + tl.league.id + "-thumbnail");
         this.leagues.push(tl.league);
       }
-        
+
     }
   }
 
@@ -45,7 +49,10 @@ export class SelectLeagueToChatPage {
 
   public async toChat(league) {
     await this.navCtrl.pop({ animation: "ios-transition" });
-    this.navCtrl.push(ChatManagerOfTeamsLeaguePage, { league });
+    if (this.toGames === false)
+      this.navCtrl.push(ChatManagerOfTeamsLeaguePage, { league });
+    else
+      this.navCtrl.push(GamesLeaguePage, { league });
   }
 
 }
