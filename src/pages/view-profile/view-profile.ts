@@ -411,7 +411,7 @@ export class ViewProfilePage {
   public async deleteDevices() {
     let load = this.helper.getLoadingStandar();
     try {
-      await this.http.delete("/user/devices/" + MyApp.User.id + "/" + this.helper.getDeviceInfo().uuid).toPromise();
+      await this.http.delete("/user/devices/" + MyApp.User.id + "/" + this.helper.getDeviceInfo().uuid, { responseType: "text" }).toPromise();
       load.dismissAll();
     }
     catch (e) {
@@ -481,11 +481,11 @@ export class ViewProfilePage {
     this.navCtrl.push(AddFamilyPage)
   }
 
-  public toMyTask(){
+  public toMyTask() {
     this.navCtrl.push(MyTaskPage);
   }
 
-  public toCreateOwnerLeagueAdmin(){
+  public toCreateOwnerLeagueAdmin() {
     this.navCtrl.push(AdminCreateOwnerLeaguePage);
   }
 }

@@ -107,7 +107,7 @@ export class ChatManagerOfTeamsLeaguePage {
       }
 
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + this.league.id);
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id);
         item.loadImage = false;
         return item;
       }).reverse().concat(this.msgList);
@@ -191,7 +191,7 @@ export class ChatManagerOfTeamsLeaguePage {
         return it.hasOwnProperty("user");
       });
       this.msgList = mgs.map(function (item) {
-        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id + "/" + this.league.id);
+        item.photo = interceptor.transformUrl("/userprofile/images/" + item.user.id);
         item.loadImage = false;
         return item;
       }.bind(this)).reverse();
@@ -295,7 +295,7 @@ export class ChatManagerOfTeamsLeaguePage {
     let index = this.getMsgIndexById(msg.dateTime);
     // console.log(msg, index);
     if (index === -1) {
-      msg.photo = interceptor.transformUrl("/userprofile/images/" + msg.user + "/" + MyApp.User.team);
+      msg.photo = interceptor.transformUrl("/userprofile/images/" + msg.user);
       this.ngZone.run(() => { this.msgList.push(msg); });
       // console.log(ChatPage.enableChat);
       if (ChatManagerOfTeamsLeaguePage.enableChat === true) {

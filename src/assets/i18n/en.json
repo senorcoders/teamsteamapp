@@ -470,5 +470,6 @@
     },
     "CHATMANAGERSTEAMSLEAGUE": "Team Managers of the league",
     "MSGTOMANAGERSTEAMSLEAGUE": "Messages to Team Managers",
-    "SELECTLEAGUE": "Select the league"
+    "SELECTLEAGUE": "Select the league",
+    "CLOSESESIONDEVICE": "the sessions have been closed from another device"
 }

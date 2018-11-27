@@ -195,6 +195,7 @@ export class MyApp {
       await this.proccessViews();
       //Para iniciar sesion en websocket
       await this.socket.initConexion();
+      setTimeout(function () { this.auth.validSesion() }.bind(this), 10000);
     } else {
       this.nav.root = LoginPage;
     }

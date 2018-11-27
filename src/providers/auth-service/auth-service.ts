@@ -288,4 +288,25 @@ export class AuthServiceProvider {
 
   }
 
+  public async validSesion() {
+    try {
+      let response = await this.http.get(`/user/devices/${MyApp.User.id}/${this.helper.getDeviceInfo().uuid}`).toPromise() as { msg: 1 | 0 };
+      if (response.msg === 0)
+        this.forceLogout();
+    }
+    catch (e) {
+      console.error(e);
+    }
+  }
+
+  private async forceLogout() {
+    let message = await this.helper.getWords("CLOSESESIONDEVICE");
+    this.helper.alertCtrl.create({
+      message,
+      buttons: ["Ok"]
+    })
+    .present();
+    await MyApp.me.logout();
+  }
+
 }
