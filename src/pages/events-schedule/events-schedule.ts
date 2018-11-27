@@ -496,6 +496,7 @@ export class EventsSchedulePage {
   }
 
   public inViews(e) {
+    if (!e.views) return false;
     return e.views.findIndex(it => {
       return it.user === MyApp.User.id;
     }) === -1;
@@ -628,7 +629,7 @@ export class EventsSchedulePage {
     this.firstTime = true;
   }
 
-  public toGamesLeagues(){
+  public toGamesLeagues() {
     this.navCtrl.push(GamesLeaguePage);
   }
 

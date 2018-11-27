@@ -1,0 +1,19 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>SelectLeague</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-searchbar type="text" [(ngModel)]="search" showCancelButton="true" (ionInput)="searchLeague($event)">
+  </ion-searchbar>
+
+  <ion-list>
+    <ion-item *ngFor="let league of leagues">{{league.name}}</ion-item>
+  </ion-list>
+
+</ion-content>

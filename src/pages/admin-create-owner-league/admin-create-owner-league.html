@@ -1,0 +1,27 @@
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>{{"CREATEOWNERLEAGUE.TITLE" | translate}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content padding>
+
+  <ion-list>
+    <ion-item>
+      <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="firstname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"LASTNAME" | translate}}</ion-label>
+      <ion-input type="text" [(ngModel)]="lastname"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>{{"EMAIL" | translate}}</ion-label>
+      <ion-input type="email" [(ngModel)]="email"></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <button ion-button (click)="addOwnerLeague()">{{"ADD" | translate}}</button>
+</ion-content>

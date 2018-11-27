@@ -18,6 +18,7 @@ import { SettingPage } from '../setting/setting';
 import { SelectTeamsLeaguesPage } from '../select-teams-leagues/select-teams-leagues';
 import { AddFamilyPage } from '../add-family/add-family';
 import { MyTaskPage } from '../my-task/my-task';
+import { AdminCreateOwnerLeaguePage } from '../admin-create-owner-league/admin-create-owner-league';
 
 
 @IonicPage()
@@ -117,8 +118,6 @@ export class ViewProfilePage {
 
     return this.user.role.hasOwnProperty('team')
   }
-
-
 
   public async loadImage() {
     this.image = true;
@@ -484,5 +483,9 @@ export class ViewProfilePage {
 
   public toMyTask(){
     this.navCtrl.push(MyTaskPage);
+  }
+
+  public toCreateOwnerLeagueAdmin(){
+    this.navCtrl.push(AdminCreateOwnerLeaguePage);
   }
 }

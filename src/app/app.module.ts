@@ -197,6 +197,10 @@ import { OwnerLeaguesPageModule } from '../pages/owner-leagues/owner-leagues.mod
 import { OwnerLeaguesPage } from '../pages/owner-leagues/owner-leagues';
 import { GamesLeaguePage } from '../pages/games-league/games-league';
 import { GamesLeaguePageModule } from '../pages/games-league/games-league.module';
+import { AdminCreateOwnerLeaguePage } from '../pages/admin-create-owner-league/admin-create-owner-league';
+import { AdminCreateOwnerLeaguePageModule } from '../pages/admin-create-owner-league/admin-create-owner-league.module';
+import { SelectLeaguePageModule } from '../pages/select-league/select-league.module';
+import { SelectLeaguePage } from '../pages/select-league/select-league';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -297,7 +301,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFamilyPageModule,
     TabsPageModule,
     OwnerLeaguesPageModule,
-    GamesLeaguePageModule
+    GamesLeaguePageModule,
+    AdminCreateOwnerLeaguePageModule,
+    SelectLeaguePageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -386,7 +392,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddFamilyPage,
     TabsPage,
     OwnerLeaguesPage,
-    GamesLeaguePage
+    GamesLeaguePage,
+    AdminCreateOwnerLeaguePage,
+    SelectLeaguePage
   ],
   providers: [
     StatusBar,

@@ -463,5 +463,9 @@
         "TITLE": "League owners"
     },
     "OWNERS": "Owner",
-    "GAMES": "Games"
+    "GAMES": "Games",
+    "CREATEOWNERLEAGUE": {
+        "TITLE": "Create League Owner",
+        "SELECT": "Select League"
+    }
 }

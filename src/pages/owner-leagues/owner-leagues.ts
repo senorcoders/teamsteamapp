@@ -33,7 +33,7 @@ export class OwnerLeaguesPage {
 
       this.owners = await this.http.get(`/roles?where={"name":"OwnerLeague","league":"${this.league}"}`).toPromise() as any[];
       this.owners = this.owners.filter(it => {
-        return it.user.typeObject();
+        return it.user !== undefined && it.user !== null;
       });
     }
     catch (e) {

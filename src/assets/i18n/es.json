@@ -468,5 +468,9 @@
         "ADD": ""
     },
     "OWNERS": "Dueños",
-    "GAMES": "Juegos"
+    "GAMES": "Juegos",
+    "CREATEOWNERLEAGUE": {
+        "TITLE": "Crear Dueño de Liga",
+        "SELECT": "Seleccionar Liga"
+    }
 }
