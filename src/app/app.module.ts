@@ -201,6 +201,10 @@ import { AdminCreateOwnerLeaguePage } from '../pages/admin-create-owner-league/a
 import { AdminCreateOwnerLeaguePageModule } from '../pages/admin-create-owner-league/admin-create-owner-league.module';
 import { SelectLeaguePageModule } from '../pages/select-league/select-league.module';
 import { SelectLeaguePage } from '../pages/select-league/select-league';
+import { ChatManagerOfTeamsLeaguePage } from '../pages/chat-manager-of-teams-league/chat-manager-of-teams-league';
+import { ChatManagerOfTeamsLeaguePageModule } from '../pages/chat-manager-of-teams-league/chat-manager-of-teams-league.module';
+import { SelectLeagueToChatPage } from '../pages/select-league-to-chat/select-league-to-chat';
+import { SelectLeagueToChatPageModule } from '../pages/select-league-to-chat/select-league-to-chat.module';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/i18n/', '.json');
@@ -303,7 +307,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     OwnerLeaguesPageModule,
     GamesLeaguePageModule,
     AdminCreateOwnerLeaguePageModule,
-    SelectLeaguePageModule
+    SelectLeaguePageModule,
+    ChatManagerOfTeamsLeaguePageModule,
+    SelectLeagueToChatPageModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -394,7 +400,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     OwnerLeaguesPage,
     GamesLeaguePage,
     AdminCreateOwnerLeaguePage,
-    SelectLeaguePage
+    SelectLeaguePage,
+    ChatManagerOfTeamsLeaguePage,
+    SelectLeagueToChatPage
   ],
   providers: [
     StatusBar,

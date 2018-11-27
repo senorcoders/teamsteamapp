@@ -472,5 +472,8 @@
     "CREATEOWNERLEAGUE": {
         "TITLE": "Crear Dueño de Liga",
         "SELECT": "Seleccionar Liga"
-    }
+    },
+    "CHATMANAGERSTEAMSLEAGUE": "Gerentes de Equipos de la liga",
+    "MSGTOMANAGERSTEAMSLEAGUE": "Mensajes a Gerentes de Equipos",
+    "SELECTLEAGUE": "Seleccione la liga"
 }

@@ -467,5 +467,8 @@
     "CREATEOWNERLEAGUE": {
         "TITLE": "Create League Owner",
         "SELECT": "Select League"
-    }
+    },
+    "CHATMANAGERSTEAMSLEAGUE": "Team Managers of the league",
+    "MSGTOMANAGERSTEAMSLEAGUE": "Messages to Team Managers",
+    "SELECTLEAGUE": "Select the league"
 }

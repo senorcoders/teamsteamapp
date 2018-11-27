@@ -1,5 +1,5 @@
 /**
- * a qui estan guardador todos los emojis que se usaran para el chat y commntarios
+ * a qui estan guardador todos los emojis que se usaran para el chat y comentarios
  */
 
 export class EmojiProvider {

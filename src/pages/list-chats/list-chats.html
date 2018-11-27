@@ -15,7 +15,7 @@
 
   <ion-list>
 
-    <ion-item>
+    <ion-item *ngIf="user.role.name!=='OwnerLeague'">
       <ion-avatar item-start>
         <img [src]="team.imageSrc" [hidden]="!loadImage" (load)="successImage()" >
         <img [hidden]="loadImage" src="./assets/imgs/logo-login.png">
@@ -33,6 +33,17 @@
       </ion-avatar>
       <h2 (click)="goChatFamily()" >{{'CHATFORFAMILY' | translate}} <div class="new-point-message" [hidden]="newMessagePeople('family')"></div></h2>
       <button (click)="goChatFamily()"  item-end ion-button class="chat">
+        <img class="chat-0" src="./assets/imgs/chat-1.png">
+      </button>
+    </ion-item>
+
+    <ion-item *ngIf="user.role.name==='OwnerLeague'||user.role.name==='Manager'">
+      <ion-avatar item-start>
+        <img [src]="league.imageSrc" [hidden]="!loadImageLeague" (load)="successImageLeague()" >
+        <img src="./assets/imgs/logo-login.png">
+      </ion-avatar>
+      <h2 (click)="goManagersOfTeamsLeague()" >{{'CHATMANAGERSTEAMSLEAGUE' | translate}} <div class="new-point-message" [hidden]="newMessagePeople('family')"></div></h2>
+      <button (click)="goManagersOfTeamsLeague()"  item-end ion-button class="chat">
         <img class="chat-0" src="./assets/imgs/chat-1.png">
       </button>
     </ion-item>

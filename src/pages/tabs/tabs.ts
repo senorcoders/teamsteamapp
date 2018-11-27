@@ -23,7 +23,7 @@ export class TabsPage {
     { id: 1, title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "custom-events", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
     { id: 2, title: "NAVMENU.ROSTER", component: RosterPage, icon: "custom-roster", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
     { id: 3, title: "PHOTOS.TITLE", component: PhotosPage, icon: "custom-photos", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "", newData: "" },
-    { id: 4, title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "custom-chat", role: { not: "FreeAgent|OwnerLeague", yes: "*" }, watch: "chat", newData: "" },
+    { id: 4, title: "NAVMENU.MESSAGES", component: ListChatsPage, icon: "custom-chat", role: { not: "FreeAgent", yes: "*" }, watch: "chat", newData: "" },
     // { title: "NAVMENU.MYTASK", component: MyTaskPage, icon: "tasks.png", role: { not: "FreeAgent|OwnerLeague|Manager|Family", yes: "*" }, watch: "", newData: "" },
     { id: 5, title: "LEAGUE.TEAMS.TITLE", component: TeamsLeaguePage, icon: "custom-add-team", role: "OwnerLeague", watch: "", newData: "" },
     { id: 10, title: "OWNERS", component: OwnerLeaguesPage, icon: "ios-people", role: "OwnerLeague", watch: "", newData: "" },

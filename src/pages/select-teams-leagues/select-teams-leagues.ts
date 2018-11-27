@@ -38,11 +38,11 @@ export class SelectTeamsLeaguesPage {
             if (it.league.typeObject()) {
               let league: any = await HelpersProvider.me.http.get("/leagues/" + it.league.id).toPromise();
               it.identity = league.name;
-              it.imageSrc = interceptor.transformUrl("/images/ramdon/teams/" + it.league.id+ "-thumbnail");
+              it.imageSrc = interceptor.transformUrl("/images/ramdon/leagues/" + it.league.id+ "-thumbnail");
             } else {
               let league: any = await HelpersProvider.me.http.get("/leagues/" + it.league).toPromise();
               it.identity = league.name;
-              it.imageSrc = interceptor.transformUrl("/images/ramdon/teams/" + it.league+ "-thumbnail");
+              it.imageSrc = interceptor.transformUrl("/images/ramdon/leagues/" + it.league+ "-thumbnail");
             }
           }
           catch (e) {
@@ -56,8 +56,6 @@ export class SelectTeamsLeaguesPage {
           it.identity = it.team.name;
           it.imageSrc = interceptor.transformUrl("/images/ramdon/teams/" + it.team.id+ "-thumbnail");
         }
-          
-
         return it;
       }));
 
