@@ -630,11 +630,21 @@ export class EventsSchedulePage {
     this.firstTime = true;
   }
 
-  public toGamesLeagues() {
-    if (this.league === true)
-      this.navCtrl.push(GamesLeaguePage);
-    else
-      this.navCtrl.push(SelectLeagueToChatPage, { toGames: true });
+  public async toGamesLeagues() {
+    try {
+      if (this.league === true)
+        this.navCtrl.push(GamesLeaguePage);
+      else {
+        let leagueteams = await this.http.get(`/teamleague?where={"team":"${MyApp.User.team}"}`).toPromise() as any[];
+        leagueteams = leagueteams.filter(it => {
+          return it.league !== undefined && it.league.typeObject();
+        });
+        this.navCtrl.push(GamesLeaguePage, { league: leagueteams[0].league });
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
 }

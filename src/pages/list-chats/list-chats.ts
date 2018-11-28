@@ -116,7 +116,7 @@ export class ListChatsPage {
     return valid;
   }
 
-  public successImageLeague(){
+  public successImageLeague() {
     this.loadImageLeague = true;
   }
 
@@ -128,12 +128,17 @@ export class ListChatsPage {
     user.loadImage = true;
   }
 
-  public goManagersOfTeamsLeague() {
-    if(this.user.role.name === "OwnerLeague"){
+  public async goManagersOfTeamsLeague() {
+    if (this.user.role.name === "OwnerLeague") {
       this.navCtrl.push(ChatManagerOfTeamsLeaguePage, { league: this.league });
-    }else{
-      this.navCtrl.push(SelectLeagueToChatPage, {}, { animation: "ios-transition" });
+    } else {
+      let leagueteams = await this.http.get(`/teamleague?where={"team":"${MyApp.User.team}"}`).toPromise() as any[];
+      leagueteams = leagueteams.filter(it => {
+        return it.league !== undefined && it.league.typeObject();
+      });
+      this.navCtrl.push(ChatManagerOfTeamsLeaguePage, { league: leagueteams[0].league });
+      // this.navCtrl.push(SelectLeagueToChatPage, {}, { animation: "ios-transition" });
     }
-    
+
   }
 }

@@ -44,7 +44,7 @@ export class TabsPage {
 
   public enableMenu = true;
 
-  public static reloadMenu: Function;
+  public static reloadMenu: Function = ()=>{};
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
