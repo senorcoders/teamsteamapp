@@ -1,16 +1,17 @@
-import { Component, NgZone } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Component, NgZone, ViewChild, isDevMode } from '@angular/core';
+import { IonicPage, NavController, NavParams, Tabs, Platform, ViewController, Tab } from 'ionic-angular';
 import { EventsSchedulePage } from '../events-schedule/events-schedule';
 import { RosterPage } from '../roster/roster';
 import { ListChatsPage } from '../list-chats/list-chats';
 import { PhotosPage } from '../photos/photos';
 import { ViewProfilePage } from '../view-profile/view-profile';
 import { MyApp } from '../../app/app.component';
-import { NotificationPage } from '../notification/notification';
 import { TeamsLeaguePage } from '../teams-league/teams-league';
 import { AgentFreePage } from '../agent-free/agent-free';
 import { PlacesPlayerFreePage } from '../places-player-free/places-player-free';
 import { OwnerLeaguesPage } from '../owner-leagues/owner-leagues';
+import { HttpClient } from '@angular/common/http';
+import * as moment from 'moment';
 
 @IonicPage()
 @Component({
@@ -18,6 +19,8 @@ import { OwnerLeaguesPage } from '../owner-leagues/owner-leagues';
   templateUrl: 'tabs.html',
 })
 export class TabsPage {
+
+  @ViewChild('myTabs') tabRef: Tabs;
 
   public pages = [
     { id: 1, title: "NAVMENU.EVENTS", component: EventsSchedulePage, icon: "custom-events", role: { not: "FreeAgent", yes: "*" }, watch: "", newData: "" },
@@ -44,17 +47,126 @@ export class TabsPage {
 
   public enableMenu = true;
 
-  public static reloadMenu: Function = ()=>{};
+  public static reloadMenu: Function = () => { };
 
   constructor(
     public navCtrl: NavController, public navParams: NavParams,
-    public zone: NgZone
+    public zone: NgZone, private http: HttpClient,
+    private platform: Platform
   ) {
     TabsPage.reloadMenu = this.reloadMenu.bind(this);
   }
 
   async ionViewDidLoad() {
+    this.tabRef.ionChange.subscribe(this.proccessOnChangeRoot.bind(this));
+  }
 
+  private proccessOnChangeRoot(tab:Tab){
+    let page = tab.root;
+    try {
+      if (MyApp.User === null || MyApp.User === undefined) return;
+
+      if (
+        this.platform.is('cordova') &&
+        page.hasOwnProperty("__name") === true
+        && isDevMode() === false
+        ) {
+
+        let screen: any = {
+          startTime: new Date().toISOString(),
+          screen: page.__name,
+          firstName: MyApp.User.firstName,
+          lastName: MyApp.User.lastName,
+          userEmail: MyApp.User.email,
+          platform: this.platform.is("ios") ? 'ios' : 'android'
+        };
+
+        if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+          screen.team = MyApp.User.team
+        } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+            screen.league = MyApp.User.role.league.id;
+          else
+            screen.league = MyApp.User.role.league.id;
+        }
+
+        tab._views[0].willLeave.subscribe(async () => {
+          // console.log("will leave root", page.__name);
+          try {
+            screen.endTime = new Date().toISOString();
+
+            //Calculamos el tiempo que estuvo en la pantalla en segundos
+            let dateTime = moment(screen.startTime),
+              dateTimeEnd = moment(screen.endTime);
+            let diff = moment.duration(dateTime.diff(dateTimeEnd));
+            screen.timeVisited = Math.abs(diff.seconds());
+
+            await this.http.post("/screen", screen).toPromise();
+          }
+          catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
+
+    tab.viewDidLoad.subscribe(this.proccessViewInRoot.bind(this));
+  }
+
+  private proccessViewInRoot(data: ViewController) {
+    // console.log("change page", data);
+    try {
+      if (MyApp.User === null || MyApp.User === undefined) return;
+
+      if (
+        this.platform.is('cordova') &&
+        data.component.hasOwnProperty("__name") === true 
+        && isDevMode() === false
+        ) {
+
+        let screen: any = {
+          startTime: new Date().toISOString(),
+          screen: data.component.__name,
+          firstName: MyApp.User.firstName,
+          lastName: MyApp.User.lastName,
+          userEmail: MyApp.User.email,
+          platform: this.platform.is("ios") ? 'ios' : 'android'
+        };
+
+        if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+          screen.team = MyApp.User.team
+        } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+          if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+            screen.league = MyApp.User.role.league.id;
+          else
+            screen.league = MyApp.User.role.league.id;
+        }
+
+        data.didLeave.subscribe(async () => { 
+          // console.log("onDidDismiss", screen);
+          try {
+            screen.endTime = new Date().toISOString();
+
+            //Calculamos el tiempo que estuvo en la pantalla en segundos
+            let dateTime = moment(screen.startTime),
+              dateTimeEnd = moment(screen.endTime);
+            let diff = moment.duration(dateTime.diff(dateTimeEnd));
+            screen.timeVisited = Math.abs(diff.seconds());
+
+            await this.http.post("/screen", screen).toPromise();
+          }
+          catch (e) {
+            console.error(e);
+          }
+        });
+      }
+    }
+    catch (e) {
+      console.error(e);
+    }
   }
 
   public returnPageComponents(id: number) {
@@ -160,12 +272,12 @@ export class TabsPage {
 
   private reloadMenu() {
     this.enableMenu = false;
-    this.zone.run(()=>{ console.log("updated menu init"); })
-    return new Promise(resolve=>{
+    this.zone.run(() => { console.log("updated menu init"); })
+    return new Promise(resolve => {
       setTimeout(function () {
         this.enableMenu = true;
-      this.zone.run(()=>{ console.log("updated menu finish"); });
-      resolve();
+        this.zone.run(() => { console.log("updated menu finish"); });
+        resolve();
       }.bind(this), 400);
     })
   }

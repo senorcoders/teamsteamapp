@@ -124,54 +124,55 @@ export class MyApp {
   //Para cuando se cambia de pantalla
   //Enviamos los datos al api
   ngAfterViewInit() {
-    this.nav.viewDidEnter.subscribe((data: ViewController) => {
-      try {
-        if (MyApp.User === null || MyApp.User === undefined) return;
+    // this.nav.viewDidEnter.subscribe((data: ViewController) => {
+    //   console.log("change page", data)
+    //   try {
+    //     if (MyApp.User === null || MyApp.User === undefined) return;
 
-        if (this.platform.is('cordova') &&
-          data.component.hasOwnProperty("__name") === true &&
-          isDevMode() === false) {
+    //     if (this.platform.is('cordova') &&
+    //       data.component.hasOwnProperty("__name") === true &&
+    //       isDevMode() === false) {
 
-          let screen: any = {
-            startTime: new Date().toISOString(),
-            screen: data.component.__name,
-            firstName: MyApp.User.firstName,
-            lastName: MyApp.User.lastName,
-            userEmail: MyApp.User.email,
-            platform: this.platform.is("ios") ? 'ios' : 'android'
-          };
+    //       let screen: any = {
+    //         startTime: new Date().toISOString(),
+    //         screen: data.component.__name,
+    //         firstName: MyApp.User.firstName,
+    //         lastName: MyApp.User.lastName,
+    //         userEmail: MyApp.User.email,
+    //         platform: this.platform.is("ios") ? 'ios' : 'android'
+    //       };
 
-          if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
-            screen.team = MyApp.User.team
-          } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
-            if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
-              screen.league = MyApp.User.role.league.id;
-            else
-              screen.league = MyApp.User.role.league.id;
-          }
+    //       if (MyApp.User.team !== undefined && MyApp.User.team !== null) {
+    //         screen.team = MyApp.User.team
+    //       } else if (MyApp.User.role.league !== undefined && MyApp.User.role.league !== null) {
+    //         if (Object.prototype.toString.call(MyApp.User.role.league) === "[object Object]")
+    //           screen.league = MyApp.User.role.league.id;
+    //         else
+    //           screen.league = MyApp.User.role.league.id;
+    //       }
 
-          data.willUnload.subscribe(async () => {
-            try {
-              screen.endTime = new Date().toISOString();
+    //       data.willUnload.subscribe(async () => {
+    //         try {
+    //           screen.endTime = new Date().toISOString();
 
-              //Calculamos el tiempo que estuvo en la pantalla en segundos
-              let dateTime = moment(screen.startTime),
-                dateTimeEnd = moment(screen.endTime);
-              let diff = moment.duration(dateTime.diff(dateTimeEnd));
-              screen.timeVisited = Math.abs(diff.seconds());
+    //           //Calculamos el tiempo que estuvo en la pantalla en segundos
+    //           let dateTime = moment(screen.startTime),
+    //             dateTimeEnd = moment(screen.endTime);
+    //           let diff = moment.duration(dateTime.diff(dateTimeEnd));
+    //           screen.timeVisited = Math.abs(diff.seconds());
 
-              await this.http.post("/screen", screen).toPromise();
-            }
-            catch (e) {
-              console.error(e);
-            }
-          });
-        }
-      }
-      catch (e) {
-        console.error(e);
-      }
-    });
+    //           await this.http.post("/screen", screen).toPromise();
+    //         }
+    //         catch (e) {
+    //           console.error(e);
+    //         }
+    //       });
+    //     }
+    //   }
+    //   catch (e) {
+    //     console.error(e);
+    //   }
+    // });
   }
 
   public async init() {
