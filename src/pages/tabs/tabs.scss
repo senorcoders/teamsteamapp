@@ -40,31 +40,31 @@ page-tabs {
         
     }
     .tab-button[aria-selected="false"] {
-        ion-icon[aria-label="custom events"] {
+        ion-icon[aria-label="custom events"], ion-icon[aria-label="custom events-outline"] {
             background: url("./../assets/imgs/events-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom chat"] {
+        ion-icon[aria-label="custom chat"],  ion-icon[aria-label="custom chat-outline"] {
             background: url("./../assets/imgs/chat-0.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom roster"] {
+        ion-icon[aria-label="custom roster"], ion-icon[aria-label="custom roster-outline"] {
             background: url("./../assets/imgs/roster-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom photos"] {
+        ion-icon[aria-label="custom photos"], ion-icon[aria-label="custom photos-outline"] {
             background: url("./../assets/imgs/photos-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom add-team"] {
+        ion-icon[aria-label="custom add-team"], ion-icon[aria-label="custom add-team-outline"] {
             background: url("./../assets/imgs/add-team-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom nearby-events"]{
+        ion-icon[aria-label="custom nearby-events"], ion-icon[aria-label="custom nearby-events-outline"]{
             background: url("./../assets/imgs/nearby-events-icon-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
-        ion-icon[aria-label="custom events-places"]{
+        ion-icon[aria-label="custom events-places"], ion-icon[aria-label="custom events-places-outline"]{
             background: url("./../assets/imgs/events-places-deactive.png") no-repeat 50% 50%;
             background-size: contain;
         }
