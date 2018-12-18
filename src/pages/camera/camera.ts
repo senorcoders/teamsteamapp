@@ -127,7 +127,7 @@ export class CameraPage {
         x: 0,
         y: 56,
         width: HelpersProvider.me.platform.width(),
-        height: HelpersProvider.me.platform.height() - 156,
+        height: HelpersProvider.me.platform.height() - 180,
         camera: 'rear',
         tapPhoto: false,
         previewDrag: false,

@@ -183,7 +183,7 @@ export class CreatePlayerPage {
           message: await this.helper.getWords("PLAYEREXISTS"),
           buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
             text: "Ok",
-            handler: function () { this.saveFinish.bind(this)(load) }.bind(this)
+            handler: function () { this.savePlayer.bind(this)(load) }.bind(this)
           }]
         })
           .present();
@@ -259,9 +259,9 @@ export class CreatePlayerPage {
     }
   }
 
-  public getEmail(id):String{
-    let player = this.players.find(function(it){ return it.id === id; })
-    if(player === undefined){return ""; }
+  public getEmail(id): String {
+    let player = this.players.find(function (it) { return it.id === id; })
+    if (player === undefined) { return ""; }
     return player.user.email;
   }
 

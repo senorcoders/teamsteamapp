@@ -19,7 +19,7 @@
       <p (click)="setRole(role)">{{role.identity}}</p>
       <span item-end color="primary" class="rol-name">{{role.name.toUpperCase() | translate}}</span>
       <ion-icon color="secondary" [hidden]="!isSelect(role)" name="md-checkmark" item-end></ion-icon>
-      <ion-icon color="danger" (click)="editTeam(role)" *ngIf="isEditable(role)" name="ios-create-outline"
+      <ion-icon color="danger" (click)="editRole(role)" *ngIf="isEditable(role)" name="ios-create-outline"
         item-end></ion-icon>
     </ion-item>
 

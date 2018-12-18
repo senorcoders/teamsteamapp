@@ -110,7 +110,8 @@
         "WRESTLING": "Lucha",
         "MMA": "Artes Marciales Mixtas",
         "YOGA": "Yoga",
-        "SKATING": "Patinaje"
+        "SKATING": "Patinaje",
+        "STRENGTHANDCONDITIONING": "Fuerza y Acondicionamiento"
     },
     "SEARCHTEAM": {
         "TITLE": "Encuentra tu equipo",
