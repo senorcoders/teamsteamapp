@@ -13,6 +13,7 @@ export class FormJoinTeamPage {
 
   public static __name = "FormJoinTeamPage"
 
+  public username = "";
   public firstName = "";
   public lastName = "";
   public email = "";
@@ -49,7 +50,7 @@ export class FormJoinTeamPage {
 
   public async sent() {
 
-    if (this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
+    if (this.username === "" || this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
       let requiredM = await this.helper.getWords("REQUIRED"),
         unex = await this.helper.getWords("EMPTYFIELDS");
       this.alertCtrl.create({ title: requiredM, message: unex })
@@ -84,11 +85,11 @@ export class FormJoinTeamPage {
     let user: any;
     if (this.role === "Family") {
       user = {
-        firstName: this.firstName, lastName: this.lastName,
+        username: this.username, firstName: this.firstName, lastName: this.lastName,
         email: this.email, players: playersSelects, role: this.role
       };
     } else {
-      user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
+      user = { username: this.username, firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
     }
 
     this.viewCtrl.dismiss(user);

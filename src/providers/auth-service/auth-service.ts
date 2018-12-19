@@ -81,6 +81,60 @@ export class AuthServiceProvider {
 
   }
 
+  /**
+   * Login
+   */
+  public async LoginWithUsername(username: String, callback: Function) {
+
+    try {
+      let info: any = this.helper.getDeviceInfo();
+      info.username = username;
+
+      let data: any = await this.http.post('/v2/login', info).toPromise()
+
+      this.menuCtrl.swipeEnable(true);
+
+      if (data.hasOwnProperty("message")) {
+        callback(data, null);
+      } else if (data.hasOwnProperty("verify")) {
+        callback(data, null);
+      } else {
+
+        //For save
+
+        //guardamos el wheaterApi
+        let apiKey = data.wheaterApiKey;
+        delete data.wheaterApiKey;
+        await this.storage.set("apiKey", apiKey);
+        HelpersProvider.me.wheaterApiKey = apiKey;
+
+        data.tokenReady = false;
+        await this.storage.set('user', data);
+        this.user = data;
+        this.user.tokenReg = data.tokenReg || [];
+
+        //ahora asignamos el lenaguaje si es que esta definido
+        if (this.user.hasOwnProperty('options') && this.user.options.hasOwnProperty('language')) {
+          await this.helper.setLanguage(this.user.options.language);
+        } else {
+          await this.helper.setLanguage('en');
+        }
+
+        //console.log(this.user);
+
+        this.saveRole(function () {
+          callback(null, data);
+        });
+
+      }
+    }
+    catch (err) {
+      console.log(err);
+      callback(null, null);
+    }
+
+  }
+
   public async setTimeZoneTeam() {
     if (MyApp.User.role.name === "Manager") {
       let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });

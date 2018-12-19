@@ -16,16 +16,17 @@
   <ion-searchbar type="email" [(ngModel)]="search" showCancelButton="true" (ionInput)="searchUser($event)">
   </ion-searchbar>
 
-  <ion-card *ngIf="userEnable">
+  <ion-card *ngFor="let user of users">
     <ion-item>
       <ion-avatar item-start>
-        <img src="./assets/imgs/logo-login.png" [hidden]="loadImage">
-        <img [src]="user.imgSrc" (load)="loadImg()" [hidden]="!loadImage">
+        <img src="./assets/imgs/logo-login.png" [hidden]="user.loadImage">
+        <img [src]="user.imgSrc" (load)="loadImg(user)" [hidden]="!user.loadImage">
       </ion-avatar>
-      <h2>{{user.firstName+ " "+ user.lastName}}</h2>
+      <h2>{{user.username}}</h2>
+      <h4>{{user.firstName+ " "+ user.lastName}}</h4>
     </ion-item>
 
-    <button ion-button (click)="add()">{{"ADD" | translate}}</button>
+    <button ion-button (click)="add(user)">{{"ADD" | translate}}</button>
   </ion-card>
 
 </ion-content>

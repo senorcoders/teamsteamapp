@@ -84,7 +84,7 @@
     "DATEEND": "End date",
     "TIME": "Start Time",
     "TIMEEND": "End Time",
-    "DESCRIPTION": "Event Description",
+    "DESCRIPTION": "Description",
     "SPORT": "Sport",
     "SPORTS":{
         "BASEBALL&SOFTBALL": "Baseball & Softball",
@@ -213,7 +213,7 @@
     "FAMILY": "Family",
     "PASSWORD": "Password",
     "EMAILINVALID": "Invalid Email Address",
-    "INVALIDUSERNAMEYPASS": "Incorrect Email",
+    "INVALIDUSERNAMEYPASS": "Incorrect username",
     "ERRORCONECTION": "Error in the conection",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",

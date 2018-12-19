@@ -9,6 +9,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { StatusBar } from '@ionic-native/status-bar';
 import { MenuController } from 'ionic-angular/components/app/menu-controller';
 import { TabsPage } from '../tabs/tabs';
+import { Storage } from '@ionic/storage';
 
 @IonicPage()
 @Component({
@@ -19,6 +20,7 @@ export class FormJoinTeamCodePage {
 
   public static __name = "FormJoinTeamCodePage"
 
+  public username = "";
   public firstName = "";
   public lastName = "";
   public email = "";
@@ -33,7 +35,7 @@ export class FormJoinTeamCodePage {
     public alertCtrl: AlertController, private http: HttpClient,
     public viewCtrl: ViewController, private auth: AuthServiceProvider,
     public statusBar: StatusBar, public ngZone: NgZone,
-    public menuCtrl: MenuController
+    public menuCtrl: MenuController, private storage: Storage
   ) {
     this.team = this.navParams.get("team");
     this.code = this.navParams.get("code");
@@ -59,7 +61,7 @@ export class FormJoinTeamCodePage {
 
     let load = HelpersProvider.me.getLoadingStandar(false);
     try {
-      if (this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
+      if (this.username === "" || this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
         let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
           unex = await HelpersProvider.me.getWords("EMPTYFIELDS");
         this.alertCtrl.create({ title: requiredM, message: unex })
@@ -95,11 +97,11 @@ export class FormJoinTeamCodePage {
       let user: any;
       if (this.role === "Family") {
         user = {
-          firstName: this.firstName, lastName: this.lastName,
+          username: this.username, firstName: this.firstName, lastName: this.lastName,
           email: this.email, players: playersSelects, role: this.role
         };
       } else {
-        user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
+        user = { username: this.username, firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
       }
 
       let res = { user, code: this.code, team: this.team.id, info: HelpersProvider.me.getDeviceInfo() };
@@ -122,7 +124,7 @@ export class FormJoinTeamCodePage {
               this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
             }
           } else if (err) {
-            
+
             let notConectionMSG = await this.helper.getWords("ERRORCONECTION");
             this.alertCtrl.create({
               title: "Error",
@@ -133,7 +135,7 @@ export class FormJoinTeamCodePage {
 
         }.bind(this);
 
-        await this.auth.Login(user.email, call);
+        await this.auth.LoginWithUsername(user.username, call);
 
       } else {
         HelpersProvider.me.presentAlertErrorStandar();
@@ -143,7 +145,7 @@ export class FormJoinTeamCodePage {
       console.error(e);
       HelpersProvider.me.presentAlertErrorStandar();
     }
-    finally{
+    finally {
       load.dismiss();
     }
 

@@ -16,7 +16,7 @@ export class CreatePlayerPage {
 
   public static __name = "CreatePlayerPage"
 
-  // public username: string = "";
+  public username: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -140,6 +140,11 @@ export class CreatePlayerPage {
     return !res.valid;
   }
 
+  public async checkendUsername() {
+    let res = await this.http.put("/user-enable-username", { username: this.username }).toPromise() as { valid: boolean };
+    return !res.valid;
+  }
+
   public async saveAction() {
 
     let load = HelpersProvider.me.getLoadingStandar();
@@ -177,17 +182,15 @@ export class CreatePlayerPage {
 
     //si el correo es de jugador Comprobamos si ya existe el correo
     //si ya existe le avisamos al usuario
-    if (this.emailType === "player") {
-      if (await this.checkendEmail() === true) {
-        return this.alertCtrl.create({
-          message: await this.helper.getWords("PLAYEREXISTS"),
-          buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
-            text: "Ok",
-            handler: function () { this.savePlayer.bind(this)(load) }.bind(this)
-          }]
-        })
-          .present();
-      }
+    if (await this.checkendUsername() === true) {
+      return this.alertCtrl.create({
+        message: await this.helper.getWords("USERNAMEREADY"),
+        buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
+          text: "Ok",
+          // handler: function () { this.savePlayer.bind(this)(load) }.bind(this)
+        }]
+      })
+        .present();
     }
 
     if (this.nonPlayer === false && this.managerAccess === false) {
@@ -204,13 +207,12 @@ export class CreatePlayerPage {
   private async savePlayer(load: Loading) {
 
     let user: any = {
-      // username: this.username,
+      username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
       email: this.email.toLowerCase(),
-      image: this.imageSrc,
-      emailType: this.emailType
+      image: this.imageSrc
     };
 
     let positions: Array<any> = this.positions.split(",");
@@ -285,6 +287,7 @@ export class CreatePlayerPage {
 
       let i = 0;
       let family = {
+        username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email.toLowerCase(),
@@ -316,6 +319,7 @@ export class CreatePlayerPage {
   private async saveManager(load) {
     try {
       let manager = {
+        username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email.toLowerCase(),
