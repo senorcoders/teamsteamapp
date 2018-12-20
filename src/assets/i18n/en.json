@@ -39,6 +39,7 @@
         "OPTIONALINFO": "OPTIONAL INFO",
         "LOCATIONDETAIL": "Notes about location",
         "TYPE": "Choose Contact Type",
+        "SELECTDAYREPEATS": "Select the days on which the event is repeated",
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",

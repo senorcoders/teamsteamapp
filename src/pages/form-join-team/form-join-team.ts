@@ -54,7 +54,7 @@ export class FormJoinTeamPage {
       { value: this.username, type: "text", nameMessage: "Username" },
       { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
       { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
-      { value: this.email, type: "text", nameMessage: "Email" },
+      { value: this.email, type: "email", nameMessage: "Email" },
       { value: this.role, type: "text", nameMessage: "ROLE" }
     ]);
     if (valid.valid === false) {

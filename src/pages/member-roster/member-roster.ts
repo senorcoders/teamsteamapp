@@ -202,6 +202,14 @@ export class MemberRosterPage {
   }
 
   private async update() {
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.player.user.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.player.user.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.player.gender, type: "text", nameMessage: "ROSTER.GENDER" }
+    ]);
+    if (valid.valid === false) {
+      return;
+    }
     if (this.isUpdating === true) {
       return;
     }

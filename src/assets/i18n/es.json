@@ -40,6 +40,7 @@
         "LOCATIONDETAIL": "Notas sobre la ubicación",
         "TYPE": "Tipo",
         "NEWTEAMACTION": "Crear Nuevo Equipo",
+        "SELECTDAYREPEATS": "Seleccione los días en que se repite el evento",
         "TYPES": {
             "GAME": "Juego",
             "PRACTICE": "Práctica",

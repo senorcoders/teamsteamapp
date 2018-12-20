@@ -147,39 +147,18 @@ export class CreatePlayerPage {
 
   public async saveAction() {
 
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" }
+    ]);
+    if (valid.valid === false) {
+      return;
+    }
+
     let load = HelpersProvider.me.getLoadingStandar();
-    if (
-      this.firstName == '' ||
-      this.lastName == '' ||
-      this.email == ''
-    ) {
-
-      load.dismiss();
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: emptyM,
-        buttons: ["Ok"]
-      }).present();
-
-      return;
-    }
-
-    if (
-      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email.toLowerCase())
-    ) {
-
-      load.dismiss();
-      let emailERM = await HelpersProvider.me.getWords("EMAILINVALID");
-      this.alertCtrl.create({
-        title: "Error",
-        message: emailERM,
-        buttons: ["Ok"]
-      }).present();
-      return;
-    }
-
+    
     //si el correo es de jugador Comprobamos si ya existe el correo
     //si ya existe le avisamos al usuario
     if (await this.checkendUsername() === true) {
@@ -201,10 +180,17 @@ export class CreatePlayerPage {
       this.saveManager.bind(this)(load);
     }
 
-
   }
 
   private async savePlayer(load: Loading) {
+
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.gender, type: "text", nameMessage: "ROSTER.GENDER" }
+    ]);
+    if (valid.valid === false) {
+      load.dismiss();
+      return;
+    }
 
     let user: any = {
       username: this.username,
@@ -317,6 +303,7 @@ export class CreatePlayerPage {
   }
 
   private async saveManager(load) {
+
     try {
       let manager = {
         username: this.username,

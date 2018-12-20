@@ -256,6 +256,22 @@ export class NewEventPage {
 
   public async save() {
 
+    let validFields = HelpersProvider.me.validadorFields(this, [
+      { value: this.name, type: "text", nameMessage: "NAME" },
+      { value: this.time, type: "text", nameMessage: "TIME" }
+    ]);
+    if (validFields.valid === false) {
+      return;
+    }
+
+    if (this.repeats === false && this.date === "") {
+      return await HelpersProvider.me.showRequired("DATE");
+    }
+
+    if (this.repeats === true && this.repeatsDaily == false && this.repeatsDays.length === 0) {
+      return await HelpersProvider.me.showRequired("NEWEVENT.SELECTDAYREPEATS");
+    }
+
     this.load = this.helper.getLoadingStandar();
 
     let requiredM = await this.helper.getWords("REQUIRED"),

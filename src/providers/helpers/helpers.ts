@@ -709,9 +709,17 @@ export class HelpersProvider {
 
       //Si el campo es tipo email, se valida que el email no este vacio, y cumpla con el formato
       if (field.type === "email") {
-        if (field.value === "" || this.validEmail(field.value) === false) {
+        if (field.value === "") {
           isInvalid(field);
-          this.showRequiredField(field);
+          break;
+        }
+        if(this.validEmail(field.value) === false){
+           this.getWords("EMAILINVALID").then(mgs=>{
+            field.message = mgs;
+            isInvalid(field);
+          });
+          response.valid = false;
+          response.field = field.name;
           break;
         }
       }

@@ -235,7 +235,7 @@ export class RegistrationPage {
         { value: this.username, type: "text", nameMessage: "Username" },
         { value: this.firstname, type: "text", nameMessage: "FIRSTNAME" },
         { value: this.lastname, type: "text", nameMessage: "LASTNAME" },
-        { value: this.email, type: "text", nameMessage: "Email" },
+        { value: this.email, type: "email", nameMessage: "Email" },
       ]);
       if (valid.valid === false) {
         return;

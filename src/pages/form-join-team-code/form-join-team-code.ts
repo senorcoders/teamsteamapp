@@ -61,11 +61,14 @@ export class FormJoinTeamCodePage {
 
     let load = HelpersProvider.me.getLoadingStandar(false);
     try {
-      if (this.username === "" || this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
-        let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-          unex = await HelpersProvider.me.getWords("EMPTYFIELDS");
-        this.alertCtrl.create({ title: requiredM, message: unex })
-          .present();
+      let valid = HelpersProvider.me.validadorFields(this, [
+        { value: this.username, type: "text", nameMessage: "Username" },
+        { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+        { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+        { value: this.email, type: "email", nameMessage: "Email" },
+        { value: this.role, type: "text", nameMessage: "ROLE" }
+      ]);
+      if (valid.valid === false) {
         return;
       }
 
@@ -80,7 +83,7 @@ export class FormJoinTeamCodePage {
         this.playersSelects.length !== lengthR)
       ) {
         let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-          unex = await HelpersProvider.me.getWords("EMPTYFIELDS");
+          unex = await HelpersProvider.me.getWords("TYPERELATIONSHIP");
         this.alertCtrl.create({ title: requiredM, message: unex })
           .present();
         return;
