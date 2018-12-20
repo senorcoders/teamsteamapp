@@ -101,31 +101,13 @@ export class CreateLeaguePage {
   }
 
   public async save() {
-    if (
-      this.name == ''
-    ) {
-      let requiredM = await HelpersProvider.me.getWords("ISREQUIRED"),
-        nameM = await HelpersProvider.me.getWords("NAME");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: `${nameM} ${requiredM}`,
-        buttons: ["Ok"]
-      }).present();
-
+    
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.name, type: "text", nameMessage: "LEAGUE.NAMEOF" }
+    ]);
+    if (valid.valid === false) {
       return;
     }
-
-    // if (this.usersOwners.length === 0 && this.userPresent === false) {
-    //   let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-    //     msg = await HelpersProvider.me.getWords("LEAGUE.CREATE.SELECTSOWNERS");
-    //   this.alertCtrl.create({
-    //     title: requiredM,
-    //     message: msg,
-    //     buttons: ["Ok"]
-    //   }).present();
-
-    //   return;
-    // }
 
     //Agregamos el usuario actual y filtramos
     let user;

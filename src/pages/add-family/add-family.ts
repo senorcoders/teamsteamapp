@@ -17,6 +17,7 @@ export class AddFamilyPage {
 
   public static __name = "AddFamilyPage"
 
+  public username = "";
   public firstname = "";
   public lastname = "";
   public email = "";
@@ -37,21 +38,21 @@ export class AddFamilyPage {
 
   public async addFamily() {
 
-    if (
-      this.firstname === "" ||
-      this.lastname === "" ||
-      this.email === "" ||
-      this.relationship === ""
-    ) {
-      let empty = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      HelpersProvider.me.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-        .present();
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstname, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastname, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" },
+      { value: this.relationship, type: "text", nameMessage: "RELATIONSHIP" }
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
     let load = await HelpersProvider.me.getLoadingStandar();
     try {
       let user = {
+        username: this.username,
         firstName: this.firstname,
         lastName: this.lastname,
         email: this.email

@@ -104,17 +104,11 @@ export class NewTaskPage {
 
   public async save() {
 
-    let requiredM = await this.helper.getWords("REQUIRED");
-    let emptyM = await this.helper.getWords("EMPTYFIELDS");
-
-    if (
-      this.name === '' ||
-      this.assign === ''
-    ) {
-      this.alertCtrl.create({
-        title: requiredM,
-        message: emptyM
-      }).present();
+    let _valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.name, type: "text", nameMessage: "NAME" },
+      { value: this.assign, type: "text", nameMessage: "ASSIGN" }
+    ]);
+    if (_valid.valid === false) {
       return;
     }
 
