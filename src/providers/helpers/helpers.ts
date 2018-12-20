@@ -655,4 +655,13 @@ export class HelpersProvider {
   }
   //#endregion
 
+  public async showRequired(field:string){
+    let requiredM = await this.getWords("ISREQUIRED");
+    let message = await this.getWords(field)+ " "+ requiredM;
+    this.alertCtrl.create({
+      message,
+      buttons: ["Ok"]
+    })
+    .present();
+  }
 }

@@ -162,7 +162,7 @@
     "ERORUNEXC": "Unexpected Error",
     "REQUIRED": "Required",
     "ADDRESSORDATE": "Add Address or select a place on Map",
-    "ISREQUIRED": "Is Required",
+    "ISREQUIRED": "is required",
     "DAY": "Day",
     "TEST": "Hello, you are using the language English",
     "LANGUAGE": "Language",
@@ -206,6 +206,7 @@
     "TELEPHONE": "Telephone",
     "SENT": "Send Request to Join Team",
     "EMAILREADY": "This email is already being used",
+    "USERNAMEREADY": "Username is already taken",
     "ROLE": "Role",
     "PLAYER": "Athlete",
     "MANAGER": "Manager",
@@ -315,6 +316,7 @@
     "CHANGEROLE": "Change Role",
     "LEAGUE": {
         "NAME": "League",
+        "NAMEOF": "Name of league",
         "CREATE": {
             "TITLE": "New League",
             "ACTION": "Create League",

@@ -232,45 +232,38 @@ export class RegistrationPage {
 
       this.userValid = true;
 
-      if (
-        this.username === "" ||
-        this.firstname === "" ||
-        this.lastname === "" ||
-        this.email === ""
-      ) {
-        let empty = await this.helper.getWords("EMPTYFIELDS");
-        this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-          .present();
-        return;
+      if(this.username === ""){
+        return await this.helper.showRequired("username");
       }
-
+      if(this.firstname === ""){
+        return await this.helper.showRequired("FIRSTNAME");
+      }
+      if(this.lastname === ""){
+        return await this.helper.showRequired("LASTNAME");
+      }
+      if(this.email === ""){
+        return await this.helper.showRequired("Email");
+      }
 
       if (this.selectNew === "team") {
         this.teamValid = true;
+        if(this.nameteam === ""){
+          return await this.helper.showRequired("NAMEOFTEAM");
+        }
+        if(this.city === ""){
+          return await this.helper.showRequired("CITY");
+        }
         if (
-          this.nameteam === "" ||
-          this.city === "" ||
           this.sport === ""
         ) {
-          let empty = await this.helper.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-            .present();
-          return;
+          return await this.helper.showRequired("SPORT");
         }
       } else if (this.selectNew === "ownerLeague") {
         this.leagueValid = true;
         if (
           this.nameLeague == ''
         ) {
-          let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-            emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({
-            title: requiredM,
-            message: emptyM,
-            buttons: ["Ok"]
-          }).present();
-
-          return;
+          return await this.helper.showRequired("LEAGUE.NAMEOF");
         }
 
       } else {
