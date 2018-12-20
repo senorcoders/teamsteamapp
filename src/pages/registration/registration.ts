@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { HelpersProvider } from '../../providers/helpers/helpers';
+import { HelpersProvider, Field } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 //import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
@@ -231,39 +231,33 @@ export class RegistrationPage {
     try {
 
       this.userValid = true;
-
-      if(this.username === ""){
-        return await this.helper.showRequired("username");
-      }
-      if(this.firstname === ""){
-        return await this.helper.showRequired("FIRSTNAME");
-      }
-      if(this.lastname === ""){
-        return await this.helper.showRequired("LASTNAME");
-      }
-      if(this.email === ""){
-        return await this.helper.showRequired("Email");
+      let valid = this.helper.validadorFields(this, [
+        { value: this.username, type: "text", nameMessage: "Username" },
+        { value: this.firstname, type: "text", nameMessage: "FIRSTNAME" },
+        { value: this.lastname, type: "text", nameMessage: "LASTNAME" },
+        { value: this.email, type: "text", nameMessage: "Email" },
+      ]);
+      if (valid.valid === false) {
+        return;
       }
 
       if (this.selectNew === "team") {
         this.teamValid = true;
-        if(this.nameteam === ""){
-          return await this.helper.showRequired("NAMEOFTEAM");
-        }
-        if(this.city === ""){
-          return await this.helper.showRequired("CITY");
-        }
-        if (
-          this.sport === ""
-        ) {
-          return await this.helper.showRequired("SPORT");
+        valid = this.helper.validadorFields(this, [
+          { value: this.nameteam, type: "text", nameMessage: "NAMEOFTEAM" },
+          { value: this.city, type: "text", nameMessage: "CITY" },
+          { value: this.sport, type: "text", nameMessage: "SPORT" },
+        ]);
+        if (valid.valid === false) {
+          return;
         }
       } else if (this.selectNew === "ownerLeague") {
         this.leagueValid = true;
-        if (
-          this.nameLeague == ''
-        ) {
-          return await this.helper.showRequired("LEAGUE.NAMEOF");
+        valid = this.helper.validadorFields(this, [
+          { value: this.nameLeague, type: "text", nameMessage: "LEAGUE.NAMEOF" }
+        ]);
+        if (valid.valid === false) {
+          return;
         }
 
       } else {

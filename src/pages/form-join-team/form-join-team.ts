@@ -50,11 +50,14 @@ export class FormJoinTeamPage {
 
   public async sent() {
 
-    if (this.username === "" || this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
-      let requiredM = await this.helper.getWords("REQUIRED"),
-        unex = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: requiredM, message: unex })
-        .present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "text", nameMessage: "Email" },
+      { value: this.role, type: "text", nameMessage: "ROLE" }
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
@@ -69,7 +72,7 @@ export class FormJoinTeamPage {
       this.playersSelects.length !== lengthR) 
     ) {
       let requiredM = await this.helper.getWords("REQUIRED"),
-        unex = await this.helper.getWords("EMPTYFIELDS");
+        unex = await this.helper.getWords("TYPERELATIONSHIP");
       this.alertCtrl.create({ title: requiredM, message: unex })
         .present();
       return;
