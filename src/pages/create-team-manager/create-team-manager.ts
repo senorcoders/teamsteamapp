@@ -18,6 +18,7 @@ export class CreateTeamManagerPage {
   //for user
   public newUser = true;
   // public username: string = "";
+  public username: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -26,7 +27,7 @@ export class CreateTeamManagerPage {
   public imageSrcUser = "";
 
   //Para cuando no es para un nuevo usuario
-  public emailUser = "";
+  public username_ = "";
 
   //for team
   public name = "";
@@ -93,35 +94,18 @@ export class CreateTeamManagerPage {
   }
 
   private async getUser() {
-    if (
-      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.emailUser)
-    ) {
-
-      let emailERM = await HelpersProvider.me.getWords("EMAILINVALID");
-      this.alertCtrl.create({
-        title: "Error",
-        message: emailERM,
-        buttons: ["Ok"]
-      }).present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.username_, type: "text", nameMessage: "Username" }
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
     let load = HelpersProvider.me.getLoadingStandar();
-    let enableEmail = await this.http.get(`/user/enable/${this.emailUser}`).toPromise() as any;
-    if (enableEmail.valid === false) {
-      let user = await this.http.get(`/user?where={"email":"${this.emailUser}"}`).toPromise() as any;
-      if (user.length > 0) {
-        user = user[0];
-        await this.saveTeam(user, load);
-      } else {
-        load.dismiss();
-        let USERNOTFOUND = await HelpersProvider.me.getWords("LEAGUE.ERROR.USERNOTFOUND");
-        this.alertCtrl.create({
-          title: "Error",
-          message: USERNOTFOUND,
-          buttons: ["Ok"]
-        }).present();
-      }
+    let user = await this.http.get(`/user?where={"username":"${this.username_}"}`).toPromise() as any;
+    if (user.length > 0) {
+      user = user[0];
+      await this.saveTeam(user, load);
     } else {
       load.dismiss();
       let USERNOTFOUND = await HelpersProvider.me.getWords("LEAGUE.ERROR.USERNOTFOUND");
@@ -136,48 +120,21 @@ export class CreateTeamManagerPage {
 
   private async saveUser() {
 
-    if (
-      this.firstName == '' ||
-      this.lastName == '' ||
-      this.email == '' ||
-      this.password == '' ||
-      this.passwordCheck == ''
-    ) {
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: emptyM,
-        buttons: ["Ok"]
-      }).present();
-
-      return;
-    }
-
-    if (
-      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email)
-    ) {
-
-      let emailERM = await HelpersProvider.me.getWords("EMAILINVALID");
-      this.alertCtrl.create({
-        title: "Error",
-        message: emailERM,
-        buttons: ["Ok"]
-      }).present();
-      return;
-    }
-
-    //Para validar los campos del equipo
-    if (this.name === "" || this.sport === "" || this.city === "") {
-      let requiredM = await this.helper.getWords("REQUIRED"),
-        emptyFields = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: requiredM, message: emptyFields })
-        .present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" },
+      { value: this.name, type: "text", nameMessage: "NAMEOFTEAM" },
+      { value: this.city, type: "text", nameMessage: "CITY" },
+      { value: this.sport, type: "text", nameMessage: "SPORT" },
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
     let user: any = {
-      // username: this.username,
+      username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
