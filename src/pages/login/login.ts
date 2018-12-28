@@ -57,7 +57,7 @@ export class LoginPage {
 
   async ionViewDidLoad() {
     this.helper.setLenguagueLocal();
-    // this.emailTrans = await this.helper.getWords("EMAIL");
+    this.emailTrans = await this.helper.getWords("EMAIL");
     // this.passwordTrans = await this.helper.getWords("PASSWORD");
     this.statusBar.overlaysWebView(true);
   }
@@ -105,13 +105,17 @@ export class LoginPage {
 
   public async Login() {
 
-    if (this.username == '') {
-
+    // if (this.username == '') {
+    //   let emptyM = await this.helper.getWords("EMPTYFIELDS");
+    //   this.presentAlert(emptyM);
+    // } else {
+    //   this.authService.LoginWithUsername(this.username, this.actionLogin.bind(this));
+    // }
+    if (this.email == '') {
       let emptyM = await this.helper.getWords("EMPTYFIELDS");
       this.presentAlert(emptyM);
-
     } else {
-      this.authService.LoginWithUsername(this.username, this.actionLogin.bind(this));
+      this.authService.Login(this.email, this.actionLogin.bind(this));
     }
   }
 
