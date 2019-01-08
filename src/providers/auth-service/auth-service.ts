@@ -181,20 +181,18 @@ export class AuthServiceProvider {
 
   public async updateTokenReg(token) {
     try {
-
-      let tokens = [];
-      if (MyApp.User.hasOwnProperty("tokenReg") && Object.prototype.toString.call(MyApp.User.tokenReg) === '[object Array]') {
-        tokens = MyApp.User.tokenReg;
+      
+      let payload:any = {
+        token,
+        userId: MyApp.User.id
+      };
+      let previousToken = await this.storage.get("tokenReg");
+      // console.log("previousToken", previousToken, "token", token);
+      if(previousToken){
+        payload.previousToken = previousToken;
       }
-      tokens.push(token);
-      console.log(tokens);
-      let updated = await this.http.put("/user/" + MyApp.User.id, { "tokenReg": tokens, tokenReady: false }).toPromise()
-      console.log(updated);
-      let user = MyApp.User;
-      user.tokenReg = token;
-      user.tokenReady = true;
-      await this.updateUser(user);
-
+      await this.http.put("/user-token", payload).toPromise();
+      await this.storage.set("tokenReg", token);
     }
     catch (e) {
       console.error(e);
@@ -252,6 +250,7 @@ export class AuthServiceProvider {
     var data = await this.storage.remove("user");
     data = await this.storage.remove("role");
     data = await this.storage.remove("apiKey");
+    data = await this.storage.remove("tokenReg");
     HelpersProvider.me.wheaterApiKey = "";
     this.user = null;
     delete MyApp.User;
