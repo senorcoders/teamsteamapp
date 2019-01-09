@@ -30,6 +30,11 @@
   <ion-list>
 
     <ion-item>
+      <ion-label floating>username <span style="color: red;">*</span></ion-label>
+      <ion-input type="text" value="" [(ngModel)]="username"></ion-input>
+    </ion-item>
+
+    <ion-item>
       <ion-label floating>{{"FIRSTNAME" | translate}} <span style="color: red;">*</span></ion-label>
       <ion-input type="text" value="" [(ngModel)]="firstName"></ion-input>
     </ion-item>
@@ -39,34 +44,11 @@
       <ion-input type="text" value="" [(ngModel)]="lastName"></ion-input>
     </ion-item>
 
-  </ion-list>
-
-  <!--para eligir si el correo es el correo del jugador o padre-->
-  <ion-list radio-group [(ngModel)]="emailType">
-    <ion-list-header>
-      {{"EMAILTYPE" | translate}}
-    </ion-list-header>
     <ion-item>
-      <ion-label>{{"PLAYER" | translate}}</ion-label>
-      <ion-radio value="player" checked></ion-radio>
-    </ion-item>
-    <ion-item>
-      <ion-label>{{"FAMILY" | translate}}</ion-label>
-      <ion-radio value="family"></ion-radio>
-    </ion-item>
-  </ion-list>
-
-  <ion-list>
-
-    <p style="padding-left: 10px; padding-right: 10px;" *ngIf="emailType==='family'">
-      {{"CHECKEMAILGENERATED" | translate}}
-    </p>
-
-    <ion-item>
-      <ion-label floating>{{"EMAIL" | translate}} <span style="color: red;">*</span></ion-label>
-      <ion-input type="email" [(ngModel)]="email"></ion-input>
-    </ion-item>
-
+        <ion-label floating>{{"EMAIL" | translate}} <span style="color: red;">*</span></ion-label>
+        <ion-input type="email" [(ngModel)]="email"></ion-input>
+      </ion-item>
+      
   </ion-list>
 
   <ion-list>

@@ -12,44 +12,40 @@ export class SelectOwnerLeaguePage {
 
   public static __name = "SelectOwnerLeaguePage"
 
-
-  public search="";
-  public user:any;
-  public userEnable=false;
+  public users = [];
+  public search = "";
   public loadImage = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, public viewCtrl:ViewController
+    public http: HttpClient, public viewCtrl: ViewController
   ) {
   }
 
   ionViewDidLoad() {
-    
+
   }
 
-  public async searchUser(){
-    try{
-      let user = await this.http.get(`/user/search/${this.search}`).toPromise();
-      if(user.hasOwnProperty("msg")){
-        this.userEnable = false;
-      }else{
-        this.user = user as any;
-        this.user.imgSrc = interceptor.transformUrl("/images/ramdon/users/" + this.user.id);
-        this.userEnable = true;
-        this.loadImage = false;
-      }
+  public async searchUser() {
+    try {
+      let query = { email: this.search };
+      this.users = await this.http.get(`/user?where=${JSON.stringify(query)}`).toPromise() as any[];
+      this.users = this.users.map(it=>{
+        it.imgSrc = interceptor.transformUrl("/userprofile/images/"+ it.id);
+        it.loadImage = false;
+        return it;
+      });
     }
-    catch(e){
+    catch (e) {
       console.error(e);
     }
   }
 
-  public loadImg(){
-    this.loadImage = true;
+  public loadImg(user) {
+    user.loadImage = true;
   }
 
-  public add(){
-    this.viewCtrl.dismiss(this.user);
+  public add(user) {
+    this.viewCtrl.dismiss(user);
   }
 
 }

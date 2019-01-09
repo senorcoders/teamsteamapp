@@ -39,6 +39,7 @@
         "OPTIONALINFO": "OPTIONAL INFO",
         "LOCATIONDETAIL": "Notes about location",
         "TYPE": "Choose Contact Type",
+        "SELECTDAYREPEATS": "Select the days on which the event is repeated",
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",
@@ -84,7 +85,7 @@
     "DATEEND": "End date",
     "TIME": "Start Time",
     "TIMEEND": "End Time",
-    "DESCRIPTION": "Event Description",
+    "DESCRIPTION": "Description",
     "SPORT": "Sport",
     "SPORTS":{
         "BASEBALL&SOFTBALL": "Baseball & Softball",
@@ -162,7 +163,7 @@
     "ERORUNEXC": "Unexpected Error",
     "REQUIRED": "Required",
     "ADDRESSORDATE": "Add Address or select a place on Map",
-    "ISREQUIRED": "Is Required",
+    "ISREQUIRED": "is required",
     "DAY": "Day",
     "TEST": "Hello, you are using the language English",
     "LANGUAGE": "Language",
@@ -206,6 +207,7 @@
     "TELEPHONE": "Telephone",
     "SENT": "Send Request to Join Team",
     "EMAILREADY": "This email is already being used",
+    "USERNAMEREADY": "Username is already taken",
     "ROLE": "Role",
     "PLAYER": "Athlete",
     "MANAGER": "Manager",
@@ -213,7 +215,7 @@
     "FAMILY": "Family",
     "PASSWORD": "Password",
     "EMAILINVALID": "Invalid Email Address",
-    "INVALIDUSERNAMEYPASS": "Incorrect Email",
+    "INVALIDUSERNAMEYPASS": "Incorrect username",
     "ERRORCONECTION": "Error in the conection",
     "INVALIDPASS": "la contraseña mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registration",
@@ -315,6 +317,7 @@
     "CHANGEROLE": "Change Role",
     "LEAGUE": {
         "NAME": "League",
+        "NAMEOF": "Name of league",
         "CREATE": {
             "TITLE": "New League",
             "ACTION": "Create League",
@@ -472,5 +475,6 @@
     "CHATMANAGERSTEAMSLEAGUE": "Team Managers of the league",
     "MSGTOMANAGERSTEAMSLEAGUE": "Messages to Team Managers",
     "SELECTLEAGUE": "Select the league",
-    "CLOSESESIONDEVICE": "the sessions have been closed from another device"
+    "CLOSESESIONDEVICE": "the sessions have been closed from another device",
+    "TYPERELATIONSHIP": "Type your relationships with your relatives"
 }

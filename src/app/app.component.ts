@@ -638,12 +638,6 @@ export class MyApp {
 
 
       MyApp.me.pushObject.on('registration').subscribe((registration: any) => {
-
-        if (MyApp.User.tokenReady === true) {
-          MyApp.me.notificationEnable = true;
-          return;
-        }
-        MyApp.me.notificationEnable = true;
         MyApp.me.auth.updateTokenReg(registration.registrationId);
         console.log('Device registered', registration);
       });

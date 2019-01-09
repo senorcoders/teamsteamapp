@@ -82,11 +82,12 @@ export class AddTeamPage {
 
   public async save() {
 
-    if (this.name === "" || this.sport === "" || this.city === "") {
-      let requiredM = await this.helper.getWords("REQUIRED"),
-        emptyFields = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: requiredM, message: emptyFields })
-        .present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.name, type: "text", nameMessage: "NAMEOFTEAM" },
+      { value: this.city, type: "text", nameMessage: "CITY" },
+      { value: this.sport, type: "text", nameMessage: "SPORT" },
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
@@ -126,11 +127,12 @@ export class AddTeamPage {
 
   public async updateAction() {
 
-    if (this.name === "" || this.sport === "" || this.city === "") {
-      let requiredM = await this.helper.getWords("REQUIRED"),
-        emptyFields = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: requiredM, message: emptyFields })
-        .present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.name, type: "text", nameMessage: "NAMEOFTEAM" },
+      { value: this.city, type: "text", nameMessage: "CITY" },
+      { value: this.sport, type: "text", nameMessage: "SPORT" },
+    ]);
+    if (valid.valid === false) {
       return;
     }
 

@@ -195,14 +195,13 @@ export class AddLocationUserFreeComponent {
   }
 
   public async select() {
-    if (
-      this.sport === "" ||
-      this.level === "" ||
-      this.positions === ""
-    ) {
-      let empty = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-        .present();
+  
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.sport, type: "text", nameMessage: "SPORT" },
+      { value: this.level, type: "text", nameMessage: "LEVEL.TITLE" },
+      { value: this.positions, type: "text", nameMessage: "ROSTER.POSITIONS" },
+    ]);
+    if (valid.valid === false) {
       return;
     }
 

@@ -13,6 +13,7 @@ import { MyApp } from '../../app/app.component';
 })
 export class AdminCreateOwnerLeaguePage {
 
+  public username = "";
   public firstname = "";
   public lastname = "";
   public email = "";
@@ -40,25 +41,20 @@ export class AdminCreateOwnerLeaguePage {
   public async addOwnerLeague() {
 
     let load = HelpersProvider.me.getLoadingStandar();
-    if (
-      this.firstname === "" ||
-      this.lastname === ""
-    ) {
-      let empty = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      HelpersProvider.me.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-        .present();
-      return;
-    }
-
-    if (HelpersProvider.me.validEmail(this.email) === false) {
-      let emailInvalid = await HelpersProvider.me.getWords("EMAILINVALID");
-      HelpersProvider.me.alertCtrl.create({ message: emailInvalid, buttons: ["Ok"] })
-        .present();
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstname, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastname, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" },
+    ]);
+    if (valid.valid === false) {
+      load.dismiss();
       return;
     }
 
     try{
       let user = {
+        username: this.username,
         email: this.email,
         firstName: this.firstname,
         lastName: this.lastname

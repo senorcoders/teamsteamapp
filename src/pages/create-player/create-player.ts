@@ -16,7 +16,7 @@ export class CreatePlayerPage {
 
   public static __name = "CreatePlayerPage"
 
-  // public username: string = "";
+  public username: string = "";
   public firstName: string = "";
   public lastName: string = "";
   public email: string = "";
@@ -140,54 +140,36 @@ export class CreatePlayerPage {
     return !res.valid;
   }
 
+  public async checkendUsername() {
+    let res = await this.http.put("/user-enable-username", { username: this.username }).toPromise() as { valid: boolean };
+    return !res.valid;
+  }
+
   public async saveAction() {
 
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" }
+    ]);
+    if (valid.valid === false) {
+      return;
+    }
+
     let load = HelpersProvider.me.getLoadingStandar();
-    if (
-      this.firstName == '' ||
-      this.lastName == '' ||
-      this.email == ''
-    ) {
-
-      load.dismiss();
-      let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-        emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({
-        title: requiredM,
-        message: emptyM,
-        buttons: ["Ok"]
-      }).present();
-
-      return;
-    }
-
-    if (
-      !/^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$/.test(this.email.toLowerCase())
-    ) {
-
-      load.dismiss();
-      let emailERM = await HelpersProvider.me.getWords("EMAILINVALID");
-      this.alertCtrl.create({
-        title: "Error",
-        message: emailERM,
-        buttons: ["Ok"]
-      }).present();
-      return;
-    }
-
+    
     //si el correo es de jugador Comprobamos si ya existe el correo
     //si ya existe le avisamos al usuario
-    if (this.emailType === "player") {
-      if (await this.checkendEmail() === true) {
-        return this.alertCtrl.create({
-          message: await this.helper.getWords("PLAYEREXISTS"),
-          buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
-            text: "Ok",
-            handler: function () { this.savePlayer.bind(this)(load) }.bind(this)
-          }]
-        })
-          .present();
-      }
+    if (await this.checkendUsername() === true) {
+      return this.alertCtrl.create({
+        message: await this.helper.getWords("USERNAMEREADY"),
+        buttons: [{ text: "No", handler: function () { load.dismiss() } }, {
+          text: "Ok",
+          // handler: function () { this.savePlayer.bind(this)(load) }.bind(this)
+        }]
+      })
+        .present();
     }
 
     if (this.nonPlayer === false && this.managerAccess === false) {
@@ -198,19 +180,25 @@ export class CreatePlayerPage {
       this.saveManager.bind(this)(load);
     }
 
-
   }
 
   private async savePlayer(load: Loading) {
 
+    let valid = HelpersProvider.me.validadorFields(this, [
+      { value: this.gender, type: "text", nameMessage: "ROSTER.GENDER" }
+    ]);
+    if (valid.valid === false) {
+      load.dismiss();
+      return;
+    }
+
     let user: any = {
-      // username: this.username,
+      username: this.username,
       firstName: this.firstName,
       lastName: this.lastName,
       password: this.password,
       email: this.email.toLowerCase(),
-      image: this.imageSrc,
-      emailType: this.emailType
+      image: this.imageSrc
     };
 
     let positions: Array<any> = this.positions.split(",");
@@ -285,6 +273,7 @@ export class CreatePlayerPage {
 
       let i = 0;
       let family = {
+        username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email.toLowerCase(),
@@ -314,8 +303,10 @@ export class CreatePlayerPage {
   }
 
   private async saveManager(load) {
+
     try {
       let manager = {
+        username: this.username,
         firstName: this.firstName,
         lastName: this.lastName,
         email: this.email.toLowerCase(),

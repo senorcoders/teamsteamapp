@@ -40,6 +40,7 @@
         "LOCATIONDETAIL": "Notas sobre la ubicación",
         "TYPE": "Tipo",
         "NEWTEAMACTION": "Crear Nuevo Equipo",
+        "SELECTDAYREPEATS": "Seleccione los días en que se repite el evento",
         "TYPES": {
             "GAME": "Juego",
             "PRACTICE": "Práctica",
@@ -86,7 +87,7 @@
     "DATEEND": "Fecha Fin",
     "TIME": "Hora de Inicio",
     "TIMEEND": "Hora de Finalización",
-    "DESCRIPTION": "Descripción del Evento",
+    "DESCRIPTION": "Descripción",
     "SPORT": "Deporte",
     "SPORTS": {
         "BASEBALL&SOFTBALL": "Béisbol y Softbol",
@@ -158,13 +159,13 @@
     "UPDATE": "Actualizar",
     "DELETE": "Eliminar",
     "DELETEEVENT": "Eliminar Evento?",
-    "REMOVE": "Remover",
+    "REMOVE": "Quitar",
     "SAVING": "Guardando...",
     "UPDATING": "Actualizando...",
     "ERORUNEXC": "Error Inesperado",
     "REQUIRED": "Requerido",
     "ADDRESSORDATE": "Agregue La Dirección o seleccione un lugar en Mapa",
-    "ISREQUIRED": "Es Requerido",
+    "ISREQUIRED": "es requerido",
     "DAY": "Día",
     "TEST": "Hola estas usando el idioma español",
     "LANGUAGE": "Idioma",
@@ -210,13 +211,14 @@
     "TELEPHONE": "Teléfono",
     "SENT": "Enviar Solicitud para unirse al equipo",
     "EMAILREADY": "Correo ya está en uso",
+    "USERNAMEREADY": "username ya está en uso",
     "ROLE": "Rol",
     "PLAYER": "Atleta",
     "MANAGER": "Manager",
     "OWNERLEAGUE": "Dueño de Liga",
     "FAMILY": "Familiar",
     "PASSWORD": "Contraseñas",
-    "INVALIDUSERNAMEYPASS": "Correo Electrónico",
+    "INVALIDUSERNAMEYPASS": "Incorrecto username",
     "INVALIDPASS": "La contraseña debe ser mayor de 8 y menor de 15 caracteres",
     "REGISTRATION": "Registro",
     "SELECTFAMILY": "Selecciona tu Familiar",
@@ -319,6 +321,7 @@
     "CHANGEROLE": "Cambiar Rol",
     "LEAGUE": {
         "NAME": "Liga",
+        "NAMEOF": "Nombre de liga",
         "CREATE": {
             "TITLE": "Nueva Liga",
             "ACTION": "Crear Liga",
@@ -477,5 +480,6 @@
     "CHATMANAGERSTEAMSLEAGUE": "Gerentes de Equipos de la liga",
     "MSGTOMANAGERSTEAMSLEAGUE": "Mensajes a Gerentes de Equipos",
     "SELECTLEAGUE": "Seleccione la liga",
-    "CLOSESESIONDEVICE": "Las sesiones han sido cerradas desde otro dispositivo"
+    "CLOSESESIONDEVICE": "Las sesiones han sido cerradas desde otro dispositivo",
+    "TYPERELATIONSHIP": "Digitar las relaciones con tus familiares"
 }

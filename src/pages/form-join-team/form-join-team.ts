@@ -13,6 +13,7 @@ export class FormJoinTeamPage {
 
   public static __name = "FormJoinTeamPage"
 
+  public username = "";
   public firstName = "";
   public lastName = "";
   public email = "";
@@ -49,11 +50,14 @@ export class FormJoinTeamPage {
 
   public async sent() {
 
-    if (this.firstName == "" || this.lastName === "" || this.email == "" || this.role == "") {
-      let requiredM = await this.helper.getWords("REQUIRED"),
-        unex = await this.helper.getWords("EMPTYFIELDS");
-      this.alertCtrl.create({ title: requiredM, message: unex })
-        .present();
+    let valid = this.helper.validadorFields(this, [
+      { value: this.username, type: "text", nameMessage: "Username" },
+      { value: this.firstName, type: "text", nameMessage: "FIRSTNAME" },
+      { value: this.lastName, type: "text", nameMessage: "LASTNAME" },
+      { value: this.email, type: "email", nameMessage: "Email" },
+      { value: this.role, type: "text", nameMessage: "ROLE" }
+    ]);
+    if (valid.valid === false) {
       return;
     }
 
@@ -68,7 +72,7 @@ export class FormJoinTeamPage {
       this.playersSelects.length !== lengthR) 
     ) {
       let requiredM = await this.helper.getWords("REQUIRED"),
-        unex = await this.helper.getWords("EMPTYFIELDS");
+        unex = await this.helper.getWords("TYPERELATIONSHIP");
       this.alertCtrl.create({ title: requiredM, message: unex })
         .present();
       return;
@@ -84,11 +88,11 @@ export class FormJoinTeamPage {
     let user: any;
     if (this.role === "Family") {
       user = {
-        firstName: this.firstName, lastName: this.lastName,
+        username: this.username, firstName: this.firstName, lastName: this.lastName,
         email: this.email, players: playersSelects, role: this.role
       };
     } else {
-      user = { firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
+      user = { username: this.username, firstName: this.firstName, lastName: this.lastName, email: this.email, role: this.role };
     }
 
     this.viewCtrl.dismiss(user);

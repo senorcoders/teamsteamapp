@@ -81,6 +81,60 @@ export class AuthServiceProvider {
 
   }
 
+  /**
+   * Login
+   */
+  public async LoginWithUsername(username: String, callback: Function) {
+
+    try {
+      let info: any = this.helper.getDeviceInfo();
+      info.username = username;
+
+      let data: any = await this.http.post('/v2/login', info).toPromise()
+
+      this.menuCtrl.swipeEnable(true);
+
+      if (data.hasOwnProperty("message")) {
+        callback(data, null);
+      } else if (data.hasOwnProperty("verify")) {
+        callback(data, null);
+      } else {
+
+        //For save
+
+        //guardamos el wheaterApi
+        let apiKey = data.wheaterApiKey;
+        delete data.wheaterApiKey;
+        await this.storage.set("apiKey", apiKey);
+        HelpersProvider.me.wheaterApiKey = apiKey;
+
+        data.tokenReady = false;
+        await this.storage.set('user', data);
+        this.user = data;
+        this.user.tokenReg = data.tokenReg || [];
+
+        //ahora asignamos el lenaguaje si es que esta definido
+        if (this.user.hasOwnProperty('options') && this.user.options.hasOwnProperty('language')) {
+          await this.helper.setLanguage(this.user.options.language);
+        } else {
+          await this.helper.setLanguage('en');
+        }
+
+        //console.log(this.user);
+
+        this.saveRole(function () {
+          callback(null, data);
+        });
+
+      }
+    }
+    catch (err) {
+      console.log(err);
+      callback(null, null);
+    }
+
+  }
+
   public async setTimeZoneTeam() {
     if (MyApp.User.role.name === "Manager") {
       let times = await this.globalization.getDatePattern({ formatLength: "", selector: "" });
@@ -127,20 +181,18 @@ export class AuthServiceProvider {
 
   public async updateTokenReg(token) {
     try {
-
-      let tokens = [];
-      if (MyApp.User.hasOwnProperty("tokenReg") && Object.prototype.toString.call(MyApp.User.tokenReg) === '[object Array]') {
-        tokens = MyApp.User.tokenReg;
+      
+      let payload:any = {
+        token,
+        userId: MyApp.User.id
+      };
+      let previousToken = await this.storage.get("tokenReg");
+      // console.log("previousToken", previousToken, "token", token);
+      if(previousToken){
+        payload.previousToken = previousToken;
       }
-      tokens.push(token);
-      console.log(tokens);
-      let updated = await this.http.put("/user/" + MyApp.User.id, { "tokenReg": tokens, tokenReady: false }).toPromise()
-      console.log(updated);
-      let user = MyApp.User;
-      user.tokenReg = token;
-      user.tokenReady = true;
-      await this.updateUser(user);
-
+      await this.http.put("/user-token", payload).toPromise();
+      await this.storage.set("tokenReg", token);
     }
     catch (e) {
       console.error(e);
@@ -198,6 +250,7 @@ export class AuthServiceProvider {
     var data = await this.storage.remove("user");
     data = await this.storage.remove("role");
     data = await this.storage.remove("apiKey");
+    data = await this.storage.remove("tokenReg");
     HelpersProvider.me.wheaterApiKey = "";
     this.user = null;
     delete MyApp.User;

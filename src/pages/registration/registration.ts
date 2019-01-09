@@ -1,6 +1,6 @@
 import { Component, NgZone } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, ModalController } from 'ionic-angular';
-import { HelpersProvider } from '../../providers/helpers/helpers';
+import { HelpersProvider, Field } from '../../providers/helpers/helpers';
 import { HttpClient } from '@angular/common/http';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 //import { PaymentSubscripcionPage } from '../payment-subscripcion/payment-subscripcion';
@@ -14,6 +14,7 @@ import { MyApp } from '../../app/app.component';
 import { SelectOwnerLeaguePage } from '../select-owner-league/select-owner-league';
 import { AddTeamsLeagueComponent } from '../../components/add-teams-league/add-teams-league';
 import { TabsPage } from '../tabs/tabs';
+import { Storage } from '@ionic/storage';
 
 
 @IonicPage()
@@ -26,6 +27,7 @@ export class RegistrationPage {
   public static __name = "RegistrationPage"
 
 
+  public username = "";
   public firstname = "";
   public lastname = "";
   public email = "";
@@ -69,7 +71,7 @@ export class RegistrationPage {
     private http: HttpClient, public auth: AuthServiceProvider,
     public statusBar: StatusBar, public device: Device,
     public modalCtrl: ModalController, public geolocation: Geolocation,
-    public ngZone: NgZone
+    public ngZone: NgZone, public storage: Storage
   ) {
     this.selectNew = "team";
   }
@@ -229,57 +231,32 @@ export class RegistrationPage {
     try {
 
       this.userValid = true;
-
-      if (this.nohave === false) {
-        if (
-          this.firstname === "" ||
-          this.lastname === "" ||
-          this.email === ""
-        ) {
-          let empty = await this.helper.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-            .present();
-          return;
-        }
-      } else {
-        if (
-          this.firstname === "" ||
-          this.lastname === "" ||
-          this.emailVerification === ""
-        ) {
-          let empty = await this.helper.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-            .present();
-          return;
-        }
+      let valid = this.helper.validadorFields(this, [
+        { value: this.username, type: "text", nameMessage: "Username" },
+        { value: this.firstname, type: "text", nameMessage: "FIRSTNAME" },
+        { value: this.lastname, type: "text", nameMessage: "LASTNAME" },
+        { value: this.email, type: "email", nameMessage: "Email" },
+      ]);
+      if (valid.valid === false) {
+        return;
       }
-
 
       if (this.selectNew === "team") {
         this.teamValid = true;
-        if (
-          this.nameteam === "" ||
-          this.city === "" ||
-          this.sport === ""
-        ) {
-          let empty = await this.helper.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({ message: empty, buttons: ["Ok"] })
-            .present();
+        valid = this.helper.validadorFields(this, [
+          { value: this.nameteam, type: "text", nameMessage: "NAMEOFTEAM" },
+          { value: this.city, type: "text", nameMessage: "CITY" },
+          { value: this.sport, type: "text", nameMessage: "SPORT" },
+        ]);
+        if (valid.valid === false) {
           return;
         }
       } else if (this.selectNew === "ownerLeague") {
         this.leagueValid = true;
-        if (
-          this.nameLeague == ''
-        ) {
-          let requiredM = await HelpersProvider.me.getWords("REQUIRED"),
-            emptyM = await HelpersProvider.me.getWords("EMPTYFIELDS");
-          this.alertCtrl.create({
-            title: requiredM,
-            message: emptyM,
-            buttons: ["Ok"]
-          }).present();
-
+        valid = this.helper.validadorFields(this, [
+          { value: this.nameLeague, type: "text", nameMessage: "LEAGUE.NAMEOF" }
+        ]);
+        if (valid.valid === false) {
           return;
         }
 
@@ -294,14 +271,12 @@ export class RegistrationPage {
         }
       }
 
-      if (this.nohave === false) {
-        let email: any = await this.http.get("/user/enable/" + this.email).toPromise();
-        if (email.valid === false) {
-          let emailM = await this.helper.getWords("EMAILREADY");
-          this.alertCtrl.create({ message: emailM, buttons: ["Ok"] })
-            .present();
-          return;
-        }
+      let res = await this.http.put("/user-enable-username", { username: this.username }).toPromise() as { valid: boolean };
+      if (res.valid === false) {
+        let resM = await this.helper.getWords("USERNAMEREADY");
+        this.alertCtrl.create({ message: resM, buttons: ["Ok"] })
+          .present();
+        return;
       }
 
 
@@ -309,6 +284,7 @@ export class RegistrationPage {
       let user: any;
       if (this.selectNew === "team") {
         user = {
+          username: this.username,
           "password": this.password,
           "firstName": this.firstname,
           "lastName": this.lastname,
@@ -326,6 +302,7 @@ export class RegistrationPage {
       } else if (this.selectNew === "agentFree") {
         user = {
           user: {
+            username: this.username,
             "password": this.password,
             "firstName": this.firstname,
             "lastName": this.lastname,
@@ -340,14 +317,12 @@ export class RegistrationPage {
         }
       } else {
         user = {
+          username: this.username,
           "password": this.password,
           "firstName": this.firstname,
           "lastName": this.lastname,
           "email": this.email,
         };
-        if (this.nohave === true) {
-          user.emailVerification = this.emailVerification;
-        }
       }
 
       for (let n of Object.keys(info)) {
@@ -387,14 +362,6 @@ export class RegistrationPage {
         }
       }
 
-      if (this.nohave == true) {
-        this.alertCtrl.create({
-          message: await this.helper.getWords("REMEMBEREMAILVERIFICATION"),
-          buttons: ["Ok"]
-        })
-          .present();
-      }
-
       let call = async function (err, user) {
 
         if (user) {
@@ -404,7 +371,6 @@ export class RegistrationPage {
             this.storage.set('firstTime', true);
             this.storage.set('firstTimeRoster', true);
             this.ngZone.run(() => this.navCtrl.setRoot(TabsPage));
-            // this.ngZone.run(() => this.navCtrl.setRoot(EventsSchedulePage));
           } else {
             this.ngZone.run(() => this.navCtrl.setRoot(AgentFreePage));
           }
@@ -439,11 +405,11 @@ export class RegistrationPage {
       }.bind(this)
 
       if (this.selectNew === "team")
-        await this.auth.Login(user.email, call);
+        await this.auth.LoginWithUsername(user.username, call);
       else if (this.selectNew === "agentFree")
-        await this.auth.Login(user.user.email, call);
+        await this.auth.LoginWithUsername(user.user.username, call);
       else
-        await this.auth.Login(user.email, call);
+        await this.auth.LoginWithUsername(user.username, call);
 
     }
     catch (e) {

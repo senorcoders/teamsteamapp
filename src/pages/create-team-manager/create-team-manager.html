@@ -21,9 +21,9 @@
     </ion-item>
 
     <ion-item [hidden]="newUser">
-        <ion-label floating>{{"EMAIL" | translate}}</ion-label>
-        <ion-input type="email" value="" [(ngModel)]="emailUser"></ion-input>
-      </ion-item>
+      <ion-label floating>username</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="username_"></ion-input>
+    </ion-item>
   </ion-list>
 
   <ion-avatar *ngIf="newUser">
@@ -37,6 +37,11 @@
   </ion-avatar>
 
   <ion-list *ngIf="newUser">
+
+    <ion-item>
+      <ion-label floating>username</ion-label>
+      <ion-input type="text" value="" [(ngModel)]="username"></ion-input>
+    </ion-item>
 
     <ion-item>
       <ion-label floating>{{"FIRSTNAME" | translate}}</ion-label>

@@ -13,6 +13,13 @@
 
     <ion-item [ngClass]="userValid===true?'color-label':''">
       <ion-label floating>
+        username <span style="color: red;">*</span>
+      </ion-label>
+      <ion-input type="text" [ngClass]="userValid==true&&username===''?'not-valid':''" [(ngModel)]="username"></ion-input>
+    </ion-item>
+
+    <ion-item [ngClass]="userValid===true?'color-label':''">
+      <ion-label floating>
         {{"FIRSTNAME" | translate}} <span style="color: red;">*</span>
       </ion-label>
       <ion-input type="text" [ngClass]="userValid==true&&firstname===''?'not-valid':''" [(ngModel)]="firstname"></ion-input>
@@ -32,7 +39,7 @@
       <ion-input type="email" [ngClass]="userValid==true&&validEmail(email)===true?'not-valid':''" [(ngModel)]="email"></ion-input>
     </ion-item>
 
-    <ion-item>
+    <!-- <ion-item>
       <ion-label>{{"NOHAVEEMAIL" | translate}}</ion-label>
       <ion-toggle [(ngModel)]="nohave"></ion-toggle>
     </ion-item>
@@ -41,8 +48,9 @@
       <ion-label floating>
         {{"EMAILVERIFICATION" | translate}}
       </ion-label>
-      <ion-input type="email" [ngClass]="userValid==true&&validEmail(emailVerification)===true?'not-valid':''" [(ngModel)]="emailVerification"></ion-input>
-    </ion-item>
+      <ion-input type="email" [ngClass]="userValid==true&&validEmail(emailVerification)===true?'not-valid':''"
+        [(ngModel)]="emailVerification"></ion-input>
+    </ion-item> -->
 
     <p *ngIf="nohave" style="padding-left: 10px;
     padding-right: 10px;">

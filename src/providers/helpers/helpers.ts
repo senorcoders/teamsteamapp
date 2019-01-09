@@ -29,6 +29,14 @@ declare global {
     typeObject(): boolean;
   }
 }
+export class Field {
+  name?: string;
+  value?: any;
+  type: string | "text" | "email" | "number";
+  notEqual0?: boolean;
+  nameMessage: string;
+  message?: string
+}
 
 @Injectable()
 export class HelpersProvider {
@@ -57,13 +65,13 @@ export class HelpersProvider {
     if (window.hasOwnProperty("google") === true) {
       HelpersProvider.me.enableMapsLocation = true;
     }
-    
+
     try {
       this.wheaterApiKey = await this.storage.get("apiKey");
       if (this.wheaterApiKey === null || this.wheaterApiKey === undefined) {
-        let user:any = await this.storage.get("user");
+        let user: any = await this.storage.get("user");
         if (user !== null && user !== undefined) {
-          this.wheaterApiKey = await this.http.get("/apikey/wheater?token="+ user.token, { responseType: "text" }).toPromise();
+          this.wheaterApiKey = await this.http.get("/apikey/wheater?token=" + user.token, { responseType: "text" }).toPromise();
           this.storage.set("apiKey", this.wheaterApiKey);
         }
       }
@@ -654,5 +662,100 @@ export class HelpersProvider {
     await this.backgroundGeolocation.stop();
   }
   //#endregion
+
+  public async showRequired(field: string) {
+    let requiredM = await this.getWords("ISREQUIRED");
+    let message = await this.getWords(field) + " " + requiredM;
+    this.alertCtrl.create({
+      message,
+      buttons: ["Ok"]
+    })
+      .present();
+  }
+
+  /******
+   * 
+   * PARA VALIDAR CAMPOS DE USUARIOS
+   * 
+   */
+  public validadorFields(context: any, fields: Field[]) {
+
+    let response = { valid: true, field: "" };
+    let isInvalid = function (field) {
+      response.valid = false;
+      response.field = field.name;
+      this.showRequiredField(field);
+    }.bind(this);
+
+    for (let field of fields) {
+
+      //Se comprueba que el campo exista en el contexto si es por name
+      if (field.name !== undefined) {
+        if (context[field.name] === undefined || context[field.name] === null) {
+          isInvalid(field);
+          break;
+        } else {
+          field.value = context[field.name];
+        }
+      }
+
+      //Si el campo es tipo texto solo se evalua que no sea vacio
+      if (field.type === "text") {
+        if (field.value === "") {
+          isInvalid(field);
+          break;
+        }
+      }
+
+      //Si el campo es tipo email, se valida que el email no este vacio, y cumpla con el formato
+      if (field.type === "email") {
+        if (field.value === "") {
+          isInvalid(field);
+          break;
+        }
+        if(this.validEmail(field.value) === false){
+           this.getWords("EMAILINVALID").then(mgs=>{
+            field.message = mgs;
+            isInvalid(field);
+          });
+          response.valid = false;
+          response.field = field.name;
+          break;
+        }
+      }
+
+      //Si el campo es tipo numero se valida que no este vacio, y se comprueba que no sea igual a
+      // cero, si es necesario
+      if (field.type === "number") {
+        if (field.value === "") {
+          isInvalid(field);
+          this.showRequiredField(field);
+          break;
+        }
+        if (field.notEqual0 === true) {
+          if (Number(field.value === 0)) {
+            isInvalid(field);
+            this.showRequiredField(field);
+            break;
+          }
+        }
+      }
+
+    }
+
+    return response;
+  }
+
+  private showRequiredField(field: Field) {
+    if (field.message !== undefined) {
+      this.alertCtrl.create({
+        message: field.message,
+        buttons: ["Ok"]
+      })
+        .present();
+    } else {
+      this.showRequired(field.nameMessage);
+    }
+  }
 
 }
