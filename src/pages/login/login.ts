@@ -105,18 +105,18 @@ export class LoginPage {
 
   public async Login() {
 
-    if (this.username == '') {
-      let emptyM = await this.helper.getWords("EMPTYFIELDS");
-      this.presentAlert(emptyM);
-    } else {
-      this.authService.LoginWithUsername(this.username, this.actionLogin.bind(this));
-    }
-    // if (this.email == '') {
+    // if (this.username === '') {
     //   let emptyM = await this.helper.getWords("EMPTYFIELDS");
     //   this.presentAlert(emptyM);
     // } else {
-    //   this.authService.Login(this.email, this.actionLogin.bind(this));
+    //   this.authService.LoginWithUsername(this.username, this.actionLogin.bind(this));
     // }
+    if (this.email === '') {
+      let emptyM = await this.helper.getWords("EMPTYFIELDS");
+      this.presentAlert(emptyM);
+    } else {
+      this.authService.Login(this.email, this.actionLogin.bind(this));
+    }
   }
 
   private async actionLogin(err, user) {

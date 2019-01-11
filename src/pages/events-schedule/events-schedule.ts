@@ -145,7 +145,7 @@ export class EventsSchedulePage {
         events = await this.http.get("/event/team/" + this.by + "/" + moment().format("MM-DD-YYYY-hh:mm") + "/" + this.team).toPromise();
       }
       this.helper.setGeofences(200, events);
-      this.events = await this.parserEvents(events);
+      this.events = await this.parserEvents(events); console.log(this.events);
 
       this.eventsOrigin = this.events;
 
@@ -293,7 +293,7 @@ export class EventsSchedulePage {
   //pueden haber varios dias en la semana que el evento ocurre
   //hay que buscar el evento mas cercano al fecha actual
   private getDayCercano(days: any): any {
-
+    console.log(days);
     let daysNumber = {
       "m": 1,
       "tu": 2,
@@ -306,23 +306,27 @@ export class EventsSchedulePage {
     let daysMoment = [];
     let Days = Object.prototype.toString.call(days) === '[object String]' ? days.split(',') : days;
 
-
     for (let day of Days) {
       let newmoment = moment();
-      newmoment.day(daysNumber[day]);
+      newmoment.weekday(daysNumber[day]);
+      console.log(newmoment.format("DD/MM/YY"));
       daysMoment.push(newmoment);
+    }
+    console.log(Days)
+    if (Days.length === 1) {
+      return daysMoment[0];
     }
 
 
     //Para cuando el dia de hoy es mayor que los dias de repeticion del evento
     let ind = 0, day = 0;
     for (let i = 0; i < daysMoment.length; i++) {
-      if (daysMoment[i].day() > day) {
-        day = daysMoment[i].day();
+      if (daysMoment[i].weekday() > day) {
+        day = daysMoment[i].weekday();
         ind = i;
       }
     }
-    if (moment().day() > daysMoment[ind].day()) {
+    if (moment().weekday() > daysMoment[ind].day()) {
       let d = daysMoment[0];
       d.add(7, "days");
       return d;
@@ -331,7 +335,7 @@ export class EventsSchedulePage {
 
     if (Days.length === 1) {
       let newmoment = moment();
-      newmoment.day(daysNumber[Days[0]]);
+      newmoment.weekday(daysNumber[Days[0]]);
       return newmoment;
     }
 
