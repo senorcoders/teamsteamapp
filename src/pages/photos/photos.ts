@@ -20,11 +20,11 @@ export class PhotosPage {
   public events = [];
   public allImages = [];
   public filter = "imagesEvent";
-  photoEvent:any;
+  photoEvent: any;
   public url = interceptor.url;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
-    public http: HttpClient, private imageViewerCtrl:ImageViewerController
+    public http: HttpClient, private imageViewerCtrl: ImageViewerController
   ) {
 
   }
@@ -37,18 +37,18 @@ export class PhotosPage {
 
       //Obtenemos todas las imagenes
       let imgs = [];
-      for (let  e of this.events) {
+      for (let e of this.events) {
         let is = e.images || [];
         imgs = imgs.concat(is);
       }
       this.allImages = imgs;
-      let eLeng:any = this.events.length;
-      for (let index in this.events){
-        let n:any = index;
+      let eLeng: any = this.events.length;
+      for (let index in this.events) {
+        let n: any = index;
         console.log(index, this.events.length);
-        if(n == (eLeng - 1 )){
-          console.log(this.events[n].name);
-          this.photoEvent = this.events[n].name;
+        if (n == (eLeng - 1)) {
+          console.log(this.events[n].id);
+          this.photoEvent = this.events[n].id;
         }
       }
     }
@@ -62,7 +62,7 @@ export class PhotosPage {
   public presentImage(myImage) {
     let img = new Image();
     let src = myImage.target.src;
-    src = src.split("?").shift()+ "?large=true";
+    src = src.split("?").shift() + "?large=true";
     img.setAttribute("src", src);
     const imageViewer = this.imageViewerCtrl.create(img);
     imageViewer.present();
@@ -70,6 +70,17 @@ export class PhotosPage {
 
   public toImages(event) {
     this.navCtrl.push(ImagesEventPage, { event: event });
+  }
+
+  public changeEvent(e) {
+    const index = this.events.findIndex(it => it.id === e);
+    if (index !== -1) {
+      // console.log(e, this.events[index]);
+      this.http.get('/event/' + this.events[index].id).subscribe(data => {
+        this.events[index] = data;
+      });
+    }
+
   }
 
 }

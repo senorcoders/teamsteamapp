@@ -5,7 +5,7 @@ import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../helpers/helpers';
 
 /**
- * intercepta todas lo peticiones que se realizan por http cliente para añadir 
+ * intercepta todas lo peticiones que se realizan por http cliente para añadir
  * la base url y token de seguridad
  */
 
@@ -13,7 +13,7 @@ import { HelpersProvider } from '../helpers/helpers';
 export class interceptor implements HttpInterceptor {
 
   public static url = 'https://api.lockerroomapp.com'; // "http://localhost:8187";
-  
+
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 
     if( req.url.includes("./assets/i18n/") ) return next.handle(req);
@@ -46,7 +46,7 @@ export class interceptor implements HttpInterceptor {
         url: interceptor.url + req.url
       });
     }
-  
+
     return next.handle(req);
   }
 
@@ -60,5 +60,5 @@ export class interceptor implements HttpInterceptor {
 
     return interceptor.url+ url;
   }
-  
+
 }

@@ -158,7 +158,7 @@ export class CreatePlayerPage {
     }
 
     let load = HelpersProvider.me.getLoadingStandar();
-    
+
     //si el correo es de jugador Comprobamos si ya existe el correo
     //si ya existe le avisamos al usuario
     if (await this.checkendUsername() === true) {

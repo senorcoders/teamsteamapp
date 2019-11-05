@@ -29,13 +29,13 @@
   <ion-list [hidden]="filter!=='imagesEvent'">
       <ion-item>
         <ion-label>Select an event</ion-label>
-        <ion-select interface="popover" [(ngModel)]="photoEvent">
-          <ion-option *ngFor="let e of events; let last = last" [value]="e.name" [selected]="last ? true : false">{{e.name}}</ion-option>
+        <ion-select interface="popover" (ngModelChange)="changeEvent($event)" [(ngModel)]="photoEvent">
+          <ion-option *ngFor="let e of events; let last = last" [value]="e.id" [selected]="last ? true : false">{{e.name}}</ion-option>
         </ion-select>
       </ion-item>
     </ion-list>
-  <div class="images-event" (click)="toImages(e)" *ngFor="let e of events;" [hidden]="photoEvent!==e.name">
-   
+  <div class="images-event" (click)="toImages(e)" *ngFor="let e of events;" [hidden]="photoEvent!==e.id">
+
     <h3 class="title">{{e.name}}</h3>
     <!-- <ion-slides>
       <ion-slide *ngFor="let i of e.images">
@@ -56,6 +56,6 @@
         </ion-col>
 
       </ion-row>
-    </ion-grid> 
+    </ion-grid>
   </div>
 </ion-content>
