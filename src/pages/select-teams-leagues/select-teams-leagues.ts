@@ -66,7 +66,7 @@ export class SelectTeamsLeaguesPage {
         this.havingLeagues = true;
       else
         this.havingTeamsAndLeague = true;
-        
+
       console.log(this.roles);
     }
     catch (e) {
@@ -98,7 +98,7 @@ export class SelectTeamsLeaguesPage {
     try {
       await this.auth.updateRole(role);
       await this.auth.setTimeZoneTeam();
-      await HelpersProvider.me.setGeofences(200);
+      // await HelpersProvider.me.setGeofences(200);
     }
     catch (e) {
       console.error(e);

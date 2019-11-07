@@ -15,7 +15,7 @@ import { MyApp } from '../../app/app.component';
 import * as moment from 'moment';
 import { Storage } from '@ionic/storage';
 declare var google: any;
-import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+// import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation'; //"@ionic-native/background-geolocation": "^4.10.0"
 
 
 /**
@@ -53,7 +53,8 @@ export class HelpersProvider {
     public zone: NgZone, private loading: LoadingController,
     public modalCtrl: ModalController, public camera: Camera,
     public platform: Platform, public alertCtrl: AlertController,
-    public device: Device, public storage: Storage, public backgroundGeolocation: BackgroundGeolocation
+    public device: Device, public storage: Storage,
+    // public backgroundGeolocation: BackgroundGeolocation
   ) {
     this.init();
     this.polyfill();
@@ -527,81 +528,81 @@ export class HelpersProvider {
     return data;
   }
 
-  public async setGeofences(radius: number, events?: any) {
-    try {
+  // public async setGeofences(radius: number, events?: any) {
+  //   try {
 
-      if (MyApp.User.role.name === "Manager") {
-        await this.backgroundGeolocation.stop();
-        return;
-      }
+  //     if (MyApp.User.role.name === "Manager") {
+  //       await this.backgroundGeolocation.stop();
+  //       return;
+  //     }
 
-      await this.setGeofencesAny();
+  //     await this.setGeofencesAny();
 
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
 
   //#region geofences
-  private async setGeofencesAny() {
-    try {
-      if (await this.backgroundGeolocation.isLocationEnabled() === 0) {
-        let required = await this.getWords("REQUIRED"),
-          enableSetting = await this.getWords("ENABLEGEOLOCATION");
-        this.alertCtrl.create({
-          title: required, message: enableSetting,
-          buttons: [{
-            text: "Ok", handler: function () {
-              setTimeout(this.setGeofencesAny.bind(this), (30 * 1000));
-              this.backgroundGeolocation.showLocationSettings();
-            }.bind(this)
-          }]
-        })
-          .present();
-      }
-      const config: BackgroundGeolocationConfig = {
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 20,
-        stopOnTerminate: false,
-        interval: 4000,
-        url: interceptor.transformUrl("/geofence"),
-        syncUrl: interceptor.transformUrl("/geofence-fail"),
-        httpHeaders: {
-          "id": MyApp.User.id + "." + MyApp.User.team
-        }
-      };
+  // private async setGeofencesAny() {
+  //   try {
+  //     if (await this.backgroundGeolocation.isLocationEnabled() === 0) {
+  //       let required = await this.getWords("REQUIRED"),
+  //         enableSetting = await this.getWords("ENABLEGEOLOCATION");
+  //       this.alertCtrl.create({
+  //         title: required, message: enableSetting,
+  //         buttons: [{
+  //           text: "Ok", handler: function () {
+  //             setTimeout(this.setGeofencesAny.bind(this), (30 * 1000));
+  //             this.backgroundGeolocation.showLocationSettings();
+  //           }.bind(this)
+  //         }]
+  //       })
+  //         .present();
+  //     }
+  //     const config: BackgroundGeolocationConfig = {
+  //       desiredAccuracy: 10,
+  //       stationaryRadius: 20,
+  //       distanceFilter: 20,
+  //       stopOnTerminate: false,
+  //       interval: 4000,
+  //       url: interceptor.transformUrl("/geofence"),
+  //       syncUrl: interceptor.transformUrl("/geofence-fail"),
+  //       httpHeaders: {
+  //         "id": MyApp.User.id + "." + MyApp.User.team
+  //       }
+  //     };
 
-      this.executeBackgroudGeolocation(config);
+  //     this.executeBackgroudGeolocation(config);
 
-    }
-    catch (e) {
-      console.error(e);
-    }
-  }
+  //   }
+  //   catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
-  public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
+  // public executeBackgroudGeolocation(config: BackgroundGeolocationConfig) {
 
-    config.debug = false;
+  //   config.debug = false;
 
-    this.backgroundGeolocation.configure(config)
-      .subscribe(function (location: BackgroundGeolocationResponse) {
+  //   this.backgroundGeolocation.configure(config)
+  //     .subscribe(function (location: BackgroundGeolocationResponse) {
 
-        console.log("location background", location);
+  //       console.log("location background", location);
 
-        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-        // this.backgroundGeolocation.finish(); // FOR IOS ONLY
+  //       // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+  //       // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+  //       // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+  //       // this.backgroundGeolocation.finish(); // FOR IOS ONLY
 
-      }.bind(this));
+  //     }.bind(this));
 
-    // start recording location
-    this.backgroundGeolocation.start();
-    console.log("Background", this.backgroundGeolocation);
-  }
+  //   // start recording location
+  //   this.backgroundGeolocation.start();
+  //   console.log("Background", this.backgroundGeolocation);
+  // }
 
   // public async executeGeofencesIOS(myPosition) {
   //   let events: Array<any> = await this.storage.get("geofences");
@@ -658,9 +659,9 @@ export class HelpersProvider {
   //   return x * Math.PI / 180;
   // }
 
-  public async stopGeofences() {
-    await this.backgroundGeolocation.stop();
-  }
+  // public async stopGeofences() {
+  //   await this.backgroundGeolocation.stop();
+  // }
   //#endregion
 
   public async showRequired(field: string) {
@@ -674,9 +675,9 @@ export class HelpersProvider {
   }
 
   /******
-   * 
+   *
    * PARA VALIDAR CAMPOS DE USUARIOS
-   * 
+   *
    */
   public validadorFields(context: any, fields: Field[]) {
 

@@ -457,7 +457,7 @@ export class ViewProfilePage {
     if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
       try {
         await this.auth.setTimeZoneTeam();
-        await HelpersProvider.me.setGeofences(200);
+        // await HelpersProvider.me.setGeofences(200);
       }
       catch (e) {
         console.error(e);
@@ -465,7 +465,7 @@ export class ViewProfilePage {
     } else {
       delete this.user.team;
       try {
-        await HelpersProvider.me.stopGeofences();
+        // await HelpersProvider.me.stopGeofences();
       }
       catch (e) {
         console.error(e);

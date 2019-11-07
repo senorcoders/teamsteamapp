@@ -134,7 +134,7 @@ export class SettingPage {
       console.error(e);
       // if(Object.prototype.toString.call(this.setting.team[id])==="[object Boolean]"){
       //   this.setting.team[id] = !this.setting.team[id];
-      // } 
+      // }
       await HelpersProvider.me.presentAlertErrorStandar();
     }
   }
@@ -239,7 +239,7 @@ export class SettingPage {
     if (role.name !== "FreeAgent" && role.name !== "OwnerLeague") {
       try {
         await this.auth.setTimeZoneTeam();
-        await HelpersProvider.me.setGeofences(200);
+        // await HelpersProvider.me.setGeofences(200);
       }
       catch (e) {
         console.error(e);
@@ -247,7 +247,7 @@ export class SettingPage {
     } else {
 
       try {
-        await HelpersProvider.me.stopGeofences();
+        // await HelpersProvider.me.stopGeofences();
       }
       catch (e) {
         console.error(e);

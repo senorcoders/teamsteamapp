@@ -181,7 +181,7 @@ export class AuthServiceProvider {
 
   public async updateTokenReg(token) {
     try {
-      
+
       let payload:any = {
         token,
         userId: MyApp.User.id
@@ -242,7 +242,7 @@ export class AuthServiceProvider {
 
       let success = await this.http.post("/logout", { email: MyApp.User.email, token: MyApp.User.tokenReg }).toPromise();
       console.log(success);
-      await HelpersProvider.me.backgroundGeolocation.stop();
+      // await HelpersProvider.me.backgroundGeolocation.stop();
     }
     this.storage.remove('firstTime');
     this.storage.remove('firstTimeRoster');
