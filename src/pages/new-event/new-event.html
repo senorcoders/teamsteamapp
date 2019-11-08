@@ -13,7 +13,7 @@
 
     <ion-list-header>
       {{ 'NEWEVENT.TITLE' | translate }}
-    </ion-list-header> 
+    </ion-list-header>
 
     <ion-item>
       <ion-label floating>{{ 'NAME' | translate }} <span style="color: red;">*</span></ion-label>
@@ -78,7 +78,7 @@
 
   <ion-list>
 
-   
+
 
     <ion-item>
       <ion-label stacked>{{"NEWEVENT.NOTIFYSTARTEVENT" | translate}} {{timeNoti}} {{"NEWEVENT.MINUTESBEFORE" |
@@ -102,7 +102,7 @@
       </ion-range>
     </ion-item>
 
-    <ion-item *ngIf="!league">
+    <ion-item>
       <ion-label>{{'NEWEVENT.SENDNOTI.CREATED' | translate}}?</ion-label>
       <ion-toggle [(ngModel)]="notificationInCreate"></ion-toggle>
     </ion-item>

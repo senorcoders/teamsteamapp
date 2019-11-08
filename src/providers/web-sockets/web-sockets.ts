@@ -27,18 +27,18 @@ export class WebSocketsProvider {
   };
   private static functions: { onConnect: boolean, callback: Function }[] = [];
 
-  public static onMessages:any = {};
+  public static onMessages: any = {};
 
   constructor(public http: HttpClient, private event: Events) {
 
   }
 
-  private static async executeFunctionsOnMessages(){
-    for(let nameValue of Object.keys(WebSocketsProvider.onMessages)){
-      if(WebSocketsProvider.onMessages[nameValue].typeFunction() === true){
-        
+  private static async executeFunctionsOnMessages() {
+    for (let nameValue of Object.keys(WebSocketsProvider.onMessages)) {
+      if (WebSocketsProvider.onMessages[nameValue].typeFunction() === true) {
+
         await WebSocketsProvider.onMessages[nameValue]();
-        console.log("execute on message "+ nameValue);
+        console.log("execute on message " + nameValue);
 
       }
     }
@@ -71,7 +71,7 @@ export class WebSocketsProvider {
         return;
 
       if (WebSocketsProvider.conexion === null || WebSocketsProvider.conexion === undefined) {
-        WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true });
+        WebSocketsProvider.conexion = io.sails.connect(interceptor.url, { reconnection: true, transports: ['websocket'] });
         this.asignFunctions();
       } else {
         if (WebSocketsProvider.conexion.isConnected() === false) {
@@ -155,17 +155,17 @@ export class WebSocketsProvider {
   private asignFunctions() {
     WebSocketsProvider.conexion.on("connect", async function () {
       let onconnects = WebSocketsProvider.functions.filter(it => it.onConnect);
-      for(let fn of onconnects){
+      for (let fn of onconnects) {
         await fn.callback();
       }
-      HelpersProvider.me.zone.run(function(){ console.log("connect with websocket"); });
+      HelpersProvider.me.zone.run(function () { console.log("connect with websocket"); });
     });
     WebSocketsProvider.conexion.on("disconnect", async function () {
       let onconnects = WebSocketsProvider.functions.filter(it => !it.onConnect);
-      for(let fn of onconnects){
+      for (let fn of onconnects) {
         await fn.callback();
       }
-      HelpersProvider.me.zone.run(function(){ console.log("disconnect with websocket"); });
+      HelpersProvider.me.zone.run(function () { console.log("disconnect with websocket"); });
     });
   }
 
@@ -174,10 +174,10 @@ export class WebSocketsProvider {
     await this.initConexion();
 
     WebSocketsProvider.conexion.on(model, function (event) {
-      HelpersProvider.me.zone.run(async function () { 
+      HelpersProvider.me.zone.run(async function () {
         await callback(event);
         await WebSocketsProvider.executeFunctionsOnMessages();
-       });
+      });
     });
   }
 

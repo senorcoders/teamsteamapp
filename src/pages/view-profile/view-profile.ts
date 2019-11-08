@@ -163,7 +163,8 @@ export class ViewProfilePage {
       this.user.imageSrc = interceptor.transformUrl("/userprofile/images/" + MyApp.User.id + "/" + team + "/" + ramdon);
 
       //es necesario actualizar la image del nav manualmente
-      document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);
+      if (document.getElementById("imageSlide"))
+        document.getElementById("imageSlide").setAttribute("src", this.user.imageSrc);
 
       load.dismiss();
     }

@@ -8,7 +8,7 @@
     <ion-title>{{"ROSTER.TITLE" | translate}}</ion-title>
 
     <ion-buttons class="requests-container" *ngIf="user.role.name==='Manager'&&requests>0" end>
-      
+
       <button ion-button icon-only class="requests" (click)="goToRequest()">
         <!-- <img src="/assets/imgs/request-icon-deactive.png">     -->
       </button>
@@ -86,7 +86,7 @@
         <ion-avatar (click)="viewPlayer(player)" style="cursor: pointer;">
           <img [src]="player.image" [hidden]="!player.loadImage" (load)="success(event, player);">
           <img src="./assets/imgs/user.png" [hidden]="player.loadImage">
-          <div class="layover" [hidden]="player.firstTime">{{"INVITED" | translate}}</div>
+          <div class="layover" *ngIf="player.user.invitation===true&&player.user.insideApp===false">{{"INVITED" | translate}}</div>
         </ion-avatar>
 
         <h4>{{player.user.firstName}} {{player.user.lastName}}</h4>

@@ -46,8 +46,8 @@
             "EVENT": "Other Event"
         },
         "SENDNOTI": {
-            "CREATED": "Send Notification when this event is created",
-            "UPDATED": "Send Notification when this event is updated"
+            "CREATED": "Notify everyone of this event",
+            "UPDATED": "Notify everyone of this event"
         },
         "NOTIFYSTARTEVENT": "Notify that the event starts",
         "MINUTESBEFORE": "minutes before",

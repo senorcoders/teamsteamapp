@@ -45,7 +45,7 @@ export class LibraryImagesPage {
 
   constructor(public navCtrl: NavController, private photoLibrary: PhotoLibrary,
     private platform: Platform, private cd: ChangeDetectorRef,
-    private toastCtrl: ToastController, public navParams: NavParams, 
+    private toastCtrl: ToastController, public navParams: NavParams,
     public zone: NgZone
     ) {
 
@@ -170,6 +170,7 @@ export class LibraryImagesPage {
     let index = this.selects.findIndex(it => {
       return it.id === libraryItem.id;
     });
+    console.log("index select", index);
     if (index !== -1) {
       if (this.selects.length === 1) {
         this.selects = [];

@@ -78,7 +78,8 @@ export class AssistenceComponent {
         }
       }
 
-      this.players = await this.http.get('/roles?where={"team":"' + MyApp.User.team + '","name":"Player"}').toPromise() as any;
+      this.players = (await this.http.get('/roles?where={"team":"' + MyApp.User.team + '","name":"Player"}').toPromise() as any[])
+        .filter(it => it.user);
       console.log(this.players);
       //Filtramos los que no tenga user
       this.players = this.players.filter(it => it.user.typeObject());

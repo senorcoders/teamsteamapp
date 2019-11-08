@@ -6,7 +6,7 @@ import { HttpHeaders, HttpClient } from '@angular/common/http';
 import { MyApp } from '../../app/app.component';
 import { HelpersProvider } from '../../providers/helpers/helpers';
 
-declare var NFile:any;
+declare var NFile: any;
 @IonicPage()
 @Component({
   selector: 'page-upload-multiples-images',
@@ -23,36 +23,42 @@ export class UploadMultiplesImagesPage {
   constructor(public navCtrl: NavController, public navParams: NavParams,
     private file: DFile, public zone: NgZone, private http: HttpClient
   ) {
+    // console.log(this.navParams.data)
     this.images = this.navParams.get("images");
     this.id = this.navParams.get("id");
   }
 
   ionViewDidLoad() {
-    this.zone.run(function () { console.log("hola") });
+    this.zone.run(function () { console.log(this.id, this.images) }.bind(this));
   }
 
   public trackById(index: number, libraryItem: LibraryItem): string { return libraryItem.id; }
 
   public async upload() {
+    let load = HelpersProvider.me.getLoadingStandar();
     try {
-
-      let load = HelpersProvider.me.getLoadingStandar();
       let files: File[] = [];
+      // console.log(this.images);
       for (let img of this.images) {
         let fileEntry: any = await this.file.resolveLocalFilesystemUrl(this.getSystemURL(img.id));
-        let arrBufer = await this.file.readAsArrayBuffer(fileEntry.nativeURL.split("/").slice(0, -1).join("/"), fileEntry.name);
-        let IFile:any = await new Promise((resolve, reject)=>{
+        // console.log('fileEntry', fileEntry);
+        // let arrBufer = await this.file.readAsArrayBuffer(fileEntry.nativeURL.split("/").slice(0, -1).join("/"), fileEntry.name);
+        let arrBufer = await new Promise((resolve, reject) => {
+          this.getArrayBuffer(fileEntry.nativeURL, resolve, reject)
+        });
+        // console.log("arrBufer", arrBufer);
+        let IFile: any = await new Promise((resolve, reject) => {
           fileEntry.file(function (file) {
             resolve(file);
           }.bind(this), reject);
         });
-        
-        let f = new NFile([arrBufer], fileEntry.name, {type:IFile.type});
+        // console.log("IFile", IFile);
+        let f = new NFile([arrBufer], fileEntry.name, { type: IFile.type });
         files.push(f);
-      
+
       }
 
-      console.log(files);
+      // console.log(files);
       let form = new FormData();
       for (let f of files) {
         form.append("images", f);
@@ -62,12 +68,32 @@ export class UploadMultiplesImagesPage {
       await this.http.post("/images/event/" + this.id + "/" + MyApp.User.id, form, httpOptionsForm).toPromise()
       this.navCtrl.pop();
       this.navCtrl.pop();
-      load.dismiss();
+      return load.dismiss();
 
     }
     catch (e) {
       console.error(e);
     }
+    load.dismiss()
+  }
+
+  private getArrayBuffer(nativeUrl, resolve, reject) {
+    var oReq = new XMLHttpRequest();
+    oReq.open("GET", nativeUrl, true);
+    oReq.responseType = "arraybuffer";
+
+    oReq.onload = function (oEvent) {
+      var arrayBuffer = oReq.response; // Note: not oReq.responseText
+      if (arrayBuffer) {
+        var byteArray = new Uint8Array(arrayBuffer);
+        // for (var i = 0; i < byteArray.byteLength; i++) {
+        // do something with each byte in the array
+        // }
+        resolve(byteArray);
+      }
+    };
+
+    oReq.send(null);
   }
 
   public getSystemURL(url: string) {
