@@ -38,3 +38,4 @@ GoogleService-Info.plist
 google-services.json
 *.apk
 *.p12
+*.p8
