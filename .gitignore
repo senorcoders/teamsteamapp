@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 *.jks
 GoogleService-Info.plist
 google-services.json
+*.apk
+*.p12
