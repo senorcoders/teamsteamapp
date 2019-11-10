@@ -1,8 +1,8 @@
 {
     "EVENTS": {
         "TITLE": "Events",
-        "PAST": "Past Events",
-        "UPCOMING": "Upcoming Events",
+        "PAST": "Past",
+        "UPCOMING": "Upcoming",
         "NOEVENT": "Well, this is boring. Add events",
         "AREYOU": "Are You Coming?",
         "STATUS": {
@@ -117,7 +117,7 @@
         "ACTION": "Name of the Team"
     },
     "LOGIN":{
-        "TITLE": "Welcome To Team Steam",
+        "TITLE": "Welcome To Locker Room",
         "INIT": "Sign into your pages account",
         "NOTACCOUNT": "Starting a new Team? Click Here to ",
         "REGISTER": "Register a new team",
@@ -476,5 +476,5 @@
     "MSGTOMANAGERSTEAMSLEAGUE": "Messages to Team Managers",
     "SELECTLEAGUE": "Select the league",
     "CLOSESESIONDEVICE": "the sessions have been closed from another device",
-    "TYPERELATIONSHIP": "Type your relationships with your relatives"
+    "TYPERELATIONSHIP": "Type your relationship with your relatives"
 }
