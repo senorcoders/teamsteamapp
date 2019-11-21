@@ -7,7 +7,8 @@ import { AgentFreePage } from '../agent-free/agent-free';
 import { MyApp } from '../../app/app.component';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { StatusBar } from '@ionic-native/status-bar';
-import { MenuController } from 'ionic-angular/components/app/menu-controller';
+//import { MenuController } from 'ionic-angular/components/app/menu-controller';
+import { MenuController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { Storage } from '@ionic/storage';
 

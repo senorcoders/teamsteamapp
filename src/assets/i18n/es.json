@@ -33,6 +33,7 @@
     "NEWEVENT": {
         "TT": "Nuevo Evento",
         "TITLE": "Datos Generales",
+        "NAME": "Nombre de Evento"
         "REPEATS": "Repetir",
         "DAYSREPEATS": "Días",
         "NOTIFY": "Notificar",

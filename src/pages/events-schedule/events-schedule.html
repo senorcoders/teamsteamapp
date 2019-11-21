@@ -10,11 +10,12 @@
       <button ion-button>{{"PRACTICE" | translate}}</button>
     </ion-buttons> -->
     <ion-row>
-      <ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title>
+      <!--<ion-title> {{ 'EVENTS.TITLE' | translate }} </ion-title> -->
       <ion-select [(ngModel)]="filter" (ionChange)="filterEvents()">
         <ion-option value='all'>{{ 'ALL' | translate }}</ion-option>
         <ion-option value='practice'>{{ 'NEWEVENT.TYPES.PRACTICE' | translate }}</ion-option>
         <ion-option value='game'>{{ 'NEWEVENT.TYPES.GAME' | translate }}</ion-option>
+        <ion-option value='meeting'>{{ 'NEWEVENT.TYPES.MEETING' | translate }}</ion-option>
         <ion-option value='event'>{{ 'NEWEVENT.TYPES.EVENT' | translate }}</ion-option>
       </ion-select>
     </ion-row>

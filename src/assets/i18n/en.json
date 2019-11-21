@@ -32,6 +32,7 @@
     },
     "NEWEVENT": {
         "TT": "New Event",
+        "NAME": "Event Name",
         "TITLE": "Event Data",
         "REPEATS": "Repeats",
         "DAYSREPEATS": "Repeats Days",
@@ -43,6 +44,7 @@
         "TYPES": {
             "GAME": "Game",
             "PRACTICE": "Practice",
+            "MEETING": "Meeting",
             "EVENT": "Other Event"
         },
         "SENDNOTI": {

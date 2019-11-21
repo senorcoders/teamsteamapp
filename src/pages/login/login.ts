@@ -104,7 +104,7 @@ export class LoginPage {
   }
 
   public async Login() {
-
+    document.getElementById('login-button').innerHTML = "...Loading";
     // if (this.username === '') {
     //   let emptyM = await this.helper.getWords("EMPTYFIELDS");
     //   this.presentAlert(emptyM);
@@ -113,6 +113,7 @@ export class LoginPage {
     // }
     if (this.email === '') {
       let emptyM = await this.helper.getWords("EMPTYFIELDS");
+      document.getElementById('login-button').innerHTML = "LOGIN AGAIN";
       this.presentAlert(emptyM);
     } else {
       this.authService.Login(this.email, this.actionLogin.bind(this));

@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { HttpClient } from '@angular/common/http';
-import { ViewController } from 'ionic-angular/navigation/view-controller';
-
+//import { ViewController } from 'ionic-angular/navigation/view-controller';
+import { ViewController } from 'ionic-angular';
 
 @IonicPage()
 @Component({

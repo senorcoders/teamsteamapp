@@ -43,9 +43,10 @@
     "angular-cropperjs": "^0.1.5",
     "com-darryncampbell-cordova-plugin-intent": "^1.1.8",
     "cordova": "^8.1.2",
-    "cordova-android": "8.1.0",
+    "cordova-android": "^8.1.0",
     "cordova-browser": "^5.0.4",
-    "cordova-ios": "^5.0.0",
+    "cordova-ios": "^5.0.1",
+    "cordova-plugin-add-swift-support": "~1.6.0",
     "cordova-plugin-camera": "^4.1.0",
     "cordova-plugin-camera-preview": "^0.9.0",
     "cordova-plugin-datepicker": "^0.9.3",
@@ -67,6 +68,7 @@
     "cordova.plugins.diagnostic": "^4.0.12",
     "date-fns": "^1.29.0",
     "ion2-calendar": "^2.1.7",
+    "ionic": "^5.4.6",
     "ionic-angular": "3.9.2",
     "ionic-img-viewer": "^2.9.0",
     "ionicons": "3.0.0",
@@ -81,7 +83,7 @@
   },
   "devDependencies": {
     "@angular/cli": "^6.2.1",
-    "@ionic/app-scripts": "3.1.8",
+    "@ionic/app-scripts": "^3.2.4",
     "@ionic/lab": "1.0.15",
     "cordova-plugin-googlemaps": "^2.6.2",
     "typescript": "^2.4.2"
@@ -123,10 +125,8 @@
         "PLAY_SERVICES_VERSION": "15.0.1",
         "ANDROID_SUPPORT_V4_VERSION": "27.+"
       },
-      "phonegap-plugin-push": {
-        "FCM_VERSION": "17.1.0",
-        "ANDROID_SUPPORT_V13_VERSION": "27.+"
-      }
+      "phonegap-plugin-push": {},
+      "cordova-plugin-add-swift-support": {}
     },
     "platforms": [
       "android",
